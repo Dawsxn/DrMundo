@@ -1,0 +1,19 @@
+# Dr. Mundo — full application runtime.
+# Install with:  python -m pip install -r requirements.txt
+
+# Core agent + data
+openai>=1.30
+python-dotenv>=1.0
+numpy>=1.26
+pydantic>=2.6
+
+# API
+fastapi>=0.110
+uvicorn[standard]>=0.29
+
+# UI
+streamlit>=1.33
+requests>=2.31
+
+# Dev / tests
+pytest>=8.0
