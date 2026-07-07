@@ -55,6 +55,9 @@ cover/
 *.mo
 *.pot
 
+# Dr. Mundo build artifact (regenerate with: python data/load_db.py)
+dr_mundo.db
+
 # Django stuff:
 *.log
 local_settings.py
