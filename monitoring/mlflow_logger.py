@@ -20,6 +20,12 @@ if TYPE_CHECKING:  # avoid a runtime import cycle (service imports this module)
 
 EXPERIMENT_NAME = os.getenv("DR_MUNDO_MLFLOW_EXPERIMENT", "dr_mundo")
 
+# mlflow 3.x put the old file store (./mlruns) in maintenance mode, so default to a
+# repo-local SQLite backend. This keeps the app and the UI in sync -- view runs with:
+#   mlflow ui --backend-store-uri sqlite:///mlflow.db
+# Honour MLFLOW_TRACKING_URI if the operator set one.
+TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "sqlite:///mlflow.db")
+
 _warned = False
 
 
@@ -59,6 +65,7 @@ def _log(mlflow, question: str, result: "ServiceResult") -> None:
     else:
         error_type = "none"
 
+    mlflow.set_tracking_uri(TRACKING_URI)
     mlflow.set_experiment(EXPERIMENT_NAME)
     with mlflow.start_run(run_name=f"ask:{answer.status}"):
         mlflow.set_tags(

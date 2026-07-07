@@ -61,6 +61,7 @@ dr_mundo.db
 # MLflow local tracking store (Phase 9 monitoring)
 mlruns/
 mlartifacts/
+mlflow.db
 
 # Django stuff:
 *.log
