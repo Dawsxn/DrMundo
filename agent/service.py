@@ -5,6 +5,7 @@ follow-up questions keep context, applies the guardrails on the way in and out, 
 returns the grounded Answer plus the reasoning trace and guardrail metadata.
 """
 
+import os
 import time
 from dataclasses import dataclass, field
 from typing import Optional
@@ -14,6 +15,8 @@ from agent.memory import SessionMemory
 from agent.schemas import Answer
 from guardrails.input_guard import check_input
 from guardrails.output_guard import OutputReport, check_output
+from monitoring.mlflow_logger import log_service_result
+from monitoring.usage import UsageTotals, estimate_cost, track_usage
 
 
 @dataclass
@@ -25,11 +28,18 @@ class ServiceResult:
     output_report: Optional[OutputReport] = None
     latency_ms: int = 0
     prompt_version: str = DEFAULT_PROMPT
+    usage: UsageTotals = field(default_factory=UsageTotals)
+    estimated_cost_usd: float = 0.0
 
 
 class DrMundoService:
-    def __init__(self, prompt_name: str = DEFAULT_PROMPT):
+    def __init__(self, prompt_name: str = DEFAULT_PROMPT, enable_mlflow: Optional[bool] = None):
         self.prompt_name = prompt_name
+        # MLflow logging is on by default; DR_MUNDO_MLFLOW=0 (or enable_mlflow=False)
+        # turns it off for offline/eval runs that don't want per-call runs.
+        if enable_mlflow is None:
+            enable_mlflow = os.getenv("DR_MUNDO_MLFLOW", "1").lower() not in ("0", "false", "")
+        self.enable_mlflow = enable_mlflow
         self._sessions: dict[str, SessionMemory] = {}
 
     def _memory(self, session_id: str) -> SessionMemory:
@@ -39,6 +49,19 @@ class DrMundoService:
         self._sessions.pop(session_id, None)
 
     def handle(self, question: str, session_id: str = "default") -> ServiceResult:
+        """Answer one question, accounting token usage and (optionally) logging to MLflow.
+
+        The monitoring wrapper is additive: it observes the request but never alters the
+        Answer, so the six hard constraints are untouched."""
+        with track_usage() as usage:
+            result = self._handle(question, session_id)
+        result.usage = usage
+        result.estimated_cost_usd = estimate_cost(usage)
+        if self.enable_mlflow:
+            log_service_result(question, result)
+        return result
+
+    def _handle(self, question: str, session_id: str = "default") -> ServiceResult:
         start = time.perf_counter()
         memory = self._memory(session_id)
 
