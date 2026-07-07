@@ -58,6 +58,10 @@ cover/
 # Dr. Mundo build artifact (regenerate with: python data/load_db.py)
 dr_mundo.db
 
+# MLflow local tracking store (Phase 9 monitoring)
+mlruns/
+mlartifacts/
+
 # Django stuff:
 *.log
 local_settings.py

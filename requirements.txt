@@ -15,5 +15,8 @@ uvicorn[standard]>=0.29
 streamlit>=1.33
 requests>=2.31
 
+# Monitoring + eval (Phase 9)
+mlflow>=2.12
+
 # Dev / tests
 pytest>=8.0
