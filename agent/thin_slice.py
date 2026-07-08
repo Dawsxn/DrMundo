@@ -25,8 +25,10 @@ def main() -> None:
             print(f"[{i}] Thought: {step.thought.strip()[:160]}")
         print(f"[{i}] Action: {step.action}({step.action_input})")
         obs = step.observation
-        if isinstance(obs, list):  # search_catalog returns a ranked list
-            summary = [f"{c['kind']}:{c['key']}({c['score']:.2f})" for c in obs[:3]]
+        if isinstance(obs, dict) and "candidates" in obs:  # search_catalog result
+            cands = obs["candidates"]
+            summary = {"confidence": obs.get("confidence", {}).get("level"),
+                       "top": [f"{c['kind']}:{c['key']}({c['score']:.2f})" for c in cands[:3]]}
         elif isinstance(obs, dict):
             summary = {k: obs[k] for k in ("status", "procedure", "service", "case_rate",
                                            "price_low", "price_high", "oop_low", "oop_high")
