@@ -184,6 +184,10 @@ def _render_meta(meta: dict) -> None:
         bits.append(f"PII redacted: {', '.join(meta['pii_found'])}")
     if meta.get("latency_ms"):
         bits.append(f"{meta['latency_ms']} ms")
+    if meta.get("total_tokens"):
+        bits.append(f"{meta['total_tokens']:,} tokens")
+    if meta.get("estimated_cost_usd"):
+        bits.append(f"${meta['estimated_cost_usd']:.4f}")
     if meta.get("prompt_version"):
         bits.append(f"prompt: {meta['prompt_version']}")
     report = meta.get("output_report") or {}
