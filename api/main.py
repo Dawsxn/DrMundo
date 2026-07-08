@@ -40,7 +40,7 @@ class AskRequest(BaseModel):
 class TraceStepOut(BaseModel):
     thought: Optional[str] = None
     action: Optional[str] = None
-    # Observations vary by tool: search_catalog returns a list, the cost tools a dict.
+    # Observations vary by tool: search_catalog returns {candidates, confidence}, cost tools a dict.
     action_input: Optional[Any] = None
     observation: Optional[Any] = None
 
@@ -58,7 +58,9 @@ class AskResponse(BaseModel):
     pii_found: list[str] = Field(default_factory=list)
     category: str = "cost"
     latency_ms: int = 0
-    prompt_version: str = "system_v1"
+    total_tokens: int = 0
+    estimated_cost_usd: float = 0.0
+    prompt_version: str = "system_v2"
     output_report: OutputReportOut = Field(default_factory=OutputReportOut)
 
 
@@ -123,6 +125,8 @@ def ask(req: AskRequest) -> AskResponse:
         pii_found=result.pii_found,
         category=result.category,
         latency_ms=result.latency_ms,
+        total_tokens=result.usage.total_tokens,
+        estimated_cost_usd=result.estimated_cost_usd,
         prompt_version=result.prompt_version,
         output_report=output_report,
     )

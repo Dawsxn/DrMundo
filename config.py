@@ -32,11 +32,17 @@ EMBEDDING_MODEL = os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small")
 @lru_cache(maxsize=1)
 def get_openai_client():
     """Return a cached OpenAI client. Imported lazily so modules that don't touch the
-    API (e.g. the pure-SQL queries) don't require the SDK or a key to import."""
+    API (e.g. the pure-SQL queries) don't require the SDK or a key to import.
+
+    The client is wrapped so token usage is recorded inside a `monitoring.track_usage()`
+    block (Phase 9a). The wrapper is transparent -- it never alters responses -- so this
+    does not change any answer."""
     from openai import OpenAI
+
+    from monitoring.usage import wrap_client
 
     if not OPENAI_API_KEY:
         raise RuntimeError(
             "OPENAI_API_KEY is not set. Copy .env.example to .env and add your key."
         )
-    return OpenAI(api_key=OPENAI_API_KEY)
+    return wrap_client(OpenAI(api_key=OPENAI_API_KEY))

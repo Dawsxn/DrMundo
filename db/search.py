@@ -24,6 +24,13 @@ SIMILARITY_FLOOR = 0.35
 # the canonical procedure/service above raw-embedding neighbours. > max cosine (1.0).
 ALIAS_BOOST = 1.0
 
+# Confidence bands over the top candidate's score and its margin to the runner-up. This
+# mirrors the classic high/medium/low intent-confidence routing: a clear winner is priced
+# directly, while a weak top match or a near-tie is flagged so the agent asks the user to
+# clarify instead of guessing (see the confidence note in the system prompts).
+CONFIDENCE_STRONG = 0.8   # a genuine catalogue match usually scores well above this
+CONFIDENCE_MARGIN = 0.08  # the top must beat the runner-up by this much to be unambiguous
+
 
 @lru_cache(maxsize=1)
 def _load_embeddings() -> dict:
@@ -79,18 +86,42 @@ def _apply_alias_boost(candidates: list[dict], query_text: str) -> None:
             cand["via"] = "alias"
 
 
-def search_catalog(query_text: str, top_k: int = 5) -> list[dict]:
+def assess_confidence(candidates: list[dict]) -> dict:
+    """Summarise how confident the top match is: 'high' | 'medium' | 'low' | 'ambiguous'.
+
+    Alias-boosted hits (score > 1.0) are always 'high'. A decent top score that sits too
+    close to the runner-up is 'ambiguous' -- the agent should clarify rather than guess."""
+    if not candidates:
+        return {"level": "none", "top_score": 0.0, "runner_up_score": 0.0, "margin": 0.0}
+    top = candidates[0]["score"]
+    runner = candidates[1]["score"] if len(candidates) > 1 else 0.0
+    margin = round(top - runner, 3)
+    if top >= 1.0 or (top >= CONFIDENCE_STRONG and margin >= CONFIDENCE_MARGIN):
+        level = "high"
+    elif top >= SIMILARITY_FLOOR and margin < CONFIDENCE_MARGIN:
+        level = "ambiguous"       # good-enough top match, but too close to call
+    elif top >= 0.5:
+        level = "medium"
+    else:
+        level = "low"
+    return {"level": level, "top_score": round(top, 3),
+            "runner_up_score": round(runner, 3), "margin": margin}
+
+
+def search_catalog(query_text: str, top_k: int = 5) -> dict:
     """Rank covered procedures AND outpatient services against `query_text`.
 
-    Returns candidates sorted by descending score:
-        [{kind: "covered"|"outpatient", key: rvs_code|service_name, name, score, via}, ...]
+    Returns:
+        {"candidates": [{kind, key, name, score, via}, ...],
+         "confidence": {level, top_score, runner_up_score, margin}}
     `via` is "alias" if a curated phrase pinned it, else "embedding". Only candidates at
-    or above SIMILARITY_FLOOR are returned (alias-boosted ones always clear it). An empty
-    list means nothing matched -> the agent should ask the user to clarify.
+    or above SIMILARITY_FLOOR are returned (alias-boosted ones always clear it). The
+    `confidence` block lets the agent decide whether to price the top match directly or
+    ask the user to clarify (empty candidates / 'ambiguous' / 'low' -> clarify).
     """
     query_text = (query_text or "").strip()
     if not query_text:
-        return []
+        return {"candidates": [], "confidence": assess_confidence([])}
 
     emb = _load_embeddings()
     qvec = _embed_query(query_text)
@@ -101,7 +132,8 @@ def search_catalog(query_text: str, top_k: int = 5) -> list[dict]:
     )
     _apply_alias_boost(candidates, query_text)
     candidates.sort(key=lambda c: c["score"], reverse=True)
-    return [c for c in candidates if c["score"] >= SIMILARITY_FLOOR][:top_k]
+    ranked = [c for c in candidates if c["score"] >= SIMILARITY_FLOOR][:top_k]
+    return {"candidates": ranked, "confidence": assess_confidence(ranked)}
 
 
 if __name__ == "__main__":
@@ -116,6 +148,9 @@ if __name__ == "__main__":
         "how to bake bread",  # nonsense -> should return little/nothing
     ]
     for t in tests:
-        print(f"\nQUERY: {t}")
-        for c in search_catalog(t, top_k=3):
+        result = search_catalog(t, top_k=3)
+        conf = result["confidence"]
+        print(f"\nQUERY: {t}   [confidence={conf['level']} "
+              f"top={conf['top_score']} margin={conf['margin']}]")
+        for c in result["candidates"]:
             print(f"  [{c['kind']:10}] {c['score']:.3f}  {c['key']:8}  {c['name'][:55]}")

@@ -45,10 +45,12 @@ TOOL_SCHEMAS: list[dict] = [
             "name": "search_catalog",
             "description": (
                 "STEP 1 for any cost question. Match the user's phrase to a covered "
-                "procedure OR an outpatient service. Returns ranked candidates with a "
-                "'kind' field: 'covered' (PhilHealth procedure, use get_covered_cost) or "
-                "'outpatient' (not covered, use get_outpatient_cost). If the top results "
-                "are close/ambiguous or nothing scores well, ask_user to clarify."
+                "procedure OR an outpatient service. Returns {candidates, confidence}. Each "
+                "candidate has a 'kind' field: 'covered' (PhilHealth procedure, use "
+                "get_covered_cost) or 'outpatient' (not covered, use get_outpatient_cost). "
+                "The 'confidence.level' is high/medium/low/ambiguous: if it is 'ambiguous' "
+                "or 'low' (or there are no candidates), call ask_user to clarify instead of "
+                "guessing. Otherwise price the single best (top) candidate."
             ),
             "parameters": {
                 "type": "object",
