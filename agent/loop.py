@@ -18,7 +18,9 @@ from agent.tools import TOOL_SCHEMAS, execute_tool
 from config import CHAT_MODEL, get_openai_client
 
 MAX_ITERS = 5
-DEFAULT_PROMPT = "system_v1"
+# system_v2 is the production default: the Phase 9b ablation showed it best-balanced
+# (94% pass, 100% coverage/OOP correctness, cheaper than v1). See eval/ and HANDOFF/write-up.
+DEFAULT_PROMPT = "system_v2"
 
 
 @dataclass
