@@ -123,8 +123,8 @@ def print_ablation(summaries: dict[str, dict]) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Dr. Mundo offline eval harness")
-    ap.add_argument("--prompts", default="system_v1",
-                    help="comma-separated prompt names (default: system_v1)")
+    ap.add_argument("--prompts", default="system_v2",
+                    help="comma-separated prompt names (default: system_v2, the production prompt)")
     ap.add_argument("--ablation", action="store_true",
                     help="shortcut for --prompts system_v1,system_v2,system_v3")
     ap.add_argument("--limit", type=int, default=None, help="run only the first N cases")
