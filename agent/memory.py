@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 
 @dataclass
 class SessionMemory:
-    max_turns: int = 8  # keep the last N text turns (~4 exchanges)
+    max_turns: int = 20  # keep the last N text turns
     turns: list[dict] = field(default_factory=list)
 
     def add(self, role: str, content: str) -> None:
