@@ -25,7 +25,7 @@ rvs_code,hospital_id,price_low,price_high,as_of,mmc_code,source,confidence,price
 47562,2,"174,500","208,500","July 20, 2026",18170040,mmc-price-list,high,package
 49000,2,"172,600","202,100","April 06, 2024",12010040,mmc-price-list,high,package
 49505,2,"82,600","92,600","April 05, 2024",18170021,mmc-price-list,high,package
-50590,2,"22,700","70,900","March 10, 2025",03010001,mmc-price-list,high,component
+50590,2,"22,700","70,900","March 10, 2025",03010001,mmc-price-list,high,package
 52000,2,"42,500","73,960","April 05, 2024",18170033,mmc-price-list,high,package
 54152,2,"13,700","17,120","April 05, 2024",18170039,mmc-price-list,high,package
 55530,2,"83,700","110,200","April 05, 2024",18170022,mmc-price-list,high,package

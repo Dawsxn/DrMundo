@@ -233,11 +233,16 @@ def main() -> None:
             # the 'DR ...' delivery-room and ambulatory lines, which bill room/facility time
             # only). Recording this as `price_basis` stops the app concluding "fully covered"
             # from a partial price, which would understate the patient's real bill.
-            low = float(row["price_low"])
-            basis = "component" if rate > low else "package"
+            # Compare against price_HIGH, not price_low. A case rate that merely sits INSIDE
+            # a wide price range is ordinary partial coverage (PhilHealth covers the cheap
+            # end but not the dear end) -- e.g. ESWL at P22,700-70,900 against a P35,100 case
+            # rate. Only a case rate above the ceiling is impossible for a complete price and
+            # therefore proves MMC billed a component.
+            high = float(row["price_high"])
+            basis = "component" if rate > high else "package"
             if basis == "component":
                 warnings.append(
-                    f"{name}: case rate P{rate:,.0f} > MMC low P{low:,.0f} -> "
+                    f"{name}: case rate P{rate:,.0f} > MMC high P{high:,.0f} -> "
                     f"marked price_basis=component (RVS {code} mapping itself is sound)")
             out.append({"mmc_code": row["mmc_code"], "mmc_name": name,
                         "mmc_type": row["mmc_type"], "price_low": row["price_low"],
