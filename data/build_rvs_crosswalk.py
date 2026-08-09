@@ -25,6 +25,7 @@ Usage:
 """
 
 import csv
+import re
 import sys
 from pathlib import Path
 
@@ -151,6 +152,18 @@ CURATED: dict[str, tuple[str, str, str]] = {
         "Ligation and division of the long saphenous vein at the saphenofemoral junction; the "
         "dedicated stripping codes (37718/37722) are absent from this catalog."),
     "BRONCHOSCOPY PACKAGE": ("31622", "high", "Diagnostic flexible/rigid bronchoscopy."),
+    # --- ambulatory gynaecology / urology ------------------------------------------------
+    "DR AMBULATORY-IUD INSERTION": ("58300", "high", "Insertion of intrauterine device."),
+    "DR AMBULATORY-COLPOSCOPY": ("57452", "high",
+        "Colposcopy alone; 57454 adds biopsy and 57460 adds LEEP, neither stated here."),
+    "DR AMBULATORY-LEEP": ("57460", "high",
+        "Colposcopy with loop electrode excision of the cervix -- LEEP by definition."),
+    "DR HYSTEROSCOPY": ("58555", "high",
+        "Diagnostic hysteroscopy; the surgical variants (58558+) specify added work."),
+    "MYOMECTOMY (ROBOT-ASSISTED)": ("58545", "high",
+        "Laparoscopic myomectomy -- robot-assisted is a laparoscopic approach; 58140 is the "
+        "open operation."),
+    "ESWL": ("50590", "high", "Extracorporeal shock wave lithotripsy."),
 }
 
 # Items deliberately left without an RVS code, with the reason. These keep their real MMC
@@ -175,14 +188,24 @@ UNMAPPED: dict[str, str] = {
     "DR LAPAROSCOPY PACKAGE": "Unqualified laparoscopy -- the operation performed is not stated.",
     "DR LAPAROSCOPY (KITTING)": "Instrument kitting charge, not a distinct operation.",
     "DR AMBULATORY-GYNE BIOPSY": "Unqualified biopsy -- site not stated.",
+    "DR AMBULATORY-IUD REMOVAL": "No IUD-removal code in this catalog (only 58300 insertion).",
+    "DR AMBULATORY-CAUTERY OF WARTS":
+        "Destruction codes are site-specific (genital vs cutaneous) and the site is not stated.",
+    "DR NON-STRESS TES": "No fetal non-stress test code in this catalog.",
+    "DR OB GYNE MAJOR PROCEDURE": "Generic billing tier, not a named operation.",
+    "DR OB GYNE MINOR PROCEDURE": "Generic billing tier, not a named operation.",
+    "DR GYNE EXAMINATION": "An examination, not a surgical procedure.",
+    "DR NEWBORN CARE PROCEDURE": "Newborn care, not a maternal surgical procedure.",
 }
 
-# Facility / equipment / ancillary lines: not procedures at all, so no RVS code applies.
-NOT_PROCEDURES = {
-    "USE OF DELIVERY ROOM", "ADDITIONAL USE OF DELIVERY ROOM 3OMINS",
-    "USE OF WATERPROOF DOPPLER", "CAPILLARY BLOOD GLUCOSE - DR",
-    "BIRTHING ROOM W/ WATER IMMERSION",
-}
+# Facility / equipment / anaesthesia / time-billed lines: not operations, so no RVS code
+# applies. Matched by pattern rather than an exact list so new "USE OF ..." or "... PER HOUR"
+# items added by MMC are excluded automatically instead of silently becoming warnings.
+NOT_PROCEDURE_RE = re.compile(
+    r"^(USE OF|ADDITIONAL USE OF|DR FEE)\b"
+    r"|\b(PER HOUR|\d+\s*HRS?\b|\d+\s*MINS?\b|KITTING|ANESTHESIA|ANAESTHESIA|TIVA"
+    r"|IV THERAPY|WATERPROOF DOPPLER|BIRTHING ROOM)\b", re.I)
+NOT_PROCEDURES = {"CAPILLARY BLOOD GLUCOSE - DR"}  # a blood test filed under the DR dept
 
 PACKAGE_TYPES = {"OPERATING ROOM", "DELIVERY SURGERY"}
 
@@ -197,31 +220,36 @@ def main() -> None:
     for row in raw:
         name = row["name"]
         unseen.discard(name)
-        if name in NOT_PROCEDURES:
+        if name in NOT_PROCEDURES or NOT_PROCEDURE_RE.search(name):
             continue
         if name in CURATED:
             code, conf, why = CURATED[name]
             proc, rate = rates.get(code, ("(CODE NOT IN CATALOG)", 0.0))
             if proc.startswith("("):
                 warnings.append(f"{name}: RVS {code} is not in the catalog")
-            # Sanity check: PhilHealth paying more than the hospital charges means the code
-            # is almost certainly wrong. This is a check, not a chooser.
+            # Sanity check turned into a data field. A PhilHealth case rate is an ALL-IN
+            # benefit (facility + professional fee), so if it exceeds what MMC charges, the
+            # MMC figure cannot be the whole episode -- it is a component charge (typically
+            # the 'DR ...' delivery-room and ambulatory lines, which bill room/facility time
+            # only). Recording this as `price_basis` stops the app concluding "fully covered"
+            # from a partial price, which would understate the patient's real bill.
             low = float(row["price_low"])
-            if rate > low:
+            basis = "component" if rate > low else "package"
+            if basis == "component":
                 warnings.append(
-                    f"{name}: case rate P{rate:,.0f} exceeds MMC low price P{low:,.0f} "
-                    f"(RVS {code}) -- verify")
+                    f"{name}: case rate P{rate:,.0f} > MMC low P{low:,.0f} -> "
+                    f"marked price_basis=component (RVS {code} mapping itself is sound)")
             out.append({"mmc_code": row["mmc_code"], "mmc_name": name,
                         "mmc_type": row["mmc_type"], "price_low": row["price_low"],
                         "price_high": row["price_high"], "rvs_code": code,
                         "rvs_procedure": proc, "case_rate": f"{rate:.2f}",
-                        "confidence": conf, "rationale": why})
+                        "confidence": conf, "price_basis": basis, "rationale": why})
         elif name in UNMAPPED:
             out.append({"mmc_code": row["mmc_code"], "mmc_name": name,
                         "mmc_type": row["mmc_type"], "price_low": row["price_low"],
                         "price_high": row["price_high"], "rvs_code": "",
                         "rvs_procedure": "", "case_rate": "", "confidence": "unmapped",
-                        "rationale": UNMAPPED[name]})
+                        "price_basis": "", "rationale": UNMAPPED[name]})
         else:
             warnings.append(f"{name}: not classified in CURATED, UNMAPPED or NOT_PROCEDURES")
 

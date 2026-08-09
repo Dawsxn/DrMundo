@@ -47,12 +47,27 @@ CREATE TABLE philhealth_procedure_rates (
     case_rate REAL NOT NULL
 );
 
+-- `mmc_code` is the provenance anchor: every price traces to an official Makati Medical
+-- Center catalogue entry and can be re-checked by hand against their published price list.
+-- `confidence` records how certain the MMC-name -> RVS-code mapping is (see
+-- data/build_rvs_crosswalk.py); procedures whose code could not be honestly determined are
+-- NOT in this table at all -- they live in hospital_prices with no case rate.
 CREATE TABLE hospital_procedure_prices (
     rvs_code    TEXT    NOT NULL,
     hospital_id INTEGER NOT NULL,
     price_low   INTEGER NOT NULL,
     price_high  INTEGER NOT NULL,
     as_of       TEXT,
+    mmc_code    TEXT,
+    source      TEXT,
+    confidence  TEXT,
+    -- 'package'   = MMC's all-in price for the whole operation.
+    -- 'component' = MMC bills only part of the episode (e.g. the 'DR ...' delivery-room and
+    --               ambulatory lines charge facility time only). Detected because the
+    --               PhilHealth case rate -- which is all-in -- EXCEEDS the MMC price, which
+    --               cannot happen for a complete price. Without this flag the app would
+    --               report "fully covered" from a partial price and understate the bill.
+    price_basis TEXT,
     FOREIGN KEY (rvs_code)    REFERENCES philhealth_procedure_rates(rvs_code),
     FOREIGN KEY (hospital_id) REFERENCES hospitals(id)
 );
@@ -65,6 +80,48 @@ CREATE TABLE hospital_prices (
     price_low   INTEGER NOT NULL,
     price_high  INTEGER NOT NULL,
     as_of       TEXT,
+    mmc_code    TEXT,
+    source      TEXT,
+    FOREIGN KEY (hospital_id) REFERENCES hospitals(id)
+);
+
+-- Which individual tests make up a panel, so the agent can answer "is the panel cheaper
+-- than ordering these separately?". Matched by service name (as SERVICE_EQUIVALENTS does)
+-- rather than by FK, because `service` is not unique across hospitals.
+CREATE TABLE lab_panels (
+    id             INTEGER PRIMARY KEY,
+    panel_service  TEXT NOT NULL,
+    member_service TEXT NOT NULL
+);
+
+-- MMC publishes surgeon / anaesthesiologist fees separately from the facility package.
+-- Kept apart so an answer can be explicit about which component it is quoting.
+CREATE TABLE professional_fees (
+    id          INTEGER PRIMARY KEY,
+    hospital_id INTEGER NOT NULL,
+    service     TEXT    NOT NULL,
+    price_low   INTEGER NOT NULL,
+    price_high  INTEGER NOT NULL,
+    as_of       TEXT,
+    mmc_code    TEXT,
+    source      TEXT,
+    FOREIGN KEY (hospital_id) REFERENCES hospitals(id)
+);
+
+-- Room & board, charged PER DAY. Deliberately a separate table, not a `hospital_prices`
+-- category: length of stay is unknowable from a doctor's request, so multiplying these into
+-- a headline estimate would invent the largest number on the page. Keeping them out of the
+-- priced tables makes that a structural guarantee instead of a convention.
+CREATE TABLE facility_rates (
+    id          INTEGER PRIMARY KEY,
+    hospital_id INTEGER NOT NULL,
+    room_type   TEXT    NOT NULL,
+    rate_low    INTEGER NOT NULL,
+    rate_high   INTEGER NOT NULL,
+    unit        TEXT    NOT NULL,
+    as_of       TEXT,
+    mmc_code    TEXT,
+    source      TEXT,
     FOREIGN KEY (hospital_id) REFERENCES hospitals(id)
 );
 
@@ -73,6 +130,8 @@ CREATE INDEX idx_hpp_rvs_code    ON hospital_procedure_prices(rvs_code);
 CREATE INDEX idx_hpp_hospital_id ON hospital_procedure_prices(hospital_id);
 CREATE INDEX idx_hp_hospital_id  ON hospital_prices(hospital_id);
 CREATE INDEX idx_hp_service      ON hospital_prices(service);
+CREATE INDEX idx_lab_panels_panel ON lab_panels(panel_service);
+CREATE INDEX idx_pf_service       ON professional_fees(service);
 """
 
 
@@ -116,10 +175,13 @@ def build() -> None:
     # hospital_procedure_prices (Path A)
     hpp = read_csv("hospital_procedure_prices.csv")
     conn.executemany(
-        "INSERT INTO hospital_procedure_prices (rvs_code, hospital_id, price_low, price_high, as_of) "
-        "VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO hospital_procedure_prices "
+        "(rvs_code, hospital_id, price_low, price_high, as_of, mmc_code, source, confidence, "
+        "price_basis) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [
-            (r["rvs_code"], int(r["hospital_id"]), to_int(r["price_low"]), to_int(r["price_high"]), r["as_of"])
+            (r["rvs_code"], int(r["hospital_id"]), to_int(r["price_low"]),
+             to_int(r["price_high"]), r["as_of"], r["mmc_code"], r["source"],
+             r["confidence"], r["price_basis"])
             for r in hpp
         ],
     )
@@ -127,19 +189,47 @@ def build() -> None:
     # hospital_prices (Path B)
     hp = read_csv("hospital_prices.csv")
     conn.executemany(
-        "INSERT INTO hospital_prices (id, hospital_id, category, service, price_low, price_high, as_of) "
-        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO hospital_prices "
+        "(id, hospital_id, category, service, price_low, price_high, as_of, mmc_code, source) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [
-            (
-                int(r["id"]),
-                int(r["hospital_id"]),
-                r["category"],
-                r["service"],
-                to_int(r["price_low"]),
-                to_int(r["price_high"]),
-                r["as_of"],
-            )
+            (int(r["id"]), int(r["hospital_id"]), r["category"], r["service"],
+             to_int(r["price_low"]), to_int(r["price_high"]), r["as_of"],
+             r["mmc_code"], r["source"])
             for r in hp
+        ],
+    )
+
+    # lab_panels (scope c: panel vs individual)
+    panels = read_csv("lab_panels.csv")
+    conn.executemany(
+        "INSERT INTO lab_panels (id, panel_service, member_service) VALUES (?, ?, ?)",
+        [(int(r["id"]), r["panel_service"], r["member_service"]) for r in panels],
+    )
+
+    # professional_fees (published separately from the facility package)
+    pf = read_csv("professional_fees.csv")
+    conn.executemany(
+        "INSERT INTO professional_fees "
+        "(id, hospital_id, service, price_low, price_high, as_of, mmc_code, source) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+            (int(r["id"]), int(r["hospital_id"]), r["service"], to_int(r["price_low"]),
+             to_int(r["price_high"]), r["as_of"], r["mmc_code"], r["source"])
+            for r in pf
+        ],
+    )
+
+    # facility_rates (PER DAY -- never summed into an estimate)
+    fac = read_csv("facility_rates.csv")
+    conn.executemany(
+        "INSERT INTO facility_rates "
+        "(id, hospital_id, room_type, rate_low, rate_high, unit, as_of, mmc_code, source) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+            (int(r["id"]), int(r["hospital_id"]), r["room_type"], to_int(r["rate_low"]),
+             to_int(r["rate_high"]), r["unit"], r["as_of"], r["mmc_code"], r["source"])
+            for r in fac
         ],
     )
 
@@ -156,6 +246,9 @@ def print_report(conn: sqlite3.Connection) -> None:
         "philhealth_procedure_rates",
         "hospital_procedure_prices",
         "hospital_prices",
+        "lab_panels",
+        "professional_fees",
+        "facility_rates",
     ]
     for table in tables:
         print("=" * 78)

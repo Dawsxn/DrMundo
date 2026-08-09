@@ -1,0 +1,35 @@
+id,hospital_id,room_type,rate_low,rate_high,unit,as_of,mmc_code,source
+1,2,AIR MATTRESS,395,"2,845",per day,"July 21, 2021",04440002,mmc-price-list
+2,2,CARDIOVERSION,"1,875","1,875",per day,"July 21, 2021",04440003,mmc-price-list
+3,2,ECMO ICU,"25,310","25,310",per day,"July 21, 2021",04440005,mmc-price-list
+4,2,HEMODIAFILTRATION ICU,"8,970","8,970",per day,"October 20, 2023",04440007,mmc-price-list
+5,2,HEMODIALYSIS CRITCARE,"8,510","11,400",per day,"October 20, 2023",04440006,mmc-price-list
+6,2,ICU MONITORING,"4,120","4,430",per day,"November 04, 2025",04440009,mmc-price-list
+7,2,PRONE VENTILATION FEE,"9,500","9,500",per day,"October 20, 2023",04440014,mmc-price-list
+8,2,RHYTHM STRIPS 6 SECONDS,31,31,per day,"July 21, 2021",04440011,mmc-price-list
+9,2,BMT POSITIVE PRESSURE,"8,400","8,400",per day,"October 20, 2023",02010008,mmc-price-list
+10,2,CARDIOVASCULAR ICU,"9,900","9,900",per day,"October 20, 2023",02010009,mmc-price-list
+11,2,HEALTH HUB PREMIER,"6,600","6,600",per day,"August 05, 2022",2010010,mmc-price-list
+12,2,HIGH RISK PRIVATE,"7,300","7,300",per day,"October 20, 2023",02010011,mmc-price-list
+13,2,ICU SURGICAL/MEDICAL/NEURO,"9,900","9,900",per day,"October 20, 2023",02010012,mmc-price-list
+14,2,ISOLATION PRIVATE,"10,900","10,900",per day,"August 05, 2022",2010013,mmc-price-list
+15,2,LARGE PRIVATE,"6,700","6,700",per day,"October 20, 2023",02010004,mmc-price-list
+16,2,NEONATAL ICU,"5,470","5,470",per day,"October 20, 2023",02010014,mmc-price-list
+17,2,NEURO-PSYCHIATRY PRIVATE,"10,100","10,100",per day,"October 20, 2023",02010015,mmc-price-list
+18,2,NEURO-PSYCHIATRY WARD,"4,900","4,900",per day,"October 20, 2023",02010016,mmc-price-list
+19,2,NEW BORN CARE FEE,900,900,per day,"August 05, 2022",2010017,mmc-price-list
+20,2,NICU ISOLATION,"5,470","5,470",per day,"October 20, 2023",02010018,mmc-price-list
+21,2,OB ROOM LARGE PRIVATE,"6,700","6,700",per day,"October 20, 2023",02010019,mmc-price-list
+22,2,OB ROOM SEMI PRIVATE,"2,700","2,700",per day,"August 05, 2022",2010020,mmc-price-list
+23,2,OB ROOM SMALL PRIVATE,"4,120","4,120",per day,"October 20, 2023",02010021,mmc-price-list
+24,2,OB ROOM WARD,"1,810","1,810",per day,"October 20, 2023",02010022,mmc-price-list
+25,2,PICU COMMON,"7,870","7,870",per day,"October 20, 2023",02010023,mmc-price-list
+26,2,PICU SOLO,"8,870","8,870",per day,"October 20, 2023",02010024,mmc-price-list
+27,2,PREMIUM LARGE PRIVATE,"9,470","9,470",per day,"October 20, 2023",02010005,mmc-price-list
+28,2,PRESIDENTIAL SUITE,"37,200","37,200",per day,"October 20, 2023",02010007,mmc-price-list
+29,2,RAI PRIVATE,"8,100","8,100",per day,"October 20, 2023",02010025,mmc-price-list
+30,2,REGULAR SUITE,"21,800","21,800",per day,"October 20, 2023",02010006,mmc-price-list
+31,2,SEMI PRIVATE,"2,700","2,700",per day,"August 05, 2022",2010002,mmc-price-list
+32,2,SMALL PRIVATE,"4,120","4,120",per day,"October 20, 2023",02010003,mmc-price-list
+33,2,TELEMETRY,"8,400","8,400",per day,"October 20, 2023",02010026,mmc-price-list
+34,2,WARD,"1,810","1,810",per day,"October 20, 2023",02010001,mmc-price-list

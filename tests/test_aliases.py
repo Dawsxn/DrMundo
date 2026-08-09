@@ -19,15 +19,19 @@ def test_cs_resolves_to_cesarean():
 
 
 def test_common_procedure_aliases():
-    assert ("covered", "44950") in match_aliases("appendectomy")
-    assert ("covered", "47600") in match_aliases("gallbladder removal")
+    # 47562 is the laparoscopic cholecystectomy MMC actually prices (47600 is the open
+    # operation, which MMC publishes no package for).
+    assert ("covered", "47562") in match_aliases("gallbladder removal")
     assert ("covered", "27447") in match_aliases("total knee replacement")
+    assert ("covered", "54152") in match_aliases("magkano ang tuli")
 
 
 def test_outpatient_abbreviations():
-    assert ("outpatient", "Chest X-ray") in match_aliases("chest xray please")
-    assert ("outpatient", "CT Scan (plain)") in match_aliases("how much is a ct scan")
-    assert ("outpatient", "Ultrasound (abdomen)") in match_aliases("ultrasound ng tiyan")
+    # Canonical strings are MMC's own verbose catalogue names -- the whole point of the
+    # alias layer is that nobody types them.
+    assert ("outpatient", "CHEST PA") in match_aliases("chest xray please")
+    assert ("outpatient", "CBC (COMPLETE BLOOD COUNT)") in match_aliases("magkano ang cbc")
+    assert ("outpatient", "WHOLE ABDOMEN") in match_aliases("ultrasound ng tiyan")
 
 
 def test_no_false_positive_on_unrelated_text():
@@ -40,15 +44,17 @@ def test_word_boundary_prevents_substring_false_match():
 
 
 def test_service_equivalence_grouping():
-    # Cardinal Santos' variant maps back to the shared canonical group.
-    assert canonical_service("CT Scan (plain, single region)") == "CT Scan (plain)"
-    members = equivalent_services("CT Scan (plain)")
-    assert "CT Scan (plain)" in members
-    assert "CT Scan (plain, single region)" in members
-    # plain and contrast must stay distinct.
-    assert "CT Scan (contrast)" not in members
+    # MMC's sibling listing maps back to the shared canonical group.
+    assert canonical_service("CHEST PA & LATERAL") == "CHEST PA"
+    members = equivalent_services("CHEST PA")
+    assert "CHEST PA" in members
+    assert "CHEST PA & LATERAL" in members
+    # A panel and its individual member test must stay distinct -- grouping them would
+    # destroy the "is the panel cheaper?" comparison.
+    lipid = equivalent_services("LIPID PROFILE (HDL LDL CHOL TRIG) SERUM")
+    assert "HDL" not in lipid
 
 
 def test_ungrouped_service_maps_to_itself():
-    assert canonical_service("CBC") == "CBC"
-    assert equivalent_services("CBC") == ["CBC"]
+    assert canonical_service("HbA1C") == "HbA1C"
+    assert equivalent_services("HbA1C") == ["HbA1C"]

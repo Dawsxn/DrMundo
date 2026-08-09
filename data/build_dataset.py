@@ -45,7 +45,14 @@ SOURCE = "mmc-price-list"
 LAB_PREFIX = "LAB-"
 IMAGING_TYPES = {"MRI", "RADIO CT", "RADIO ULTRASOUND", "RADIO DIAGNOSTICS",
                  "RADIO INTERVENTION", "RADIO PET IMAGING", "NUCLEAR MEDICINE",
-                 "DR ULTRASOUND", "OSTEOPOROSIS & BONE HEALTH"}
+                 "DR ULTRASOUND", "OSTEOPOROSIS & BONE HEALTH", "BREAST CLINIC"}
+# Diagnostic studies that are neither imaging nor blood work (ECG, 2D echo, spirometry,
+# endoscopy). Strictly these fall outside the three stated scope categories, but they appear
+# constantly on real doctor's requests, so they are captured under their own category rather
+# than being silently conflated with "radiologic studies".
+DIAGNOSTIC_TYPES = {"CVDL - HEART STATION", "PULMONARY LABORATORY",
+                    "NEUROVASCULAR LABORATORY", "CARDIAC CATH LAB", "ENDOSCOPY UNIT",
+                    "E.N.T. DIAGNOSTIC CENTER", "CLS EYE CENTER", "NSDL"}
 FACILITY_TYPES = {"ROOM AND BOARD", "CRITICAL CARE UNIT"}
 PROF_FEE_TYPE = "CLINICAL SERVICES (PROF FEE)"
 PACKAGE_TYPES = {"OPERATING ROOM", "DELIVERY SURGERY"}
@@ -107,14 +114,14 @@ def main() -> None:
                 "price_high": fmt(money(c["price_high"])),
                 "as_of": by_name[c["mmc_name"]]["as_of"],
                 "mmc_code": c["mmc_code"], "source": SOURCE,
-                "confidence": c["confidence"],
+                "confidence": c["confidence"], "price_basis": c["price_basis"],
             })
         else:
             unmapped_names.add(c["mmc_name"])
     proc_rows.sort(key=lambda r: r["rvs_code"])
     write(DATA / "hospital_procedure_prices.csv",
           ["rvs_code", "hospital_id", "price_low", "price_high", "as_of", "mmc_code",
-           "source", "confidence"], proc_rows)
+           "source", "confidence", "price_basis"], proc_rows)
 
     # --- scope (b) + (c) + unmapped procedures -----------------------------------------
     priced, next_id = [], 1
@@ -127,6 +134,8 @@ def main() -> None:
         elif t in IMAGING_TYPES or (t not in FACILITY_TYPES and t != PROF_FEE_TYPE
                                     and t not in PACKAGE_TYPES and IMAGING_NAME_RE.search(name)):
             category = "Imaging"
+        elif t in DIAGNOSTIC_TYPES:
+            category = "Diagnostic"
         elif name in unmapped_names:
             # A real procedure we could not tie to an RVS code: keep the published price,
             # but it lands here precisely because it has no case rate to apply.

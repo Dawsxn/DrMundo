@@ -1,101 +1,1606 @@
-id,hospital_id,category,service,price_low,price_high,as_of
-1,1,Consultation,OPD (general),"1,500","2,500",2026
-2,1,Consultation,OPD (specialist),"2,000","3,500",2026
-3,1,Consultation,OPD (senior specialist/consultant),"3,000","5,000",2026
-4,1,Consultation,ER Consultation,"3,500","6,500",2026
-5,1,Consultation,ER Triage Fee,"1,000","2,000",2026
-6,1,Consultation,Executive Health Program,"25,000","120,000",2026
-7,1,Diagnostic,CBC,400,700,2026
-8,1,Diagnostic,Lipid Profile,"1,500","2,200",2026
-9,1,Diagnostic,HbA1c,"1,200","1,800",2026
-10,1,Imaging,Chest X-ray,900,"1,500",2026
-11,1,Imaging,Ultrasound (abdomen),"3,500","5,500",2026
-12,1,Imaging,2D Echo,"5,500","8,500",2026
-13,1,Diagnostic,Treadmill Stress Test,"5,000","7,500",2026
-14,1,Imaging,CT Scan (plain),"12,000","16,000",2026
-15,1,Imaging,CT Scan (contrast),"18,000","25,000",2026
-16,1,Imaging,MRI (plain),"18,000","25,000",2026
-17,1,Imaging,MRI (contrast),"25,000","35,000",2026
-18,1,Imaging,PET-CT,"60,000","90,000",2026
-19,1,Imaging,Mammogram,"4,500","6,500",2026
-20,1,Consultation,Prenatal Consult (OB),"2,500","4,500",2026
-21,2,Consultation,OPD (general practitioner),"1,200","1,800",2026
-22,2,Consultation,OPD (specialist),"1,800","2,500",2026
-23,2,Consultation,OPD (senior consultant),"2,500","3,500",2026
-24,2,Consultation,ER Consultation,"2,500","5,500",2026
-25,2,Consultation,Executive Check-Up Basic,"15,000","25,000",2026
-26,2,Consultation,Executive Check-Up Comprehensive,"40,000","85,000",2026
-27,2,Diagnostic,CBC,350,550,2026
-28,2,Diagnostic,Lipid Profile,"1,200","1,800",2026
-29,2,Diagnostic,HbA1c,900,"1,500",2026
-30,2,Imaging,Chest X-ray,700,"1,200",2026
-31,2,Imaging,Ultrasound (abdomen),"2,800","4,500",2026
-32,2,Imaging,2D Echo,"4,500","7,000",2026
-33,2,Imaging,CT Scan (plain),"10,000","14,000",2026
-34,2,Imaging,CT Scan (contrast),"15,000","20,000",2026
-35,2,Imaging,MRI (plain),"15,000","22,000",2026
-36,2,Imaging,MRI (contrast),"22,000","30,000",2026
-37,2,Imaging,Mammogram,"3,500","5,500",2026
-38,2,Consultation,Prenatal Consult (OB),"2,000","3,500",2026
-39,3,Consultation,OPD (general),"1,200","1,800",2026
-40,3,Consultation,OPD (specialist),"1,800","2,500",2026
-41,3,Consultation,OPD (senior consultant),"2,500","3,200",2026
-42,3,Consultation,ER Consultation,"2,500","5,000",2026
-43,3,Consultation,Executive Check-Up Basic,"15,000","22,000",2026
-44,3,Consultation,Executive Check-Up Comprehensive,"35,000","75,000",2026
-45,3,Diagnostic,CBC,350,550,2026
-46,3,Diagnostic,Lipid Profile,"1,200","1,700",2026
-47,3,Imaging,Chest X-ray,700,"1,200",2026
-48,3,Imaging,Ultrasound (abdomen),"2,800","4,200",2026
-49,3,Imaging,2D Echo,"4,500","6,800",2026
-50,3,Imaging,CT Scan (plain),10000,14000,2026
-51,3,Imaging,CT Scan (contrast),14000,19000,2026
-52,3,Imaging,MRI (plain),14000,20000,2026
-53,3,Imaging,MRI (contrast),20000,28000,2026
-54,3,Imaging,PET-CT,55000,80000,2026
-55,3,Consultation,Prenatal Consult,1800,3200,2026
-56,4,Consultation,OPD (general),800,1200,2026
-57,4,Consultation,OPD (specialist),1200,1800,2026
-58,4,Consultation,OPD (senior consultant),1800,2500,2026
-59,4,Consultation,ER Consultation,1800,4500,2026
-60,4,Consultation,Executive Check-Up Basic,8000,15000,2026
-61,4,Consultation,Executive Check-Up Comprehensive,22000,50000,2026
-62,4,Diagnostic,CBC,250,450,2026
-63,4,Diagnostic,Lipid Profile,900,1400,2026
-64,4,Diagnostic,HbA1c,700,1100,2026
-65,4,Imaging,Chest X-ray,500,900,2026
-66,4,Imaging,Ultrasound (abdomen),2200,3500,2026
-67,4,Imaging,2D Echo,3500,5500,2026
-68,4,Imaging,CT Scan (plain),7000,10000,2026
-69,4,Imaging,CT Scan (contrast),11000,15000,2026
-70,4,Imaging,MRI (plain),12000,18000,2026
-71,4,Imaging,MRI (contrast),18000,24000,2026
-72,4,Consultation,Prenatal Consult,1200,2500,2026
-73,5,Consultation,OPD (general practitioner),800,1200,2026
-74,5,Consultation,OPD (specialist),1500,2500,2026
-75,5,Consultation,OPD (senior consultant / subspecialty),2500,4500,2026
-76,5,Consultation,ER Consultation (triage + MD),2000,5000,2026
-77,5,Consultation,Executive Check-Up (Basic),10000,18000,2026
-78,5,Consultation,Executive Check-Up (Comprehensive),25000,60000,2026
-79,5,Consultation,Telemedicine consult,800,1800,2026
-80,5,Diagnostic,CBC,300,500,2026
-81,5,Diagnostic,Urinalysis / Fecalysis,200,350,2026
-82,5,Diagnostic,FBS / RBS,200,400,2026
-83,5,Diagnostic,Lipid Profile,1100,1700,2026
-84,5,Diagnostic,HbA1c,900,1400,2026
-85,5,Diagnostic,Liver / Kidney Panel,1800,3500,2026
-86,5,Diagnostic,"Thyroid Panel (TSH, FT3, FT4)",2200,3800,2026
-87,5,Imaging,Chest X-ray (PA),600,1100,2026
-88,5,Diagnostic,ECG (12-lead),800,1400,2026
-89,5,Imaging,2D Echo with Doppler,4500,7500,2026
-90,5,Diagnostic,Stress Test (treadmill),5500,8500,2026
-91,5,Imaging,Ultrasound (abdomen / pelvis),2800,4500,2026
-92,5,Imaging,Transvaginal / OB Ultrasound,2800,4500,2026
-93,5,Imaging,Mammography + Ultrasound,4500,7500,2026
-94,5,Imaging,Bone Densitometry (DEXA),3500,6000,2026
-95,5,Imaging,"CT Scan (plain, single region)",9000,13000,2026
-96,5,Imaging,"CT Scan (contrast, single region)",13000,18000,2026
-97,5,Imaging,"MRI (plain, single region)",15000,20000,2026
-98,5,Imaging,"MRI (contrast, single region)",20000,25000,2026
-99,5,Imaging,PET-CT (oncology staging),55000,75000,2026
-100,5,Consultation,Prenatal Consult,1800,3500,2026
+id,hospital_id,category,service,price_low,price_high,as_of,mmc_code,source
+1,2,Imaging,ULTRASOUND BIOMICROSCOPY ONE EYE / BOTH EYES,"7,800","11,400","March 02, 2026",04080067,mmc-price-list
+2,2,Imaging,ADDITIONAL MAMMOGRAM VIEWS,"2,080","2,600","March 09, 2026",04040001,mmc-price-list
+3,2,Imaging,BIOPSY CLIP PLACEMENT,"19,900","24,900","March 09, 2026",04040002,mmc-price-list
+4,2,Imaging,BREAST ULTRASOUND/ELASTOGRAPHY,"4,150","5,400","March 09, 2026",04040003,mmc-price-list
+5,2,Imaging,CONTRAST ENHANCED MAMMOGRAPHY,"17,900","22,400","March 09, 2026",04040013,mmc-price-list
+6,2,Imaging,GALACTOGRAPHY,"13,900","27,400","March 09, 2026",04040004,mmc-price-list
+7,2,Imaging,MAMMOGRAM GUIDED WIRE LOCALIZATION,"10,500","37,500","March 09, 2026",04040005,mmc-price-list
+8,2,Imaging,MAMMOGRAM WITH BREAST ULTRASOUND PACKAGE,"8,300","10,400","March 09, 2026",04050001,mmc-price-list
+9,2,Imaging,MAMMOGRAPHY 3D,"5,010","6,300","March 09, 2026",04040006,mmc-price-list
+10,2,Imaging,PRE-OP GALACTOGRAPHY,"13,900","53,700","March 09, 2026",04040007,mmc-price-list
+11,2,Imaging,SONO GUIDED CORE BIOPSY,"11,100","40,500","March 09, 2026",04040009,mmc-price-list
+12,2,Imaging,SONO GUIDED CYST ASPIRATION BIOPSY,"5,450","11,800","March 09, 2026",04040010,mmc-price-list
+13,2,Imaging,SONO GUIDED FINE NEEDLE ASPIRATION BIOPSY,"5,750","12,900","March 09, 2026",04040011,mmc-price-list
+14,2,Imaging,SONO GUIDED WIRE LOCALIZATION,"10,500","37,500","March 09, 2026",04040008,mmc-price-list
+15,2,Imaging,STEREOTACTIC CORE BIOPSY,"12,100","44,700","March 09, 2026",04040012,mmc-price-list
+16,2,Imaging,ONCO-DX PET BUNDLE,"86,600","108,300","March 09, 2026",04050049,mmc-price-list
+17,2,Diagnostic,ACTIVATED COAGULATION TIME,810,"1,100","March 04, 2026",04060001,mmc-price-list
+18,2,Diagnostic,CEREBRAL ANGIOGRAM,"42,400","79,500","March 04, 2026",04060003,mmc-price-list
+19,2,Diagnostic,CEREBRAL COILING AND EMBOLIZATION,"78,400","147,000","March 04, 2026",04060004,mmc-price-list
+20,2,Diagnostic,ELECTROPHYSIOLOGY,"144,900","233,900","March 04, 2026",04060005,mmc-price-list
+21,2,Diagnostic,ENDOMYOCARDIAL BIOPSY,"14,100","17,700","March 04, 2026",04060006,mmc-price-list
+22,2,Diagnostic,ENDOVASCULAR AORTIC REPAIR 3HRS,"74,100","92,700","March 04, 2026",04060007,mmc-price-list
+23,2,Diagnostic,INFERIOR VENA CAVA FILTER INSERTION,"25,600","43,700","March 04, 2026",04060008,mmc-price-list
+24,2,Diagnostic,INSERTION OF CENTRAL VENOUS ACCESS DEVICE,"23,200","39,600","March 04, 2026",04060009,mmc-price-list
+25,2,Diagnostic,INSERTION OF CVAD (PERM CATH AND IMPLANTED PORT),"40,100","75,400","March 04, 2026",04060012,mmc-price-list
+26,2,Diagnostic,INSERTION OF INTRA-AORTIC BALLOON PUMP,"25,600","29,100","March 04, 2026",04060010,mmc-price-list
+27,2,Diagnostic,INSERTION OF SWAN GANZ,"30,800","52,500","March 04, 2026",04060011,mmc-price-list
+28,2,Diagnostic,INSERTION OF TEMPORARY PACEMAKER,"44,000","75,000","March 04, 2026",04060013,mmc-price-list
+29,2,Diagnostic,KYPHOPLASTY,"35,300","40,200","March 04, 2026",04060014,mmc-price-list
+30,2,Diagnostic,LEFT HEART CATHETERIZATION W/ CORONARY ANGIOGRAM (ANCILLARY),"41,200","77,300","March 04, 2026",04060016,mmc-price-list
+31,2,Diagnostic,PERCUTANEOUS TRANSLUMINAL CORONARY ANGIOPLASTY,"113,400","577,100","March 04, 2026",04060025,mmc-price-list
+32,2,Diagnostic,PERCUTANEOUS TRANSVENOUS MITRAL COMMISSUROTOMY,"67,600","76,900","March 04, 2026",04060015,mmc-price-list
+33,2,Diagnostic,PERMANENT PACEMAKER,"44,000","79,300","March 04, 2026",04060019,mmc-price-list
+34,2,Diagnostic,RIGHT AND LEFT HEART CATHETERIZATION,"61,600","72,200","March 04, 2026",04060017,mmc-price-list
+35,2,Diagnostic,SINGLE CATHETER ELECTROPHYSIOLOGY,"37,500","46,900","March 04, 2026",04060022,mmc-price-list
+36,2,Diagnostic,TRANSCATHETER AORTIC VALVE REPLACEMENT (TAVR),"182,200","227,800","March 04, 2026",04060023,mmc-price-list
+37,2,Diagnostic,ANTERIOR PHOTO ONE EYE / BOTH EYES,"1,080","2,900","March 02, 2026",04080001,mmc-price-list
+38,2,Diagnostic,AUTO FLUORESCENCE PHOTO ONE EYE / BOTH EYES,"1,950","3,800","March 02, 2026",04080003,mmc-price-list
+39,2,Diagnostic,AUTOREFRACTION ONE EYE / BOTH EYES,515,570,"March 02, 2026",04080004,mmc-price-list
+40,2,Diagnostic,CATARACT DIAGNOSTIC FOR CONTACT ONE EYE / BOTH EYES,"2,370","9,200","March 02, 2026",04080007,mmc-price-list
+41,2,Diagnostic,CORNEAL ANALYSIS (TOPOGRAPHY) ONE EYE / BOTH EYES,"1,130","1,750","March 02, 2026",04080009,mmc-price-list
+42,2,Diagnostic,CORNEAL PACHYMETRY ONE EYE / BOTH EYES,"1,580","3,700","March 02, 2026",04080010,mmc-price-list
+43,2,Diagnostic,DIODE ENDOLASER ONE EYE / BOTH EYES,"6,550","13,900","March 02, 2026",04080011,mmc-price-list
+44,2,Diagnostic,DIODE LIO ONE EYE / BOTH EYES,"6,700","16,300","March 02, 2026",04080012,mmc-price-list
+45,2,Diagnostic,DIODE RETINOPEXY ONE EYE / BOTH EYES,"7,400","14,500","March 02, 2026",04080013,mmc-price-list
+46,2,Diagnostic,DIODE SMALL SPOT LASER ONE EYE / BOTH EYES,"6,700","16,300","March 02, 2026",04080014,mmc-price-list
+47,2,Diagnostic,DIODE TSCPC ONE EYE / BOTH EYES,"9,700","15,700","March 02, 2026",04080015,mmc-price-list
+48,2,Diagnostic,DIODE TTT ONE EYE / BOTH EYES,"6,900","15,900","March 02, 2026",04080016,mmc-price-list
+49,2,Diagnostic,DISC PHOTO ONE EYE / BOTH EYES,"1,260","3,200","March 02, 2026",04080017,mmc-price-list
+50,2,Diagnostic,DRY EYE ANALYSIS,"2,900","4,700","March 02, 2026",04080068,mmc-price-list
+51,2,Diagnostic,EYE OSMOLARITY TEST ONE EYE / BOTH EYES,"3,000","5,000","March 02, 2026",04080019,mmc-price-list
+52,2,Imaging,EYE ULTRASOUND - B SCAN ONE EYE / BOTH EYES,"3,800","9,200","March 02, 2026",04080020,mmc-price-list
+53,2,Diagnostic,FLUORESCEIN ANGIOGRAM,"5,200","6,400","March 05, 2026",04080023,mmc-price-list
+54,2,Diagnostic,FOCAL LASER ONE EYE / BOTH EYES,"5,000","11,800","March 02, 2026",04080024,mmc-price-list
+55,2,Diagnostic,GANGLION CELL ANALYSIS (GCA) ONE EYE / BOTH EYES,"3,900","6,800","March 02, 2026",04080027,mmc-price-list
+56,2,Diagnostic,GLAUCOMA SCREENING BOTH EYES,"8,050","20,800","March 02, 2026",04080028,mmc-price-list
+57,2,Diagnostic,GLAUCOMA SCREENING ONE EYE,"5,100","16,700","March 02, 2026",04080029,mmc-price-list
+58,2,Diagnostic,OCT MACULA ONE EYE / BOTH EYES,"3,950","7,500","June 15, 2026",04080043,mmc-price-list
+59,2,Diagnostic,OCT NERVE ONE EYE / BOTH EYES,"3,950","7,500","June 15, 2026",04080044,mmc-price-list
+60,2,Diagnostic,SELECTIVE LASER TRABECULOPLASTY ONE EYE / BOTH EYES,"5,570","11,200","September 20, 2025",04080065,mmc-price-list
+61,2,Diagnostic,24HRS BLOOD PRESSURE MONITORING,"4,700","5,900","March 04, 2026",0416010004,mmc-price-list
+62,2,Diagnostic,24HRS BLOOD PRESSURE MONITORING HOUSE CALL,"6,250","6,250","March 04, 2026",0416010005,mmc-price-list
+63,2,Diagnostic,24HRS HOLTER HOUSE CALL,"12,800","12,800","March 04, 2026",0416010007,mmc-price-list
+64,2,Diagnostic,24HRS HOLTER HOUSE CALL FEE ONLY,"12,800","3,900","March 04, 2026",0416010008,mmc-price-list
+65,2,Diagnostic,24HRS HOLTER MONITORING,"9,200","11,500","March 04, 2026",0416010006,mmc-price-list
+66,2,Diagnostic,2D + 3D ECHOCARDIOGRAM,"14,500","28,000","March 04, 2026",0416010009,mmc-price-list
+67,2,Diagnostic,2D ECHO WITH 3D LV FUNCTION,"10,500","17,800","March 04, 2026",0416010023,mmc-price-list
+68,2,Diagnostic,2D ECHOCARDIOGRAM,"9,750","17,600","March 04, 2026",0416010010,mmc-price-list
+69,2,Diagnostic,2D ECHOCARDIOGRAM W/ OPTIMIZATION,"8,100","10,200","March 04, 2026",0416010024,mmc-price-list
+70,2,Diagnostic,2D ECHOCARDIOGRAM WITH BUBBLE CONTRAST,"14,700","27,200","March 04, 2026",0416010025,mmc-price-list
+71,2,Diagnostic,3D ECHOCARDIOGRAM,"10,500","19,700","March 04, 2026",0416010011,mmc-price-list
+72,2,Diagnostic,BIKE STRESS TEST,"3,950","5,000","March 04, 2026",0416010026,mmc-price-list
+73,2,Diagnostic,CAPILLARY BLOOD GLUCOSE,405,510,"March 04, 2026",0416010012,mmc-price-list
+74,2,Diagnostic,CPET BUNDLE,"13,000","16,300","March 04, 2026",18360003,mmc-price-list
+75,2,Diagnostic,DOBUTAMINE STRESS ECHOCARDIOGRAM,"21,200","26,500","March 04, 2026",0416010013,mmc-price-list
+76,2,Diagnostic,ECG,"1,130","2,250","March 04, 2026",0416010001,mmc-price-list
+77,2,Diagnostic,FETAL ECHOCARDIOGRAM,"7,300","13,800","March 04, 2026",0416010014,mmc-price-list
+78,2,Diagnostic,HEART CARE PACKAGE,"4,200","13,100","March 04, 2026",18360002,mmc-price-list
+79,2,Diagnostic,HEART FAILURE CLINIC COUNSELING,"2,660","3,400","March 04, 2026",0416010015,mmc-price-list
+80,2,Diagnostic,HEART FAILURE CLINIC PROGRAM PACKAGE,"21,000","35,900","March 04, 2026",18360001,mmc-price-list
+81,2,Diagnostic,HOUSE CALL FEE ECG,"2,630","2,630","March 04, 2026",0416010002,mmc-price-list
+82,2,Diagnostic,INTRA OP TEE,"15,100","17,200","March 04, 2026",0416010016,mmc-price-list
+83,2,Diagnostic,PEDIATRIC ECHOCARDIOGRAM,"10,600","13,300","March 04, 2026",0416010017,mmc-price-list
+84,2,Diagnostic,RHYTHM STRIP,575,"1,300","March 04, 2026",0416010018,mmc-price-list
+85,2,Diagnostic,TILT TABLE TEST,"18,700","23,400","March 04, 2026",0416010019,mmc-price-list
+86,2,Diagnostic,TRANSESOPHAGEAL ECHOCARDIOGRAM,"32,900","71,200","March 04, 2026",0416010020,mmc-price-list
+87,2,Diagnostic,TREADMILL STRESS ECHOCARDIOGRAM,"15,300","19,200","March 04, 2026",0416010021,mmc-price-list
+88,2,Diagnostic,TREADMILL STRESS TEST,"3,860","4,900","March 04, 2026",0416010022,mmc-price-list
+89,2,Procedure (no case rate),CESAREAN SECTION BABY PACKAGE,"17,500","29,600","April 06, 2024",12010037,mmc-price-list
+90,2,Procedure (no case rate),DR AMBULATORY-CAUTERY OF WARTS,"4,310","4,310","March 04, 2026",12010002,mmc-price-list
+91,2,Procedure (no case rate),DR AMBULATORY-GYNE BIOPSY,"3,000","3,000","March 04, 2026",12010004,mmc-price-list
+92,2,Procedure (no case rate),DR AMBULATORY-IUD REMOVAL,"2,100","2,100","March 04, 2026",12010006,mmc-price-list
+93,2,Procedure (no case rate),DR GYNE EXAMINATION,"3,050","3,050","March 04, 2026",12010010,mmc-price-list
+94,2,Procedure (no case rate),DR LAPAROSCOPY PACKAGE,"273,500","292,000","April 06, 2024",12010044,mmc-price-list
+95,2,Procedure (no case rate),DR NEWBORN CARE PROCEDURE,"10,610","10,610","March 04, 2026",12010015,mmc-price-list
+96,2,Procedure (no case rate),DR NON-STRESS TES,"3,000","3,000","March 04, 2026",12010016,mmc-price-list
+97,2,Procedure (no case rate),DR OB GYNE MAJOR PROCEDURE,"41,100","41,100","March 04, 2026",12010017,mmc-price-list
+98,2,Procedure (no case rate),DR OB GYNE MINOR PROCEDURE,"18,540","18,540","September 20, 2025",12010019,mmc-price-list
+99,2,Procedure (no case rate),SPONTANEOUS VAGINAL BABY PACKAGE,"18,700","28,900","April 06, 2024",12010041,mmc-price-list
+100,2,Imaging,3D ULTRASOUND GYNE,"5,540","14,300","September 20, 2025",12020001,mmc-price-list
+101,2,Imaging,3D ULTRASOUND OB,"5,540","14,600","September 20, 2025",12020002,mmc-price-list
+102,2,Imaging,4D ULTRASOUND OB,"7,200","15,810","September 20, 2025",12020003,mmc-price-list
+103,2,Imaging,BIO PHYSICAL SCORING OB,"4,460","19,700","September 20, 2025",12020004,mmc-price-list
+104,2,Imaging,CERVICAL LENGTH ASSESSMENT,"1,700","8,600","September 20, 2025",12020019,mmc-price-list
+105,2,Imaging,CONGENITAL ANOMALY SCAN OB,"4,780","20,200","September 20, 2025",12020005,mmc-price-list
+106,2,Imaging,DEEP INFILTRATING ENDOMETRIOSIS SCAN (DRU),"6,760","15,500","September 20, 2025",12020020,mmc-price-list
+107,2,Imaging,DOPPLER SCAN GYNE,"5,215","13,950","July 21, 2021",12020006,mmc-price-list
+108,2,Imaging,DOPPLER SCAN OB,"5,530","14,130","September 20, 2025",12020007,mmc-price-list
+109,2,Imaging,DR ULTRASOUND PPE,320,320,"July 21, 2021",12020008,mmc-price-list
+110,2,Imaging,DR ULTRASOUND WELLNESS EXAMINATION,"2,370","2,900","October 29, 2025",12020009,mmc-price-list
+111,2,Imaging,FETAL ECHOCARDIOGRAM (DRU),"6,760","15,500","September 20, 2025",12020021,mmc-price-list
+112,2,Imaging,FIRST TRIMESTER SCREENING,"4,860","5,900","September 20, 2025",12020010,mmc-price-list
+113,2,Imaging,FOLLICLE MONITORING GYNE,"5,860","14,500","September 20, 2025",12020011,mmc-price-list
+114,2,Imaging,GYNE-ONCO ULTRASOUND,"8,700","17,000","September 20, 2025",12020022,mmc-price-list
+115,2,Imaging,NUCHAL TRANSLUCENCY,"2,000","9,000","September 20, 2025",12020023,mmc-price-list
+116,2,Imaging,PELVIC FLOOR (TRANSPERINEAL SCAN),"8,500","16,800","September 20, 2025",12020024,mmc-price-list
+117,2,Imaging,PELVIC GYNE,"3,800","11,700","September 20, 2025",12020012,mmc-price-list
+118,2,Imaging,PELVIC OB,"3,650","11,500","September 20, 2025",12020013,mmc-price-list
+119,2,Imaging,PLACENTAL LOCALIZATION (TRANSVAGINAL),"1,700","8,600","September 20, 2025",12020025,mmc-price-list
+120,2,Imaging,SALINE INFUSION SONOHYSTEROGRAM (SISH) GYNE,"6,730","15,800","September 20, 2025",12020014,mmc-price-list
+121,2,Imaging,TRANSRECTAL GYNE,"3,800","11,700","October 29, 2025",12020015,mmc-price-list
+122,2,Imaging,TRANSRECTAL OB,"3,685","11,320","September 20, 2025",12020016,mmc-price-list
+123,2,Imaging,TRANSVAGINAL GYNE,"3,800","11,700","September 20, 2025",12020017,mmc-price-list
+124,2,Imaging,TRANSVAGINAL OB,"3,800","11,700","September 20, 2025",12020018,mmc-price-list
+125,2,Diagnostic,ABR/ASSR PACKAGE,"9,270","11,200","September 04, 2025",04150077,mmc-price-list
+126,2,Diagnostic,AUDITORY BRAINSTEM RESPONSE,"2,690","5,900","October 06, 2025",04150001,mmc-price-list
+127,2,Diagnostic,AUDITORY STEADY STATE RESPONSE,"2,690","5,900","September 04, 2025",04150002,mmc-price-list
+128,2,Diagnostic,BIOPSY,"2,010","2,500","September 04, 2025",04150003,mmc-price-list
+129,2,Diagnostic,CHANGE OF NASAL PACK,"3,680","4,420","July 13, 2021",04150006,mmc-price-list
+130,2,Diagnostic,CHANGE OF TRACHEOSTOMY TUBE (ENT),"5,230","6,300","September 04, 2025",04150007,mmc-price-list
+131,2,Diagnostic,CONTRALATERAL ACOUSTIC REFLEX THRESHOLD TEST,980,"1,200","September 04, 2025",04150010,mmc-price-list
+132,2,Diagnostic,DECANNULATION,"5,230","6,300","September 04, 2025",04150013,mmc-price-list
+133,2,Diagnostic,DIGITAL OTOSCOPY,"1,520","1,900","September 04, 2025",04150015,mmc-price-list
+134,2,Diagnostic,ENDOSCOPIC GUIDED MYRINGOTOMY,"5,070","6,090","July 13, 2021",04150016,mmc-price-list
+135,2,Diagnostic,ENT HOUSE CALL SERVICE FEE (OUTSIDE NCR),"2,000","2,000","September 15, 2025",04150102,mmc-price-list
+136,2,Diagnostic,EPLEY MANEUVER,"1,900","2,300","March 19, 2025",04150018,mmc-price-list
+137,2,Diagnostic,EUSTACHIAN TUBE FUNCTION TEST,"1,010","1,300","September 04, 2025",04150019,mmc-price-list
+138,2,Diagnostic,EXCISION BIOPSY OF POST-AURICULAR MASS (ENT),"6,685","8,030","September 08, 2025",04150089,mmc-price-list
+139,2,Diagnostic,EXCISION OF BUCCAL MASS (ENT),"6,685","8,030","July 13, 2021",04150023,mmc-price-list
+140,2,Diagnostic,EXCISION OF INCLUSION CYST,"6,685","8,030","July 13, 2021",04150024,mmc-price-list
+141,2,Diagnostic,EXCISION OF LIPOMA (ENT),"6,685","8,030","July 13, 2021",04150026,mmc-price-list
+142,2,Diagnostic,EXCISION OF MASS (ENT),"6,685","8,030","July 13, 2021",04150028,mmc-price-list
+143,2,Diagnostic,EXCISION OF MUCUS CYST (ENT),"6,685","8,030","July 13, 2021",04150030,mmc-price-list
+144,2,Diagnostic,EXCISION OF UVULAR MASS (ENT),"6,685","8,030","July 13, 2021",04150036,mmc-price-list
+145,2,Diagnostic,EXTENDED HIGH FREQUENCY PURE TONE AUDIOMETRY,"1,250","1,800","September 08, 2025",04150090,mmc-price-list
+146,2,Diagnostic,FILAMENT PER GRAM,250,250,"September 08, 2025",04150091,mmc-price-list
+147,2,Diagnostic,FINE NEEDLE ASPIRATION BIOPSY ENT-PF NOT INCLUDED,"2,790","3,400","September 04, 2025",04150038,mmc-price-list
+148,2,Diagnostic,FLEXIBLE ENDOSCOPIC EVALUATION OF SWALLOWING,"7,730","9,300","September 04, 2025",04150039,mmc-price-list
+149,2,Diagnostic,FLEXIBLE NASOLARYNGOSCOPY,"5,990","7,820","July 13, 2021",04150040,mmc-price-list
+150,2,Diagnostic,FOOD SUPPLIES FOR FEES (ENT),340,340,"September 08, 2025",04150092,mmc-price-list
+151,2,Diagnostic,HOUSE CALL SERVICE FEE - ENT,820,820,"September 08, 2025",04150093,mmc-price-list
+152,2,Diagnostic,INCISION AND CURETTAGE (ENT),"5,070","6,090","July 13, 2021",04150042,mmc-price-list
+153,2,Diagnostic,IPSILATERAL ACOUSTIC REFLEX THRESHOLD TEST,980,"1,200","September 04, 2025",04150045,mmc-price-list
+154,2,Diagnostic,MAXILLO MANDIBULAR FIXATION/ARCH WIRE REMOVAL,"5,070","6,090","July 13, 2021",04150047,mmc-price-list
+155,2,Diagnostic,MOBILE SCREENING AUDIOMETRY,450,450,"September 08, 2025",04150094,mmc-price-list
+156,2,Diagnostic,MYRINGOTOMY,"5,070","6,300","October 10, 2025",04150049,mmc-price-list
+157,2,Diagnostic,OCCIPITAL NERVE BLOCK,"3,020","3,630","July 13, 2021",04150052,mmc-price-list
+158,2,Diagnostic,OTOACOUSTIC EMISSIONS TEST (OAE),900,"1,100","October 10, 2025",04150053,mmc-price-list
+159,2,Diagnostic,PEDIATRIC (0-5 YEARS OLD) HEARING PACKAGE,"9,550","11,500","November 09, 2022",4150087,mmc-price-list
+160,2,Diagnostic,PLAY AUDIOMETRY,"2,430","3,000","September 15, 2025",04150054,mmc-price-list
+161,2,Diagnostic,PRE-ADOLESCENT HEARING PACKAGE,"1,600","2,000","November 09, 2022",4150086,mmc-price-list
+162,2,Diagnostic,PUNCH BIOPSY,"4,330","5,200","October 10, 2025",04150055,mmc-price-list
+163,2,Diagnostic,PURE TONE AUDIOMETRY (PTA) W/ ST/CST,"1,190","2,200","September 15, 2025",04150056,mmc-price-list
+164,2,Diagnostic,REAL EAR MEASUREMENT,500,600,"September 08, 2025",04150095,mmc-price-list
+165,2,Diagnostic,REMOVAL OF NASAL PACK,"3,800","4,600","September 04, 2025",04150059,mmc-price-list
+166,2,Diagnostic,RIGID NASAL ENDOSCOPY,"6,200","7,500","September 04, 2025",04150066,mmc-price-list
+167,2,Diagnostic,SCHOOL AGE (5 YEARS OLD & ABOVE) HEARING PACKAGE,"3,000","3,600","September 11, 2023",04150088,mmc-price-list
+168,2,Diagnostic,SCREENING AUDIOMETRY,830,"1,050","September 08, 2025",04150096,mmc-price-list
+169,2,Diagnostic,SCREENING AUDIOMETRY (MAKATIMED WELLNESS),800,960,"September 08, 2025",04150100,mmc-price-list
+170,2,Diagnostic,TINNITUS MATCHING,"1,030","1,300","September 04, 2025",04150068,mmc-price-list
+171,2,Diagnostic,TYMPANOMETRY,980,"1,200","September 04, 2025",04150071,mmc-price-list
+172,2,Diagnostic,VIDEOLARYNGOSCOPY,"6,200","7,500","September 04, 2025",04150072,mmc-price-list
+173,2,Diagnostic,VIDEONYSTAGMOGRAPHY,"6,500","8,200","July 17, 2026",04150073,mmc-price-list
+174,2,Diagnostic,VIDEOSTROBOSCOPY,"8,700","10,500","September 04, 2025",04150074,mmc-price-list
+175,2,Diagnostic,WOUND DEBRIDEMENT (ENT),"6,150","7,380","July 13, 2021",04150075,mmc-price-list
+176,2,Diagnostic,ADRENALINE INJECTION (COLO),"4,250","5,400","March 04, 2026",04140001,mmc-price-list
+177,2,Diagnostic,ANOSCOPY,710,950,"March 04, 2026",04140002,mmc-price-list
+178,2,Diagnostic,BIOPSY FORCEP,"2,500","3,200","March 04, 2026",04140003,mmc-price-list
+179,2,Diagnostic,CAPILLARY BLOOD GLUCOSE ENDOSCOPY,405,500,"March 04, 2026",04140004,mmc-price-list
+180,2,Diagnostic,COLLECTION OF WASHING (COLONIC/ESOPHA),326,"18,700","March 04, 2026",04140005,mmc-price-list
+181,2,Diagnostic,COLONOSCOPY,"14,900","41,500","March 04, 2026",04140006,mmc-price-list
+182,2,Diagnostic,ENDOSCOPIC RETROGADE CHOLANGIOPANCREATOGRAPHY ENDOSCOPY,"26,400","33,000","March 04, 2026",04140007,mmc-price-list
+183,2,Diagnostic,ENTYVIO INFUSION WITH INFUSION PUMP,"4,250","5,400","June 09, 2026",04140008,mmc-price-list
+184,2,Diagnostic,ENTYVIO INFUSION WITHOUT INFUSION PUMP,"3,310","4,200","June 09, 2026",04140026,mmc-price-list
+185,2,Diagnostic,ESOPHAGOGASTRODUODENOSCOPY,"13,800","40,300","March 04, 2026",04140009,mmc-price-list
+186,2,Diagnostic,HEPA A & B VACCINE LIVER UNIT OUP,"4,900","4,900","March 04, 2026",04140010,mmc-price-list
+187,2,Diagnostic,HEPA A VACCINE LIVER UNIT OUP,"4,700","4,700","March 04, 2026",04140011,mmc-price-list
+188,2,Diagnostic,HEPA B VACCINE LIVER UNIT OUP,"1,750","1,750","March 04, 2026",04140012,mmc-price-list
+189,2,Diagnostic,HUMAN ALBUMIN INFUSION,"2,770","4,600","March 04, 2026",04140013,mmc-price-list
+190,2,Diagnostic,IRON SUCROSE,"2,650","4,900","March 04, 2026",04140014,mmc-price-list
+191,2,Diagnostic,LIVER CARE ADMINISTRATION FEE,"1,050","1,400","March 04, 2026",04140015,mmc-price-list
+192,2,Diagnostic,LIVER CARE CONSULTATION FEE,"1,740","2,200","March 04, 2026",04140016,mmc-price-list
+193,2,Diagnostic,LIVER UNIT CLINICAL TRIAL FEE,"10,000","12,000","October 27, 2025",04140027,mmc-price-list
+194,2,Diagnostic,POLYP REMOVAL,"8,400","18,800","March 04, 2026",04140017,mmc-price-list
+195,2,Diagnostic,PROCTOSIGMOIDOSCOPY,"4,000","7,500","March 04, 2026",04140018,mmc-price-list
+196,2,Diagnostic,THERAPEUTIC CLEANSING ENEMA,"3,600","6,800","March 04, 2026",04140019,mmc-price-list
+197,2,Diagnostic,UREASE TEST,"2,550","3,200","March 04, 2026",04140020,mmc-price-list
+198,2,Laboratory,ACID FAST (AFB STAIN TISSUE),"2,950","3,700","March 10, 2026",04360001,mmc-price-list
+199,2,Laboratory,ADRENOCORTICOTROPHIN (ACTH),"6,400","8,000","March 10, 2026",04360002,mmc-price-list
+200,2,Laboratory,ALCIAN BLUE,"4,320","5,400","March 10, 2026",04360003,mmc-price-list
+201,2,Laboratory,ALK 1 CONFIRM,"7,800","9,800","March 10, 2026",04360004,mmc-price-list
+202,2,Laboratory,ARGINASE-1,"6,300","7,900","March 10, 2026",04360005,mmc-price-list
+203,2,Laboratory,AUTOPSY OUP PACKAGE,"18,300","18,300","July 01, 2025",04360117,mmc-price-list
+204,2,Laboratory,BCL 2,"7,000","8,800","March 10, 2026",04360006,mmc-price-list
+205,2,Laboratory,BCL 6,"7,700","9,700","March 10, 2026",04360707,mmc-price-list
+206,2,Laboratory,BETA CATENIN,"6,500","8,200","March 10, 2026",04360008,mmc-price-list
+207,2,Laboratory,BM STAIN,580,800,"March 10, 2026",04360009,mmc-price-list
+208,2,Laboratory,BREAST PANEL (ERA PRA CERB-B2),"17,500","21,900","March 10, 2026",04360010,mmc-price-list
+209,2,Laboratory,BerEP4,"6,250","7,900","March 10, 2026",04360007,mmc-price-list
+210,2,Laboratory,C-MYC,"5,600","7,000","March 10, 2026",04360138,mmc-price-list
+211,2,Laboratory,CA 19 9 HISTO,"7,000","8,800","March 10, 2026",04360011,mmc-price-list
+212,2,Laboratory,CALDESMON,"7,250","9,100","March 10, 2026",04360012,mmc-price-list
+213,2,Laboratory,CALPONIN,"5,950","7,500","March 10, 2026",04360013,mmc-price-list
+214,2,Laboratory,CALRETENIN,"7,000","8,800","March 10, 2026",04360014,mmc-price-list
+215,2,Laboratory,CD 10,"7,000","8,800","March 10, 2026",04360015,mmc-price-list
+216,2,Laboratory,CD 117,"6,700","8,400","March 10, 2026",04360016,mmc-price-list
+217,2,Laboratory,CD 138 (SYNDECAN-1),"7,010","8,800","March 10, 2026",04360017,mmc-price-list
+218,2,Laboratory,CD 15 (GRANOLYTE),"7,250","9,100","March 10, 2026",04360018,mmc-price-list
+219,2,Laboratory,CD 1a,"7,000","8,800","March 10, 2026",04360019,mmc-price-list
+220,2,Laboratory,CD 20 (B CELL),"7,450","9,400","March 10, 2026",04360020,mmc-price-list
+221,2,Laboratory,CD 21,"7,700","9,700","March 10, 2026",04360706,mmc-price-list
+222,2,Laboratory,CD 23,"7,000","8,800","March 10, 2026",04360021,mmc-price-list
+223,2,Laboratory,CD 3 (T CELL),"7,000","8,800","March 10, 2026",04360022,mmc-price-list
+224,2,Laboratory,CD 30,"6,910","8,700","March 10, 2026",04360023,mmc-price-list
+225,2,Laboratory,CD 31,"5,950","7,500","March 10, 2026",04360024,mmc-price-list
+226,2,Laboratory,CD 34 BE12 (+),"7,250","9,100","March 10, 2026",04360025,mmc-price-list
+227,2,Laboratory,CD 4,"5,600","7,000","March 10, 2026",04360115,mmc-price-list
+228,2,Laboratory,CD 5,"7,000","8,800","March 10, 2026",04360026,mmc-price-list
+229,2,Laboratory,CD 56 (N CAM),"8,000","10,000","March 10, 2026",04360027,mmc-price-list
+230,2,Laboratory,CD 68,"6,910","8,700","March 10, 2026",04360028,mmc-price-list
+231,2,Laboratory,CD 7,"5,600","7,000","March 10, 2026",04360130,mmc-price-list
+232,2,Laboratory,CD 79a,"7,700","9,700","March 10, 2026",04360708,mmc-price-list
+233,2,Laboratory,CD 99,"7,940","10,000","March 10, 2026",04360029,mmc-price-list
+234,2,Laboratory,CD X-2,"7,000","8,800","March 10, 2026",04360030,mmc-price-list
+235,2,Laboratory,CEA MONOCLONAL TISSUE,"6,400","8,000","March 10, 2026",04360031,mmc-price-list
+236,2,Laboratory,CELL BLOCK & CYTOLOGY SMEAR,"4,950","6,200","March 10, 2026",04360032,mmc-price-list
+237,2,Laboratory,CHROMOGRANIN,"9,500","11,900","March 10, 2026",04360033,mmc-price-list
+238,2,Laboratory,CK 19,"6,850","8,600","March 10, 2026",04360034,mmc-price-list
+239,2,Laboratory,CONGO RED STAIN,"4,550","5,700","March 10, 2026",04360035,mmc-price-list
+240,2,Laboratory,CT GUIDED BIOPSY (RHP) WITH ADEQUACY,"15,350","19,200","March 10, 2026",04360036,mmc-price-list
+241,2,Laboratory,CT GUIDED SMEARS W/ CELL BLOCK,"5,300","6,700","March 10, 2026",04360037,mmc-price-list
+242,2,Laboratory,CYCLIN D1,"7,000","8,800","March 10, 2026",04360038,mmc-price-list
+243,2,Laboratory,CYTO SMEAR ADD ON,"1,560","2,000","March 10, 2026",04360039,mmc-price-list
+244,2,Laboratory,CYTOKERATIN,"6,700","9,100","March 10, 2026",04360040,mmc-price-list
+245,2,Laboratory,CYTOLOGY SMEAR,"2,350","4,000","March 10, 2026",04360041,mmc-price-list
+246,2,Laboratory,CYTOSPIN CYTOL,"3,260","4,100","March 10, 2026",04360042,mmc-price-list
+247,2,Laboratory,CYTOSPIN URINE+3 SAMPLES,"6,060","7,600","March 10, 2026",04360043,mmc-price-list
+248,2,Laboratory,DESMIN,"7,000","8,800","March 10, 2026",04360044,mmc-price-list
+249,2,Laboratory,DOG 1,"7,550","9,500","March 10, 2026",04360045,mmc-price-list
+250,2,Laboratory,E CADHERIN,"6,910","8,700","March 10, 2026",04360046,mmc-price-list
+251,2,Laboratory,EBER-ISH,"13,600","17,000","March 10, 2026",04360139,mmc-price-list
+252,2,Laboratory,EGFR (EPIDERMAL GROWTH FACTOR RECEPTOR),"6,200","7,800","March 10, 2026",04360047,mmc-price-list
+253,2,Laboratory,EMA (EPITHELIAL MEMBRANE ANTIGEN),"6,400","8,000","March 10, 2026",04360048,mmc-price-list
+254,2,Laboratory,ERA PRA,"11,700","14,700","March 10, 2026",04360049,mmc-price-list
+255,2,Laboratory,ESTROGEN RECEPTOR,"7,150","9,000","March 10, 2026",04360050,mmc-price-list
+256,2,Laboratory,FINE NEEDLE ASPIRATION BIOPSY,"6,360","8,000","March 10, 2026",04360051,mmc-price-list
+257,2,Laboratory,FLUORESCENCE IGG IGA SKIN/RENAL,"13,600","17,700","March 27, 2026",04360052,mmc-price-list
+258,2,Laboratory,FROZEN DERMA MOHS 7 SITES,"21,900","27,400","March 10, 2026",04360053,mmc-price-list
+259,2,Laboratory,FROZEN SECTION,"15,500","39,200","March 10, 2026",04360056,mmc-price-list
+260,2,Laboratory,FROZEN SECTION - ADDITIONAL CUTS,"4,050","5,100","March 10, 2026",04360054,mmc-price-list
+261,2,Laboratory,FROZEN SECTION - CANCELLATION FEE,"5,390","6,800","March 10, 2026",04360055,mmc-price-list
+262,2,Laboratory,GALECTIN 3,"5,950","7,500","March 10, 2026",04360057,mmc-price-list
+263,2,Laboratory,GATA 3,"7,210","9,100","March 10, 2026",04360058,mmc-price-list
+264,2,Laboratory,GCDFP (GROSS CYSTIC DISEASE FLUID PROTEIN) 15,"6,400","8,000","March 10, 2026",04360059,mmc-price-list
+265,2,Laboratory,GFAP (GLIAL FIBRI ACIDIC PROTE),"6,450","8,100","March 10, 2026",04360060,mmc-price-list
+266,2,Laboratory,GIEMSA STAIN,"3,810","4,800","March 10, 2026",04360061,mmc-price-list
+267,2,Laboratory,GLYPICAN 3,"6,700","8,400","March 10, 2026",04360062,mmc-price-list
+268,2,Laboratory,H&E VERTICAL/HORIZONTAL CUTS,"2,700","3,400","March 10, 2026",04360063,mmc-price-list
+269,2,Laboratory,HBME - 1,"5,600","7,000","March 10, 2026",04360255,mmc-price-list
+270,2,Laboratory,HEPATOCYTE,"6,130","7,700","March 10, 2026",04360064,mmc-price-list
+271,2,Laboratory,HER2/NEU - DDISH,"11,000","13,800","July 24, 2026",04360726,mmc-price-list
+272,2,Laboratory,HER2NEU,"6,400","8,000","March 10, 2026",04360065,mmc-price-list
+273,2,Laboratory,HISTOPATH BONE MARROW,"5,150","8,100","March 10, 2026",04360066,mmc-price-list
+274,2,Laboratory,HISTOPATH GROSS,800,"1,050","March 10, 2026",04360067,mmc-price-list
+275,2,Laboratory,HISTOPATH RAPID PROCESSING,"5,650","7,100","March 10, 2026",04360068,mmc-price-list
+276,2,Laboratory,HISTOPATH ROUTINE,"3,520","6,400","March 10, 2026",04360069,mmc-price-list
+277,2,Laboratory,HISTOPATH SLIDE/BLOCK II,"2,160","2,700","March 10, 2026",04360070,mmc-price-list
+278,2,Laboratory,IHC PACKAGE,"15,800","55,500","March 10, 2026",04360691,mmc-price-list
+279,2,Laboratory,IMMUNOHISTOCHEMICAL (IHC) PACKAGE,"18,700","23,400","March 10, 2026",04360071,mmc-price-list
+280,2,Laboratory,INHIBIN,"3,850","4,900","March 10, 2026",04360072,mmc-price-list
+281,2,Laboratory,IRON STAINING,"3,850","4,900","March 10, 2026",04360073,mmc-price-list
+282,2,Laboratory,KAPPA & LAMBA - ISH,"20,100","25,200","March 10, 2026",04360286,mmc-price-list
+283,2,Laboratory,KAPPA CONFIRM,"3,750","4,700","March 10, 2026",04360074,mmc-price-list
+284,2,Laboratory,KI 67,"6,700","8,400","March 10, 2026",04360075,mmc-price-list
+285,2,Laboratory,LAMBDA LIGHT CHAIN,"3,960","5,000","March 10, 2026",04360076,mmc-price-list
+286,2,Laboratory,LCA CD 45,"7,000","8,800","March 10, 2026",04360077,mmc-price-list
+287,2,Laboratory,MAMMOGLOBIN,"7,300","9,200","March 10, 2026",04360078,mmc-price-list
+288,2,Laboratory,MART 1/MELAN A CONFIRM,"7,250","9,100","March 10, 2026",04360079,mmc-price-list
+289,2,Laboratory,MELANOMA HMB 45,"6,800","8,500","March 10, 2026",04360080,mmc-price-list
+290,2,Laboratory,METHENAMINE SILVER STAIN,"4,420","5,600","March 10, 2026",04360081,mmc-price-list
+291,2,Laboratory,MMR PANEL - IHC,"19,900","24,900","July 24, 2026",04360727,mmc-price-list
+292,2,Laboratory,MOC 31,"7,520","9,400","March 10, 2026",04360082,mmc-price-list
+293,2,Laboratory,MUM 1,"7,000","8,800","March 10, 2026",04360083,mmc-price-list
+294,2,Laboratory,MYELOPEROXIDASE (MPO),"5,400","6,800","March 10, 2026",04360404,mmc-price-list
+295,2,Laboratory,MYELOPEROXIDASE TISSUE,"4,010","5,100","March 10, 2026",04360084,mmc-price-list
+296,2,Laboratory,MYOGENIN (MYF 4),"5,850","7,400","March 10, 2026",04360085,mmc-price-list
+297,2,Laboratory,NAPSIN,"7,210","9,100","March 10, 2026",04360086,mmc-price-list
+298,2,Laboratory,NKX3.1,"5,600","7,000","March 10, 2026",04360406,mmc-price-list
+299,2,Laboratory,P 16,"7,210","9,100","March 10, 2026",04360089,mmc-price-list
+300,2,Laboratory,P 53,"6,700","8,400","March 10, 2026",04360087,mmc-price-list
+301,2,Laboratory,P 63,"6,700","8,400","March 10, 2026",04360088,mmc-price-list
+302,2,Laboratory,P504S,"4,950","6,200","March 10, 2026",04360091,mmc-price-list
+303,2,Laboratory,PAP AUTO,"1,350","2,800","March 10, 2026",04360092,mmc-price-list
+304,2,Laboratory,PAP SMEAR,"1,030","2,050","March 10, 2026",04360093,mmc-price-list
+305,2,Laboratory,PAS (PERIODIC ACID SHIFF),"3,750","4,700","March 10, 2026",04360094,mmc-price-list
+306,2,Laboratory,PAX 5,"7,210","9,100","March 10, 2026",04360095,mmc-price-list
+307,2,Laboratory,PAX 8,"7,210","9,100","March 10, 2026",04360096,mmc-price-list
+308,2,Laboratory,PDL1,"9,100","11,400","March 10, 2026",04360409,mmc-price-list
+309,2,Laboratory,PLAP (PLACENTAL ALKALINE PHOSPHATASE),"3,590","4,500","March 10, 2026",04360097,mmc-price-list
+310,2,Laboratory,PROGESTERONE RECEPTOR,"7,150","9,000","March 10, 2026",04360098,mmc-price-list
+311,2,Laboratory,PSAP (PROSTATE SPECIFIC ACID PHOSPHATASE),"6,600","8,300","March 10, 2026",04360099,mmc-price-list
+312,2,Laboratory,"RENAL BIOPSY (LM, SS, IF, EM) PACKAGE","57,000","71,300","July 20, 2026",04361290,mmc-price-list
+313,2,Laboratory,RETICULIN (SILVER IMPREGNATION),"3,490","4,400","March 10, 2026",04360100,mmc-price-list
+314,2,Laboratory,RHP ADD ON,"2,910","3,700","March 10, 2026",04360101,mmc-price-list
+315,2,Laboratory,S 100,"7,000","8,800","March 10, 2026",04360102,mmc-price-list
+316,2,Laboratory,SALL4,"6,300","7,900","March 10, 2026",04360103,mmc-price-list
+317,2,Laboratory,SATB2,"5,600","7,000","March 10, 2026",04360411,mmc-price-list
+318,2,Laboratory,SLIDE REVIEW,"3,050","3,900","March 10, 2026",04360104,mmc-price-list
+319,2,Laboratory,SMA (SMOOTH MUSCLE ACTIN),"7,250","9,100","March 10, 2026",04360105,mmc-price-list
+320,2,Laboratory,SOX - 10,"5,600","7,000","March 10, 2026",04360416,mmc-price-list
+321,2,Laboratory,SYNAPTOPHYSIN,"6,910","8,700","March 10, 2026",04360106,mmc-price-list
+322,2,Laboratory,THYROGLOBULIN TISSUE,"6,800","8,500","March 10, 2026",04360108,mmc-price-list
+323,2,Laboratory,TRICHROME (MASSON TRICHROME W/ ANILINE BLUE),"4,100","5,200","March 10, 2026",04360109,mmc-price-list
+324,2,Laboratory,TTF 1 (THYROID TRANSCRIPTION FACTOR 1),"6,910","8,700","March 10, 2026",04360110,mmc-price-list
+325,2,Laboratory,TZANKS,"1,590","2,050","March 10, 2026",04360111,mmc-price-list
+326,2,Laboratory,TdT,"7,210","9,100","March 10, 2026",04360107,mmc-price-list
+327,2,Laboratory,ULTRASOUND GUIDED BIOPSY (C/CB) WITH ADEQUACY,"15,800","19,800","March 10, 2026",04360112,mmc-price-list
+328,2,Laboratory,UNSTAINED SLIDE,655,900,"March 10, 2026",04360113,mmc-price-list
+329,2,Laboratory,VIMENTIN,"6,910","8,700","March 10, 2026",04360114,mmc-price-list
+330,2,Laboratory,WT1,"6,700","8,400","March 10, 2026",04360116,mmc-price-list
+331,2,Laboratory,p40,"7,420","9,300","March 10, 2026",04360090,mmc-price-list
+332,2,Laboratory,ALIQUOT PROCEDURE,"1,370","1,800","March 10, 2026",04360118,mmc-price-list
+333,2,Laboratory,ANTIBODY SCREENING COMPONENT,600,600,"April 07, 2026",04360121,mmc-price-list
+334,2,Laboratory,ANTIBODY SCREENING DONOR,"3,950","7,000","March 10, 2026",04360119,mmc-price-list
+335,2,Laboratory,ANTIBODY SCREENING PATIENT,"3,710","6,700","March 10, 2026",04360120,mmc-price-list
+336,2,Laboratory,BLOOD IRRADIATION,"2,380","3,000","March 10, 2026",04360122,mmc-price-list
+337,2,Laboratory,BLOOD SCREENING FEE,"1,500","2,300","April 07, 2026",04360123,mmc-price-list
+338,2,Laboratory,BLOOD TRANSFUSION SET PLATELET,431,600,"March 10, 2026",04360124,mmc-price-list
+339,2,Laboratory,BLOOD TRANSPORT BAG,655,900,"March 10, 2026",04360125,mmc-price-list
+340,2,Laboratory,CONVALESCENT,"33,100","62,200","March 10, 2026",04360126,mmc-price-list
+341,2,Laboratory,COOMBS DIRECT,630,"1,200","March 10, 2026",04360127,mmc-price-list
+342,2,Laboratory,COOMBS INDIRECT,630,"1,200","March 10, 2026",04360128,mmc-price-list
+343,2,Laboratory,CROSSMATCH BLOOD CELL,"3,150","4,000","March 10, 2026",04360129,mmc-price-list
+344,2,Laboratory,HACT TESTING,"2,700","3,400","March 10, 2026",04360134,mmc-price-list
+345,2,Laboratory,HUMAN RETROVIRUS SCREENING,"1,390","2,800","March 10, 2026",04360131,mmc-price-list
+346,2,Laboratory,NEEDLESTICK INJURY HUMAN RETROVIRUS SCREENING,"1,360","2,800","March 10, 2026",04360692,mmc-price-list
+347,2,Laboratory,NUCLEIC ACID TESTING (NAT) COMPONENT - BLOOD BANK,"1,800","3,600","April 07, 2026",04360132,mmc-price-list
+348,2,Laboratory,NUCLEIC ACID TESTING (NAT) DONOR BLOOD BANK,"3,810","6,800","March 10, 2026",04360133,mmc-price-list
+349,2,Laboratory,PLASMA PHERESIS DONOR,"18,700","23,400","March 10, 2026",04360135,mmc-price-list
+350,2,Laboratory,PLATELET APHERESIS,"20,000","20,000","April 07, 2026",04360136,mmc-price-list
+351,2,Laboratory,REVERSE TYPING,"1,830","2,300","March 10, 2026",04360137,mmc-price-list
+352,2,Laboratory,THERAPEUTIC LEUCOCYTE REDUCTION,"38,100","47,700","March 10, 2026",04360140,mmc-price-list
+353,2,Laboratory,THERAPEUTIC PHLEBOTOMY,780,"1,050","March 10, 2026",04360141,mmc-price-list
+354,2,Laboratory,THERAPEUTIC PLASMA EXCHANGE,"26,800","33,500","March 10, 2026",04360142,mmc-price-list
+355,2,Laboratory,THERAPEUTIC PLATELET REDUCTION,"18,800","23,500","March 10, 2026",04360143,mmc-price-list
+356,2,Laboratory,TYPE ABO BLOOD TYPING,570,"1,100","March 10, 2026",04360144,mmc-price-list
+357,2,Laboratory,TYPE RH (D) BLOOD TYPING,570,"1,100","March 10, 2026",04360145,mmc-price-list
+358,2,Laboratory,TYPING ABO/RH ADULT,"1,830","3,700","March 10, 2026",04360146,mmc-price-list
+359,2,Laboratory,TYPING ABO/RH PEDIA 0-6 MONTHS,"1,370","2,800","March 10, 2026",04360147,mmc-price-list
+360,2,Laboratory,WASHING ONLY FOR RBC,"1,170","1,550","March 10, 2026",04360148,mmc-price-list
+361,2,Laboratory,24 HOUR URINE METANEPHRINE,"7,420","9,300","March 10, 2026",04360149,mmc-price-list
+362,2,Laboratory,24 HOUR URINE VMA,"6,050","7,600","March 10, 2026",04360150,mmc-price-list
+363,2,Laboratory,24 HRS URINE - MICROALBUMIN CREATININE RATIO,"1,500","1,900","April 06, 2026",04360768,mmc-price-list
+364,2,Laboratory,24 HRS URINE - PHOSPHOROUS,"1,000","1,300","April 06, 2026",04360767,mmc-price-list
+365,2,Laboratory,24 HRS URINE TOTAL PROTEIN,"1,050","2,400","March 10, 2026",04360151,mmc-price-list
+366,2,Laboratory,24HR URINE - CORTISOL,"3,150","4,000","March 10, 2026",04360723,mmc-price-list
+367,2,Laboratory,5 HIAA SEROTININ QUANTI,"2,620","5,300","March 10, 2026",04360152,mmc-price-list
+368,2,Laboratory,ACETONE SERUM (KETONES),610,"1,200","March 10, 2026",04360153,mmc-price-list
+369,2,Laboratory,ACID PHOSPHATASE,"1,630","2,100","March 10, 2026",04360724,mmc-price-list
+370,2,Laboratory,ALBUMIN OTHER BODY FLUIDS,630,"1,200","March 10, 2026",04360154,mmc-price-list
+371,2,Laboratory,ALBUMIN SERUM,610,"1,200","March 10, 2026",04360155,mmc-price-list
+372,2,Laboratory,ALK PHOS HEAT FRACTIONATION,"2,050","3,900","March 10, 2026",04360156,mmc-price-list
+373,2,Laboratory,ALK PHOSPHATASE BONE SPECIFIC SERUM,"3,800","10,900","March 10, 2026",04360157,mmc-price-list
+374,2,Laboratory,ALKALINE PHOSPHATASE SERUM,655,"1,300","March 10, 2026",04360158,mmc-price-list
+375,2,Laboratory,ALPHA FETO PROTEIN CHEMI,"3,500","6,400","March 10, 2026",04360159,mmc-price-list
+376,2,Laboratory,AMINOPHYLLINE/THEOPHYLLINE ASSAY,"1,930","3,800","March 10, 2026",04360160,mmc-price-list
+377,2,Laboratory,AMMONIA BLOOD,"1,730","3,500","March 10, 2026",04360161,mmc-price-list
+378,2,Laboratory,AMPHET/CANNA COMBI QUALI (DRUG TEST) OUP,300,800,"March 10, 2026",04360162,mmc-price-list
+379,2,Laboratory,AMPHETAMINES/METAMPHETAMINE QTY (DRUG TEST) QUANTI,"3,400","6,300","March 10, 2026",04360163,mmc-price-list
+380,2,Laboratory,AMYLASE OTHER BODY FLUIDS,890,"1,850","March 10, 2026",04360164,mmc-price-list
+381,2,Laboratory,AMYLASE SERUM,890,"1,850","March 10, 2026",04360165,mmc-price-list
+382,2,Laboratory,AMYLASE URINE 24HRS,"1,090","2,500","March 10, 2026",04360166,mmc-price-list
+383,2,Laboratory,AMYLASE URINE RANDOM,"1,020","3,400","March 10, 2026",04360167,mmc-price-list
+384,2,Laboratory,ANTI CCP,"4,750","9,300","March 10, 2026",04360168,mmc-price-list
+385,2,Laboratory,ANTI HAV IGG (CMIA) HEPATITIS A,"1,520","3,000","March 10, 2026",04360169,mmc-price-list
+386,2,Laboratory,ANTI HAV IGM CHEMI HEPATITIS A,"2,070","4,100","March 10, 2026",04360170,mmc-price-list
+387,2,Laboratory,ANTI HAV TOTAL,"1,100","1,450","April 06, 2026",04360766,mmc-price-list
+388,2,Laboratory,ANTI HBC IGM CHEMI,"1,710","3,500","March 10, 2026",04360171,mmc-price-list
+389,2,Laboratory,ANTI HBC TOTAL,"1,710","3,500","March 10, 2026",04360172,mmc-price-list
+390,2,Laboratory,ANTI HBE,"1,760","3,600","March 10, 2026",04360173,mmc-price-list
+391,2,Laboratory,ANTI HBS CHEMI,"1,710","3,500","March 10, 2026",04360174,mmc-price-list
+392,2,Laboratory,ANTI HCV CHEMI HEP C,"1,710","3,500","March 10, 2026",04360175,mmc-price-list
+393,2,Laboratory,ANTI TG ANTI THYROGLOBULIN,"3,560","6,500","March 10, 2026",04360176,mmc-price-list
+394,2,Laboratory,ANTI TPO CHEMI,"3,900","6,900","March 10, 2026",04360177,mmc-price-list
+395,2,Laboratory,ANTI-MULLERIAN HORMONE,"5,200","6,500","March 10, 2026",4360704,mmc-price-list
+396,2,Laboratory,ANTI-SARS-COV-2 IGG,"3,210","6,000","March 10, 2026",04360178,mmc-price-list
+397,2,Laboratory,ANTI-SARS-COV-2 TOTAL,"2,650","5,300","March 10, 2026",04360179,mmc-price-list
+398,2,Laboratory,APOLIPOPROTEIN A SERUM,"8,500","10,700","March 10, 2026",04360760,mmc-price-list
+399,2,Laboratory,APOLIPOPROTEIN B,"3,200","4,000","March 10, 2026",04360763,mmc-price-list
+400,2,Laboratory,ASO TITER (ANTI STREPTOLYSIN O TITER),"2,000","3,900","March 10, 2026",04360180,mmc-price-list
+401,2,Laboratory,B2 MICROGLOBULIN,"3,400","6,300","March 10, 2026",04360181,mmc-price-list
+402,2,Laboratory,BARBITURATES QUALI OUP,410,900,"March 10, 2026",04360182,mmc-price-list
+403,2,Laboratory,BARBITURATES QUANTI,"3,270","6,100","March 10, 2026",04360183,mmc-price-list
+404,2,Laboratory,BENZODIAZEPINE QUALI OUP,770,"1,450","March 10, 2026",04360184,mmc-price-list
+405,2,Laboratory,BENZODIAZEPINE QUANTI,"3,270","6,100","March 10, 2026",04360185,mmc-price-list
+406,2,Laboratory,BETA CROSS LAPS,"5,800","10,600","March 10, 2026",04360186,mmc-price-list
+407,2,Laboratory,BETA HCG CHEMI,"3,500","6,200","March 10, 2026",04360187,mmc-price-list
+408,2,Laboratory,BLOOD ALCOHOL LEVEL,"1,930","3,800","March 10, 2026",04360188,mmc-price-list
+409,2,Laboratory,BRAIN NATRIURETIC PEPTIDE (BNP),"2,310","4,300","March 10, 2026",04360189,mmc-price-list
+410,2,Laboratory,BUN OTHER BODY FLUIDS,590,"1,100","March 10, 2026",04360190,mmc-price-list
+411,2,Laboratory,BUN SERUM,655,"1,300","March 10, 2026",04360191,mmc-price-list
+412,2,Laboratory,BUN URINE 24HRS,"1,180","2,600","March 10, 2026",04360192,mmc-price-list
+413,2,Laboratory,BUN URINE RANDOM,"1,120","2,500","March 10, 2026",04360193,mmc-price-list
+414,2,Laboratory,C PEPTIDE,"3,620","6,500","March 10, 2026",04360194,mmc-price-list
+415,2,Laboratory,C REACTIVE PROTEIN (LATEX),"1,390","2,800","March 10, 2026",04360195,mmc-price-list
+416,2,Laboratory,C REACTIVE PROTEIN HIGH SENSITIVITY,"2,150","4,100","March 10, 2026",04360196,mmc-price-list
+417,2,Laboratory,C3 BETA COMPLEMENT,"2,010","3,900","March 10, 2026",04360197,mmc-price-list
+418,2,Laboratory,C4 BETA COMPLEMENT,"2,010","3,900","March 10, 2026",04360198,mmc-price-list
+419,2,Laboratory,CA 125,"4,200","7,100","March 10, 2026",04360199,mmc-price-list
+420,2,Laboratory,CA 15-3 SERUM CHEMI,"3,140","6,000","March 10, 2026",04360200,mmc-price-list
+421,2,Laboratory,CA 19-9 SERUM CHEMI,"5,000","9,600","March 10, 2026",04360201,mmc-price-list
+422,2,Laboratory,CA 72-4,"4,250","9,500","March 10, 2026",04360202,mmc-price-list
+423,2,Laboratory,CALCIUM IONIZED,"2,630","5,300","March 10, 2026",04360203,mmc-price-list
+424,2,Laboratory,CALCIUM SERUM,865,"1,800","March 10, 2026",04360204,mmc-price-list
+425,2,Laboratory,CALCIUM URINE 24HRS,"1,050","2,400","March 10, 2026",04360205,mmc-price-list
+426,2,Laboratory,CALCIUM URINE RANDOM,"1,050","2,400","March 10, 2026",04360206,mmc-price-list
+427,2,Laboratory,CANNABINOIDS/MARIJUANA/THC QUALI OUP,300,800,"March 10, 2026",04360207,mmc-price-list
+428,2,Laboratory,CANNABINOIDS/MARIJUANA/THC QUANTI,"3,150","4,000","March 10, 2026",04360208,mmc-price-list
+429,2,Laboratory,CARBAMEZEPENE TEGRETOL,"2,630","5,300","March 10, 2026",04360209,mmc-price-list
+430,2,Laboratory,CARDIAC ENZYME,"3,050","5,800","March 10, 2026",04360210,mmc-price-list
+431,2,Laboratory,CARDIO PANEL,"7,050","9,900","March 10, 2026",04360211,mmc-price-list
+432,2,Laboratory,CEA,"3,810","6,800","March 10, 2026",04360212,mmc-price-list
+433,2,Laboratory,CERULOPLASMIN,"3,900","6,900","March 10, 2026",04360213,mmc-price-list
+434,2,Laboratory,CHEM 12,"8,700","16,200","March 10, 2026",04360214,mmc-price-list
+435,2,Laboratory,CHEM 15,"10,900","18,900","March 10, 2026",04360215,mmc-price-list
+436,2,Laboratory,CHEM 16,"11,700","19,900","March 10, 2026",04360216,mmc-price-list
+437,2,Laboratory,CHEM 17,"14,400","23,300","March 10, 2026",04360217,mmc-price-list
+438,2,Laboratory,CHEM 19,"14,400","23,300","March 10, 2026",04360218,mmc-price-list
+439,2,Laboratory,CHEM 23,"18,100","27,900","March 10, 2026",04360219,mmc-price-list
+440,2,Laboratory,CHEM M,"14,700","23,700","March 10, 2026",04360220,mmc-price-list
+441,2,Laboratory,CHEM NEURO,"6,500","12,800","March 10, 2026",04360221,mmc-price-list
+442,2,Laboratory,CHLORIDE OTHER BODY FLUIDS,800,"1,400","March 10, 2026",04360222,mmc-price-list
+443,2,Laboratory,CHLORIDE SERUM,830,"1,750","March 10, 2026",04360223,mmc-price-list
+444,2,Laboratory,CHLORIDE URINE 24HRS,875,"1,800","March 10, 2026",04360224,mmc-price-list
+445,2,Laboratory,CHLORIDE URINE RANDOM,875,"1,800","March 10, 2026",04360225,mmc-price-list
+446,2,Laboratory,CHOLESTEROL OTHER BODY FLUIDS,710,"1,300","March 10, 2026",04360226,mmc-price-list
+447,2,Laboratory,CHOLESTEROL TOTAL SERUM,710,"1,300","March 10, 2026",04360227,mmc-price-list
+448,2,Laboratory,CMV IGG,"3,250","6,100","March 10, 2026",04360228,mmc-price-list
+449,2,Laboratory,CMV IGM (CMIA),"3,000","5,800","March 10, 2026",04360229,mmc-price-list
+450,2,Laboratory,CO2 CARBON DIOXIDE,840,"1,800","March 10, 2026",04360230,mmc-price-list
+451,2,Laboratory,COCCAINE QUALI OUP,770,"2,000","March 10, 2026",04360231,mmc-price-list
+452,2,Laboratory,COCCAINE QUANTI,"3,270","6,100","March 10, 2026",04360232,mmc-price-list
+453,2,Laboratory,CORTISOL,"1,950","3,800","March 10, 2026",04360233,mmc-price-list
+454,2,Laboratory,COVID -19 PANEL,"24,100","33,000","March 10, 2026",04360405,mmc-price-list
+455,2,Laboratory,CPK MB ISOENZYME,"1,970","3,800","March 10, 2026",04360234,mmc-price-list
+456,2,Laboratory,CPK/CK,"1,120","2,500","March 10, 2026",04360235,mmc-price-list
+457,2,Laboratory,CREATININE CLEARANCE,"2,130","4,000","March 10, 2026",04360236,mmc-price-list
+458,2,Laboratory,CREATININE KINASE MM,"4,700","9,200","March 10, 2026",04360237,mmc-price-list
+459,2,Laboratory,CREATININE OTHER BODY FLUIDS,740,"1,400","March 10, 2026",04360238,mmc-price-list
+460,2,Laboratory,CREATININE SERUM,740,"1,400","March 10, 2026",04360239,mmc-price-list
+461,2,Laboratory,CREATININE URINE 24HRS,"1,140","2,500","March 10, 2026",04360240,mmc-price-list
+462,2,Laboratory,CREATININE URINE RANDOM,"1,140","2,500","March 10, 2026",04360241,mmc-price-list
+463,2,Laboratory,CYA MONO,"9,400","17,100","March 10, 2026",04360242,mmc-price-list
+464,2,Laboratory,CYFRA 21-1,"4,900","6,200","March 10, 2026",04360686,mmc-price-list
+465,2,Laboratory,CYFRA 21-1,"4,500","5,400","November 09, 2022",4360686,mmc-price-list
+466,2,Laboratory,CYSTATIN C,"2,200","6,100","March 10, 2026",04360243,mmc-price-list
+467,2,Laboratory,CYTOKERATIN FRAGMENT 21.1,"1,485","1,900","March 10, 2026",04360244,mmc-price-list
+468,2,Laboratory,DHEA-S CHEMI,"2,260","4,200","March 10, 2026",04360245,mmc-price-list
+469,2,Laboratory,DIGOXIN,"3,180","6,000","March 10, 2026",04360246,mmc-price-list
+470,2,Laboratory,DILANTIN (PHENYTOIN),"3,120","5,900","March 10, 2026",04360247,mmc-price-list
+471,2,Laboratory,DIRECT BILIRUBIN,820,"1,750","March 10, 2026",04360248,mmc-price-list
+472,2,Laboratory,DPYR (PYRILINKS),"3,700","6,600","March 10, 2026",04360249,mmc-price-list
+473,2,Laboratory,ECSTASY QUALI,770,"1,450","March 10, 2026",04360250,mmc-price-list
+474,2,Laboratory,ELECSYS FERRITIN,"2,850","5,600","March 10, 2026",04360251,mmc-price-list
+475,2,Laboratory,ELECTROLYTE PANEL,"2,230","2,800","March 10, 2026",04360252,mmc-price-list
+476,2,Laboratory,ENDO DM / THYROID PANEL,"2,710","10,400","March 10, 2026",04360253,mmc-price-list
+477,2,Laboratory,ESTRADIOL CHEMI/ESTROGEN,"3,750","6,700","March 10, 2026",04360254,mmc-price-list
+478,2,Laboratory,EVEROLIMUS (CERTICAN TROUGH LEVEL),"11,300","14,200","March 10, 2026",0436040081,mmc-price-list
+479,2,Laboratory,FERTILITY PANEL,"12,000","15,000","March 10, 2026",04360256,mmc-price-list
+480,2,Laboratory,FIBROSIS 4,850,"1,100","March 10, 2026",0436040080,mmc-price-list
+481,2,Laboratory,FOLATE,"3,850","6,800","March 10, 2026",04360257,mmc-price-list
+482,2,Laboratory,FREE BETA HCG,"5,620","10,400","March 10, 2026",04360258,mmc-price-list
+483,2,Laboratory,FSH CHEMI,"2,710","5,400","March 10, 2026",04360259,mmc-price-list
+484,2,Laboratory,FT3 & FT4,"2,850","3,600","March 10, 2026",04360260,mmc-price-list
+485,2,Laboratory,FT3 CHEMI,"2,010","3,900","March 10, 2026",04360261,mmc-price-list
+486,2,Laboratory,FT4 CHEMI,"2,010","3,900","March 10, 2026",04360262,mmc-price-list
+487,2,Laboratory,GASTRO PANEL 1,"7,650","9,600","March 10, 2026",04360263,mmc-price-list
+488,2,Laboratory,GGTP OTHER BODY FLUIDS,"1,030","2,400","March 10, 2026",04360264,mmc-price-list
+489,2,Laboratory,GGTP SERUM (GAMMA GLUTAMYLTRANSPEPTIDASE),"1,470","2,900","March 10, 2026",04360265,mmc-price-list
+490,2,Laboratory,GLUCOSE (FBS/FPG),630,"1,200","March 10, 2026",04360266,mmc-price-list
+491,2,Laboratory,GLUCOSE 2HRS PPBS,"1,390","2,800","March 10, 2026",04360267,mmc-price-list
+492,2,Laboratory,GLUCOSE CHALLENGE TEST (50 GRAMS) (OGCT),675,"2,800","March 10, 2026",04360268,mmc-price-list
+493,2,Laboratory,GLUCOSE CSF,710,"1,300","March 10, 2026",04360269,mmc-price-list
+494,2,Laboratory,GLUCOSE OTHER BODY FLUIDS,630,"1,200","March 10, 2026",04360270,mmc-price-list
+495,2,Laboratory,GLUCOSE RANDOM (RBS) (RANDOM BLOOD SUGAR),380,900,"March 10, 2026",04360271,mmc-price-list
+496,2,Laboratory,GLUCOSE TOLERANCE 2 SAMPLES 75 GRAMS (OGTT),"1,280","2,700","March 10, 2026",04360272,mmc-price-list
+497,2,Laboratory,GLUCOSE TOLERANCE 3 SAMPLES 100 GRAMS (OGTT),"1,460","3,000","March 10, 2026",04360273,mmc-price-list
+498,2,Laboratory,GLUCOSE TOLERANCE 3 SAMPLES 75 GRAMS (OGTT),"2,010","3,900","March 10, 2026",04360274,mmc-price-list
+499,2,Laboratory,GLUCOSE TOLERANCE 4 SAMPLES 100 GRAMS (OGTT),"2,000","3,900","March 10, 2026",04360275,mmc-price-list
+500,2,Laboratory,GLUCOSE TOLERANCE 4 SAMPLES 75 GRAMS (OGTT),"2,000","3,900","March 10, 2026",04360276,mmc-price-list
+501,2,Laboratory,GLUCOSE TOLERANCE 5 SAMPLES 75 GRAMS (OGTT),"2,010","3,900","March 10, 2026",04360277,mmc-price-list
+502,2,Laboratory,HAPTOGLOBIN,"5,000","6,300","March 10, 2026",04360705,mmc-price-list
+503,2,Laboratory,HBE AG (HEPATITIS BE ANTIGEN),"1,410","2,900","March 10, 2026",04360279,mmc-price-list
+504,2,Laboratory,HBsAG,"1,710","3,500","March 10, 2026",04360280,mmc-price-list
+505,2,Laboratory,HDL,"1,030","2,400","March 10, 2026",04360281,mmc-price-list
+506,2,Laboratory,HEPATITIS PROFILE 1,"5,100","9,700","March 10, 2026",04360282,mmc-price-list
+507,2,Laboratory,HEPATITIS PROFILE 10,"4,800","9,300","March 10, 2026",04360283,mmc-price-list
+508,2,Laboratory,HEPATITIS PROFILE 11,"1,630","3,400","March 10, 2026",04360284,mmc-price-list
+509,2,Laboratory,HEPATITIS PROFILE 12,"6,000","10,800","March 10, 2026",04360285,mmc-price-list
+510,2,Laboratory,HEPATITIS PROFILE 13,"4,650","9,200","March 10, 2026",043603914,mmc-price-list
+511,2,Laboratory,HEPATITIS PROFILE 14,"5,150","9,800","March 10, 2026",04360287,mmc-price-list
+512,2,Laboratory,HEPATITIS PROFILE 2,"4,950","9,500","March 10, 2026",04360288,mmc-price-list
+513,2,Laboratory,HEPATITIS PROFILE 3,"4,450","8,900","March 10, 2026",04360289,mmc-price-list
+514,2,Laboratory,HEPATITIS PROFILE 4,"4,550","9,000","March 10, 2026",04360290,mmc-price-list
+515,2,Laboratory,HEPATITIS PROFILE 5,"3,360","6,200","March 10, 2026",04360291,mmc-price-list
+516,2,Laboratory,HEPATITIS PROFILE 6,"8,600","16,100","March 10, 2026",04360292,mmc-price-list
+517,2,Laboratory,HEPATITIS PROFILE 7,"11,000","19,100","March 10, 2026",04360293,mmc-price-list
+518,2,Laboratory,HEPATITIS PROFILE 8,"10,000","17,800","March 10, 2026",04360294,mmc-price-list
+519,2,Laboratory,HEPATITIS PROFILE 9,"12,900","21,400","March 10, 2026",04360295,mmc-price-list
+520,2,Laboratory,HOMOCYSTEINE,"3,500","6,400","March 10, 2026",04360296,mmc-price-list
+521,2,Laboratory,HUMAN EPIDYDYMIS PROTEIN 4 (HE4),"3,750","6,700","March 10, 2026",04360297,mmc-price-list
+522,2,Laboratory,HbA1C,"2,170","4,100","March 10, 2026",04360278,mmc-price-list
+523,2,Laboratory,IGA IMMUNOGLOBULINS,"2,260","4,200","March 10, 2026",04360298,mmc-price-list
+524,2,Laboratory,IGG (CSF),"1,830","3,700","March 10, 2026",04360299,mmc-price-list
+525,2,Laboratory,IGG IMMUNOGLOBULINS SERUM,"1,830","3,700","March 10, 2026",04360300,mmc-price-list
+526,2,Laboratory,IGM IMMUNOGLOBULINS SERUM,"1,830","3,700","March 10, 2026",04360301,mmc-price-list
+527,2,Laboratory,IMMUNOGLOBULINS (IGG IGM IGA),"5,550","10,300","March 10, 2026",04360302,mmc-price-list
+528,2,Laboratory,INSULIN,"5,150","9,600","March 10, 2026",04360303,mmc-price-list
+529,2,Laboratory,INTACT PTH CHEM,"3,900","6,900","March 10, 2026",04360304,mmc-price-list
+530,2,Laboratory,INTERLEUKIN-6,"6,300","7,900","March 10, 2026",04360305,mmc-price-list
+531,2,Laboratory,IRON,"1,260","2,700","March 10, 2026",04360306,mmc-price-list
+532,2,Laboratory,KIDNEY FUNCTION,"7,200","14,300","March 10, 2026",04360307,mmc-price-list
+533,2,Laboratory,L-FAB,"6,900","13,300","March 10, 2026",04360313,mmc-price-list
+534,2,Laboratory,LACTATE,"1,230","2,700","March 10, 2026",04360308,mmc-price-list
+535,2,Laboratory,LDH OTHER BODY FLUIDS,"1,010","2,400","March 10, 2026",04360309,mmc-price-list
+536,2,Laboratory,LDH SERUM,"1,010","2,400","March 10, 2026",04360310,mmc-price-list
+537,2,Laboratory,LDL,"1,520","3,000","March 10, 2026",04360311,mmc-price-list
+538,2,Laboratory,LEUTINIZING HORMONE CHEMI,"2,260","4,200","March 10, 2026",04360312,mmc-price-list
+539,2,Laboratory,LIPASE,905,"1,850","March 10, 2026",04360314,mmc-price-list
+540,2,Laboratory,LIPID PROFILE (HDL & LDL) SERUM,"2,400","4,400","March 10, 2026",04360315,mmc-price-list
+541,2,Laboratory,LIPID PROFILE (HDL LDL CHOL TRIG) SERUM,"4,450","8,700","March 10, 2026",04360316,mmc-price-list
+542,2,Laboratory,LIPID PROFILE (HDL LDL TRIG) SERUM,"3,750","6,700","March 10, 2026",04360317,mmc-price-list
+543,2,Laboratory,LIPOPROTEIN A SERUM,"12,500","15,700","March 10, 2026",04360761,mmc-price-list
+544,2,Laboratory,LIPOPROTEIN PACKAGE,"8,300","10,400","March 10, 2026",04360764,mmc-price-list
+545,2,Laboratory,LIPOPROTEIN PACKAGE + LIPID PROFILE,"8,500","10,700","March 10, 2026",04360765,mmc-price-list
+546,2,Laboratory,LITHIUM,830,"1,750","March 10, 2026",04360318,mmc-price-list
+547,2,Laboratory,LIVER ENZYMES,"5,150","9,800","March 10, 2026",04360319,mmc-price-list
+548,2,Laboratory,LIVER FUNCTION TEST,"8,000","15,300","March 10, 2026",04360320,mmc-price-list
+549,2,Laboratory,LIVER PANEL PACKAGE,"19,470","70,300","March 10, 2026",04360408,mmc-price-list
+550,2,Laboratory,MACI SCREENING,"16,900","26,400","March 10, 2026",04360321,mmc-price-list
+551,2,Laboratory,MAGNESIUM OTHER BODY FLUIDS,830,"1,750","March 10, 2026",04360322,mmc-price-list
+552,2,Laboratory,MAGNESIUM SERUM,"1,070","2,450","March 10, 2026",04360323,mmc-price-list
+553,2,Laboratory,MAGNESIUM URINE 24HRS URINE,"1,140","2,500","March 10, 2026",04360324,mmc-price-list
+554,2,Laboratory,MAGNESIUM URINE RANDOM,"1,100","2,500","March 10, 2026",04360325,mmc-price-list
+555,2,Laboratory,METAMPETHAMINE QUALI OUP,326,800,"March 10, 2026",04360326,mmc-price-list
+556,2,Laboratory,METHADONE QUALI,515,"1,050","March 10, 2026",04360327,mmc-price-list
+557,2,Laboratory,METHAQUALONE,630,850,"March 10, 2026",04360662,mmc-price-list
+558,2,Laboratory,MICRO ALBUMIN CREATININE RATIO,"1,950","3,800","March 10, 2026",04360328,mmc-price-list
+559,2,Laboratory,NEEDLESTICK INJURY ANTI-HBS,"1,650","3,400","March 10, 2026",04360756,mmc-price-list
+560,2,Laboratory,NEEDLESTICK INJURY ANTI-HCV,"1,650","3,400","March 10, 2026",04360757,mmc-price-list
+561,2,Laboratory,NEEDLESTICK INJURY HBsAg,"1,650","3,400","March 10, 2026",04360758,mmc-price-list
+562,2,Laboratory,NSE (NEURON SPECIFIC ENOLASE),"4,900","9,500","March 10, 2026",04360329,mmc-price-list
+563,2,Laboratory,OPIATES (MORPHINE DEMEROL) QUALI OUP,410,900,"March 10, 2026",04360330,mmc-price-list
+564,2,Laboratory,OPIATES (MORPHINE DEMEROL) QUANTI,"3,250","4,100","March 10, 2026",04360331,mmc-price-list
+565,2,Laboratory,OSMOLALITY BLOOD,"2,370","4,300","March 10, 2026",04360332,mmc-price-list
+566,2,Laboratory,OSMOLALITY URINE,"2,250","4,200","March 10, 2026",04360333,mmc-price-list
+567,2,Laboratory,OSTEOCALCIN SERUM,"4,300","8,700","March 10, 2026",04360334,mmc-price-list
+568,2,Laboratory,PANEL DRUG TEST PACKAGE,"3,000","4,800","March 13, 2026",04360704,mmc-price-list
+569,2,Laboratory,PAPP-A,"6,100","12,300","March 10, 2026",04360335,mmc-price-list
+570,2,Laboratory,PCP QUALI OUP,410,900,"March 10, 2026",04360336,mmc-price-list
+571,2,Laboratory,PCP QUANTI,"3,150","6,000","March 10, 2026",04360337,mmc-price-list
+572,2,Laboratory,PEDIA PANEL,"5,600","7,000","March 10, 2026",04360338,mmc-price-list
+573,2,Laboratory,PH URINE W/ MINERAL OIL,665,"1,300","March 10, 2026",04360339,mmc-price-list
+574,2,Laboratory,PHENOBARBITAL,"3,120","5,900","March 10, 2026",04360340,mmc-price-list
+575,2,Laboratory,PHOSPHOROUS OTHER BODY FLUID,750,"1,400","March 10, 2026",04360341,mmc-price-list
+576,2,Laboratory,PHOSPHOROUS SERUM,980,"1,950","March 10, 2026",04360342,mmc-price-list
+577,2,Laboratory,PHOSPHOROUS URINE,"1,010","2,400","March 10, 2026",04360343,mmc-price-list
+578,2,Laboratory,PIVKA - II,"6,000","10,900","March 10, 2026",04360344,mmc-price-list
+579,2,Laboratory,PLACENTAL GROWTH FACTOR (PIGF),"11,000","13,800","March 10, 2026",04360720,mmc-price-list
+580,2,Laboratory,POST COVID-19 RECOVERY BUNDLE,"31,900","53,800","March 10, 2026",04360407,mmc-price-list
+581,2,Laboratory,POTASSIUM OTHER BODY FLUID,"1,010","2,400","March 10, 2026",04360345,mmc-price-list
+582,2,Laboratory,POTASSIUM SERUM,980,"1,950","March 10, 2026",04360346,mmc-price-list
+583,2,Laboratory,POTASSIUM URINE 24HRS,"1,340","2,800","March 10, 2026",04360347,mmc-price-list
+584,2,Laboratory,POTASSIUM URINE RANDOM,"1,340","2,800","March 10, 2026",04360348,mmc-price-list
+585,2,Laboratory,PRE ECLAMPSIA PACKAGE (PIGF/SFLT-1),"19,900","24,900","March 10, 2026",04360759,mmc-price-list
+586,2,Laboratory,PRESEPSIN,"4,500","5,700","March 10, 2026",04360349,mmc-price-list
+587,2,Laboratory,PRO BRAIN NATRIURETIC PEPTIDE,"4,850","9,400","March 10, 2026",04360350,mmc-price-list
+588,2,Laboratory,PROCALCITONIN,"4,160","8,500","March 10, 2026",04360351,mmc-price-list
+589,2,Laboratory,PROGASTRIN RELEASING PEPTIDE,"1,190","2,450","July 12, 2021",04360352,mmc-price-list
+590,2,Laboratory,PROGESTERONE CHEMI,"3,750","6,700","March 10, 2026",04360353,mmc-price-list
+591,2,Laboratory,PROGRP,"7,400","9,300","March 10, 2026",04360685,mmc-price-list
+592,2,Laboratory,PROLACTIN CHEMI,"1,950","3,800","March 10, 2026",04360354,mmc-price-list
+593,2,Laboratory,PROPOXYPHENE URINE,770,"1,450","March 10, 2026",04360355,mmc-price-list
+594,2,Laboratory,PSA FREE SERUM,"5,250","9,900","March 10, 2026",04360356,mmc-price-list
+595,2,Laboratory,RHEUMATOID FACTOR,"2,050","3,800","March 10, 2026",04360357,mmc-price-list
+596,2,Laboratory,RUBELLA IGG (GERMAN MEASLES),"3,120","5,900","March 10, 2026",04360358,mmc-price-list
+597,2,Laboratory,RUBELLA IGM (GERMAN MEASLES),"5,250","9,900","March 10, 2026",04360359,mmc-price-list
+598,2,Laboratory,SALICYLATE,"4,100","5,200","March 10, 2026",04360712,mmc-price-list
+599,2,Laboratory,SARS-CoV-2 NEUTRALIZING ANTIBODY,"3,050","3,900","March 10, 2026",4360687,mmc-price-list
+600,2,Laboratory,SERUM AMYLOID A,"14,250","17,900","March 10, 2026",0436040082,mmc-price-list
+601,2,Laboratory,SGOT AST,"1,020","2,400","March 10, 2026",04360360,mmc-price-list
+602,2,Laboratory,SGPT ALT,"1,020","2,400","March 10, 2026",04360361,mmc-price-list
+603,2,Laboratory,SIROLIMUS,"2,400","4,400","March 10, 2026",04360362,mmc-price-list
+604,2,Laboratory,SODIUM SERUM,980,"1,950","March 10, 2026",04360363,mmc-price-list
+605,2,Laboratory,SODIUM URINE 24HRS,"1,610","3,400","March 10, 2026",04360364,mmc-price-list
+606,2,Laboratory,SODIUM URINE RANDOM,"1,700","3,500","March 10, 2026",04360365,mmc-price-list
+607,2,Laboratory,SOLUBLE FMS-LIKE TYROSINE KINASE-1 (SFLT),"11,400","14,300","March 10, 2026",04360721,mmc-price-list
+608,2,Laboratory,STONE ANALYSIS (KIDNEY),"3,750","4,700","March 10, 2026",04360684,mmc-price-list
+609,2,Laboratory,STONE ANALYSIS GALLBLADDER,"1,570","3,200","March 10, 2026",04360366,mmc-price-list
+610,2,Laboratory,STONE ANALYSIS KIDNEY/URETHRAL/URINARY,"1,570","3,200","March 10, 2026",04360367,mmc-price-list
+611,2,Laboratory,TACROLIMUS,"4,550","9,000","March 10, 2026",04360368,mmc-price-list
+612,2,Laboratory,TESTOSTERONE CHEMI,"3,750","6,700","March 10, 2026",04360369,mmc-price-list
+613,2,Laboratory,THYROGLOBULIN BLOOD,"3,750","6,700","March 10, 2026",04360370,mmc-price-list
+614,2,Laboratory,THYROID PROFILE 1,"4,450","8,900","March 10, 2026",04360371,mmc-price-list
+615,2,Laboratory,THYROID PROFILE 2,"6,650","13,000","March 10, 2026",04360372,mmc-price-list
+616,2,Laboratory,THYROID PROFILE 3,"6,650","13,000","March 10, 2026",04360373,mmc-price-list
+617,2,Laboratory,THYROID PROFILE 4,"12,100","20,400","March 10, 2026",04360374,mmc-price-list
+618,2,Laboratory,TOTAL BILIRUBIN,890,"1,850","March 10, 2026",04360375,mmc-price-list
+619,2,Laboratory,TOTAL IGE FOR ALLERGENS,"4,060","8,400","March 10, 2026",04360376,mmc-price-list
+620,2,Laboratory,TOTAL IRON BINDING CAPACITY,"3,250","6,100","March 10, 2026",04360377,mmc-price-list
+621,2,Laboratory,TOTAL PROSTATIC SPECIFIC ANTIGEN BLOOD,"4,750","9,300","March 10, 2026",04360378,mmc-price-list
+622,2,Laboratory,TOTAL PROTEIN A G RATIO SERUM,890,"1,850","March 10, 2026",04360379,mmc-price-list
+623,2,Laboratory,TOTAL PROTEIN CSF,710,"1,300","March 10, 2026",04360380,mmc-price-list
+624,2,Laboratory,TOTAL PROTEIN OTHER BODY FLUIDS,890,"1,850","March 10, 2026",04360381,mmc-price-list
+625,2,Laboratory,TOTAL PROTEIN SERUM,630,"1,200","March 10, 2026",04360382,mmc-price-list
+626,2,Laboratory,TOTAL PROTEIN URINE,"1,050","2,400","March 10, 2026",04360383,mmc-price-list
+627,2,Laboratory,TOTAL T3 (CMIA),"2,120","4,100","March 10, 2026",04360384,mmc-price-list
+628,2,Laboratory,TOTAL T4 (CMIA),"1,900","3,700","March 10, 2026",04360385,mmc-price-list
+629,2,Laboratory,TOXOPLASMOSIS IGG QUANTI,"4,400","8,800","March 10, 2026",04360386,mmc-price-list
+630,2,Laboratory,TOXOPLASMOSIS IGM QUANTI,"4,150","8,500","March 10, 2026",04360387,mmc-price-list
+631,2,Laboratory,TRIGLY OTHER BODY FLUID,"1,230","2,600","March 10, 2026",04360388,mmc-price-list
+632,2,Laboratory,TRIGLYCERIDES SERUM,"1,260","2,700","March 10, 2026",04360389,mmc-price-list
+633,2,Laboratory,TROPONIN I HIGH SENSITIVITY,"4,100","8,500","March 10, 2026",04360390,mmc-price-list
+634,2,Laboratory,TROPONIN T,"5,500","10,200","March 10, 2026",04360391,mmc-price-list
+635,2,Laboratory,TROPONIN T HIGH SENSITIVITY,"6,800","13,200","March 10, 2026",04360392,mmc-price-list
+636,2,Laboratory,TRUTOL SOLUTION (DEXTROSE OR GLUCOSE),655,"1,300","March 10, 2026",04360393,mmc-price-list
+637,2,Laboratory,TSH CHEMI,"1,530","3,200","March 10, 2026",04360394,mmc-price-list
+638,2,Laboratory,URIC ACID OTHER BODY FLUIDS,550,"1,100","March 10, 2026",04360395,mmc-price-list
+639,2,Laboratory,URIC ACID SERUM,665,"1,300","March 10, 2026",04360396,mmc-price-list
+640,2,Laboratory,URIC ACID URINE 24HRS,"1,180","2,600","March 10, 2026",04360397,mmc-price-list
+641,2,Laboratory,URIC ACID URINE RANDOM,"1,120","2,500","March 10, 2026",04360398,mmc-price-list
+642,2,Laboratory,URINE NEUTROPHIL GELATINASE ASSOCIATED LIPOCALIN,"3,610","6,500","March 10, 2026",04360399,mmc-price-list
+643,2,Laboratory,VALPROIC (DEPAKENE EPIVAL),"2,630","5,300","March 10, 2026",04360400,mmc-price-list
+644,2,Laboratory,VANCOMYCIN,"4,150","8,500","March 10, 2026",04360401,mmc-price-list
+645,2,Laboratory,VIT B12,"6,150","12,300","March 10, 2026",04360402,mmc-price-list
+646,2,Laboratory,VITAMIN D (VIT D3-25-OH),"3,120","5,900","March 10, 2026",04360403,mmc-price-list
+647,2,Laboratory,24 HRS URINE SEROTONIN (5HIAA),"10,000","12,500","March 10, 2026",04360581,mmc-price-list
+648,2,Laboratory,APTS TEST,400,900,"March 10, 2026",04360582,mmc-price-list
+649,2,Laboratory,BENCE JONES PROTEIN,610,"1,200","March 10, 2026",04360583,mmc-price-list
+650,2,Laboratory,BODY FLUIDS CELL COUNT,655,"1,300","March 10, 2026",04360584,mmc-price-list
+651,2,Laboratory,CLOSTRIDIUM DIFFICILE ANTIGEN,"5,700","10,800","March 10, 2026",04360585,mmc-price-list
+652,2,Laboratory,CLOSTRIDIUM DIFFICILE TOXIN A & B,"3,700","4,700","March 10, 2026",04360688,mmc-price-list
+653,2,Laboratory,CONCENTRATION METHOD,960,"1,900","March 10, 2026",04360586,mmc-price-list
+654,2,Laboratory,ENTEROBIUS VERMICULARIS IDENTIFICATION SCOTCH TAPE METHOD,420,950,"March 10, 2026",04360587,mmc-price-list
+655,2,Laboratory,FECAL CALPROTECTIN,"2,730","3,500","March 10, 2026",04360689,mmc-price-list
+656,2,Laboratory,FECAL IMMUNOCHEMICAL TEST (FIT),"2,610","5,300","March 10, 2026",04361185,mmc-price-list
+657,2,Laboratory,H. PYLORI ANTIGEN STOOL,"2,630","3,300","March 10, 2026",04360588,mmc-price-list
+658,2,Laboratory,HEMOGLOBIN URINE,685,"1,300","March 10, 2026",04360589,mmc-price-list
+659,2,Laboratory,MICRAL TEST,610,"1,200","March 10, 2026",04360590,mmc-price-list
+660,2,Laboratory,OCCULT BLOOD,890,"1,850","March 10, 2026",04360591,mmc-price-list
+661,2,Laboratory,PH STOOL,445,950,"March 10, 2026",04360592,mmc-price-list
+662,2,Laboratory,PREGNANCY TEST,"1,010","2,400","March 10, 2026",04360593,mmc-price-list
+663,2,Laboratory,RBC MORPHOLOGY URINE,"1,390","2,800","March 10, 2026",04360594,mmc-price-list
+664,2,Laboratory,ROTAVIRUS ANTIGEN,"1,830","3,700","March 10, 2026",04360595,mmc-price-list
+665,2,Laboratory,SEMEN ANALYSIS,"1,010","2,400","March 10, 2026",04360596,mmc-price-list
+666,2,Laboratory,SPECIFIC GRAVITY,380,900,"March 10, 2026",04360597,mmc-price-list
+667,2,Laboratory,STOOL ROUTINE,390,900,"March 10, 2026",04360598,mmc-price-list
+668,2,Laboratory,SUDAN (STOOL FOR FATS),431,950,"March 10, 2026",04360599,mmc-price-list
+669,2,Laboratory,URIC ACID CRYSTAL (BODY FLUID),625,"1,200","March 10, 2026",04360600,mmc-price-list
+670,2,Laboratory,URINALYSIS ROUTINE,495,"1,000","March 10, 2026",04360601,mmc-price-list
+671,2,Laboratory,WET MOUNT METHOD,750,"1,400","March 10, 2026",04360602,mmc-price-list
+672,2,Laboratory,ED CHEM 5,"4,200","5,300","March 10, 2026",4360690,mmc-price-list
+673,2,Laboratory,ER ALBUMIN OTHER BODY FLUIDS,950,"1,200","March 10, 2026",043605036,mmc-price-list
+674,2,Laboratory,ER ALBUMIN SERUM,930,"1,200","March 10, 2026",043605035,mmc-price-list
+675,2,Laboratory,ER ALKALINE PHOSPHATASE SERUM,975,"1,300","March 10, 2026",043605037,mmc-price-list
+676,2,Laboratory,ER AMMONIA BLOOD,"2,785","3,500","March 10, 2026",043605038,mmc-price-list
+677,2,Laboratory,ER AMYLASE SERUM,"1,420","1,850","March 10, 2026",043605039,mmc-price-list
+678,2,Laboratory,ER ANTI HAV IGG (CMIA) HEPATITIS A,"2,365","3,000","March 10, 2026",043605041,mmc-price-list
+679,2,Laboratory,ER ANTI HAV IGM CHEMI HEPATITIS A,"3,150","4,000","March 10, 2026",043605040,mmc-price-list
+680,2,Laboratory,ER ANTI HBC IGM CHEMI,"2,765","3,500","March 10, 2026",043605043,mmc-price-list
+681,2,Laboratory,ER ANTI HBC TOTAL,"2,765","3,500","March 10, 2026",043605042,mmc-price-list
+682,2,Laboratory,ER ANTI HBE,"2,815","3,600","March 10, 2026",043605044,mmc-price-list
+683,2,Laboratory,ER ANTI HBS CHEMI,"2,765","3,500","March 10, 2026",043605045,mmc-price-list
+684,2,Laboratory,ER ANTI HCV CHEMI HEP C,"2,765","3,500","March 10, 2026",043605046,mmc-price-list
+685,2,Laboratory,ER BETA HCG CHEMI,"5,080","6,400","March 10, 2026",043605048,mmc-price-list
+686,2,Laboratory,ER BLEEDING TIME,685,900,"March 10, 2026",043605061,mmc-price-list
+687,2,Laboratory,ER BLOOD ALCOHOL LEVEL,"2,985","3,800","March 10, 2026",043605049,mmc-price-list
+688,2,Laboratory,ER BODY FLUIDS CELL COUNT,975,"1,300","March 10, 2026",043605051,mmc-price-list
+689,2,Laboratory,ER C REACTIVE PROTEIN HIGH SENSITIVITY,"3,205","4,100","March 10, 2026",043605060,mmc-price-list
+690,2,Laboratory,ER CALCIUM SERUM,"1,395","1,800","March 10, 2026",043605097,mmc-price-list
+691,2,Laboratory,ER CBC (COMPLETE BLOOD COUNT),950,"1,250","March 10, 2026",04360410,mmc-price-list
+692,2,Laboratory,ER CHEM 8,"4,750","6,000","March 10, 2026",4360691,mmc-price-list
+693,2,Laboratory,ER CHLORIDE,"1,360","1,750","March 10, 2026",043605033,mmc-price-list
+694,2,Laboratory,ER CHOLESTEROL OTHER BODY FLUIDS,"1,030","1,300","March 10, 2026",043605052,mmc-price-list
+695,2,Laboratory,ER CLOTTING TIME,780,"1,050","March 10, 2026",043605055,mmc-price-list
+696,2,Laboratory,ER CO2 CARBON DIOXIDE,"1,370","1,800","March 10, 2026",043605098,mmc-price-list
+697,2,Laboratory,ER COOMBS DIRECT,950,"1,200","March 10, 2026",043605064,mmc-price-list
+698,2,Laboratory,ER COVID-19 IGM/IGG ANTIBODY (POCT),"1,990","2,500","March 10, 2026",04360698,mmc-price-list
+699,2,Laboratory,ER COVID-19 RAPID ANTIGEN SCREENING TEST (POCT),"1,055","1,400","March 10, 2026",04360699,mmc-price-list
+700,2,Laboratory,ER CPK MB ISOENZYME,"3,025","3,800","March 10, 2026",043605053,mmc-price-list
+701,2,Laboratory,ER CPK/CK,"1,965","2,500","March 10, 2026",043605054,mmc-price-list
+702,2,Laboratory,ER CREATININE (SINGLE ANALYTE),"2,000","2,500","March 10, 2026",4360692,mmc-price-list
+703,2,Laboratory,ER CREATININE OTHER BODY FLUIDS,"1,060","1,400","March 10, 2026",04360412,mmc-price-list
+704,2,Laboratory,ER D DIMER (POCT),"3,600","4,500","March 10, 2026",04360413,mmc-price-list
+705,2,Laboratory,ER D-DIMER (MINI-VIDAS),"7,985","10,000","March 10, 2026",043605063,mmc-price-list
+706,2,Laboratory,ER DENGUE DUO IGG/IGM,"3,690","4,700","March 10, 2026",04360414,mmc-price-list
+707,2,Laboratory,ER DENGUE NS 1,"4,830","6,100","March 10, 2026",04360415,mmc-price-list
+708,2,Laboratory,ER DIRECT BILIRUBIN,"1,350","1,750","March 10, 2026",043605102,mmc-price-list
+709,2,Laboratory,ER ESR,950,"1,200","March 10, 2026",043605070,mmc-price-list
+710,2,Laboratory,ER EYE PH,280,340,"October 20, 2023",04360417,mmc-price-list
+711,2,Laboratory,ER FT3 CHEMI,"3,065","3,900","March 10, 2026",043605074,mmc-price-list
+712,2,Laboratory,ER FT4 CHEMI,"3,065","3,900","March 10, 2026",043605075,mmc-price-list
+713,2,Laboratory,ER FUNGAL SMEAR KOH ONLY,965,"1,300","March 10, 2026",043605079,mmc-price-list
+714,2,Laboratory,ER GLUCOSE (FBS/FPG),950,"1,200","March 10, 2026",043605071,mmc-price-list
+715,2,Laboratory,ER GLUCOSE CAPILLARY (CBG) RANDOM,670,950,"March 10, 2026",04360418,mmc-price-list
+716,2,Laboratory,ER GLUCOSE RANDOM (RBS) (RANDOM BLOOD SUGAR),645,900,"March 10, 2026",043605110,mmc-price-list
+717,2,Laboratory,ER GRAMS STAIN,"2,835","3,600","March 10, 2026",043605109,mmc-price-list
+718,2,Laboratory,ER HBsAG,"2,765","3,500","March 10, 2026",043605076,mmc-price-list
+719,2,Laboratory,ER HEPATITIS PROFILE,"12,815","16,100","March 10, 2026",043605077,mmc-price-list
+720,2,Laboratory,ER HEPATITIS PROFILE,"1,855","2,400","March 10, 2026",043605082,mmc-price-list
+721,2,Laboratory,ER INFLUENZA A/B RAPID,"4,400","5,500","March 10, 2026",04360419,mmc-price-list
+722,2,Laboratory,ER IONIZED CALCIUM,"4,210","5,300","March 10, 2026",043605034,mmc-price-list
+723,2,Laboratory,ER KETONES,870,"1,150","March 10, 2026",04360420,mmc-price-list
+724,2,Laboratory,ER LACTATE,"2,075","2,600","March 10, 2026",043605080,mmc-price-list
+725,2,Laboratory,ER LDH SERUM,"1,855","2,400","March 10, 2026",043605081,mmc-price-list
+726,2,Laboratory,ER LEPTOSPIRA IGG/IGM,"2,405","3,100","March 10, 2026",043605083,mmc-price-list
+727,2,Laboratory,ER LIPASE,"1,435","1,850","March 10, 2026",043605084,mmc-price-list
+728,2,Laboratory,ER LITHIUM,"1,360","1,750","March 10, 2026",043605085,mmc-price-list
+729,2,Laboratory,ER LIVER FUNCTION TEST,"12,215","15,300","March 10, 2026",043605086,mmc-price-list
+730,2,Laboratory,ER MAGNESIUM SERUM,"1,915","2,400","March 10, 2026",043605087,mmc-price-list
+731,2,Laboratory,ER OCCULT BLOOD,"1,420","1,850","March 10, 2026",043605072,mmc-price-list
+732,2,Laboratory,ER PARTIAL THROMBOPLASTIN TIME CS,"2,105","2,700","March 10, 2026",043605047,mmc-price-list
+733,2,Laboratory,ER PERIPHERAL SMEAR,"1,945","2,500","March 10, 2026",043605088,mmc-price-list
+734,2,Laboratory,ER PHENOBARBITAL,"4,700","5,900","March 10, 2026",043605066,mmc-price-list
+735,2,Laboratory,ER PHOSPHOROUS SERUM,"1,510","1,950","March 10, 2026",043605089,mmc-price-list
+736,2,Laboratory,ER POCT PACKAGE (ECPKMB ERTROP EDIMER EPBNP),"13,850","16,620","October 20, 2023",04360421,mmc-price-list
+737,2,Laboratory,ER POTASSIUM OTHER BODY FLUID,"1,855","2,400","March 10, 2026",043605078,mmc-price-list
+738,2,Laboratory,ER POTASSIUM SERUM,"1,510","1,950","March 10, 2026",04360422,mmc-price-list
+739,2,Laboratory,ER PREGNANCY TEST,875,"1,150","March 10, 2026",04360423,mmc-price-list
+740,2,Laboratory,ER PRO BNP (POCT),"7,485","9,400","March 10, 2026",04360424,mmc-price-list
+741,2,Laboratory,ER PROCALCITONIN,"6,795","8,500","March 10, 2026",043605090,mmc-price-list
+742,2,Laboratory,ER PROTHROMBIN TIME PROTIME CS,"1,420","1,850","March 10, 2026",043605091,mmc-price-list
+743,2,Laboratory,ER RBC MORPHOLOGY URINE,"2,235","2,800","March 10, 2026",043605093,mmc-price-list
+744,2,Laboratory,ER RETICULOCYTE COUNT,"1,040","1,300","March 10, 2026",043605094,mmc-price-list
+745,2,Laboratory,ER SALICYLATE,"6,735","8,500","March 10, 2026",043605067,mmc-price-list
+746,2,Laboratory,ER SGOT AST,"1,865","2,400","March 10, 2026",043605095,mmc-price-list
+747,2,Laboratory,ER SGPT ALT,"1,865","2,400","March 10, 2026",043605096,mmc-price-list
+748,2,Laboratory,ER SODIUM SERUM,"1,510","1,950","March 10, 2026",04360425,mmc-price-list
+749,2,Laboratory,ER STOOL ROUTINE,655,900,"March 10, 2026",043605073,mmc-price-list
+750,2,Laboratory,ER TOTAL BILIRUBIN,"1,420","1,850","March 10, 2026",043605101,mmc-price-list
+751,2,Laboratory,ER TOTAL PROTEIN,950,"1,850","March 10, 2026",043605103,mmc-price-list
+752,2,Laboratory,ER TRIGLY OTHER BODY FLUID,"2,075","2,600","March 10, 2026",043605104,mmc-price-list
+753,2,Laboratory,ER TROPONIN I HIGH SENSITIVITY,"6,735","8,500","March 10, 2026",043605105,mmc-price-list
+754,2,Laboratory,ER TROPONIN T (POCT),"8,100","10,200","March 10, 2026",04360426,mmc-price-list
+755,2,Laboratory,ER TSH CHEMI,"2,450","3,100","March 10, 2026",043605106,mmc-price-list
+756,2,Laboratory,ER TYPING ABO/RH ADULT,"2,885","3,700","March 10, 2026",043605050,mmc-price-list
+757,2,Laboratory,ER URIC ACID SERUM,985,"1,300","March 10, 2026",043605107,mmc-price-list
+758,2,Laboratory,ER URINALYSIS ROUTINE,760,"1,000","March 10, 2026",043605108,mmc-price-list
+759,2,Laboratory,ER VALPROIC (DEPAKENE EPIVAL),"4,210","5,300","March 10, 2026",043605068,mmc-price-list
+760,2,Laboratory,ER VANCOMYCIN,"6,785","8,500","March 10, 2026",043605069,mmc-price-list
+761,2,Laboratory,ER WET SMEAR (VAGINAL DISCHARGE ONLY),"1,875","2,400","March 10, 2026",043605065,mmc-price-list
+762,2,Laboratory,ANTI THROMBIN III CS,"5,960","12,200","March 10, 2026",04360427,mmc-price-list
+763,2,Laboratory,BLEEDING TIME MACRO,420,950,"March 10, 2026",04360428,mmc-price-list
+764,2,Laboratory,BLEEDING TIME MiCRO,420,950,"March 10, 2026",04360725,mmc-price-list
+765,2,Laboratory,CBC (COMPLETE BLOOD COUNT),630,"1,200","March 10, 2026",04360429,mmc-price-list
+766,2,Laboratory,CLOT RETRACTION,525,"1,050","March 10, 2026",04360430,mmc-price-list
+767,2,Laboratory,CLOTTING TIME,515,"1,050","March 10, 2026",04360431,mmc-price-list
+768,2,Laboratory,D-DIMER (MINI-VIDAS),"5,350","10,000","March 10, 2026",04360432,mmc-price-list
+769,2,Laboratory,DENGUE PANEL,"3,400","6,800","March 10, 2026",04360433,mmc-price-list
+770,2,Laboratory,DIRECT FACTOR X,"3,300","4,200","March 10, 2026",04360711,mmc-price-list
+771,2,Laboratory,ELLAGIC ACID CLOTTING TIME,"6,700","8,400","March 10, 2026",04360434,mmc-price-list
+772,2,Laboratory,ESR,630,"1,200","March 10, 2026",04360435,mmc-price-list
+773,2,Laboratory,FACTOR 5 CS LEIDEN,"8,910","17,400","March 10, 2026",04360436,mmc-price-list
+774,2,Laboratory,FACTOR SPECIFIC ASSAY IX CS,"5,150","10,700","March 10, 2026",04360437,mmc-price-list
+775,2,Laboratory,FACTOR SPECIFIC ASSAY V CS,"5,020","10,500","March 10, 2026",04360438,mmc-price-list
+776,2,Laboratory,FACTOR SPECIFIC ASSAY VIII CS,"5,100","11,000","March 10, 2026",04360439,mmc-price-list
+777,2,Laboratory,FIBRIN DEGRADATION PRODUCT,"5,400","10,100","March 10, 2026",04360440,mmc-price-list
+778,2,Laboratory,FIBRINOGEN LEVEL CS,"2,410","4,400","March 10, 2026",04360441,mmc-price-list
+779,2,Laboratory,HAMS TEST,740,"1,400","March 10, 2026",04360442,mmc-price-list
+780,2,Laboratory,HEMA COAG PANEL,"2,600","3,300","March 10, 2026",04360443,mmc-price-list
+781,2,Laboratory,HEMA STAIN/SLIDE,580,"1,150","March 10, 2026",04360444,mmc-price-list
+782,2,Laboratory,HEPARIN TEST,"2,230","4,200","March 10, 2026",04360445,mmc-price-list
+783,2,Laboratory,IMMATURE PLATELET FRACTION,950,"1,900","March 10, 2026",04360446,mmc-price-list
+784,2,Laboratory,LEPREP,780,"1,400","March 10, 2026",04360447,mmc-price-list
+785,2,Laboratory,LEUKOCYTE ALKALINE PHOS (LAP SCORE),"4,900","9,500","March 10, 2026",04360448,mmc-price-list
+786,2,Laboratory,LUPUS ANTI COAGULANT CS,"7,100","13,900","March 10, 2026",04360449,mmc-price-list
+787,2,Laboratory,MALARIAL ANTIBODY,"1,100","2,500","March 10, 2026",04360450,mmc-price-list
+788,2,Laboratory,MALARIAL ANTIGEN,960,"1,900","March 10, 2026",04360451,mmc-price-list
+789,2,Laboratory,MALARIAL SMEAR,"1,000","1,300","March 10, 2026",04360722,mmc-price-list
+790,2,Laboratory,MICROFILARIAL TEST,980,"1,950","March 10, 2026",04360452,mmc-price-list
+791,2,Laboratory,MYELOPEROXIDASE,"5,850","10,700","March 10, 2026",04360453,mmc-price-list
+792,2,Laboratory,NEONATAL PANEL PACKAGE,"1,230","4,600","March 10, 2026",04360464,mmc-price-list
+793,2,Laboratory,NEWBORN SCREENING,"1,910","1,910","March 10, 2026",04360454,mmc-price-list
+794,2,Laboratory,OSMOTIC FRAGILITY,770,"1,450","March 10, 2026",04360455,mmc-price-list
+795,2,Laboratory,PARTIAL THROMBOPLASTIN TIME CS,"1,260","2,700","March 10, 2026",04360456,mmc-price-list
+796,2,Laboratory,PERIPHERAL SMEAR,"1,100","2,450","March 10, 2026",04360457,mmc-price-list
+797,2,Laboratory,PROTEIN C CS,"5,750","36,300","March 10, 2026",04360458,mmc-price-list
+798,2,Laboratory,PROTEIN S CS,"9,300","29,200","March 10, 2026",04360459,mmc-price-list
+799,2,Laboratory,PROTHROMBIN TIME PROTIME CS,890,"1,850","March 10, 2026",04360460,mmc-price-list
+800,2,Laboratory,PT MIXING STUDIES,"2,850","5,600","March 10, 2026",04360461,mmc-price-list
+801,2,Laboratory,PTT MIXING STUDIES,"3,070","5,900","March 10, 2026",04360762,mmc-price-list
+802,2,Laboratory,RETICULOCYTE COUNT,720,"1,350","March 10, 2026",04360462,mmc-price-list
+803,2,Laboratory,SICKLE CELL THALASEMIA,550,"1,100","March 10, 2026",04360463,mmc-price-list
+804,2,Laboratory,SILICA CLOTTING TIME,"2,500","3,200","March 10, 2026",043607148,mmc-price-list
+805,2,Laboratory,THROMBIN TIME,"1,100","1,400","March 10, 2026",04360709,mmc-price-list
+806,2,Laboratory,VON WILLIBRAND FACTOR,"11,400","14,300","March 10, 2026",04360674,mmc-price-list
+807,2,Laboratory,ACACIA LONGIFOLIA (t19),"2,120","4,100","March 10, 2026",04360465,mmc-price-list
+808,2,Laboratory,ALLERGENS,"2,630","3,600","March 10, 2026",04360715,mmc-price-list
+809,2,Laboratory,ALLERGENS ADDTL TEST AFTER PANEL 10 & 20,"1,360","2,800","March 10, 2026",04360466,mmc-price-list
+810,2,Laboratory,ALLERGENS PANEL 10,"15,150","24,300","March 10, 2026",04360467,mmc-price-list
+811,2,Laboratory,ALLERGENS PANEL 20,"24,700","36,200","March 10, 2026",04360468,mmc-price-list
+812,2,Laboratory,ALLERGY PANEL 2PH (INHALANT PANEL),"11,100","13,900","March 10, 2026",043608408,mmc-price-list
+813,2,Laboratory,ALLERGY PANEL 3PH (FOOD PANEL),"11,100","13,900","March 10, 2026",043608409,mmc-price-list
+814,2,Laboratory,ALMOND (f20),"4,060","8,400","March 10, 2026",04360469,mmc-price-list
+815,2,Laboratory,ALTERNARIA ALTERNATA (m6),"2,120","4,100","March 10, 2026",04360470,mmc-price-list
+816,2,Laboratory,AMA ANTI MICHONDRIAL ANTIBODY,"4,100","8,500","March 10, 2026",04360471,mmc-price-list
+817,2,Laboratory,AMOXICILLIN (c6),"3,950","7,000","March 10, 2026",04360472,mmc-price-list
+818,2,Laboratory,ANA ANTI NUCLEAR ANTIBODY,"2,170","4,200","March 10, 2026",04360473,mmc-price-list
+819,2,Laboratory,ANA PROFILE (LUPUS PANEL),"11,400","19,600","March 10, 2026",04360474,mmc-price-list
+820,2,Laboratory,ANTI BETA 2 GLYCOPROTEIN IGG,"5,350","6,700","March 10, 2026",04360693,mmc-price-list
+821,2,Laboratory,ANTI BETA 2 GLYCOPROTEIN IGM,"5,350","6,700","March 10, 2026",04360694,mmc-price-list
+822,2,Laboratory,ANTI CARDIOLIPIN IGG,"7,650","14,900","March 10, 2026",04360475,mmc-price-list
+823,2,Laboratory,ANTI CARDIOLIPIN IGM,"7,650","14,900","March 10, 2026",04360476,mmc-price-list
+824,2,Laboratory,ANTI JO 1,"3,710","6,700","March 10, 2026",04360477,mmc-price-list
+825,2,Laboratory,ANTI NDNA (DOUBLE STRANDED DNA),"2,800","5,500","March 10, 2026",04360478,mmc-price-list
+826,2,Laboratory,ANTI RNP,"3,710","6,700","March 10, 2026",04360479,mmc-price-list
+827,2,Laboratory,ANTI SCL 70,"4,300","8,700","March 10, 2026",04360480,mmc-price-list
+828,2,Laboratory,ANTI SM (ANTI SMITH),"3,710","6,700","March 10, 2026",04360481,mmc-price-list
+829,2,Laboratory,ANTI SSA/RO,"3,050","5,800","March 10, 2026",04360482,mmc-price-list
+830,2,Laboratory,ANTI SSB/LA,"3,710","6,700","March 10, 2026",04360483,mmc-price-list
+831,2,Laboratory,ANTI-CHLAMYDIA TRACHOMATIS (IGA),"2,850","3,600","March 10, 2026",04360718,mmc-price-list
+832,2,Laboratory,ASMA ANTI SMOOTH MUSCLE ANTIBODY,"5,200","9,800","March 10, 2026",04360484,mmc-price-list
+833,2,Laboratory,ASPERGILLIUS FUMIG (m3),"2,700","5,400","March 10, 2026",04360485,mmc-price-list
+834,2,Laboratory,AVOCADO (f26),"2,670","5,400","March 10, 2026",04360486,mmc-price-list
+835,2,Laboratory,BACTERIAL MENINGITIS ANTIGEN,"2,870","5,600","March 10, 2026",04360487,mmc-price-list
+836,2,Laboratory,BAMBOO SHOOT (f51),"2,700","5,400","March 10, 2026",04360488,mmc-price-list
+837,2,Laboratory,BANANA (f92),"2,700","5,400","March 10, 2026",04360489,mmc-price-list
+838,2,Laboratory,BEEF (f27),"2,760","5,500","March 10, 2026",04360490,mmc-price-list
+839,2,Laboratory,BERMUDA GRASS (g2),"2,760","5,500","March 10, 2026",04360491,mmc-price-list
+840,2,Laboratory,BLUE MUSSEL (f37),"2,700","5,400","March 10, 2026",04360492,mmc-price-list
+841,2,Laboratory,C ANCA,"6,050","12,200","March 10, 2026",04360493,mmc-price-list
+842,2,Laboratory,CABBAGE (f216),"3,950","7,000","March 10, 2026",04360494,mmc-price-list
+843,2,Laboratory,CACAO (f93),"3,950","7,000","March 10, 2026",04360495,mmc-price-list
+844,2,Laboratory,CALDOSPORIUM HERB (m2),"2,700","5,400","March 10, 2026",04360496,mmc-price-list
+845,2,Laboratory,CANDIDA ALBICANS (m5),"2,700","5,400","March 10, 2026",04360497,mmc-price-list
+846,2,Laboratory,CASHEW NUT (f202),"3,950","7,000","March 10, 2026",04360498,mmc-price-list
+847,2,Laboratory,CAT DANDER (e1),"2,770","5,500","March 10, 2026",04360499,mmc-price-list
+848,2,Laboratory,CHEDDAR CHEESE (f81),"3,950","7,000","March 10, 2026",04360500,mmc-price-list
+849,2,Laboratory,CHICKEN MEAT (f83),"2,760","5,500","March 10, 2026",04360501,mmc-price-list
+850,2,Laboratory,CHIKUNGUNYA IGM,"2,120","4,000","March 10, 2026",04360502,mmc-price-list
+851,2,Laboratory,CHLAMYDIA ANTIGEN,"1,530","3,200","March 10, 2026",04360503,mmc-price-list
+852,2,Laboratory,COCKROACH (15),"4,060","8,400","March 10, 2026",04360504,mmc-price-list
+853,2,Laboratory,COFFEE (f247),"3,950","7,000","March 10, 2026",04360505,mmc-price-list
+854,2,Laboratory,COLD AGGLUTININS,560,"1,100","March 10, 2026",04360506,mmc-price-list
+855,2,Laboratory,COMMON RAGWEED (w1),"2,700","5,400","March 10, 2026",04360507,mmc-price-list
+856,2,Laboratory,CRAB (f23),"3,100","5,700","February 25, 2026",04360508,mmc-price-list
+857,2,Laboratory,CRYOGLOBULIN,780,"1,400","March 10, 2026",04360509,mmc-price-list
+858,2,Laboratory,CRYPTOCCOCCUS ANTIGEN/CALAS QUALI/QUANTI,"1,540","8,800","March 10, 2026",04360510,mmc-price-list
+859,2,Laboratory,D. FARINAE (d2),"2,760","5,500","March 10, 2026",04360511,mmc-price-list
+860,2,Laboratory,D. PTEROYSSINUS/HOUSE DUST (d1),"2,770","5,500","March 10, 2026",04360512,mmc-price-list
+861,2,Laboratory,DENGUE DUO IGG/IGM,"2,250","4,100","March 10, 2026",04360513,mmc-price-list
+862,2,Laboratory,DENGUE NS 1,"3,250","6,100","March 10, 2026",04360514,mmc-price-list
+863,2,Laboratory,DOG DANDER (e2),"2,760","5,500","March 10, 2026",04360515,mmc-price-list
+864,2,Laboratory,EBV IGM/IGG,"3,050","6,700","March 10, 2026",04360516,mmc-price-list
+865,2,Laboratory,EGGWHITE (f1),"2,770","5,500","March 10, 2026",04360517,mmc-price-list
+866,2,Laboratory,EGGYOLK (f75),"2,760","5,500","March 10, 2026",04360518,mmc-price-list
+867,2,Laboratory,ELECTROPHORESIS CSF W/ IMMUNOFIXA TEST OLIGOCLONAL BANDING,"13,900","24,100","March 10, 2026",04360519,mmc-price-list
+868,2,Laboratory,FEATHER MIX (ex73),"4,060","8,400","March 10, 2026",04360520,mmc-price-list
+869,2,Laboratory,FISH COD (f3),"1,830","3,700","March 10, 2026",04360521,mmc-price-list
+870,2,Laboratory,FOOD ALLERGEN,"14,600","29,000","March 10, 2026",04360716,mmc-price-list
+871,2,Laboratory,FX2 (SHRIMPS TUNA SALMON BLUE MUSSEL FISH CO),"3,950","7,000","March 10, 2026",04360522,mmc-price-list
+872,2,Laboratory,FX5 E (EGG WHITE MILK FISH WHEAT PEANUT SOYA),"4,650","9,200","March 10, 2026",04360523,mmc-price-list
+873,2,Laboratory,G6PD ADULT,"1,880","3,700","March 10, 2026",04360524,mmc-price-list
+874,2,Laboratory,G6PD CONFIRMATORY PEDIA,445,445,"March 10, 2026",04360525,mmc-price-list
+875,2,Laboratory,GROUP B STREP (GBS) SCREENING TEST,"1,800","2,300","March 10, 2026",04360719,mmc-price-list
+876,2,Laboratory,GUINEA PIG EPITH. (e6),"2,700","5,400","March 10, 2026",04360526,mmc-price-list
+877,2,Laboratory,HAZEL NUT (f17),"3,950","7,000","March 10, 2026",04360527,mmc-price-list
+878,2,Laboratory,HELICOBACTER PYLORI IGG/IGM,"2,910","6,400","March 10, 2026",04360528,mmc-price-list
+879,2,Laboratory,HEMOGLOBIN ELECTROPHORESIS,"5,400","10,100","March 10, 2026",04360529,mmc-price-list
+880,2,Laboratory,HERPES SIMPLEX I IGG/IGM,"3,500","6,700","March 10, 2026",04360530,mmc-price-list
+881,2,Laboratory,HERPES SIMPLEX II IGG/IGM,"3,500","6,700","March 10, 2026",04360531,mmc-price-list
+882,2,Laboratory,HOLLISTIER-STIER LABS (h2),"2,770","5,500","March 10, 2026",04360532,mmc-price-list
+883,2,Laboratory,IMMUNOFIXATION SERUM,"11,000","19,100","March 10, 2026",04360533,mmc-price-list
+884,2,Laboratory,INFECTIOUS MONO (HETEROPHILE) TEST,"1,300","2,700","March 10, 2026",04360534,mmc-price-list
+885,2,Laboratory,INHALANT ALLERGEN-10 ITEMS,"17,800","22,300","March 10, 2026",04360717,mmc-price-list
+886,2,Laboratory,JOHNSON GRASS (g10),"2,700","5,400","March 10, 2026",04360535,mmc-price-list
+887,2,Laboratory,KIWI (f84),"2,700","5,400","March 10, 2026",04360536,mmc-price-list
+888,2,Laboratory,LEPTOSPIRA IGG/IGM,"1,560","3,100","March 10, 2026",04360537,mmc-price-list
+889,2,Laboratory,LETTUCE (f215),"3,950","7,000","March 10, 2026",04360538,mmc-price-list
+890,2,Laboratory,LKM 1 (LIVER/KIDNEY MICROSOME) ANTIBODY TEST,"5,550","10,300","March 10, 2026",04360539,mmc-price-list
+891,2,Laboratory,MANGO (f91),"3,950","7,000","March 10, 2026",04360540,mmc-price-list
+892,2,Laboratory,MILK (f2),"2,770","5,500","March 10, 2026",04360541,mmc-price-list
+893,2,Laboratory,MOSQUITO (171),"3,950","7,000","March 10, 2026",04360542,mmc-price-list
+894,2,Laboratory,MOULD MIX (mx2),"4,060","8,400","March 10, 2026",04360543,mmc-price-list
+895,2,Laboratory,MOUSE EPITHELIEUM (ex70),"3,950","7,000","March 10, 2026",04360544,mmc-price-list
+896,2,Laboratory,MUMPS IGG/IGM,"3,500","8,800","March 10, 2026",04360545,mmc-price-list
+897,2,Laboratory,MYCOPLASMA PNEUMONIAE IGM,"2,450","4,400","March 10, 2026",04360546,mmc-price-list
+898,2,Laboratory,NITROTYROSINE ASSAY OUP,"3,400","3,400","March 10, 2026",04360547,mmc-price-list
+899,2,Laboratory,ORANGE (f33),"2,700","5,400","March 10, 2026",04360548,mmc-price-list
+900,2,Laboratory,OYSTER (f290),"3,950","7,000","March 10, 2026",04360549,mmc-price-list
+901,2,Laboratory,P ANCA,"6,050","12,200","March 10, 2026",04360550,mmc-price-list
+902,2,Laboratory,PARROT FEATHERS (e213),"3,950","7,000","March 10, 2026",04360551,mmc-price-list
+903,2,Laboratory,PEANUT (f13),"1,830","3,700","March 10, 2026",04360552,mmc-price-list
+904,2,Laboratory,PHADIATOP,"4,400","8,800","March 10, 2026",04360553,mmc-price-list
+905,2,Laboratory,PORK (f26),"1,770","3,600","March 10, 2026",04360554,mmc-price-list
+906,2,Laboratory,PROTEIN ELECTROPHORESIS SERUM,"6,650","13,000","March 10, 2026",04360555,mmc-price-list
+907,2,Laboratory,QUANTIFERON INCUBATION,"1,580","2,000","March 10, 2026",04360687,mmc-price-list
+908,2,Laboratory,RICE (f9),"2,700","5,400","March 10, 2026",04360556,mmc-price-list
+909,2,Laboratory,RPR QUALI/QUANTI,600,"3,100","March 10, 2026",04360557,mmc-price-list
+910,2,Laboratory,RUBEOLA IGG/IGM,"6,100","12,300","March 10, 2026",04360558,mmc-price-list
+911,2,Laboratory,SALMON (f41),"2,770","5,500","March 10, 2026",04360559,mmc-price-list
+912,2,Laboratory,SALMONELLA TYPHI IGG/IGM,"2,050","4,000","March 10, 2026",04360560,mmc-price-list
+913,2,Laboratory,SERAMOEBA QUALI/QUANTI,"1,090","3,200","March 10, 2026",04360561,mmc-price-list
+914,2,Laboratory,SESAME SEED (f10),"2,700","5,400","March 10, 2026",04360562,mmc-price-list
+915,2,Laboratory,SHRIMPS (F24),"2,770","5,500","March 10, 2026",04360563,mmc-price-list
+916,2,Laboratory,SOYA BEANS (f14),"2,770","5,500","March 10, 2026",04360564,mmc-price-list
+917,2,Laboratory,SQUID (f58),"2,770","5,500","March 10, 2026",04360565,mmc-price-list
+918,2,Laboratory,TB QUANTIFERON ELISA,"7,750","15,000","March 10, 2026",04360566,mmc-price-list
+919,2,Laboratory,TOMATO (f25),"1,770","3,600","March 10, 2026",04360567,mmc-price-list
+920,2,Laboratory,TORCH,"12,600","21,100","March 10, 2026",04360568,mmc-price-list
+921,2,Laboratory,TORCH IGG,"7,000","8,800","March 10, 2026",043608426,mmc-price-list
+922,2,Laboratory,TORCH IGG/IGM/SERUM,"22,000","27,500","March 10, 2026",043608428,mmc-price-list
+923,2,Laboratory,TORCH IGM,"7,000","8,800","March 10, 2026",043608427,mmc-price-list
+924,2,Laboratory,TREPONEMA PALLIDUM AGGLUTINATION ASSAY QUALI/QUANTI,"1,705","9,300","March 10, 2026",04360569,mmc-price-list
+925,2,Laboratory,TUNA (f40),"2,770","5,500","March 10, 2026",04360570,mmc-price-list
+926,2,Laboratory,TYPHIDOT DUO (IGG & IGM) (LONG METHOD) - STAT,"3,605","4,600","March 10, 2026",04360571,mmc-price-list
+927,2,Laboratory,TYPHOID PANEL,"2,270","2,900","March 10, 2026",04360572,mmc-price-list
+928,2,Laboratory,URINE PROTEIN ELECTROPHORESIS,"7,200","13,700","March 10, 2026",04360573,mmc-price-list
+929,2,Laboratory,VARICELLA IGG/IGM,"3,050","6,800","March 10, 2026",04360574,mmc-price-list
+930,2,Laboratory,VDRL QUALI / QUANTI,720,"3,100","March 10, 2026",04360575,mmc-price-list
+931,2,Laboratory,WALNUT (f256),"2,700","5,400","March 10, 2026",04360576,mmc-price-list
+932,2,Laboratory,WEIL FELIX ONLY,"1,070","2,400","March 10, 2026",04360577,mmc-price-list
+933,2,Laboratory,WHEAT (f4),"2,770","5,500","March 10, 2026",04360578,mmc-price-list
+934,2,Laboratory,WIDAL AND WEIL FELIX TEST,"2,560","5,200","March 10, 2026",04360579,mmc-price-list
+935,2,Laboratory,WIDAL ONLY,"1,490","3,000","March 10, 2026",04360580,mmc-price-list
+936,2,Laboratory,TOTAL IGE - SPECIFIC IGE,"3,000","3,800","March 10, 2026",043608424,mmc-price-list
+937,2,Laboratory,AFB CONCENTRATION (ACID FAST),"1,090","2,500","March 10, 2026",04360603,mmc-price-list
+938,2,Laboratory,AFB SMEAR/DIRECT,"1,090","2,500","March 10, 2026",04360604,mmc-price-list
+939,2,Laboratory,BACTERIAL CHALLENGE OUP,"1,670","1,670","March 10, 2026",04360605,mmc-price-list
+940,2,Laboratory,BACTERIAL CULTURE AND SUSCEPTIBILITY,"10,900","13,700","March 10, 2026",04360695,mmc-price-list
+941,2,Laboratory,BACTERIAL CULTURE PANEL,"37,300","46,700","March 10, 2026",04360606,mmc-price-list
+942,2,Laboratory,BACTERIAL ISOLATE OUP,610,610,"March 10, 2026",04360607,mmc-price-list
+943,2,Laboratory,BLOOD CS (AEROBIC AND ANAEROBIC),"10,800","13,500","March 10, 2026",04360608,mmc-price-list
+944,2,Laboratory,BLOOD CS PEDIATRIC,"6,600","8,300","March 10, 2026",04360609,mmc-price-list
+945,2,Laboratory,CARBAPENAMESE INACTIVATION METHOD,"1,210","1,600","March 10, 2026",04360610,mmc-price-list
+946,2,Laboratory,CRYPTOSPORIDIUM,"1,090","2,500","March 10, 2026",04360611,mmc-price-list
+947,2,Laboratory,CS BODY FLUIDS (BAcT/ALERT BOTTLE),"10,800","13,500","March 10, 2026",04360612,mmc-price-list
+948,2,Laboratory,CS OTHER SPECIMEN AEROBIC/ANAEROBIC,"5,100","9,600","March 10, 2026",04360613,mmc-price-list
+949,2,Laboratory,CS STOOL + ECOLI,"3,710","4,700","March 10, 2026",04360614,mmc-price-list
+950,2,Laboratory,CS URINE (URINE CULTURE),"4,850","6,100","March 10, 2026",04360615,mmc-price-list
+951,2,Laboratory,E-TEST (MIC),"1,830","2,300","March 10, 2026",04360616,mmc-price-list
+952,2,Laboratory,FUNGAL C/S,"5,650","7,100","March 10, 2026",04360617,mmc-price-list
+953,2,Laboratory,FUNGAL SMEAR KOH,645,"1,300","March 10, 2026",04360618,mmc-price-list
+954,2,Laboratory,GASTRO PANEL 2,"3,600","4,500","March 10, 2026",04360619,mmc-price-list
+955,2,Laboratory,GRAMS STAIN,"1,780","3,600","March 10, 2026",04360620,mmc-price-list
+956,2,Laboratory,IDENTIFICATION OF FILAMENTOUS FUNGI,"3,710","4,700","March 10, 2026",04360621,mmc-price-list
+957,2,Laboratory,INDIA INK,780,"1,600","October 20, 2025",04360622,mmc-price-list
+958,2,Laboratory,MILK CULTURE,"1,110","1,400","March 10, 2026",04360623,mmc-price-list
+959,2,Laboratory,MOTT SPECIATION,"4,050","5,100","March 10, 2026",04360624,mmc-price-list
+960,2,Laboratory,MTB HIGH CONCENTRATION DRUG SUSCEPTIBILITY,"9,800","12,300","March 10, 2026",04361187,mmc-price-list
+961,2,Laboratory,MTB SENSITIVITY (2ND LINE DRUGS),"5,150","6,500","March 10, 2026",04360625,mmc-price-list
+962,2,Laboratory,MYCOBACTERIAL CULTURE,"8,150","10,200","March 10, 2026",04361188,mmc-price-list
+963,2,Laboratory,MYCOBACTERIAL SUSCEPTIBILITY,"9,000","11,300","March 10, 2026",4360696,mmc-price-list
+964,2,Laboratory,POEA-KR II PACKAGE,"1,900","2,400","March 10, 2026",4360698,mmc-price-list
+965,2,Laboratory,POEA-KR PACKAGE,"2,800","3,500","March 10, 2026",4360699,mmc-price-list
+966,2,Laboratory,SENSITIVITY OF FILAMENTOUS FUNGI,"5,400","6,800","March 10, 2026",04360626,mmc-price-list
+967,2,Laboratory,SENSITIVITY OF MOTT,"4,850","6,100","March 10, 2026",04360627,mmc-price-list
+968,2,Laboratory,SENSITIVITY TO COLISTIN C/T CAZ/AVI,"3,950","5,000","March 10, 2026",04360628,mmc-price-list
+969,2,Laboratory,SPUTUM C/S,"8,150","10,200","March 10, 2026",04361186,mmc-price-list
+970,2,Laboratory,STERILE BODY FLUID PANEL,"23,000","28,800","March 10, 2026",04360629,mmc-price-list
+971,2,Laboratory,TB CULTURE SENSITIVITY,"3,820","4,800","March 10, 2026",04360630,mmc-price-list
+972,2,Laboratory,UROGENITAL CULTURE PANEL,"15,700","19,700","March 10, 2026",04360631,mmc-price-list
+973,2,Laboratory,WATER CULTURE OUP,"1,110","1,400","March 10, 2026",04360632,mmc-price-list
+974,2,Laboratory,WET SMEAR (VAGINAL DISCHARGE),"1,030","2,400","March 10, 2026",04360633,mmc-price-list
+975,2,Laboratory,YEAST SENSITIVITY,"5,350","6,700","March 10, 2026",04360697,mmc-price-list
+976,2,Laboratory,ZERBAXA STUDY OUP,"1,650","1,650","March 10, 2026",04360634,mmc-price-list
+977,2,Laboratory,ALPHA GLOBIN GENOTYPING,"15,900","25,200","March 10, 2026",04360635,mmc-price-list
+978,2,Laboratory,ASTRAZENECA EGFR MUTATION OUP,"9,150","9,150","August 25, 2021",04360636,mmc-price-list
+979,2,Laboratory,BCR-ABL (QRT-PCR),"15,800","19,800","March 10, 2026",04360637,mmc-price-list
+980,2,Laboratory,BETA GLOBIN GENOTYPING,"14,800","23,800","March 10, 2026",04360638,mmc-price-list
+981,2,Laboratory,BLOOD CULTURE IDENTIFICATION PANEL,"29,000","36,300","March 10, 2026",04360672,mmc-price-list
+982,2,Laboratory,C. DIFFICILE PCR,"8,500","10,700","March 10, 2026",04360667,mmc-price-list
+983,2,Laboratory,CARBA R. PCR,"11,300","14,200","March 10, 2026",04360668,mmc-price-list
+984,2,Laboratory,CHIKUNGUNYA VIRUS PCR,"12,000","15,000","March 10, 2026",04360639,mmc-price-list
+985,2,Laboratory,CHLAMYDIA TRACHOMATIS/NEISSERIA GONORRHOEAE (CT/NG) PCR,"7,950","10,000","March 10, 2026",04360640,mmc-price-list
+986,2,Laboratory,COVID 19 TEST,"3,360","3,360","March 10, 2026",04360641,mmc-price-list
+987,2,Laboratory,CRC - RESPIRATORY PANEL,"10,300","12,900","March 10, 2026",04360690,mmc-price-list
+988,2,Laboratory,CYTOMEGALOVIRUS (CMV) QUANTITATIVE,"9,900","19,200","March 10, 2026",04360642,mmc-price-list
+989,2,Laboratory,DENGUE RNA PCR (SCREENING),"11,000","13,800","March 10, 2026",04360643,mmc-price-list
+990,2,Laboratory,EGFR MUTATION ANALYSIS,"40,200","85,900","March 10, 2026",04360645,mmc-price-list
+991,2,Laboratory,ENTEROVIRUS RNA-PCR,"12,700","15,900","March 10, 2026",04360646,mmc-price-list
+992,2,Laboratory,FACTOR II AND V PCR,"12,700","15,900","March 10, 2026",04360669,mmc-price-list
+993,2,Laboratory,GASTROINTESTINAL PANEL,"32,130","40,200","March 10, 2026",04360647,mmc-price-list
+994,2,Laboratory,GBS PCR,"10,300","12,900","March 10, 2026",04360670,mmc-price-list
+995,2,Laboratory,HACT VIRAL LOAD,"10,400","13,000","March 10, 2026",04360651,mmc-price-list
+996,2,Laboratory,HAEMOCHROMATOSIS MUTATION ANALYSIS,"10,800","18,800","March 10, 2026",04360648,mmc-price-list
+997,2,Laboratory,HBV - DNA PCR,"6,300","16,500","March 10, 2026",04360710,mmc-price-list
+998,2,Laboratory,HBV DNA REAL TIME PCR-TAQMAN HEPATITIS B VIRUS,"10,000","71,700","March 10, 2026",04360649,mmc-price-list
+999,2,Laboratory,HCV VIRAL LOAD,"13,850","17,400","March 10, 2026",04360650,mmc-price-list
+1000,2,Laboratory,HEPATITIS C VIRUS (HCV) DNA SINGLE-RUN,"12,000","15,000","March 10, 2026",04361288,mmc-price-list
+1001,2,Laboratory,HLA TISSUE TYPING (PCR),"25,100","36,700","March 10, 2026",04360653,mmc-price-list
+1002,2,Laboratory,HLA-B27 (PCR),"12,390","20,800","March 10, 2026",04360652,mmc-price-list
+1003,2,Laboratory,HPV (BATCH RUN),"5,550","7,000","March 10, 2026",04360713,mmc-price-list
+1004,2,Laboratory,HPV GENOTYPING,"8,750","11,000","March 10, 2026",04360654,mmc-price-list
+1005,2,Laboratory,HSV 1 & 2 DNA-PCR,"11,600","14,500","March 10, 2026",04360655,mmc-price-list
+1006,2,Laboratory,INFLUENZA A/B CONFIRMATORY,"17,800","22,300","March 10, 2026",04360656,mmc-price-list
+1007,2,Laboratory,JAK2 MUTATION PCR,"13,600","17,000","March 10, 2026",04360657,mmc-price-list
+1008,2,Laboratory,JAPANESE ENCEPHALITIS VIRUS RNA-PCR,"13,700","17,200","March 10, 2026",04360658,mmc-price-list
+1009,2,Laboratory,LINKSEQ HLA TISSUE TYPING,"107,500","134,400","March 10, 2026",04361289,mmc-price-list
+1010,2,Laboratory,MEASLES VIRUS RNA-PCR,"12,200","15,300","March 10, 2026",04360659,mmc-price-list
+1011,2,Laboratory,MENINGITIS PANEL,"40,400","50,500","March 10, 2026",04360660,mmc-price-list
+1012,2,Laboratory,METHICILLIN-RESISTANT STAPHYLOCOCCUS AUREUS (MRSA),"11,400","14,300","March 10, 2026",04360661,mmc-price-list
+1013,2,Laboratory,MTB PCR GENE EXPERT,"10,300","18,200","March 10, 2026",04360663,mmc-price-list
+1014,2,Laboratory,OP COVID-19 PANEL,"25,150","25,150","October 23, 2025",04360644,mmc-price-list
+1015,2,Laboratory,PNEUMOCYSTIS CARINII (JIROVECI) DNA PCR,"12,500","15,700","March 10, 2026",04360664,mmc-price-list
+1016,2,Laboratory,PNEUMONIA BUNDLE,"32,600","40,800","March 10, 2026",04360665,mmc-price-list
+1017,2,Laboratory,PNEUMONIA PANEL,"22,100","27,700","March 10, 2026",04360714,mmc-price-list
+1018,2,Laboratory,RESPIRATORY PANEL,"11,900","14,900","March 10, 2026",04360666,mmc-price-list
+1019,2,Laboratory,TAQPATH: GAIHN-HAI,"2,630","3,300","March 10, 2026",4360700,mmc-price-list
+1020,2,Laboratory,CP BUNDLE A - BASIC,"6,900","6,900","March 10, 2026",04361181,mmc-price-list
+1021,2,Laboratory,CP BUNDLE B - BLEEDING,"8,700","8,700","March 10, 2026",04361182,mmc-price-list
+1022,2,Laboratory,CP BUNDLE C - CARDIAC,"16,600","16,600","March 10, 2026",04361183,mmc-price-list
+1023,2,Laboratory,CP BUNDLE D - DM,"10,400","10,400","March 10, 2026",04361184,mmc-price-list
+1024,2,Laboratory,GLUCOSE CAPILLARY,350,700,"July 12, 2021",04360671,mmc-price-list
+1025,2,Laboratory,KETONES,560,680,"July 12, 2021",04360673,mmc-price-list
+1026,2,Laboratory,OXYGEN SATURATION DETERMINATION,30,30,"October 20, 2023",04360682,mmc-price-list
+1027,2,Laboratory,SAFE KEEPING W/ PROCESSING,780,"1,050","March 10, 2026",04360675,mmc-price-list
+1028,2,Laboratory,SPECIMEN SAFE KEEPING,370,470,"March 10, 2026",04360676,mmc-price-list
+1029,2,Laboratory,BLOOD EXTRACTION LAB OUP,465,465,"March 10, 2026",04360696,mmc-price-list
+1030,2,Laboratory,COVID-19 RAPID ANTIGEN SCREENING TEST (POCT),660,660,"March 10, 2026",04360678,mmc-price-list
+1031,2,Laboratory,CREATININE (POCT),"1,050","1,260","July 12, 2021",04360679,mmc-price-list
+1032,2,Laboratory,GLUCOSE CAPILLARY (CBG) RANDOM,405,510,"March 10, 2026",04360700,mmc-price-list
+1033,2,Laboratory,INFLUENZA A AND B SCREENING (POCT),"2,800","3,500","March 10, 2026",04360680,mmc-price-list
+1034,2,Laboratory,LABORATORY RAPID COVID CARE BUNDLE,"2,200","2,200","March 10, 2026",04360683,mmc-price-list
+1035,2,Laboratory,PANBIO COVID-19/FLU A&B RAPID PANEL,"1,050","1,400","March 10, 2026",04360677,mmc-price-list
+1036,2,Laboratory,POCT - HIGH SENSITIVITY TROPONIN I,"6,700","8,400","March 10, 2026",04360701,mmc-price-list
+1037,2,Laboratory,POCT - NA/K/RBS,"4,300","5,400","March 10, 2026",04360702,mmc-price-list
+1038,2,Laboratory,POCT - NA/RBS,"2,500","3,200","March 10, 2026",04360703,mmc-price-list
+1039,2,Laboratory,TB LAM ANTIGEN TEST,"2,200","2,700","February 20, 2026",04360681,mmc-price-list
+1040,2,Imaging,ADVISA DR MRI A3DR01(DEVICE PACKAGE),"454,615","454,615","July 30, 2026",06000048,mmc-price-list
+1041,2,Imaging,AMPLIA MRI QUAD CRTD,"1,723,480","1,723,490","July 30, 2026",06000063,mmc-price-list
+1042,2,Imaging,AZURE XT DR MRI WL OUS W2DR01,"504,500","504,500","September 10, 2025",06000083,mmc-price-list
+1043,2,Imaging,AZURE XT SR MRI PULSE GEN W2SR01,"271,250","271,250","September 10, 2025",06000084,mmc-price-list
+1044,2,Imaging,GEL; TRANSONIC ULTRASOUND GEL 5 LITERS,"1,734","1,734","September 26, 2025",06000824,mmc-price-list
+1045,2,Imaging,GEL; ULTRASOUND 5L,"1,365","3,037","September 26, 2025",06000825,mmc-price-list
+1046,2,Imaging,MR CHOLANGIOPANCREATOGRAPHY W/ CONTRAST,"18,900","36,500","March 04, 2026",0430030001,mmc-price-list
+1047,2,Imaging,MR ENTEROGRAPHY,"18,200","53,100","March 04, 2026",0430030002,mmc-price-list
+1048,2,Imaging,MR SPECTROSCOPY,"11,150","34,000","March 04, 2026",0430030003,mmc-price-list
+1049,2,Imaging,MRA ABDOMEN W/ CONTRAST,"25,600","49,700","March 04, 2026",0430030004,mmc-price-list
+1050,2,Imaging,MRA ABDOMINAL AORTA W/ CONTRAST,"25,400","49,500","March 04, 2026",0430030128,mmc-price-list
+1051,2,Imaging,MRA BRAIN W/ AND W/O CONTRAST,"10,900","29,000","March 04, 2026",0430030005,mmc-price-list
+1052,2,Imaging,MRA CHEST W/ IV CONTRAST,"24,700","48,600","March 04, 2026",0430030006,mmc-price-list
+1053,2,Imaging,MRA FACE W/ CONTRAST,"24,700","48,600","March 04, 2026",0430030007,mmc-price-list
+1054,2,Imaging,MRA KIDNEY (RENAL ARTERIES) W/ CONTRAST,"24,700","48,600","March 04, 2026",0430030008,mmc-price-list
+1055,2,Imaging,MRA NECK & CAROTID W/ CONTRAST,"19,100","37,200","March 04, 2026",0430030009,mmc-price-list
+1056,2,Imaging,MRA NECK W/O CONTRAST,"10,900","23,400","March 04, 2026",0430030129,mmc-price-list
+1057,2,Imaging,MRA PERIPHERAL W/ CONTRAST,"30,800","56,600","March 04, 2026",0430030010,mmc-price-list
+1058,2,Imaging,MRA RENAL ARTERIES W/O CONTRAST,"16,700","32,700","March 04, 2026",0430030011,mmc-price-list
+1059,2,Imaging,MRA THORACIC AORTA W/ CONTRAST,"25,400","49,500","March 04, 2026",0430030012,mmc-price-list
+1060,2,Imaging,MRA UPPER ABDOMEN W/ CONTRAST,"25,000","49,000","March 04, 2026",0430030013,mmc-price-list
+1061,2,Imaging,MRI & MRA HEAD & MRA CAROTID W/ IV CONTRAST,"22,800","46,200","March 04, 2026",0430030014,mmc-price-list
+1062,2,Imaging,MRI ADRENAL GLANDS W/ AND W/O CONTRAST,"12,600","34,800","March 04, 2026",0430030015,mmc-price-list
+1063,2,Imaging,MRI ANKLE W/ AND W/O CONTRAST,"11,300","28,800","March 04, 2026",0430030033,mmc-price-list
+1064,2,Imaging,MRI ARM W/ AND W/O CONTRAST,"11,300","28,800","March 04, 2026",0430030034,mmc-price-list
+1065,2,Imaging,MRI ARTHROGRAM,"14,800","28,800","March 04, 2026",0430030016,mmc-price-list
+1066,2,Imaging,MRI BRAIN CSF FLOW W/O CONTRAST,"17,700","33,400","March 04, 2026",0430030130,mmc-price-list
+1067,2,Imaging,MRI BRAIN DWIS ONLY W/O CONTRAST,"7,800","18,300","March 04, 2026",0430030131,mmc-price-list
+1068,2,Imaging,MRI BRAIN KOLIBRI W/ AND W/O CONTRAST,"11,300","26,600","March 04, 2026",0430030132,mmc-price-list
+1069,2,Imaging,MRI BRAIN PERFUSION W/ CONTRAST,"30,400","56,200","March 04, 2026",0430030133,mmc-price-list
+1070,2,Imaging,MRI BRAIN STEM RECONSTRUCTION (THIN SLICE 1MM),"2,850","3,600","March 04, 2026",0430030018,mmc-price-list
+1071,2,Imaging,MRI BRAIN W/ AND W/O CONTRAST,"11,300","26,700","March 04, 2026",0430030134,mmc-price-list
+1072,2,Imaging,MRI BRAIN W/ CONTRAST & MR SPECTROSCOPY,"20,100","37,700","March 04, 2026",0430030125,mmc-price-list
+1073,2,Imaging,MRI BRAIN W/ CONTRAST & MRA INTRACRANIAL VESSELS,"16,300","31,800","March 04, 2026",0430030135,mmc-price-list
+1074,2,Imaging,MRI BRAIN W/O CONTRAST & MRA INTRACRANIAL VESSELS,"12,600","25,600","March 04, 2026",0430030127,mmc-price-list
+1075,2,Imaging,MRI CARDIAC W/ AND W/O CONTRAST,"28,300","57,400","March 04, 2026",0430030019,mmc-price-list
+1076,2,Imaging,MRI CERVICAL SPINE W/ AND W/O CONTRAST,"11,300","29,200","March 04, 2026",0430030020,mmc-price-list
+1077,2,Imaging,MRI CERVICO-THORACIC SPINE W/ AND W/O CONTRAST,"18,600","46,700","March 04, 2026",0430030021,mmc-price-list
+1078,2,Imaging,MRI CHEST W/ AND W/O CONTRAST,"12,100","33,900","March 04, 2026",0430030022,mmc-price-list
+1079,2,Imaging,MRI CHOLANGIOPANCREATOGRAPHY W/O CONTRAST,"12,500","25,400","March 04, 2026",0430030023,mmc-price-list
+1080,2,Imaging,MRI COCCYX W/ CONTRAST,"14,500","28,400","March 04, 2026",0430030024,mmc-price-list
+1081,2,Imaging,MRI ELBOW W/ AND W/O CONTRAST,"11,300","28,800","March 04, 2026",0430030035,mmc-price-list
+1082,2,Imaging,MRI FIBER TRACKING OF BRAIN (TRACTOGRAPHY) W/O CONTRAST,"16,200","31,800","March 04, 2026",0430030025,mmc-price-list
+1083,2,Imaging,MRI FOOT W/ AND W/O CONTRAST,"11,300","29,700","March 04, 2026",0430030036,mmc-price-list
+1084,2,Imaging,MRI FOREARM W/ AND W/O CONTRAST,"11,300","28,800","March 04, 2026",0430030037,mmc-price-list
+1085,2,Imaging,MRI FUNCTIONAL FOR THE BRAIN W/O CONTRAST,"16,200","31,800","March 04, 2026",0430030029,mmc-price-list
+1086,2,Imaging,MRI HAND W/ AND W/O CONTRAST,"11,300","28,800","March 04, 2026",0430030038,mmc-price-list
+1087,2,Imaging,MRI HIP JOINT/PELVIC BONE W/ AND W/O CONTRAST,"12,300","28,900","March 04, 2026",0430030031,mmc-price-list
+1088,2,Imaging,MRI INTERNAL ACOUSTIC CANAL W/ AND W/O CONTRAST,"11,900","28,400","March 04, 2026",0430030032,mmc-price-list
+1089,2,Imaging,MRI KNEE W/ AND W/O CONTRAST,"11,300","28,800","March 04, 2026",0430030040,mmc-price-list
+1090,2,Imaging,MRI LEG W/ AND W/O CONTRAST,"11,300","29,700","March 04, 2026",0430030041,mmc-price-list
+1091,2,Imaging,MRI LIVER W/ PRIMOVIST,"38,900","70,900","March 04, 2026",0430030136,mmc-price-list
+1092,2,Imaging,MRI LOWER ABDOMEN/PELVIS W/ AND W/O CONTRAST,"12,600","35,800","March 04, 2026",0430030126,mmc-price-list
+1093,2,Imaging,MRI LUMBAR SPINE W/ AND W/O CONTRAST,"10,900","29,200","March 04, 2026",0430030047,mmc-price-list
+1094,2,Imaging,MRI LUMBOSACRAL SPINE W/ AND W/O CONTRAST,"18,600","46,700","March 04, 2026",0430030124,mmc-price-list
+1095,2,Imaging,MRI MAMMOGRAPHY W/ CONTRAST,"20,100","37,700","March 04, 2026",0430030048,mmc-price-list
+1096,2,Imaging,MRI MULTIPARAMETRIC PROSTATE W/ AND W/O CONTRAST,"12,100","45,600","March 04, 2026",0430030049,mmc-price-list
+1097,2,Imaging,MRI NECK/NASOPHARYNX W/ AND W/O CONTRAST,"11,500","30,400","March 04, 2026",0430030050,mmc-price-list
+1098,2,Imaging,MRI OF THE LIVER (PRIMOVIST) WITH MRCP,"41,000","51,300","March 04, 2026",0430030142,mmc-price-list
+1099,2,Imaging,MRI ORBITS W/ AND W/O CONTRAST,"11,900","28,900","March 04, 2026",0430030051,mmc-price-list
+1100,2,Imaging,MRI SACRUM OR COCCYX W/O CONTRAST,"11,300","23,900","March 04, 2026",0430030052,mmc-price-list
+1101,2,Imaging,MRI SACRUM W/ CONTRAST,"15,200","28,800","March 04, 2026",0430030139,mmc-price-list
+1102,2,Imaging,MRI SELLA TURCICA (PITUITARY GLAND) W/ AND W/O CONTRAST,"11,900","28,400","March 04, 2026",0430030053,mmc-price-list
+1103,2,Imaging,MRI SHOULDER W/ AND W/O CONTRAST,"11,300","28,800","March 04, 2026",0430030042,mmc-price-list
+1104,2,Imaging,MRI SPECTROSCOPY W/ IV CONTRAST,"26,200","50,500","March 04, 2026",0430030140,mmc-price-list
+1105,2,Imaging,MRI TEMPOROMANDIBULAR JOINT W/O CONTRAST,"14,400","27,800","March 04, 2026",0430030055,mmc-price-list
+1106,2,Imaging,MRI THIGH W/ AND W/O CONTRAST,"11,300","28,800","March 04, 2026",0430030043,mmc-price-list
+1107,2,Imaging,MRI THORACIC SPINE W/ AND W/O CONTRAST,"11,300","29,200","March 04, 2026",0430030056,mmc-price-list
+1108,2,Imaging,MRI THORACO-LUMBAR SPINE W/ AND W/O CONTRAST,"18,600","46,700","March 04, 2026",0430030057,mmc-price-list
+1109,2,Imaging,MRI UPPER ABDOMEN (LIVER SPECIFIC),"38,900","70,900","March 04, 2026",0430030058,mmc-price-list
+1110,2,Imaging,MRI UPPER AND LOWER ABDOMEN,"12,600","35,800","March 04, 2026",0430030046,mmc-price-list
+1111,2,Imaging,MRI WHOLE ABDOMEN W/ AND W/O CONTRAST,"21,600","52,200","March 04, 2026",0430030075,mmc-price-list
+1112,2,Imaging,MRI WHOLE ABDOMEN W/ PRIMOVIST,"51,300","95,800","March 04, 2026",0430030143,mmc-price-list
+1113,2,Imaging,MRI WHOLE BODY,"56,800","103,400","March 04, 2026",0430030076,mmc-price-list
+1114,2,Imaging,MRI WHOLE SPINE,"28,900","68,300","March 04, 2026",0430030077,mmc-price-list
+1115,2,Imaging,MRI WRIST W/ AND W/O CONTRAST,"11,300","28,800","March 04, 2026",0430030044,mmc-price-list
+1116,2,Imaging,MRI/MRV BRAIN W/ AND W/O CONTRAST,"12,200","31,800","March 04, 2026",0430030078,mmc-price-list
+1117,2,Imaging,MRV BRAIN W/ AND W/O CONTRAST,"10,900","29,000","March 04, 2026",0430030079,mmc-price-list
+1118,2,Imaging,POST PROCESSING FEE (PROSTATE CONTOURING),"2,710","3,400","March 04, 2026",0430030141,mmc-price-list
+1119,2,Imaging,BUBBLE TEST W/ TRANSCRANIAL DOPPLER,"11,100","14,800","March 03, 2026",04220026,mmc-price-list
+1120,2,Imaging,PORTABLE TRANSCRANIAL DOPPLER MONITORING,"7,100","19,100","March 03, 2026",04220027,mmc-price-list
+1121,2,Imaging,ROUTINE TRANSCRANIAL DOPPLER,"7,250","11,400","March 03, 2026",04220028,mmc-price-list
+1122,2,Diagnostic,EEG,"3,570","11,200","March 03, 2026",04220001,mmc-price-list
+1123,2,Diagnostic,ELECTROMYOGRAPHY NERVE CONDUCTION VELOCITY,"4,520","7,000","March 03, 2026",04220002,mmc-price-list
+1124,2,Diagnostic,EMG NCV EXTREMITIES SPECIAL CASE,"5,450","8,200","March 03, 2026",04220040,mmc-price-list
+1125,2,Diagnostic,EMG-ELECTROMYOGRAPHY,"4,160","5,200","March 03, 2026",04220003,mmc-price-list
+1126,2,Diagnostic,EMG-NERVE CONDUCTION VELOCITY/REPETITIVE NERVE STIMULATION NCV/RNS,"7,270","9,100","March 03, 2026",04220013,mmc-price-list
+1127,2,Diagnostic,EP - BRAINSTEM AUDITORY EVOKED POTENTIAL (BAEP),"4,470","5,600","March 03, 2026",04220004,mmc-price-list
+1128,2,Diagnostic,EP - INTRA OP MONITORING,"6,400","31,800","March 03, 2026",04220005,mmc-price-list
+1129,2,Diagnostic,EP - SOMATOSENSORY EVOKED POTENTIAL (SSEP) EXTREMITIES,"6,200","7,800","March 03, 2026",04220014,mmc-price-list
+1130,2,Diagnostic,EP - VISUAL EVOKED POTENTIAL (VEP),"4,700","5,900","March 03, 2026",04220015,mmc-price-list
+1131,2,Diagnostic,FACIAL ELECTROMYOGRAPHY NERVE CONDUCTION VELOCITY BLINK REFLEX,"4,580","5,800","March 03, 2026",04220057,mmc-price-list
+1132,2,Diagnostic,FACIAL NERVE CONDUCTION VELOCITY,"4,970","6,300","March 03, 2026",04220006,mmc-price-list
+1133,2,Diagnostic,NCV-RNS - NERVE CONDUCTION VELOCITY REPETITIVE NERVE STIMULATION,"7,500","9,400","March 03, 2026",04220043,mmc-price-list
+1134,2,Diagnostic,NERVE CONDUCTION VELOCITY,"4,300","7,200","March 03, 2026",04220007,mmc-price-list
+1135,2,Diagnostic,PSG - MULTIPLE SLEEP LATENCY TEST,"12,700","15,900","March 03, 2026",04220008,mmc-price-list
+1136,2,Diagnostic,PSG - SPLIT NIGHT NOCTURNAL POLYSOMNOGRAPHY,"34,400","43,000","March 03, 2026",04220009,mmc-price-list
+1137,2,Diagnostic,PSG - THERAPEUTIC NOCTURNAL POLYSOMNOGRAPHY (TNPSG),"24,300","30,400","March 03, 2026",04220044,mmc-price-list
+1138,2,Diagnostic,PSG - USE OF SLEEP LAB,"10,500","13,200","March 03, 2026",04220045,mmc-price-list
+1139,2,Diagnostic,PSG DIAGNOSTIC NOCTURNAL POLYSOMNOGRAM DNPSG,"22,700","29,400","March 03, 2026",04220010,mmc-price-list
+1140,2,Diagnostic,RNS - REPETITIVE NERVE STIMULATION (RNS),"4,580","5,800","March 03, 2026",04220011,mmc-price-list
+1141,2,Diagnostic,SYMPATHETIC SKIN RESPONSE (SSR),"4,300","5,400","March 03, 2026",04220036,mmc-price-list
+1142,2,Diagnostic,VIDEO EEG,"5,900","40,000","March 03, 2026",04220012,mmc-price-list
+1143,2,Imaging,17-OH PROGESTERONE,"5,650","7,100","March 05, 2026",04230001,mmc-price-list
+1144,2,Imaging,3 PHASE BONE IMAGING (BF BP WB),"11,700","24,500","July 23, 2026",04230002,mmc-price-list
+1145,2,Imaging,ACETAZOLAMIDE BRAIN PERFUSION SPECT STUDY,"133,000","176,200","June 15, 2026",04230125,mmc-price-list
+1146,2,Imaging,ACTH IRMA (ADRENOCORTICOTROPIC HORMONE),"5,710","11,800","March 05, 2026",04230003,mmc-price-list
+1147,2,Imaging,ACTH STIMULATION CORTISOL,"2,550","3,200","March 05, 2026",04230004,mmc-price-list
+1148,2,Imaging,ACUTE MYOCARDIAL INFARCT,"9,800","12,300","March 05, 2026",04230005,mmc-price-list
+1149,2,Imaging,ADRENAL VENOUS SAMPLING,"3,600","4,500","March 05, 2026",04230262,mmc-price-list
+1150,2,Imaging,ALDOSTERONE RIA,"5,400","8,400","March 05, 2026",04230006,mmc-price-list
+1151,2,Imaging,ANTI HTG RIA,"4,900","7,800","March 05, 2026",04230008,mmc-price-list
+1152,2,Imaging,ANTI R TSH (TRAB) RIA,"6,500","12,800","March 05, 2026",04230009,mmc-price-list
+1153,2,Imaging,ANTI TPO RIA,"4,110","6,800","March 05, 2026",04230010,mmc-price-list
+1154,2,Imaging,ANTI-GAD (ANTI-GLUTAMIC ACID DECARBOXYLASE) - RIA,"8,100","14,800","March 05, 2026",4230112,mmc-price-list
+1155,2,Imaging,BONE IMAGING,"10,500","17,800","July 23, 2026",04230012,mmc-price-list
+1156,2,Imaging,BONE SPECT IMAGING,"12,300","25,300","July 23, 2026",04230013,mmc-price-list
+1157,2,Imaging,BRAIN IMAGING,"10,800","23,400","March 05, 2026",04230014,mmc-price-list
+1158,2,Imaging,BRAIN SPECT IMAGING,"75,000","103,700","June 22, 2026",04230015,mmc-price-list
+1159,2,Imaging,BREMSSTRAHLUNG SCAN,"11,700","24,500","March 05, 2026",04230016,mmc-price-list
+1160,2,Imaging,CALCITONIN IRMA,"9,750","16,800","March 05, 2026",04230112,mmc-price-list
+1161,2,Imaging,CARDIAC AMYLOIDOSIS PYP-TC99m IMAGING,"15,400","19,300","March 05, 2026",04230111,mmc-price-list
+1162,2,Imaging,CARDIAC BLOOD FLOW IMAGING,"10,500","17,800","March 05, 2026",04230018,mmc-price-list
+1163,2,Imaging,CEA IRMA,"3,900","6,500","March 05, 2026",04230019,mmc-price-list
+1164,2,Imaging,COMBINATION OF WB BONE & BONE SPECT,"10,900","13,700","March 05, 2026",04230020,mmc-price-list
+1165,2,Imaging,DACRYOSCINTIGRAPHY,"5,900","12,000","March 05, 2026",04230022,mmc-price-list
+1166,2,Imaging,DHEA S RIA,"3,900","6,500","March 05, 2026",04230023,mmc-price-list
+1167,2,Imaging,DIURETIC RENAL IMAGING,"13,300","26,500","July 23, 2026",04230024,mmc-price-list
+1168,2,Imaging,DIURETIC RENAL IMAGING USING MAG3,"26,800","43,400","March 05, 2026",4230113,mmc-price-list
+1169,2,Imaging,DMSA RENAL IMAGING,"10,700","23,300","July 23, 2026",04230025,mmc-price-list
+1170,2,Imaging,ENDOCRINE TESTING ROOM UTILIZATION,"2,050","2,600","March 05, 2026",04230026,mmc-price-list
+1171,2,Imaging,ESTRADIOL RIA,"3,900","6,500","March 05, 2026",04230027,mmc-price-list
+1172,2,Imaging,EXPRESS ADENOSINE INFUSION MPI,"28,800","45,900","July 23, 2026",04230028,mmc-price-list
+1173,2,Imaging,EXPRESS DIPYRIDAMOLE INFUSION MPI,"28,800","45,900","July 23, 2026",04230029,mmc-price-list
+1174,2,Imaging,EXPRESS DOBUTAMINE INFUSION MPI,"24,400","40,400","July 23, 2026",04230030,mmc-price-list
+1175,2,Imaging,EXPRESS MPI,"23,600","39,400","July 23, 2026",04230031,mmc-price-list
+1176,2,Imaging,FREE TESTOSTERONE,"7,700","14,300","March 05, 2026",04230032,mmc-price-list
+1177,2,Imaging,FSH IRMA,"3,700","6,300","March 05, 2026",04230033,mmc-price-list
+1178,2,Imaging,FT3 RIA,"2,910","5,300","March 05, 2026",04230034,mmc-price-list
+1179,2,Imaging,FT4 RIA,"2,920","5,300","March 05, 2026",04230035,mmc-price-list
+1180,2,Imaging,GALLIUM 67 WHOLEBODY IMAGING,"171,800","224,700","July 23, 2026",04230036,mmc-price-list
+1181,2,Imaging,GASTRIC EMPTYING IMAGING,"29,900","47,300","March 05, 2026",04230037,mmc-price-list
+1182,2,Imaging,GASTROESOPHAGEAL REFLUX IMAGING,"30,000","47,400","July 23, 2026",04230039,mmc-price-list
+1183,2,Imaging,GATED BLOODPOOL REST IMAGING,"11,800","24,700","March 05, 2026",04230040,mmc-price-list
+1184,2,Imaging,GATED BLOODPOOL REST/STRESS IMAGING,"14,800","28,400","March 05, 2026",04230041,mmc-price-list
+1185,2,Imaging,GFR (GLOMERULAR FILTRATION RATE),"12,100","25,000","July 23, 2026",04230042,mmc-price-list
+1186,2,Imaging,GFR IN-VITRO,"17,900","32,300","March 05, 2026",04230114,mmc-price-list
+1187,2,Imaging,GI BLEEDING IMAGING,"22,100","37,500","July 23, 2026",04230043,mmc-price-list
+1188,2,Imaging,GI BLEEDING IMAGING DELAYED,"5,210","10,000","March 05, 2026",04230044,mmc-price-list
+1189,2,Imaging,HEPATOBILIARY IMAGING,"13,500","26,800","July 23, 2026",04230047,mmc-price-list
+1190,2,Imaging,HGH IRMA,"3,150","5,600","March 05, 2026",04230048,mmc-price-list
+1191,2,Imaging,HGH STIMULATION CLONIDINE (HGH IRMA),"2,920","3,700","March 05, 2026",04230049,mmc-price-list
+1192,2,Imaging,HGH STIMULATION EXERCISE (HGH IRMA),"2,920","3,700","March 05, 2026",04230050,mmc-price-list
+1193,2,Imaging,HGH STIMULATION GLUCOSE (HGH IRMA),"2,920","3,700","March 05, 2026",04230051,mmc-price-list
+1194,2,Imaging,HGH STIMULATION L DOPA (HGH IRMA),"2,920","3,700","March 05, 2026",04230052,mmc-price-list
+1195,2,Imaging,IGF 1 (INSULIN LIKE GROWTH FACTOR 1),"6,300","12,500","March 05, 2026",04230054,mmc-price-list
+1196,2,Imaging,INDIRECT CYSTOGRAM (RENAL IMAGING),"7,100","13,500","March 05, 2026",04230055,mmc-price-list
+1197,2,Imaging,INSULIN AUTOANTIBODY RIA,"7,000","13,400","March 05, 2026",04230124,mmc-price-list
+1198,2,Imaging,INSULIN RIA,"5,800","7,300","March 05, 2026",04230056,mmc-price-list
+1199,2,Imaging,LH IRMA,"3,700","6,300","March 05, 2026",04230057,mmc-price-list
+1200,2,Imaging,LIVER AND SPLEEN IMAGING,"11,200","23,900","July 23, 2026",04230058,mmc-price-list
+1201,2,Imaging,LIVER IMAGING,"11,100","23,800","July 23, 2026",04230059,mmc-price-list
+1202,2,Imaging,LIVER SPECT IMAGING,"12,400","25,400","July 23, 2026",04230060,mmc-price-list
+1203,2,Imaging,LUNG PERFUSION IMAGING,"10,900","23,500","July 23, 2026",04230061,mmc-price-list
+1204,2,Imaging,LUNG QUANTITATION,"12,800","25,900","July 23, 2026",04230062,mmc-price-list
+1205,2,Imaging,LUNG VENTILATION IMAGING,"21,600","36,900","July 23, 2026",04230063,mmc-price-list
+1206,2,Imaging,LUNG VENTILATION W/ RT-PCR PACKAGE,"22,500","38,000","March 05, 2026",4230118,mmc-price-list
+1207,2,Imaging,LYMPHANGIOSCINTIGRAPHY,"29,800","47,200","July 23, 2026",04230064,mmc-price-list
+1208,2,Imaging,MECKELS DIVERTICULUM IMAGING,"8,800","15,700","July 23, 2026",04230065,mmc-price-list
+1209,2,Imaging,MIBG WB IMAGING INCLUDING I131 MIBG DOSE,"99,300","134,000","July 23, 2026",04230066,mmc-price-list
+1210,2,Imaging,MIDLIFE PACKAGE MALE/FEMALE,"10,000","16,300","March 05, 2026",4230123,mmc-price-list
+1211,2,Imaging,MIDNIGHT SALIVARY CORTISOL,"6,050","7,600","March 05, 2026",4230115,mmc-price-list
+1212,2,Imaging,NSE - IRMA,"4,850","6,100","March 05, 2026",04230067,mmc-price-list
+1213,2,Imaging,NUCLEAR BREAKTHROUGH,"13,200","26,400","March 05, 2026",04230068,mmc-price-list
+1214,2,Imaging,OCTREOTIDE IMAGING,"16,100","30,000","March 05, 2026",04230069,mmc-price-list
+1215,2,Imaging,ONCOLOGIC BONE SPECT/CT,"22,000","37,400","March 05, 2026",04230263,mmc-price-list
+1216,2,Imaging,ONE DAY PROTOCOL LUNG PERFUSION/VENTILATION,"29,800","47,200","July 23, 2026",04230070,mmc-price-list
+1217,2,Imaging,ONE DAY PROTOCOL LUNG PERFUSION/VENTILATION W/ RT-PCR PACKAGE,"26,500","43,000","March 05, 2026",4230119,mmc-price-list
+1218,2,Imaging,ORGAN IMAGING DELAYED,"4,000","6,800","March 05, 2026",04230071,mmc-price-list
+1219,2,Imaging,ORTHOPEDIC PROSTHESIS SCINTIGRAPHY,"12,100","25,000","March 05, 2026",4230116,mmc-price-list
+1220,2,Imaging,PARATHYROID IMAGING,"18,200","32,700","July 23, 2026",04230072,mmc-price-list
+1221,2,Imaging,PARATHYROID IMAGING (SUBTRACTION),"31,200","48,900","July 23, 2026",04230117,mmc-price-list
+1222,2,Imaging,PLASMA CORTISOL RIA,"3,250","5,700","March 05, 2026",04230073,mmc-price-list
+1223,2,Imaging,PROLACTIN IRMA,"3,700","6,300","March 05, 2026",04230074,mmc-price-list
+1224,2,Imaging,PTH IRMA,"4,210","6,900","March 05, 2026",04230075,mmc-price-list
+1225,2,Imaging,RAI MONITORING,"1,050","1,400","March 05, 2026",04230076,mmc-price-list
+1226,2,Imaging,RAI UPTAKE W/ RESIDUAL NECK COUNT,"4,750","6,000","March 05, 2026",04230077,mmc-price-list
+1227,2,Imaging,RAI WHOLEBODY IMAGING,"15,300","29,000","July 23, 2026",04230078,mmc-price-list
+1228,2,Imaging,RENAL IMAGING,"12,600","25,700","July 23, 2026",04230080,mmc-price-list
+1229,2,Imaging,RENAL IMAGING (MAG 3),"29,200","46,400","July 23, 2026",04230082,mmc-price-list
+1230,2,Imaging,RENAL IMAGING W/ CAPTOPRIL,"12,900","26,000","July 23, 2026",04230083,mmc-price-list
+1231,2,Imaging,RENAL SPECT,"11,400","24,200","July 23, 2026",04230084,mmc-price-list
+1232,2,Imaging,RENIN RIA,"6,400","12,700","March 05, 2026",04230085,mmc-price-list
+1233,2,Imaging,REST MPI,"18,300","32,800","July 23, 2026",04230086,mmc-price-list
+1234,2,Imaging,REST MPI AFTER EXPRESS,"27,900","44,800","July 23, 2026",04230087,mmc-price-list
+1235,2,Imaging,REST/ADENOSINE INFUSION MPI,"31,300","49,000","July 23, 2026",04230088,mmc-price-list
+1236,2,Imaging,REST/DIPYRIDAMOLE INFUSION MPI,"29,000","46,200","July 23, 2026",04230089,mmc-price-list
+1237,2,Imaging,REST/DOBUTAMINE INFUSION MPI,"29,700","47,000","July 23, 2026",04230090,mmc-price-list
+1238,2,Imaging,REST/STRESS MPI,"15,500","29,300","July 23, 2026",04230091,mmc-price-list
+1239,2,Imaging,SALINE LOADING ALDOSTERONE RIA,"3,910","4,900","March 05, 2026",04230092,mmc-price-list
+1240,2,Imaging,SCINTIMAMMOGRAPHY,"15,100","28,800","July 23, 2026",04230093,mmc-price-list
+1241,2,Imaging,SENTINEL NODE SCINTIGRAPHY,"23,400","39,200","July 23, 2026",04230094,mmc-price-list
+1242,2,Imaging,SEX HORMONE BINDING GLOBULIN IRMA (SHBG-IRMA),"3,760","6,300","March 05, 2026",04230257,mmc-price-list
+1243,2,Imaging,TESTICULAR IMAGING,"9,500","16,500","July 23, 2026",04230096,mmc-price-list
+1244,2,Imaging,TESTOSTERONE RIA,"3,900","6,500","March 05, 2026",04230097,mmc-price-list
+1245,2,Imaging,THYROGLOBULIN IRMA,"4,000","7,400","March 05, 2026",04230098,mmc-price-list
+1246,2,Imaging,THYROID AUTOIMMUNE PACKAGE,"13,000","16,300","March 05, 2026",4230121,mmc-price-list
+1247,2,Imaging,THYROID BIOASSAY,"2,100","2,700","March 05, 2026",04230099,mmc-price-list
+1248,2,Imaging,THYROID CANCER SURVEILLANCE PACKAGE,"19,500","24,400","March 05, 2026",4230122,mmc-price-list
+1249,2,Imaging,THYROID FUNCTION TESTS 1-3,"5,400","10,200","March 05, 2026",4230120,mmc-price-list
+1250,2,Imaging,THYROID IMAGING,"6,700","13,000","July 23, 2026",04230100,mmc-price-list
+1251,2,Imaging,TI-201 ADENOSINE INFUSION/REDISTRIBUTION MPI,"43,500","64,300","July 23, 2026",04230101,mmc-price-list
+1252,2,Imaging,TI-201 DIPYRIDAMOLE INFUSION/REDISTRIBUTION MPI,"40,900","61,000","July 23, 2026",04230102,mmc-price-list
+1253,2,Imaging,TI-201 DOBUTAMINE INFUSION/REDISTRIBUTION MPI,"38,600","58,200","July 23, 2026",04230103,mmc-price-list
+1254,2,Imaging,TI-201 STRESS FOR VIABILITY MPI,"37,000","56,200","July 23, 2026",04230104,mmc-price-list
+1255,2,Imaging,TSH IRMA,"3,030","5,400","March 05, 2026",04230107,mmc-price-list
+1256,2,Imaging,Tc99/RAI UPTAKE,"5,900","12,000","March 05, 2026",04230095,mmc-price-list
+1257,2,Imaging,Tl-201 24HRS DELAYED,"11,400","32,700","March 05, 2026",04230105,mmc-price-list
+1258,2,Imaging,Tl-201 REST FOR VIABILITY MPI,"33,600","51,900","July 23, 2026",04230106,mmc-price-list
+1259,2,Imaging,UBT (UREA BREATH TEST),"7,700","14,300","March 05, 2026",04230108,mmc-price-list
+1260,2,Imaging,V/Q SPECT/CT,"26,700","43,300","March 05, 2026",04230260,mmc-price-list
+1261,2,Imaging,WHOLE BODY LEUCOCYTE LABELING,"81,000","111,200","June 22, 2026",04230109,mmc-price-list
+1262,2,Imaging,YTTRIUM 90 HANDLING AND MONITORING,"8,700","10,900","March 05, 2026",04230110,mmc-price-list
+1263,2,Procedure (no case rate),INFERIOR VENA CAVA (IVC) FILTER INSERTION PACKAGE,"136,400","158,400","April 05, 2024",18170018,mmc-price-list
+1264,2,Procedure (no case rate),INTRA CORPOREAL LITHOTRIPSY SPINAL PACKAGE,"118,600","131,000","April 05, 2024",18170020,mmc-price-list
+1265,2,Procedure (no case rate),PERM CATHETER INSERTION PACKAGE OUP,"87,800","87,800","April 05, 2024",18170003,mmc-price-list
+1266,2,Procedure (no case rate),PICC LINE INSERTION PACKAGE,"47,300","57,300","April 05, 2024",18170004,mmc-price-list
+1267,2,Procedure (no case rate),PORTA CATHETER INSERTION PACKAGE OUP,"93,400","93,400","April 05, 2024",18170002,mmc-price-list
+1268,2,Procedure (no case rate),PRECISION CATARACT PHACOEMULSIFICATION PER EYE PACKAGE,"91,600","91,600","April 05, 2024",18170036,mmc-price-list
+1269,2,Procedure (no case rate),RADIOFREQUENCY ABLATION (RFA) PACKAGE,"104,600","135,100","April 05, 2024",18170014,mmc-price-list
+1270,2,Procedure (no case rate),VIDEO ASSISTED THORACIC SURGERY (VATS) PACKAGE,"168,700","168,700","April 05, 2024",18170013,mmc-price-list
+1271,2,Imaging,ACP THERAPY (ARTHROCENTESIS),"29,900","37,400","March 02, 2026",04090001,mmc-price-list
+1272,2,Imaging,BONE MINERAL DENSITOMETRY,"6,350","8,000","March 02, 2026",04090003,mmc-price-list
+1273,2,Imaging,COBH INJECTION FEE OUP,720,720,"March 02, 2026",04090004,mmc-price-list
+1274,2,Imaging,CRYSTAL IDENTIFICATION (SYNOVIAL FLUID),930,"1,200","March 02, 2026",04090005,mmc-price-list
+1275,2,Imaging,DENOSUMAB INJECTION AT COBH,"15,400","19,300","March 02, 2026",04090006,mmc-price-list
+1276,2,Imaging,INFUSION FEE,"6,350","8,200","March 02, 2026",04090007,mmc-price-list
+1277,2,Imaging,INTRA-ARTICULAR HYALURONIC ACID INJECTION - ONE KNEE,"58,500","73,200","March 02, 2026",04090009,mmc-price-list
+1278,2,Imaging,PEDIATRIC BMD PACKAGE (BMD PLUS X-RAY BONE AGE),"7,210","9,100","March 02, 2026",04090011,mmc-price-list
+1279,2,Imaging,TOTAL BODY COMPOSITION,"2,920","3,700","March 02, 2026",04090008,mmc-price-list
+1280,2,Imaging,ULTRASOUND-GUIDED PERINEURAL INJECTION TREATMENT,"2,840","3,600","March 03, 2026",04260010,mmc-price-list
+1281,2,Imaging,PLUS THERAPEUTIC ULTRASOUND THERAPY,347,550,"March 03, 2026",04280034,mmc-price-list
+1282,2,Diagnostic,6 MINS WALK TEST,"2,700","3,400","March 03, 2026",04290001,mmc-price-list
+1283,2,Diagnostic,AEROSOL PER DAY / PER TREATMENT,610,"1,100","March 03, 2026",04290002,mmc-price-list
+1284,2,Diagnostic,ARTERIAL BLOOD GASES,"2,310","2,900","March 03, 2026",04290003,mmc-price-list
+1285,2,Diagnostic,CHEST PHYSIOTHERAPY,"1,020","2,000","March 03, 2026",04290004,mmc-price-list
+1286,2,Diagnostic,FRACTIONAL EXHALED NITRIC OXIDE (FENO),"3,300","4,200","March 03, 2026",04290014,mmc-price-list
+1287,2,Diagnostic,HEATED AEROSOL PER TREATMENT,665,900,"March 03, 2026",04290005,mmc-price-list
+1288,2,Diagnostic,INCENTIVE SPIROMETRY THERAPY PER SESSION,580,800,"March 03, 2026",04290006,mmc-price-list
+1289,2,Diagnostic,LUNG FLUTE THERAPY,585,800,"March 03, 2026",04290007,mmc-price-list
+1290,2,Diagnostic,METANEB THERAPY,"1,210","1,600","March 03, 2026",04290011,mmc-price-list
+1291,2,Diagnostic,PEAK EXPIRATORY FLOW RATE/RSB PROCEDURE,465,650,"March 03, 2026",04290008,mmc-price-list
+1292,2,Diagnostic,RAPID SHALLOW BREATHING (RSB),380,550,"March 03, 2026",04290009,mmc-price-list
+1293,2,Diagnostic,SPIROMETRY,"4,510","11,800","March 03, 2026",04290010,mmc-price-list
+1294,2,Diagnostic,VEST AIRWAY CLEARANCE THERAPY PER TREATMENT,"1,400","1,750","March 03, 2026",04290015,mmc-price-list
+1295,2,Imaging,CT ADRENAL GLAND W/ CONTRAST,"16,400","31,900","March 06, 2026",0430020001,mmc-price-list
+1296,2,Imaging,CT ADRENAL GLAND W/O CONTRAST,"8,800","19,500","March 06, 2026",0430020002,mmc-price-list
+1297,2,Imaging,CT ANGIOGRAPHY MAPPING,"31,100","59,200","March 06, 2026",0430020003,mmc-price-list
+1298,2,Imaging,CT ANGIOGRAPHY OF THE ABDOMEN,"24,400","48,200","March 06, 2026",0430020004,mmc-price-list
+1299,2,Imaging,CT ANGIOGRAPHY OF THE ABDOMINAL AORTA,"24,300","51,600","March 06, 2026",0430020005,mmc-price-list
+1300,2,Imaging,CT ANGIOGRAPHY OF THE BRAIN,"23,500","50,800","March 06, 2026",0430020006,mmc-price-list
+1301,2,Imaging,CT ANGIOGRAPHY OF THE BRAIN PERFUSION,"32,200","61,300","March 06, 2026",0430020007,mmc-price-list
+1302,2,Imaging,CT ANGIOGRAPHY OF THE CHEST/PULMONARY,"36,100","70,000","March 06, 2026",0430020008,mmc-price-list
+1303,2,Imaging,CT ANGIOGRAPHY OF THE CORONARY ARTERIES,"37,000","71,100","March 06, 2026",0430020009,mmc-price-list
+1304,2,Imaging,CT ANGIOGRAPHY OF THE LIVER/HEPATIC (DONOR),"29,500","54,900","March 06, 2026",0430020010,mmc-price-list
+1305,2,Imaging,CT ANGIOGRAPHY OF THE LIVER/HEPATIC (RECIPIENT),"23,400","47,000","March 06, 2026",0430020011,mmc-price-list
+1306,2,Imaging,CT ANGIOGRAPHY OF THE NECK/CAROTID,"23,500","50,700","March 06, 2026",0430020012,mmc-price-list
+1307,2,Imaging,CT ANGIOGRAPHY OF THE RENAL ARTERIES,"31,700","64,500","March 06, 2026",0430020013,mmc-price-list
+1308,2,Imaging,CT ANGIOGRAPHY OF THE THORACIC AORTA,"31,700","64,500","March 06, 2026",0430020014,mmc-price-list
+1309,2,Imaging,CT ANGIOGRAPHY OF THE THORACOABDOMINAL AORTA,"46,200","82,600","March 06, 2026",0430020015,mmc-price-list
+1310,2,Imaging,CT ANGIOGRAPHY PERIPHERALS,"35,900","69,700","March 06, 2026",0430020016,mmc-price-list
+1311,2,Imaging,CT BRAIN/HEAD,"7,950","32,900","March 06, 2026",0430020021,mmc-price-list
+1312,2,Imaging,CT BRAIN/HEAD & NECK,"15,300","19,200","March 06, 2026",0430020017,mmc-price-list
+1313,2,Imaging,CT BRAIN/HEAD TRAUMA,"7,800","25,000","March 06, 2026",0430020020,mmc-price-list
+1314,2,Imaging,CT BRAIN/HEAD; NECK; CHEST & ABDOMEN PACKAGE,"62,102","74,523","September 06, 2025",0430020039,mmc-price-list
+1315,2,Imaging,CT CALCIUM SCORING,"12,500","25,400","March 06, 2026",0430020022,mmc-price-list
+1316,2,Imaging,CT CERVICAL SPINE,"8,400","26,100","March 06, 2026",0430020023,mmc-price-list
+1317,2,Imaging,CT CHEST HIGH RESOLUTION,"11,600","35,600","March 06, 2026",0430020024,mmc-price-list
+1318,2,Imaging,CT CHEST LOW DOSE,"12,000","29,900","March 06, 2026",0430020025,mmc-price-list
+1319,2,Imaging,CT CHEST W/O CONTRAST (ILD PROTOCOL),"18,200","22,800","March 06, 2026",0430020127,mmc-price-list
+1320,2,Imaging,CT DENTAL MANDIBLE,"9,400","20,300","March 06, 2026",0430020026,mmc-price-list
+1321,2,Imaging,CT ENTEROGRAHY,"27,900","52,600","March 06, 2026",0430020027,mmc-price-list
+1322,2,Imaging,CT FACIAL BONE W/ 3D,"10,550","24,190","September 06, 2025",0430020028,mmc-price-list
+1323,2,Imaging,CT GUIDED ABSCESS DRAINAGE PACKAGE,"71,100","93,500","October 01, 2025",0430020110,mmc-price-list
+1324,2,Imaging,CT GUIDED BIOPSY (SPECIFIC ORGAN) PACKAGE,"46,700","68,800","October 01, 2025",0430020111,mmc-price-list
+1325,2,Imaging,CT GUIDED DRAINAGE PROCEDURES PARACENTESIS PACKAGE,"37,200","58,750","October 01, 2025",0430020112,mmc-price-list
+1326,2,Imaging,CT GUIDED DRAINAGE PROCEDURES THORACENTESIS PACKAGE,"37,700","62,250","October 01, 2025",0430020113,mmc-price-list
+1327,2,Imaging,CT GUIDED KIDNEY BIOPSY PACKAGE,"57,500","149,500","October 01, 2025",0430020114,mmc-price-list
+1328,2,Imaging,CT GUIDED LIVER BIOPSY PACKAGE,"60,000","190,000","October 01, 2025",0430020108,mmc-price-list
+1329,2,Imaging,CT GUIDED NEPHROSTOMY TUBE INSERTION PACKAGE,"116,500","142,000","October 01, 2025",0430020115,mmc-price-list
+1330,2,Imaging,CT GUIDED PIGTAIL INSERTION PACKAGE,"75,500","115,000","October 01, 2025",0430020109,mmc-price-list
+1331,2,Imaging,CT HIP,"13,000","28,200","March 06, 2026",0430020030,mmc-price-list
+1332,2,Imaging,CT LOWER ABDOMEN,"8,800","31,900","March 06, 2026",0430020054,mmc-price-list
+1333,2,Imaging,CT LUMBAR SPINE,"8,400","26,600","March 06, 2026",0430020055,mmc-price-list
+1334,2,Imaging,CT MASTOIDS,"8,300","25,300","March 06, 2026",0430020056,mmc-price-list
+1335,2,Imaging,CT MAXILLA,"8,400","24,900","March 06, 2026",0430020068,mmc-price-list
+1336,2,Imaging,CT NASAL BONE,"8,400","27,300","March 06, 2026",0430020069,mmc-price-list
+1337,2,Imaging,CT NECK/NASOPHARYNX,"8,450","35,600","March 06, 2026",0430020070,mmc-price-list
+1338,2,Imaging,CT ONE ANKLE,"8,400","25,600","March 06, 2026",0430020031,mmc-price-list
+1339,2,Imaging,CT ONE ARM,"8,150","26,100","March 06, 2026",0430020032,mmc-price-list
+1340,2,Imaging,CT ONE ELBOW,"8,400","26,600","March 06, 2026",0430020033,mmc-price-list
+1341,2,Imaging,CT ONE FOOT,"8,400","26,100","March 06, 2026",0430020046,mmc-price-list
+1342,2,Imaging,CT ONE FOREARM,"8,150","26,100","March 06, 2026",0430020047,mmc-price-list
+1343,2,Imaging,CT ONE HAND,"8,400","26,100","March 06, 2026",0430020048,mmc-price-list
+1344,2,Imaging,CT ONE KNEE,"9,000","25,600","March 06, 2026",0430020049,mmc-price-list
+1345,2,Imaging,CT ONE LEG,"8,400","26,100","March 06, 2026",0430020050,mmc-price-list
+1346,2,Imaging,CT ONE SHOULDER,"8,400","25,600","March 06, 2026",0430020051,mmc-price-list
+1347,2,Imaging,CT ONE THIGH/FEMUR,"8,150","26,100","March 06, 2026",0430020052,mmc-price-list
+1348,2,Imaging,CT ONE WRIST,"8,400","26,100","March 06, 2026",0430020053,mmc-price-list
+1349,2,Imaging,CT ORBITS,"9,050","25,800","March 06, 2026",0430020071,mmc-price-list
+1350,2,Imaging,CT PARANASAL SINUSES,"8,450","25,400","March 06, 2026",0430020073,mmc-price-list
+1351,2,Imaging,CT PARANASAL SINUSES (LOPA),"6,500","27,300","March 06, 2026",0430020072,mmc-price-list
+1352,2,Imaging,CT PERIPHERALS,"17,200","54,000","March 06, 2026",0430020074,mmc-price-list
+1353,2,Imaging,CT PNS AND ORBITS,"8,150","25,800","March 06, 2026",0430020075,mmc-price-list
+1354,2,Imaging,CT STONOGRAM,"12,300","25,200","March 06, 2026",0430020078,mmc-price-list
+1355,2,Imaging,CT TEMPORAL BONES,"8,400","26,100","March 06, 2026",0430020079,mmc-price-list
+1356,2,Imaging,CT TEMPOROMANDIBULAR BONES,"12,100","27,300","March 06, 2026",0430020080,mmc-price-list
+1357,2,Imaging,CT THORACIC SPINE,"13,000","27,100","March 06, 2026",0430020081,mmc-price-list
+1358,2,Imaging,CT UPPER ABDOMEN,"9,500","57,000","March 06, 2026",0430020082,mmc-price-list
+1359,2,Imaging,CT UROGRAM,"24,600","48,500","March 06, 2026",0430020083,mmc-price-list
+1360,2,Imaging,CT VIRTUAL BRONCHOSCOPY,"15,100","29,600","March 06, 2026",0430020084,mmc-price-list
+1361,2,Imaging,CT VIRTUAL COLONOSCOPY,"15,600","30,500","March 06, 2026",0430020085,mmc-price-list
+1362,2,Imaging,CT WHOLE ABDOMEN,"16,800","67,100","March 06, 2026",0430020086,mmc-price-list
+1363,2,Imaging,CT WHOLE BODY PACKAGE,"49,460","96,200","September 06, 2025",0430020122,mmc-price-list
+1364,2,Imaging,IMPORT/STORAGE FEE,445,560,"March 06, 2026",0430020103,mmc-price-list
+1365,2,Imaging,LUNG OR MEDIASTINAL MASS CORE BIOPSY PACKAGE,"64,700","79,800","October 01, 2025",0430020123,mmc-price-list
+1366,2,Imaging,STEROID INJECTION CESI CERVICAL CT GUIDED OP PACKAGE,"63,200","85,500","October 01, 2025",0430020125,mmc-price-list
+1367,2,Imaging,STEROID INJECTION LESI NERVE BLOCK PACKAGE,"52,500","65,000","October 01, 2025",0430020126,mmc-price-list
+1368,2,Imaging,ABDOMEN,"1,230","4,530","September 11, 2025",0430010001,mmc-price-list
+1369,2,Imaging,ANGIOGRAM PACKAGE,"202,000","232,000","October 20, 2025",0430010082,mmc-price-list
+1370,2,Imaging,ANKLE,"1,160","5,200","March 06, 2026",0430010002,mmc-price-list
+1371,2,Imaging,ANKLE MORTISE & FOOT ER PACKAGE,"4,180","6,756","October 20, 2025",0430010083,mmc-price-list
+1372,2,Imaging,ARTHROGRAM UPPER EXTREMITIES PACKAGE,"38,500","55,000","October 20, 2025",0430010084,mmc-price-list
+1373,2,Imaging,BABYGRAM,"3,420","8,700","March 06, 2026",0430010003,mmc-price-list
+1374,2,Imaging,BARIUM ENEMA,"4,950","19,900","March 06, 2026",0430010004,mmc-price-list
+1375,2,Imaging,BONE AGE STUDY,"1,400","3,900","March 06, 2026",0430010005,mmc-price-list
+1376,2,Imaging,CALCANEUS,"1,200","5,200","March 06, 2026",0430010006,mmc-price-list
+1377,2,Imaging,CEREBRAL ANGIOGRAM PACKAGE,"147,000","174,000","October 20, 2025",0430010085,mmc-price-list
+1378,2,Imaging,CERVICAL AP/LATERAL,"1,290","3,700","March 06, 2026",0430010007,mmc-price-list
+1379,2,Imaging,CERVICAL AP/LATERAL/OBLIQUE/FLEXION & EXTENSION,"1,470","4,000","March 06, 2026",0430010008,mmc-price-list
+1380,2,Imaging,CERVICAL CROSS TABLE LATERAL,"1,250","3,600","March 06, 2026",0430010009,mmc-price-list
+1381,2,Imaging,CHEST AP,"1,150","3,400","March 06, 2026",0430010010,mmc-price-list
+1382,2,Imaging,CHEST APICOLORDOTIC,"1,150","3,400","March 06, 2026",0430010106,mmc-price-list
+1383,2,Imaging,CHEST FLUOROSCOPY LUNG,"1,350","5,700","March 06, 2026",0430010107,mmc-price-list
+1384,2,Imaging,CHEST LATERAL VIEW ONLY,"1,090","3,300","March 06, 2026",0430010108,mmc-price-list
+1385,2,Imaging,CHEST OBLIQUE,970,"3,400","March 06, 2026",0430010109,mmc-price-list
+1386,2,Imaging,CHEST PA,"1,105","3,400","March 06, 2026",0430010110,mmc-price-list
+1387,2,Imaging,CHEST PA & APICOLORDOTIC,"1,160","3,400","March 06, 2026",0430010111,mmc-price-list
+1388,2,Imaging,CHEST PA & LATERAL,"1,120","3,400","March 06, 2026",0430010112,mmc-price-list
+1389,2,Imaging,CHEST PA & LATERAL & APICOLORDOTIC,"1,750","4,600","March 06, 2026",0430010113,mmc-price-list
+1390,2,Imaging,CHEST PA LATERAL W/ OBLIQUE,"1,850","4,700","March 06, 2026",0430010114,mmc-price-list
+1391,2,Imaging,CHEST SPOT VIEW OF BOTH UPPER LOBES,"1,015","3,400","March 06, 2026",0430010011,mmc-price-list
+1392,2,Imaging,CHEST W/ DECUBITUS,"1,860","4,900","March 06, 2026",0430010012,mmc-price-list
+1393,2,Imaging,CHOLANGIOGRAM OPERATIVE,"4,000","9,700","March 06, 2026",0430010013,mmc-price-list
+1394,2,Imaging,CHOLECYSTOSTOMY TUBE INSERTION PACKAGE,"132,500","158,000","October 20, 2025",0430010086,mmc-price-list
+1395,2,Imaging,CLAVICLE,"1,095","4,800","March 06, 2026",0430010014,mmc-price-list
+1396,2,Imaging,COCCYX,"1,190","3,500","March 06, 2026",0430010015,mmc-price-list
+1397,2,Imaging,COLONOGRAM,"7,700","19,800","March 06, 2026",0430010016,mmc-price-list
+1398,2,Imaging,CYSTOGRAM WATER SOLUBLE,"5,700","16,800","March 06, 2026",0430010017,mmc-price-list
+1399,2,Imaging,DENTAL TMJ,"1,550","4,200","March 06, 2026",0430010018,mmc-price-list
+1400,2,Imaging,DIAGNOSTIC READERS FEE,"2,610","3,300","March 06, 2026",0430010019,mmc-price-list
+1401,2,Imaging,DISCOGRAM/MYELOGRAM PACKAGE,"45,000","53,500","October 20, 2025",0430010088,mmc-price-list
+1402,2,Imaging,ELBOW,"1,300","5,200","March 06, 2026",0430010020,mmc-price-list
+1403,2,Imaging,ENDOSCOPIC RETROGADE CHOLANGIOPANCREATOGRAPHY - RADIO,"21,900","27,400","March 06, 2026",0430010021,mmc-price-list
+1404,2,Imaging,EPIPHYSIS,"1,400","3,900","March 06, 2026",0430010022,mmc-price-list
+1405,2,Imaging,ESOPHAGOGRAM,"3,710","19,900","March 06, 2026",0430010023,mmc-price-list
+1406,2,Imaging,FACIAL BONES,"1,660","4,300","March 06, 2026",0430010024,mmc-price-list
+1407,2,Imaging,FEET AP/OBLIQUE,"1,330","5,200","March 06, 2026",0430010025,mmc-price-list
+1408,2,Imaging,FEET PLANTAR ARCH STUDY,"1,250","3,600","March 06, 2026",0430010026,mmc-price-list
+1409,2,Imaging,FEMUR AP/LATERAL,"1,200","5,100","March 06, 2026",0430010115,mmc-price-list
+1410,2,Imaging,FISTULOGRAM/SINUGRAM - WATER SOLUBLE,"7,400","19,900","March 06, 2026",0430010027,mmc-price-list
+1411,2,Imaging,FLUROSOCOPY GUIDED NEPHROSTOMY TUBE INSERTION PACKAGE,"117,000","142,500","October 20, 2025",0430010090,mmc-price-list
+1412,2,Imaging,FOOT,"1,220","3,600","March 06, 2026",0430010029,mmc-price-list
+1413,2,Imaging,FOREARM,"1,200","5,200","March 06, 2026",0430010030,mmc-price-list
+1414,2,Imaging,FOREIGN BODY LOCALIZATION,"1,750","4,500","March 06, 2026",0430010031,mmc-price-list
+1415,2,Imaging,GI W/ DUODENOGRAPHY,"5,400","16,200","March 06, 2026",0430010032,mmc-price-list
+1416,2,Imaging,HAND,"1,095","4,800","March 06, 2026",0430010033,mmc-price-list
+1417,2,Imaging,HIP,"1,290","5,400","March 06, 2026",0430010034,mmc-price-list
+1418,2,Imaging,HUMERUS,"1,210","5,100","March 06, 2026",0430010035,mmc-price-list
+1419,2,Imaging,HYSTEROGRAM,"5,650","16,700","March 06, 2026",0430010036,mmc-price-list
+1420,2,Imaging,INTERVENTIONAL STUDY,695,950,"March 06, 2026",0430010037,mmc-price-list
+1421,2,Imaging,INTRAVENOUS PYELOGRAM (IVP),"18,200","35,100","March 06, 2026",0430010038,mmc-price-list
+1422,2,Imaging,INTRAVENOUS PYELOGRAM (IVP) PACKAGE,"12,870","13,370","April 05, 2024",0430010091,mmc-price-list
+1423,2,Imaging,INTRAVENOUS UROGRAM HYPERTENSIVE STUDY,"8,250","21,300","March 06, 2026",0430010039,mmc-price-list
+1424,2,Imaging,IVC FILTER INSERTION PACKAGE,"218,675","262,775","April 05, 2024",0430010092,mmc-price-list
+1425,2,Imaging,KNEE,"1,270","5,600","March 06, 2026",0430010040,mmc-price-list
+1426,2,Imaging,KUB,"1,360","3,900","March 06, 2026",0430010041,mmc-price-list
+1427,2,Imaging,LEG,"1,200","5,100","March 06, 2026",0430010042,mmc-price-list
+1428,2,Imaging,LUMBO-SACRAL,"1,470","5,800","March 06, 2026",0430010043,mmc-price-list
+1429,2,Imaging,MAGNIFIED VIEW,860,"2,200","March 06, 2026",0430010105,mmc-price-list
+1430,2,Imaging,MANDIBLE,"1,520","4,100","March 06, 2026",0430010045,mmc-price-list
+1431,2,Imaging,MAPPING ANGIOGRAM PACKAGE,"269,075","339,950","April 05, 2024",0430010093,mmc-price-list
+1432,2,Imaging,MASTOIDS,"1,520","4,100","March 06, 2026",0430010046,mmc-price-list
+1433,2,Imaging,MAXILLA,"1,520","4,100","March 06, 2026",0430010152,mmc-price-list
+1434,2,Imaging,NASAL BONE,"1,680","4,400","March 06, 2026",0430010048,mmc-price-list
+1435,2,Imaging,NEPHROSTOGRAM,"9,900","19,000","March 06, 2026",0430010049,mmc-price-list
+1436,2,Imaging,ORBITS,"1,520","4,100","March 06, 2026",0430010050,mmc-price-list
+1437,2,Imaging,PANORAMIC,"1,500","4,100","March 06, 2026",0430010051,mmc-price-list
+1438,2,Imaging,PARANASAL SINUSES,"1,630","4,300","March 06, 2026",0430010052,mmc-price-list
+1439,2,Imaging,PASSPORT CHANGE / INSERTION PACKAGE,"108,580","152,235","April 05, 2024",0430010094,mmc-price-list
+1440,2,Imaging,PEGOGRAM WATER SOLUBLE,"10,300","28,400","March 06, 2026",0430010053,mmc-price-list
+1441,2,Imaging,PELVIMETRY,"2,080","5,000","March 06, 2026",0430010054,mmc-price-list
+1442,2,Imaging,PELVIS,"1,400","5,300","March 06, 2026",0430010116,mmc-price-list
+1443,2,Imaging,PERCUTANEOUS TRANSHEPATIC BILIARY DRAINAGE (PTBD) PACKAGE,"128,155","154,990","April 05, 2024",0430010095,mmc-price-list
+1444,2,Imaging,PERIPHERALLY INSERTED CENTRAL CATHETER PACKAGE,"74,950","104,945","April 05, 2024",0430010096,mmc-price-list
+1445,2,Imaging,REFERRED DIAGNOSTIC IMAGES,"2,550","3,060","October 20, 2025",0430010057,mmc-price-list
+1446,2,Imaging,RETROGRADE PYELOGRAM,"3,860","9,400","March 06, 2026",0430010117,mmc-price-list
+1447,2,Imaging,RIBS/THORACIC CAGE,"1,510","4,200","March 06, 2026",0430010058,mmc-price-list
+1448,2,Imaging,SACRO-ILIAC JOINTS AP/OBLIQUES,"1,680","4,400","March 06, 2026",0430010059,mmc-price-list
+1449,2,Imaging,SCANOGRAM,"2,700","7,500","March 06, 2026",0430010060,mmc-price-list
+1450,2,Imaging,SCAPULA,"1,400","5,600","March 06, 2026",0430010061,mmc-price-list
+1451,2,Imaging,SCOLIOSIS STUDY,"4,400","10,600","March 06, 2026",0430010062,mmc-price-list
+1452,2,Imaging,SELLA TURCICA,"1,580","4,200","March 06, 2026",0430010063,mmc-price-list
+1453,2,Imaging,SHOULDER,"1,400","8,200","March 06, 2026",0430010064,mmc-price-list
+1454,2,Imaging,SIALOGRAM,"4,470","10,700","March 06, 2026",0430010065,mmc-price-list
+1455,2,Imaging,SKELETAL SURVEY,"5,800","21,100","March 06, 2026",0430010066,mmc-price-list
+1456,2,Imaging,SKULL SERIES,"1,400","3,900","March 06, 2026",0430010067,mmc-price-list
+1457,2,Imaging,SMALL INTESTINAL SERIES WATER SOLUBLE,"8,500","20,500","March 06, 2026",0430010068,mmc-price-list
+1458,2,Imaging,SNIFF TEST (CHEST FLOUROSCOPY),"2,455","3,900","March 06, 2026",0430010069,mmc-price-list
+1459,2,Imaging,SOFT-TISSUE NECK,"1,470","4,000","March 06, 2026",0430010070,mmc-price-list
+1460,2,Imaging,STERNUM,"1,400","3,800","March 06, 2026",0430010071,mmc-price-list
+1461,2,Imaging,STEROID INJECTION 1 HIP PACKAGE,"38,720","83,580","October 21, 2023",0430010101,mmc-price-list
+1462,2,Imaging,T-TUBE CHOLANGIOGRAM,"13,600","28,800","March 06, 2026",0430010075,mmc-price-list
+1463,2,Imaging,T-TUBE CHOLANGIOGRAM PACKAGE,"15,060","18,560","April 05, 2024",0430010102,mmc-price-list
+1464,2,Imaging,TEMPORO MANDIBULAR JOINTS,"1,630","4,200","March 06, 2026",0430010072,mmc-price-list
+1465,2,Imaging,THORACIC VERTEBRAE,"1,630","4,300","March 06, 2026",0430010073,mmc-price-list
+1466,2,Imaging,TOES,"1,180","4,800","March 06, 2026",0430010074,mmc-price-list
+1467,2,Imaging,TUBE CHANGE PTBD NEPHROSTOMY CHOLECYSTOSTOMY PACKAGE,"74,510","104,505","April 05, 2024",0430010103,mmc-price-list
+1468,2,Imaging,TUBE PLACEMENT ASSESSMENT STUDY,"6,800","15,100","March 06, 2026",0430010076,mmc-price-list
+1469,2,Imaging,UPPER GASTROINTESTINAL SERIES,"3,975","9,490","October 21, 2023",0430010077,mmc-price-list
+1470,2,Imaging,VOIDING CYSTO-URETHROGRAM (VCUG),"19,500","34,100","March 06, 2026",0430010078,mmc-price-list
+1471,2,Imaging,VOIDING CYSTOURETHROGRAM PEDIATRICS PACKAGE,"12,530","13,030","April 05, 2024",0430010104,mmc-price-list
+1472,2,Imaging,WHOLE SPINE,"4,800","10,700","March 06, 2026",0430010079,mmc-price-list
+1473,2,Imaging,WRIST,"1,290","5,300","March 06, 2026",0430010080,mmc-price-list
+1474,2,Imaging,ZYGOMATIC ARCH,"1,360","3,800","March 06, 2026",0430010081,mmc-price-list
+1475,2,Imaging,CHANGE OF DRESSING AND ASSESSMENT PROCEDURE,"1,870","2,400","March 03, 2026",0430050016,mmc-price-list
+1476,2,Imaging,CHANGE OF DRESSING PACKAGE,"1,600","1,600","March 03, 2026",0430020104,mmc-price-list
+1477,2,Imaging,INTERVENTIONAL RADIOLOGY SERVICES,"1,090","1,450","March 03, 2026",0430050017,mmc-price-list
+1478,2,Imaging,IV ACCESS - IR,685,950,"March 03, 2026",0430050018,mmc-price-list
+1479,2,Imaging,MICROWAVE ABLATION PACKAGE,"290,600","380,900","March 03, 2026",0430020124,mmc-price-list
+1480,2,Imaging,PIGTAIL REMOVAL PACKAGE,"3,200","3,200","March 03, 2026",0430010097,mmc-price-list
+1481,2,Imaging,PIGTAIL REMOVAL PROCEDURE,"3,850","4,900","March 03, 2026",0430050019,mmc-price-list
+1482,2,Imaging,PORT-A-CATH ACCESS AND CARE - IR,"3,700","4,700","March 03, 2026",0430050020,mmc-price-list
+1483,2,Imaging,RADIOFREQUENCY ABLATION PACKAGE,"172,755","216,965","March 03, 2026",0430010098,mmc-price-list
+1484,2,Imaging,SCLEROTHERAPY IMAGE GUIDED PACKAGE,"101,500","127,000","March 03, 2026",0430010099,mmc-price-list
+1485,2,Imaging,SEDATION ADULT KIT,"5,550","9,300","March 03, 2026",0430050010,mmc-price-list
+1486,2,Imaging,SEDATION PEDIATRICS KIT,"5,900","10,000","March 03, 2026",0430050011,mmc-price-list
+1487,2,Imaging,SEDATION PROCEDURE ADULT / PEDIATRICS PACKAGE,"25,500","35,600","March 03, 2026",0430010100,mmc-price-list
+1488,2,Imaging,18F PSMA - CANCELLATION FEE,"39,400","49,300","March 04, 2026",0430050007,mmc-price-list
+1489,2,Imaging,18F PSMA - PET CT SCAN W/ AND W/O CONTRAST,"113,000","170,000","March 04, 2026",0430050001,mmc-price-list
+1490,2,Imaging,AMYLOID PET/CT PATIENT VALUE SCHEDULE,"137,500","185,000","June 03, 2026",0430050024,mmc-price-list
+1491,2,Imaging,AMYLOID PET/CT PRIORITY,"185,500","245,000","June 03, 2026",0430050023,mmc-price-list
+1492,2,Imaging,BRAIN 18F-FDG PET/CT,"63,400","86,500","June 03, 2026",0430050022,mmc-price-list
+1493,2,Imaging,FLUORODEOXYGLUCOSE (FDG),"23,100","28,900","March 04, 2026",0430050002,mmc-price-list
+1494,2,Imaging,IMAGING SERVICES - PET,"27,300","34,200","March 04, 2026",0430050006,mmc-price-list
+1495,2,Imaging,LU-177 PSMA RADIOLIGAND THERAPY,"593,800","742,300","March 04, 2026",0430050005,mmc-price-list
+1496,2,Imaging,PET CT SCAN W/ AND W/O CONTRAST,"75,500","102,200","March 04, 2026",0430050003,mmc-price-list
+1497,2,Imaging,PET-CT CARDIAC VIABILITY,"69,500","86,900","April 24, 2026",0430050021,mmc-price-list
+1498,2,Imaging,PET/CT RE-READING FEE,"16,300","20,400","March 04, 2026",0430050004,mmc-price-list
+1499,2,Imaging,ABCESS DRAINAGE ULTRASOUND GUIDED,"2,780","8,000","March 04, 2026",0430040001,mmc-price-list
+1500,2,Imaging,ABDOMINAL AORTA,"10,000","22,300","March 04, 2026",0430040002,mmc-price-list
+1501,2,Imaging,ADRENAL GLAND,"3,310","8,700","March 04, 2026",0430040003,mmc-price-list
+1502,2,Imaging,AORTO-ILIAC ARTERIES COLOR DOPPLER,"11,500","24,200","March 04, 2026",0430040004,mmc-price-list
+1503,2,Imaging,ARTERIES,"8,850","20,700","March 04, 2026",0430040005,mmc-price-list
+1504,2,Imaging,ARTERIES & VEINS,"9,700","31,500","March 04, 2026",0430040006,mmc-price-list
+1505,2,Imaging,ASCITES QUANTIFICATION,"3,370","8,800","March 04, 2026",0430040007,mmc-price-list
+1506,2,Imaging,AV FISTULA/GORTEX GRAFT COLOR DOPPLER,"10,000","22,300","March 04, 2026",0430040008,mmc-price-list
+1507,2,Imaging,AXILLA,"3,920","9,400","March 04, 2026",0430040009,mmc-price-list
+1508,2,Imaging,CAROTID ARTERIES,"8,200","18,800","March 04, 2026",0430040011,mmc-price-list
+1509,2,Imaging,CHEST/LUNGS,"3,770","8,800","March 04, 2026",0430040012,mmc-price-list
+1510,2,Imaging,CRANIAL/HEAD,"4,650","19,300","March 04, 2026",0430040013,mmc-price-list
+1511,2,Imaging,ELASTOGRAPHY,"2,570","7,100","March 04, 2026",0430040014,mmc-price-list
+1512,2,Imaging,ER LIVER,"7,260","9,100","March 04, 2026",0430040095,mmc-price-list
+1513,2,Imaging,FIBROSCAN,"5,500","15,400","March 04, 2026",0430040015,mmc-price-list
+1514,2,Imaging,FINE NEEDLE ASPIRATION BIOPSY ULTRASOUND GUIDED,"4,100","9,700","March 04, 2026",0430040016,mmc-price-list
+1515,2,Imaging,GALLBLADDER/BILIARY TREE,"3,770","10,700","March 04, 2026",0430040018,mmc-price-list
+1516,2,Imaging,HEPATOBILIARY TREE (LGPS) W/ FIBROSCAN PACKAGE,"5,570","15,300","March 04, 2026",0430040088,mmc-price-list
+1517,2,Imaging,HEPATOBILIARY TREE (LGPS) W/ UGAP PACKAGE,"4,700","8,400","March 04, 2026",0430040099,mmc-price-list
+1518,2,Imaging,HEPATOBILIARY/LIVER; GALLBLADDER; PANCREAS; SPLEEN,"4,400","9,700","March 04, 2026",0430040022,mmc-price-list
+1519,2,Imaging,ILIAC ARTERIES,"3,060","8,400","March 04, 2026",0430040023,mmc-price-list
+1520,2,Imaging,IMAGING SERVICES - USG,"6,300","7,900","March 04, 2026",0430040106,mmc-price-list
+1521,2,Imaging,INGUINAL AREA,"3,800","8,900","March 04, 2026",0430040024,mmc-price-list
+1522,2,Imaging,JUGULAR VEIN,"8,050","18,600","March 04, 2026",0430040025,mmc-price-list
+1523,2,Imaging,KIDNEY BIOPSY ULTRASOUND GUIDED,"2,860","8,100","March 04, 2026",0430040096,mmc-price-list
+1524,2,Imaging,KIDNEYS,"4,010","8,800","March 04, 2026",0430040026,mmc-price-list
+1525,2,Imaging,KIDNEYS & ADRENAL,"4,700","9,900","March 04, 2026",0430040027,mmc-price-list
+1526,2,Imaging,KIDNEYS & LIVER,"4,700","9,900","March 04, 2026",0430040028,mmc-price-list
+1527,2,Imaging,KIDNEYS & URINARY BLADDER,"5,010","10,500","March 04, 2026",0430040029,mmc-price-list
+1528,2,Imaging,KIDNEYS COLOR DOPPLER,"5,270","11,700","March 04, 2026",0430040107,mmc-price-list
+1529,2,Imaging,KUB; SPLEEN; PELVIS & ABDOMINAL AORTA,"6,010","15,400","March 04, 2026",0430040030,mmc-price-list
+1530,2,Imaging,LIVER,"2,780","16,100","March 04, 2026",0430040031,mmc-price-list
+1531,2,Imaging,LIVER WITH FIBROSCAN PACKAGE,"5,890","15,000","March 04, 2026",0430040089,mmc-price-list
+1532,2,Imaging,LIVER WITH UGAP PACKAGE,"4,600","8,200","March 04, 2026",0430040100,mmc-price-list
+1533,2,Imaging,LIVER; GALLBLADDER & BILIARY TREE,"3,950","9,000","March 04, 2026",0430040032,mmc-price-list
+1534,2,Imaging,LIVER; GALLBLADDER & KIDNEYS,"3,950","8,900","March 04, 2026",0430040033,mmc-price-list
+1535,2,Imaging,LIVER; GALLBLADDER; PANCREAS,"3,950","9,100","March 04, 2026",0430040034,mmc-price-list
+1536,2,Imaging,LIVER; GALLBLADDER; PANCREAS & KIDNEYS,"4,150","9,200","March 04, 2026",0430040035,mmc-price-list
+1537,2,Imaging,LIVER; GALLBLADDER; PANCREAS & PROSTATE,"4,150","9,200","March 04, 2026",0430040036,mmc-price-list
+1538,2,Imaging,LIVER; PANCREAS; SPLEEN & KUB,"4,150","9,200","March 04, 2026",0430040038,mmc-price-list
+1539,2,Imaging,LOWER ABDOMEN /KUB & PELVIS/PROSTATE,"3,860","9,000","March 04, 2026",0430040039,mmc-price-list
+1540,2,Imaging,MASS ULTRASOUND COLOR DOPPLER,"6,900","17,100","March 04, 2026",0430040041,mmc-price-list
+1541,2,Imaging,MUSCULOSKELETAL ANKLE,"4,900","16,600","March 04, 2026",0430040042,mmc-price-list
+1542,2,Imaging,MUSCULOSKELETAL ELBOW,"4,900","16,600","March 04, 2026",0430040043,mmc-price-list
+1543,2,Imaging,MUSCULOSKELETAL KNEE,"4,900","16,600","March 04, 2026",0430040044,mmc-price-list
+1544,2,Imaging,MUSCULOSKELETAL OTHERS,"4,900","16,600","March 04, 2026",0430040045,mmc-price-list
+1545,2,Imaging,MUSCULOSKELETAL SHOULDER,"4,820","16,900","March 04, 2026",0430040046,mmc-price-list
+1546,2,Imaging,MUSCULOSKELETAL WRIST,"4,820","16,600","March 04, 2026",0430040047,mmc-price-list
+1547,2,Imaging,NECK,"4,400","11,300","March 04, 2026",0430040048,mmc-price-list
+1548,2,Imaging,PANCREAS,"3,860","16,800","March 04, 2026",0430040051,mmc-price-list
+1549,2,Imaging,PARACENTESIS ULTRASOUND GUIDED PROCEDURE,"4,100","9,700","March 04, 2026",0430040052,mmc-price-list
+1550,2,Imaging,PAROTID GLAND,"2,550","6,300","March 04, 2026",0430040053,mmc-price-list
+1551,2,Imaging,PELVIC VEINS,"5,900","15,900","March 04, 2026",0430040054,mmc-price-list
+1552,2,Imaging,PELVIS,"3,770","10,800","March 04, 2026",0430010055,mmc-price-list
+1553,2,Imaging,PENIS,"4,500","18,900","March 04, 2026",0430040056,mmc-price-list
+1554,2,Imaging,PERIANAL,"2,110","6,100","March 04, 2026",0430040057,mmc-price-list
+1555,2,Imaging,PIGTAIL INSERTION ULTRASOUND GUIDED PROCEDURE,"3,960","9,500","March 04, 2026",0430040058,mmc-price-list
+1556,2,Imaging,PORTAL VEIN/HEPATIC VEINS COLOR DOPPPLER,"10,100","21,100","March 04, 2026",0430040060,mmc-price-list
+1557,2,Imaging,PROSTATE,"2,780","10,800","March 04, 2026",0430040062,mmc-price-list
+1558,2,Imaging,PSEUDOANEURYSM,"2,110","6,100","March 04, 2026",0430040063,mmc-price-list
+1559,2,Imaging,RENAL ARTERY,"9,900","20,900","March 04, 2026",0430040065,mmc-price-list
+1560,2,Imaging,RENAL VEINS,"8,850","20,800","March 04, 2026",0430040066,mmc-price-list
+1561,2,Imaging,RIGHT LOWER QUADRANT/APPENDIX,"4,610","10,800","March 04, 2026",0430040068,mmc-price-list
+1562,2,Imaging,SCROTUM/TESTES,"4,650","11,100","March 04, 2026",0430040069,mmc-price-list
+1563,2,Imaging,SPLEEN,"3,800","10,800","March 04, 2026",0430040070,mmc-price-list
+1564,2,Imaging,SUBCLAVIAN VEIN,"7,250","17,600","March 04, 2026",0430040071,mmc-price-list
+1565,2,Imaging,THORACENTESIS ULTRASOUND GUIDED PROCEDURE,"4,100","9,700","March 04, 2026",0430040072,mmc-price-list
+1566,2,Imaging,THYROID,"3,870","9,700","March 04, 2026",0430040073,mmc-price-list
+1567,2,Imaging,THYROID MICROWAVE ABLATION PACKAGE,"192,950","211,850","March 04, 2026",0430040081,mmc-price-list
+1568,2,Imaging,TRANSPLANTED LIVER DOPPLER,"10,000","21,400","March 04, 2026",0430040097,mmc-price-list
+1569,2,Imaging,ULTRASOUND GUIDED ABSCESS DRAINAGE PACKAGE,"67,500","96,000","March 04, 2026",0430040082,mmc-price-list
+1570,2,Imaging,ULTRASOUND GUIDED ATTENUATION PARAMETER (UGAP),"3,600","7,400","March 04, 2026",0430040098,mmc-price-list
+1571,2,Imaging,ULTRASOUND GUIDED BIOPSY PROCEDURE (SPECIFIC ORGAN) PACKAGE,"63,500","93,000","March 04, 2026",0430040101,mmc-price-list
+1572,2,Imaging,ULTRASOUND GUIDED DRAINAGE (PARACENTESIS) PACKAGE,"34,200","62,250","March 04, 2026",0430040102,mmc-price-list
+1573,2,Imaging,ULTRASOUND GUIDED DRAINAGE (THORACENTESIS) PACKAGE,"34,500","61,750","March 04, 2026",0430040103,mmc-price-list
+1574,2,Imaging,ULTRASOUND GUIDED DRAINAGE PACKAGE,"46,000","78,000","March 04, 2026",0430040083,mmc-price-list
+1575,2,Imaging,ULTRASOUND GUIDED FINE NEEDLE ASPIRATION BIOPSY PACKAGE,"20,500","26,000","March 04, 2026",0430040093,mmc-price-list
+1576,2,Imaging,ULTRASOUND GUIDED KIDNEY BIOPSY FOR NEPHRO PACKAGE,"34,500","37,000","March 04, 2026",0430040094,mmc-price-list
+1577,2,Imaging,ULTRASOUND GUIDED KIDNEY BIOPSY PACKAGE,"33,990","145,000","March 04, 2026",0430040084,mmc-price-list
+1578,2,Imaging,ULTRASOUND GUIDED LIVER BIOPSY PACKAGE,"63,500","145,000","March 04, 2026",0430040085,mmc-price-list
+1579,2,Imaging,ULTRASOUND GUIDED PIGTAIL INSERTION PACKAGE,"73,000","100,000","March 04, 2026",0430040086,mmc-price-list
+1580,2,Imaging,ULTRASOUND GUIDED PIGTAIL INSERTION SINGLE STEP PACKAGE,"50,700","85,500","March 04, 2026",0430040090,mmc-price-list
+1581,2,Imaging,ULTRASOUND GUIDED PIGTAIL INSERTION SINGLE STEP SIMPLE,"45,700","57,200","March 04, 2026",0430040074,mmc-price-list
+1582,2,Imaging,ULTRASOUND GUIDED PROSTATE BIOPSY GUIDE FOR URO PACKAGE,"26,000","38,500","March 04, 2026",0430040087,mmc-price-list
+1583,2,Imaging,UMBILICAL,"2,230","6,300","March 04, 2026",0430040075,mmc-price-list
+1584,2,Imaging,UPPER ABDOMEN WITH FIBROSCAN PACKAGE,"7,290","17,500","March 04, 2026",0430040091,mmc-price-list
+1585,2,Imaging,UPPER ABDOMEN WITH UGAP PACKAGE,"5,100","12,800","March 04, 2026",0430040104,mmc-price-list
+1586,2,Imaging,UPPER ABDOMEN/LIVER; GB; PANCREAS; SPLEEN; KIDNEYS,"6,100","15,700","March 04, 2026",0430040076,mmc-price-list
+1587,2,Imaging,URINARY BLADDER,"3,800","10,800","March 04, 2026",0430040077,mmc-price-list
+1588,2,Imaging,VEINS,"9,150","20,700","March 04, 2026",0430040078,mmc-price-list
+1589,2,Imaging,WHOLE ABDOMEN,"6,750","16,500","March 04, 2026",0430040080,mmc-price-list
+1590,2,Imaging,WHOLE ABDOMEN WITH FIBROSCAN PACKAGE,"8,370","18,700","March 04, 2026",0430040092,mmc-price-list
+1591,2,Imaging,WHOLE ABDOMEN WITH UGAP PACKAGE,"5,300","13,100","March 04, 2026",0430040105,mmc-price-list
+1592,2,Imaging,ABDOMINAL AORTA DUPLEX SCAN/ULTRASOUND VLC,"9,550","12,000","March 04, 2026",04520001,mmc-price-list
+1593,2,Imaging,ARTERIAL ULTRASOUND OF THE FOOT / HAND - VLC,"4,020","6,700","March 04, 2026",04520007,mmc-price-list
+1594,2,Imaging,CAROTID ARTERY DUPLEX SCAN/ULTRASOUND (CDS) VLC,"7,880","9,900","March 04, 2026",04520011,mmc-price-list
+1595,2,Imaging,DOPPLER - VLC,"2,260","3,450","March 04, 2026",04520013,mmc-price-list
+1596,2,Imaging,HEMODIALYSIS ACCESS ULTRASOUND OR AV FISTULA/GORTEX SCAN VLC,"9,550","12,000","March 04, 2026",04520019,mmc-price-list
+1597,2,Imaging,INFERIOR VENA CAVA ILIAC AND RENAL VEIN DUPLEX SCAN/ULTRASOUND - VLC,"8,550","10,700","March 04, 2026",04520021,mmc-price-list
+1598,2,Imaging,LOWER EXTREMITY ARTERIAL DUPLEX SCAN/ULTRASOUND - VLC,"8,770","11,800","March 04, 2026",04520022,mmc-price-list
+1599,2,Imaging,LOWER EXTREMITY VENOUS DUPLEX SCAN/ULTRASOUND - VLC,"9,150","12,200","July 02, 2026",04520023,mmc-price-list
+1600,2,Imaging,LYMPHEDEMA ULTRASOUND - LOWER EXTREMITY - VLC,"7,910","11,500","March 04, 2026",04520024,mmc-price-list
+1601,2,Imaging,LYMPHEDEMA ULTRASOUND - UPPER EXTREMITY - VLC,"8,150","11,500","March 04, 2026",04520025,mmc-price-list
+1602,2,Imaging,PELVIC CONGESTION ULTRASOUND - VLC,"9,000","11,300","July 14, 2026",04520066,mmc-price-list
+1603,2,Imaging,ULTRASOUND GUIDED COMPRESSION OF PSEUDOANEURYSM - VLC,"16,930","21,200","March 04, 2026",04520040,mmc-price-list
+1604,2,Imaging,UPPER EXTREMITY ARTERIAL DUPLEX SCAN/ULTRASOUND - VLC,"8,770","11,800","March 04, 2026",04520041,mmc-price-list
+1605,2,Imaging,UPPER EXTREMITY VENOUS DUPLEX SCAN/ULTRASOUND - VLC,"8,770","11,800","March 04, 2026",04520042,mmc-price-list
