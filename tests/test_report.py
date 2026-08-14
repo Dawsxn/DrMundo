@@ -132,7 +132,7 @@ def test_published_tier_hmo_is_flagged_on_the_page():
     e.hmo_low = Decimal("500")
     e.hmo_high = Decimal("500")
     html = render_html(e)
-    assert "check your own certificate" in html
+    assert "your own certificate" in html
     assert "‡" in html
 
 
@@ -141,7 +141,7 @@ def test_patient_stated_hmo_is_not_flagged():
     e.hmo = HMOPlan(remaining_balance=Decimal("40000"), mbl_source="patient_stated")
     e.hmo_low = Decimal("500")
     e.hmo_high = Decimal("500")
-    assert "check your own certificate" not in render_html(e)
+    assert "your own certificate" not in render_html(e)
 
 
 # ------------------------------------------------------------------ deduction rows
@@ -174,16 +174,44 @@ def test_bucket_echo_caveats_are_not_repeated_on_the_page():
     assert "Not priced (2)" in html          # the bucket still says it structurally
 
 
-def test_patient_facing_caveats_use_real_dashes():
-    from decimal import Decimal as D
+def test_no_em_dashes_in_patient_facing_output():
+    """Em dashes read as machine-written. Prose is recast, not hyphen-swapped.
 
+    En dashes in numeric ranges (P1,735 – P4,600) are standard typography for a range
+    and are deliberately kept.
+    """
+    from agent.format import DISCLAIMER, format_budget_answer
+    from agent.schemas import Answer
     from pricing.waterfall import compute_budget
+
     e = compute_budget(
-        priced=[_priced("VATS PACKAGE", "50000", "60000")],
+        priced=[
+            _priced("VATS PACKAGE", "50000", "60000"),
+            _priced("CBC", "630", "1200"),
+        ],
+        unpriced=[_item("FECALYSIS")],
+        needs_confirmation=[_item("CREA")],
+        senior_or_pwd=True,
     )
     e.priced[0].item.kind = "procedure"
-    e2 = compute_budget(priced=[_priced("X", "1", "2")])
-    for c in e.caveats + e2.caveats:
+    e = compute_budget(
+        priced=e.priced, unpriced=e.unpriced, needs_confirmation=e.needs_confirmation,
+        senior_or_pwd=True,
+    )
+
+    surfaces = [render_html(e), DISCLAIMER, *e.caveats]
+    surfaces.append(format_budget_answer(Answer(
+        status="answered", path="budget_report", query="q", answer_text="", budget=e,
+    )))
+    for text in surfaces:
+        assert "—" not in text, f"em dash in: {text[:120]}"
+
+
+def test_no_raw_double_hyphen_in_patient_facing_output():
+    # The other direction: recast the sentence, do not swap the dash for "--".
+    from pricing.waterfall import compute_budget
+    e = compute_budget(priced=[_priced("X", "1", "2")], unpriced=[_item("Y")])
+    for c in e.caveats:
         assert " -- " not in c, c
 
 

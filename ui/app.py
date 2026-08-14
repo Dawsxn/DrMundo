@@ -23,7 +23,7 @@ import streamlit as st
 API_URL = os.getenv("DR_MUNDO_API_URL", "http://localhost:8000")
 REQUEST_TIMEOUT = 90  # seconds; the agent may make several model calls per turn.
 
-st.set_page_config(page_title="Dr. Mundo — PH Medical Cost Estimator",
+st.set_page_config(page_title="Dr. Mundo: PH Medical Cost Estimator",
                    page_icon="🩺", layout="centered", initial_sidebar_state="expanded")
 
 # Curated sample prompts: (emoji, short label, full question). A deliberate mix of
@@ -121,7 +121,7 @@ def _render_breakdown(answer: dict) -> None:
     with st.container(border=True):
         title = answer.get("procedure_or_service") or "Result"
         scope = answer.get("hospital")
-        st.markdown(f"**{title}**" + (f" — {scope}" if scope else ""))
+        st.markdown(f"**{title}**" + (f" {scope}" if scope else ""))
 
         if answer.get("price_low") is not None:
             cols = st.columns(3)
@@ -165,7 +165,7 @@ def _render_trace(trace: list[dict]) -> None:
         return
     with st.expander(f"🔎 Reasoning trace ({len(trace)} step(s))"):
         for i, step in enumerate(trace, 1):
-            st.markdown(f"**Step {i} — Action:** `{step.get('action')}`")
+            st.markdown(f"**Step {i} action:** `{step.get('action')}`")
             if step.get("thought"):
                 st.markdown(f"*Thought:* {step['thought']}")
             if step.get("action_input"):
@@ -299,7 +299,7 @@ with st.sidebar:
     st.divider()
     st.caption(f"API: `{API_URL}`")
     st.caption(f"Session: `{st.session_state.session_id[:8]}…`")
-    st.caption("Estimates only — not medical advice.")
+    st.caption("Estimates only. Not medical advice.")
 
 # Main area: welcome cards when empty, otherwise the conversation.
 if st.session_state.messages or pending:

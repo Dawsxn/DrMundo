@@ -9,8 +9,8 @@ from agent.schemas import Answer
 from pricing.schemas import to_display_pesos
 
 DISCLAIMER = (
-    "Estimates only — not medical or financial advice. Price ranges are indicative and "
-    "may exclude professional fees, medicines, and room charges."
+    "Estimates only. This is not medical or financial advice. Price ranges are indicative "
+    "and may exclude professional fees, medicines, and room charges."
 )
 
 
@@ -51,14 +51,14 @@ def format_budget_answer(answer: Answer) -> str:
         return format_answer(answer)
 
     p = lambda d: peso(to_display_pesos(d))  # noqa: E731 -- local shorthand, one file
-    lines: list[str] = ["**Budget estimate — Makati Medical Center**", ""]
+    lines: list[str] = ["**Budget estimate: Makati Medical Center**", ""]
     lines.append(f"Read from your request: {b.extracted_count} item(s)")
     lines.append("")
     lines.append(f"**Prepare: {p(b.prepare_low)} – {p(b.prepare_high)}**")
     lines.append("")
 
     if b.priced:
-        lines.append(f"Priced ({len(b.priced)}) — {p(b.gross_low)} – {p(b.gross_high)}")
+        lines.append(f"Priced ({len(b.priced)}): {p(b.gross_low)} to {p(b.gross_high)}")
         for it in b.priced:
             lines.append(f"  • {it.catalog_name}: {p(it.price_low)} – {p(it.price_high)}")
     if b.discount_low or b.discount_high:
@@ -77,7 +77,7 @@ def format_budget_answer(answer: Answer) -> str:
 
     if b.unpriced:
         lines.append("")
-        lines.append(f"Not priced ({len(b.unpriced)}) — MMC publishes no price; NOT in the total:")
+        lines.append(f"Not priced ({len(b.unpriced)}). MMC publishes no price, so these are not in the total:")
         for it in b.unpriced:
             lines.append(f"  • {it.normalized or it.raw_text}")
 

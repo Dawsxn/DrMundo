@@ -184,7 +184,7 @@ def _build_caveats(
         names = ", ".join(sorted(p.catalog_name for p in undetermined))
         out.append(
             f"No PhilHealth case rate is mapped for: {names}. Coverage is undetermined, "
-            f"not zero — check with PhilHealth."
+            f"not zero. Check with PhilHealth."
         )
 
     if unpriced:
@@ -202,8 +202,8 @@ def _build_caveats(
         out.append("This figure is before any HMO benefit.")
     elif hmo.needs_verification_note:
         out.append(
-            "HMO figures are published amounts for that plan tier, not your actual policy — "
-            "check your own certificate."
+            "HMO figures are published amounts for that plan tier, not your actual policy. "
+            "Check your own certificate."
         )
 
     if senior_or_pwd:

@@ -216,7 +216,7 @@ def test_published_tier_figures_are_labelled_for_verification():
         priced=[_priced(low="50000", high="50000", kind="lab", name="PANEL")],
         hmo=HMOPlan(mbl_annual=Decimal("100000"), mbl_source="published_tier"),
     )
-    assert any("check your own certificate" in c for c in est.caveats)
+    assert any("your own certificate" in c for c in est.caveats)
 
 
 # ------------------------------------------------------------------ W4 / whole thing

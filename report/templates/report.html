@@ -45,7 +45,7 @@
 
 <div class="drm">
   <div class="head">
-    <h1>Dr. Mundo — Budget Estimate</h1>
+    <h1>Dr. Mundo Budget Estimate</h1>
     <span class="where">{{ hospital }}</span>
   </div>
   <div class="meta">
@@ -97,11 +97,11 @@
 
   {% if e.separate_lines %}
   <div class="excluded">
-    <h2>Not included — ask about these separately</h2>
+    <h2>Not included, ask about these separately</h2>
     <table>
       {% for line in e.separate_lines %}
       <tr>
-        <td>{{ line.label }}{% if line.note %} <span class="sub">— {{ line.note }}</span>{% endif %}</td>
+        <td>{{ line.label }}{% if line.note %} <span class="sub">({{ line.note }})</span>{% endif %}</td>
         <td class="amt">
           {{ peso(line.price_low) }} – {{ peso(line.price_high) }}{% if line.unit %} {{ line.unit }}{% endif %}
         </td>
@@ -138,7 +138,7 @@
 
   <div class="foot">
     {% if hmo_needs_verification %}
-    ‡ published figures for this plan tier, not your actual policy — check your own certificate.<br>
+    ‡ Published figures for this plan tier, not your actual policy. Check your own certificate.<br>
     {% endif %}
     Estimates only, not a quotation. Every price traces to a Makati Medical Center catalogue item code.
   </div>
