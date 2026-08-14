@@ -398,3 +398,23 @@ def test_a_stated_balance_is_not_flagged_as_an_assumption():
                          hmo=plan)
     assert est.hmo_low == Decimal("20000")
     assert not any("annual HMO limit is still available" in c for c in est.caveats)
+
+
+def test_accreditation_is_flagged_rather_than_assumed():
+    """An HMO pays nothing at an unaccredited facility, and we could not source MMC's
+    status from a current first-party list. So we say so instead of asserting it."""
+    est = compute_budget(
+        priced=[_priced(low="50000", high="50000", name="PANEL")],
+        hmo=HMOPlan(plan_name="Gold", remaining_balance=Decimal("40000")),
+    )
+    assert est.hmo_low == Decimal("40000")
+    assert any("accredited under your plan" in c for c in est.caveats)
+
+
+def test_a_known_accredited_plan_is_not_nagged():
+    est = compute_budget(
+        priced=[_priced(low="50000", high="50000", name="PANEL")],
+        hmo=HMOPlan(plan_name="Gold", remaining_balance=Decimal("40000"),
+                    accredited_at_mmc=True),
+    )
+    assert not any("accredited under your plan" in c for c in est.caveats)

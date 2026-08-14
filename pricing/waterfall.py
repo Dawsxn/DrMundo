@@ -362,6 +362,18 @@ def _build_caveats(
             f"already claimed for it this year, you will pay up to ₱{hmo_high:,.0f} more "
             f"than shown."
         )
+    # Accreditation could not be verified to the standard the rest of this dataset holds.
+    # Maxicare publishes no citable static list -- their directory is a live search tool --
+    # and the only lists naming MMC are third-party copies from 2015 and 2018. An HMO pays
+    # nothing at a facility it has not accredited, so the honest move is to tell the
+    # patient how to check rather than assert a status we cannot source.
+    if hmo is not None and hmo.accredited_at_mmc is None and (hmo_low or hmo_high):
+        out.append(
+            "This assumes Makati Medical Center is accredited under your plan. Your HMO "
+            "pays nothing at a facility it has not accredited, so confirm it in the "
+            "Maxicare provider directory or with their hotline before you go."
+        )
+
     if hmo is not None and hmo.preexisting:
         out.append(
             "You said this condition predates your plan. Pre-existing conditions are "
