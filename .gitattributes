@@ -1,5 +1,19 @@
 # Force LF on files that run inside the Linux container, regardless of the host's
 # core.autocrlf setting. CRLF here would break `bash` and the Docker build.
+# Never line-ending-convert a binary. core.autocrlf=true is on for this checkout, and a
+# PDF or PNG that gets CRs inserted on clone is silently corrupt: it commits fine on the
+# machine that made it and fails to open on the machine that cloned it. That is exactly
+# the path the dataset takes to a teammate.
+*.pdf           binary
+*.png           binary
+*.jpg           binary
+*.jpeg          binary
+*.webp          binary
+*.npz           binary
+*.db            binary
+*.docx          binary
+*.pptx          binary
+
 *.sh            text eol=lf
 Dockerfile      text eol=lf
 .dockerignore   text eol=lf
