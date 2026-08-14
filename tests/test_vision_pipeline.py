@@ -9,6 +9,7 @@ from vision.extract_request import extract_request, triage
 from vision.reader import OracleReader, ReadMark, ReadResult
 from vision.redact import load_and_redact, redact_regions
 from eval.reader_bench import dataset_dir
+from tests.conftest import needs_media
 
 
 def _img(w: int = 200, h: int = 100) -> Image.Image:
@@ -123,6 +124,7 @@ def test_non_request_document_is_flagged():
 
 
 # ------------------------------------------------------------------ oracle reader
+@needs_media
 def test_oracle_reader_reproduces_ground_truth():
     base = dataset_dir()
     reader = OracleReader(base / "groundtruth")

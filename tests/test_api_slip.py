@@ -13,6 +13,7 @@ from fastapi.testclient import TestClient
 
 import api.main as api
 from eval.reader_bench import dataset_dir
+from tests.conftest import needs_media
 from vision.reader import OracleReader
 
 
@@ -43,6 +44,7 @@ def _slip_bytes(sample_id: str = "0000000") -> tuple[str, bytes]:
 
 
 # ------------------------------------------------------------------ the text path
+@needs_media
 def test_existing_endpoints_are_untouched(client):
     assert client.get("/health").json()["status"] == "ok"
     paths = {r.path for r in api.app.routes if hasattr(r, "path")}
@@ -50,18 +52,21 @@ def test_existing_endpoints_are_untouched(client):
 
 
 # ------------------------------------------------------------------ upload validation
+@needs_media
 def test_non_image_upload_is_rejected(client):
     r = client.post("/ask-slip", files={"file": ("x.txt", b"hello", "text/plain")},
                     data={"session_id": "t"})
     assert r.status_code == 415
 
 
+@needs_media
 def test_empty_upload_is_rejected(client):
     r = client.post("/ask-slip", files={"file": ("x.png", b"", "image/png")},
                     data={"session_id": "t"})
     assert r.status_code in (400, 413)
 
 
+@needs_media
 def test_oversized_upload_is_rejected(client):
     big = b"\x89PNG\r\n\x1a\n" + b"0" * (api.MAX_UPLOAD_BYTES + 1)
     r = client.post("/ask-slip", files={"file": ("big.png", big, "image/png")},
@@ -70,6 +75,7 @@ def test_oversized_upload_is_rejected(client):
 
 
 # ------------------------------------------------------------------ pass 1
+@needs_media
 def test_slip_upload_returns_a_priced_report(client):
     name, payload = _slip_bytes()
     r = client.post("/ask-slip", files={"file": (name, payload, "image/png")},
@@ -83,6 +89,7 @@ def test_slip_upload_returns_a_priced_report(client):
     assert float(budget["prepare_low"]) > 0
 
 
+@needs_media
 def test_pass_one_asks_nothing_and_says_before_any_hmo(client):
     name, payload = _slip_bytes()
     r = client.post("/ask-slip", files={"file": (name, payload, "image/png")},
@@ -91,6 +98,7 @@ def test_pass_one_asks_nothing_and_says_before_any_hmo(client):
     assert any("before any HMO" in c for c in caveats)
 
 
+@needs_media
 def test_upload_leaves_no_file_behind_in_the_repo(client, tmp_path):
     name, payload = _slip_bytes()
     before = set(Path(".").glob("*.png"))
@@ -100,6 +108,7 @@ def test_upload_leaves_no_file_behind_in_the_repo(client, tmp_path):
 
 
 # ------------------------------------------------------------------ pass 2
+@needs_media
 def test_refine_reprices_without_a_second_upload(client):
     name, payload = _slip_bytes()
     first = client.post("/ask-slip", files={"file": (name, payload, "image/png")},
@@ -117,6 +126,7 @@ def test_refine_reprices_without_a_second_upload(client):
     assert after < before
 
 
+@needs_media
 def test_refine_accepts_a_comma_formatted_balance(client):
     name, payload = _slip_bytes()
     client.post("/ask-slip", files={"file": (name, payload, "image/png")},
@@ -127,6 +137,7 @@ def test_refine_accepts_a_comma_formatted_balance(client):
     assert r.status_code == 200
 
 
+@needs_media
 def test_refine_rejects_a_non_numeric_balance(client):
     name, payload = _slip_bytes()
     client.post("/ask-slip", files={"file": (name, payload, "image/png")},
@@ -135,6 +146,7 @@ def test_refine_rejects_a_non_numeric_balance(client):
     assert r.status_code == 422
 
 
+@needs_media
 def test_no_procedure_planned_is_a_real_answer(client):
     name, payload = _slip_bytes()
     client.post("/ask-slip", files={"file": (name, payload, "image/png")},
@@ -145,6 +157,7 @@ def test_no_procedure_planned_is_a_real_answer(client):
     assert not any("tell me which one" in c for c in caveats)
 
 
+@needs_media
 def test_refine_without_a_slip_says_so(client):
     api.SERVICE.reset_session("empty")
     r = client.post("/refine", json={"session_id": "empty", "senior_or_pwd": True})
@@ -152,6 +165,7 @@ def test_refine_without_a_slip_says_so(client):
     assert "Upload a request slip" in r.json()["answer"]["answer_text"]
 
 
+@needs_media
 def test_reset_clears_the_slip_too(client):
     name, payload = _slip_bytes()
     client.post("/ask-slip", files={"file": (name, payload, "image/png")},

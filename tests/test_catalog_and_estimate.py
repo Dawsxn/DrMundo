@@ -4,6 +4,7 @@ from decimal import Decimal
 from pathlib import Path
 
 from eval.reader_bench import dataset_dir
+from tests.conftest import needs_media
 from pricing.catalog import KNOWN_UNPRICED, coverage_report, find_price, price_items
 from pricing.estimate import estimate_from_slip
 from pricing.hmo import resolve_hmo_plan
@@ -92,6 +93,7 @@ def _slip_for(sample_id: str) -> RequestSlip:
     return read_and_extract(OracleReader(base / "groundtruth"), img, synthetic=True)
 
 
+@needs_media
 def test_real_slip_prices_end_to_end():
     est = estimate_from_slip(_slip_for("0000000"))
     assert est.extracted_count == 7
@@ -100,6 +102,7 @@ def test_real_slip_prices_end_to_end():
     assert est.prepare_low <= est.prepare_high
 
 
+@needs_media
 def test_hmo_reduces_what_a_real_slip_costs():
     plan = resolve_hmo_plan("Maxicare", "Gold", remaining_balance=Decimal("40000"))
     with_hmo = estimate_from_slip(_slip_for("0000000"), hmo=plan)
@@ -107,6 +110,7 @@ def test_hmo_reduces_what_a_real_slip_costs():
     assert with_hmo.prepare_low < without.prepare_low
 
 
+@needs_media
 def test_non_lab_document_is_not_priced():
     # A results report lists test names and is still not an order.
     est = estimate_from_slip(_slip_for("0000250"))
@@ -114,12 +118,14 @@ def test_non_lab_document_is_not_priced():
     assert est.priced == []
 
 
+@needs_media
 def test_blank_form_produces_an_empty_estimate():
     est = estimate_from_slip(_slip_for("0000240"))
     assert est.extracted_count == 0
     assert est.prepare_low == Decimal(0)
 
 
+@needs_media
 def test_item_count_is_conserved_across_the_whole_pipeline():
     for sid in ("0000000", "0000001", "0000002", "0000250"):
         slip = _slip_for(sid)
