@@ -18,11 +18,22 @@ def peso(value) -> str:
     return f"₱{value:,.0f}" if value is not None else "n/a"
 
 
+def _hospital_names(answer: Answer) -> list[str]:
+    return sorted({h.hospital for h in (answer.hospitals or []) if h.hospital})
+
+
 def _scope_line(answer: Answer) -> str:
+    """Where the price is from.
+
+    Scope v2 covers one hospital, so "across 2 hospitals" was never true: those rows are
+    two PACKAGES at the same hospital. With a single hospital in the results, name it.
+    """
     if answer.hospital:
         return f"at {answer.hospital}"
-    n = len(answer.hospitals or [])
-    return f"across {n} hospitals" if n else ""
+    names = _hospital_names(answer)
+    if len(names) == 1:
+        return f"at {names[0]}"
+    return f"across {len(names)} hospitals" if names else ""
 
 
 def _oop_text(answer: Answer) -> str:
@@ -155,11 +166,16 @@ def format_answer(answer: Answer) -> str:
         lines.append(f"- Price range: {peso(answer.price_low)} – {peso(answer.price_high)}")
         lines.append("- Not covered by PhilHealth (no case rate or out-of-pocket).")
 
-    if answer.hospitals and not answer.hospital:
+    # A breakdown is only worth printing when it says something the headline does not.
+    # One row repeats the range; several rows at ONE hospital are packages, and listing
+    # the hospital name twice was the bug this replaces.
+    rows = answer.hospitals or []
+    if len(rows) > 1:
+        single_hospital = len(_hospital_names(answer)) == 1
         lines.append("")
-        lines.append("Per hospital:")
-        for h in answer.hospitals:
-            label = h.hospital
+        lines.append("Packages:" if single_hospital else "Per hospital:")
+        for h in rows:
+            label = (h.package or h.service or "Package") if single_hospital else h.hospital
             rng = f"{peso(h.price_low)} – {peso(h.price_high)}"
             lines.append(f"  • {label}: {rng}")
 
