@@ -1,0 +1,120 @@
+{
+  "sample_id": "0000010",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "cardiac_chest_pain",
+  "clean_image": "filled/0000010.png",
+  "blank_image": "stage1/blank/0000010.png",
+  "image": "media/0000010_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Filomena E. Casiano, MD, FPCP, FPSN",
+    "physician_name_plain": "Filomena E. Casiano",
+    "specialty": "Nephrology / Internal Medicine",
+    "mobile": "0917-0000-531",
+    "email": "filomena.casiano@clinic.example",
+    "license_no": "967062",
+    "ptr_no": "9918357",
+    "s2_no": "996062",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CPK_TOTAL",
+      "CT_CHEST",
+      "ECG_12L",
+      "ECHO_2D",
+      "LDH",
+      "TROPONIN_I",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {
+      "CT_CHEST": [
+        "triple_contrast"
+      ]
+    }
+  },
+  "marks": [
+    {
+      "code": "TROPONIN_I",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Troponin-I",
+      "section": "Cardiac Markers:"
+    },
+    {
+      "code": "CPK_TOTAL",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total CPK",
+      "section": "Cardiac Markers:"
+    },
+    {
+      "code": "LDH",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LD",
+      "section": "Cardiac Markers:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Electrocardiogram",
+      "section": "Cardiac Diagnostics:"
+    },
+    {
+      "code": "ECHO_2D",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "2D Echocardiogram",
+      "section": "Cardiac Diagnostics:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA and lateral",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "CT_CHEST",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest CT",
+      "section": "CT / Advanced:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1011.08,
+    "usable_bottom_px": 1011.06,
+    "footer_top_px": 960.25
+  },
+  "box_ink_failures": 0
+}

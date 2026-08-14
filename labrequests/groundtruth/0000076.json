@@ -1,0 +1,128 @@
+{
+  "sample_id": "0000076",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "renal_panel",
+  "clean_image": "filled/0000076.png",
+  "blank_image": "stage1/blank/0000076.png",
+  "image": "media/0000076_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Lourdes I. Samonte, MD, FSOSP",
+    "physician_name_plain": "Lourdes I. Samonte",
+    "specialty": "Surgical Oncologist / General Surgeon",
+    "mobile": "0918-0000-476",
+    "email": "lourdes.samonte@clinic.example",
+    "license_no": "927269",
+    "ptr_no": "9291310",
+    "s2_no": "992641",
+    "clinics": [
+      {
+        "name": "Balintawak General Hospital",
+        "address": "162 Malunggay St., Villa Aurora, Nueva Ecija",
+        "days": "Mon to Fri",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(03) 8275-0000",
+        "local": "local 418"
+      },
+      {
+        "name": "Sto. Theodore Community Hospital",
+        "address": "18 Camia St., Villa Aurora, Cavite",
+        "days": "Wed - Fri - Sat",
+        "hours": "By Appointment",
+        "trunkline": "(02) 8989-0000",
+        "local": "local 204"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CA_SERUM",
+      "CREATININE",
+      "ELECTROLYTES",
+      "URIC_ACID",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {
+      "CA_SERUM": "total"
+    },
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "BUN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URIC_ACID",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUA",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "ELECTROLYTES",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "CA_SERUM",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Calcium (Ca)",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 2,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1082.59,
+    "usable_bottom_px": 1083.65,
+    "footer_top_px": 1006.98
+  },
+  "box_ink_failures": 0
+}

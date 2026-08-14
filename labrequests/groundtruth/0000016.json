@@ -1,0 +1,134 @@
+{
+  "sample_id": "0000016",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "preoperative_clearance",
+  "clean_image": "filled/0000016.png",
+  "blank_image": "stage1/blank/0000016.png",
+  "image": "media/0000016_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Marilou K. Talusan, MD, FPCP",
+    "physician_name_plain": "Marilou K. Talusan",
+    "specialty": "Internal Medicine",
+    "mobile": "0918-0000-407",
+    "email": "marilou.talusan@clinic.example",
+    "license_no": "927679",
+    "ptr_no": "9361809",
+    "s2_no": "918858",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CBC_PLT",
+      "CREATININE",
+      "ECG_12L",
+      "ELECTROLYTES",
+      "PTT",
+      "PT_PROTHROMBIN",
+      "URINALYSIS",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ PLT CT",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PT (Prothrombin Time)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "PTT",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PTT (Partial Thromboplastin)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "BUN",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "ELECTROLYTES",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA and lateral",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12L ECG",
+      "section": "Cardiac Diagnostics:"
+    }
+  ],
+  "primary_mark_style": "circle_around_label",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1015.12,
+    "usable_bottom_px": 1015.12,
+    "footer_top_px": 963.52
+  },
+  "box_ink_failures": 0
+}

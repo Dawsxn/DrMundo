@@ -1,0 +1,116 @@
+{
+  "sample_id": "0000115",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "prenatal",
+  "clean_image": "filled/0000115.png",
+  "blank_image": "stage1/blank/0000115.png",
+  "image": "media/0000115_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Carlito J. Limjoco, MD, FPSEDM",
+    "physician_name_plain": "Carlito J. Limjoco",
+    "specialty": "Diabetes, Thyroid and Endocrine Diseases",
+    "mobile": "0918-0000-473",
+    "email": "carlito.limjoco@clinic.example",
+    "license_no": "911612",
+    "ptr_no": "9780527",
+    "s2_no": "916376",
+    "clinics": [
+      {
+        "name": "St. Sylvester Medical Center",
+        "address": "33 Gumamela St., Villa Aurora, Rizal",
+        "days": "Wed - Fri - Sat",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(06) 8614-0000",
+        "local": "local 671"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BLOOD_TYPING_RH",
+      "CBC",
+      "HBSAG_SCREENING",
+      "OGTT_75G",
+      "URINALYSIS",
+      "VDRL_RPR"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "BLOOD_TYPING_RH",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Blood Typing/Rh",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Profile:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VDRL/RPR",
+      "section": "Serology:"
+    },
+    {
+      "code": "OGTT_75G",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "OGTT (75 Grams)",
+      "section": "Glucose Studies:"
+    }
+  ],
+  "primary_mark_style": "circle_around_label",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 762.17,
+    "usable_bottom_px": 765.16,
+    "footer_top_px": 709.48
+  },
+  "box_ink_failures": 0
+}

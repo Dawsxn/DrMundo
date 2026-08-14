@@ -1,0 +1,131 @@
+{
+  "sample_id": "0000100",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "renal_panel",
+  "clean_image": "filled/0000100.png",
+  "blank_image": "stage1/blank/0000100.png",
+  "image": "media/0000100_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Felicidad C. Mangahas, MD",
+    "physician_name_plain": "Felicidad C. Mangahas",
+    "specialty": "Obstetrics and Gynecology",
+    "mobile": "0917-0000-104",
+    "email": "felicidad.mangahas@clinic.example",
+    "license_no": "976804",
+    "ptr_no": "9850436",
+    "s2_no": "983089",
+    "clinics": [
+      {
+        "name": "Pag-asa Family Health Center",
+        "address": "92 Kamagong St., San Ignacio, Quezon",
+        "days": "Tue - Thu - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(07) 8184-0000",
+        "local": "local 540"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CA_IONIZED",
+      "CA_TOTAL",
+      "CREATININE",
+      "K",
+      "NA",
+      "URIC_ACID",
+      "VLDL"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "BUN",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URIC_ACID",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUA",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "NA",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium (Na)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CA_TOTAL",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total Calcium",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CA_IONIZED",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Ionized Calcium",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "VLDL",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VLDL",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 766.28,
+    "usable_bottom_px": 769.28,
+    "footer_top_px": 715.02
+  },
+  "box_ink_failures": 0
+}

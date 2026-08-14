@@ -1,0 +1,136 @@
+{
+  "sample_id": "0000136",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "preoperative_clearance",
+  "clean_image": "filled/0000136.png",
+  "blank_image": "stage1/blank/0000136.png",
+  "image": "media/0000136_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Remedios J. Galang, MD, FPOGS",
+    "physician_name_plain": "Remedios J. Galang",
+    "specialty": "Obstetrics and Gynecology",
+    "mobile": "0917-0000-853",
+    "email": "remedios.galang@clinic.example",
+    "license_no": "992453",
+    "ptr_no": "9705837",
+    "s2_no": "918720",
+    "clinics": [
+      {
+        "name": "St. Wenceslaus Medical Center",
+        "address": "212 Talisay St., Mataas na Lupa, Bulacan",
+        "days": "Mon - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(06) 8259-0000",
+        "local": "local 414"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CBC",
+      "CREATININE",
+      "ECG_12L",
+      "PTT",
+      "PT_PROTHROMBIN",
+      "URINALYSIS",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PT (Prothrombin)",
+      "section": "Coagulation:"
+    },
+    {
+      "code": "PTT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PTT (Partial Thromboplastin)",
+      "section": "Coagulation:"
+    },
+    {
+      "code": "BUN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA / L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Electrocardiogram",
+      "section": "Cardio:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 762.2,
+    "usable_bottom_px": 765.2,
+    "footer_top_px": 709.94
+  },
+  "box_ink_failures": 0
+}

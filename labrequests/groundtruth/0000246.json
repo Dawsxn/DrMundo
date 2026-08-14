@@ -1,0 +1,60 @@
+{
+  "sample_id": "0000246",
+  "kind": "blank",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "blank_form",
+  "clean_image": "filled/0000246.png",
+  "blank_image": "stage1/blank/0000246.png",
+  "image": "media/0000246_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Ramon D. Bagunu, MD, FPSGS",
+    "physician_name_plain": "Ramon D. Bagunu",
+    "specialty": "General Surgeon",
+    "mobile": "0917-0000-586",
+    "email": "ramon.bagunu@clinic.example",
+    "license_no": "915921",
+    "ptr_no": "9565971",
+    "s2_no": "957830",
+    "clinics": [
+      {
+        "name": "Liwayway Family Health Center",
+        "address": "177 Bougainvillea St., Mataas na Lupa, Nueva Ecija",
+        "days": "Tue / Thu",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(08) 8436-0000",
+        "local": "local 390"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [],
+  "primary_mark_style": null,
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 764.97,
+    "usable_bottom_px": 767.95,
+    "footer_top_px": 713.77
+  },
+  "box_ink_failures": 0
+}

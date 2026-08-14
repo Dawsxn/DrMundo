@@ -1,0 +1,100 @@
+{
+  "sample_id": "0000134",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "hepatitis_screen",
+  "clean_image": "filled/0000134.png",
+  "blank_image": "stage1/blank/0000134.png",
+  "image": "media/0000134_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Filomena U. Almazan, MD, FSOSP",
+    "physician_name_plain": "Filomena U. Almazan",
+    "specialty": "Surgical Oncologist / General Surgeon",
+    "mobile": "0918-0000-701",
+    "email": "filomena.almazan@clinic.example",
+    "license_no": "974135",
+    "ptr_no": "9167384",
+    "s2_no": "937384",
+    "clinics": [
+      {
+        "name": "Sto. Ubald Community Hospital",
+        "address": "116 Acacia St., Sta. Lucia, Laguna",
+        "days": "Mon - Wed - Fri",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(08) 8275-0000",
+        "local": "local 905"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "HBSAG_SCREENING",
+      "SGOT_AST",
+      "SGPT_ALT",
+      "VDRL_RPR"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg (Screening)",
+      "section": "Hepatitis Profile:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VDRL / RPR",
+      "section": "Serology:"
+    },
+    {
+      "code": "SGOT_AST",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGOT/AST",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "SGPT_ALT",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGPT/ALT",
+      "section": "Liver Function:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 768.31,
+    "usable_bottom_px": 771.3,
+    "footer_top_px": 716.17
+  },
+  "box_ink_failures": 0
+}

@@ -1,0 +1,81 @@
+{
+  "sample_id": "0000092",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "liver_evaluation",
+  "clean_image": "filled/0000092.png",
+  "blank_image": "stage1/blank/0000092.png",
+  "image": "media/0000092_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Cesar L. Mercado, MD, FPCCP",
+    "physician_name_plain": "Cesar L. Mercado",
+    "specialty": "Pulmonary Medicine",
+    "mobile": "0917-0000-663",
+    "email": "cesar.mercado@clinic.example",
+    "license_no": "939719",
+    "ptr_no": "9908679",
+    "s2_no": "992242",
+    "clinics": [
+      {
+        "name": "Bagumbayan General Hospital",
+        "address": "365 Talisay St., San Ignacio, Cavite",
+        "days": "Tue - Thu - Sat",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(08) 8782-0000",
+        "local": "local 566"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "LIVER_PROFILE",
+      "US_HBT"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "LIVER_PROFILE",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Liver Profile",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "US_HBT",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBT (Liver)",
+      "section": "Ultrasound:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1076.23,
+    "usable_bottom_px": 1077.28,
+    "footer_top_px": 998.89
+  },
+  "box_ink_failures": 0
+}

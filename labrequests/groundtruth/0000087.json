@@ -1,0 +1,99 @@
+{
+  "sample_id": "0000087",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "breast_mass_workup",
+  "clean_image": "filled/0000087.png",
+  "blank_image": "stage1/blank/0000087.png",
+  "image": "media/0000087_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Veronica K. Sarmiento, MD",
+    "physician_name_plain": "Veronica K. Sarmiento",
+    "specialty": "Internal Medicine",
+    "mobile": "0918-0000-983",
+    "email": "veronica.sarmiento@clinic.example",
+    "license_no": "991363",
+    "ptr_no": "9450125",
+    "s2_no": "992346",
+    "clinics": [
+      {
+        "name": "Tanglaw General Hospital",
+        "address": "59 Rosal St., Barangay Masagana, Pampanga",
+        "days": "Mon - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(05) 8106-0000",
+        "local": "local 228"
+      },
+      {
+        "name": "Halamanan Medical Clinic",
+        "address": "342 Malunggay St., Mataas na Lupa, Batangas",
+        "days": "Mon to Fri",
+        "hours": "8:00 AM - 11:00 AM",
+        "trunkline": "(05) 8803-0000",
+        "local": "local 732"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC_PLT",
+      "MAMMOGRAM",
+      "US_BREAST"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "US_BREAST",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Breast",
+      "section": "Ultrasound:"
+    },
+    {
+      "code": "MAMMOGRAM",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Mammography (Bilateral)",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "CBC_PLT",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Complete Blood Count with Platelet",
+      "section": "Laboratory Test:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1076.64,
+    "usable_bottom_px": 1077.7,
+    "footer_top_px": 998.91
+  },
+  "box_ink_failures": 0
+}

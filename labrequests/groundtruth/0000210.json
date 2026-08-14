@@ -1,0 +1,86 @@
+{
+  "sample_id": "0000210",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": "stress_pt_ptt",
+  "order_profile": "stress_pt_ptt",
+  "clean_image": "filled/0000210.png",
+  "blank_image": "stage1/blank/0000210.png",
+  "image": "media/0000210_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Clarita S. Ilagan, MD",
+    "physician_name_plain": "Clarita S. Ilagan",
+    "specialty": "General Physician",
+    "mobile": "0918-0000-175",
+    "email": "clarita.ilagan@clinic.example",
+    "license_no": "934855",
+    "ptr_no": "9486682",
+    "s2_no": "974739",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BLEEDING_TIME",
+      "CLOTTING_TIME",
+      "PTT",
+      "PT_PROTHROMBIN"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PT (Prothrombin Time)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "PTT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PTT (Partial Thromboplastin)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "BLEEDING_TIME",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bleeding Time",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "CLOTTING_TIME",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Clotting Time",
+      "section": "Bleeding Parameters:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1024.72,
+    "usable_bottom_px": 1024.72,
+    "footer_top_px": 975.7
+  },
+  "box_ink_failures": 0
+}

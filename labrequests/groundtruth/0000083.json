@@ -1,0 +1,117 @@
+{
+  "sample_id": "0000083",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "liver_evaluation",
+  "clean_image": "filled/0000083.png",
+  "blank_image": "stage1/blank/0000083.png",
+  "image": "media/0000083_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Teresita V. Amoranto, MD, FPSN",
+    "physician_name_plain": "Teresita V. Amoranto",
+    "specialty": "Nephrology / Internal Medicine",
+    "mobile": "0918-0000-666",
+    "email": "teresita.amoranto@clinic.example",
+    "license_no": "978391",
+    "ptr_no": "9679577",
+    "s2_no": "955699",
+    "clinics": [
+      {
+        "name": "Pag-asa Polyclinic and Diagnostics",
+        "address": "165 Almendras St., Pook Ligaya, Rizal",
+        "days": "Tue - Thu - Sat",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(02) 8590-0000",
+        "local": "local 812"
+      },
+      {
+        "name": "Tanglaw Medical Clinic",
+        "address": "180 Palo Maria St., Bagong Silang, Bulacan",
+        "days": "Tue - Thu - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(07) 8141-0000",
+        "local": "local 698"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "ALP",
+      "BILI_PANEL",
+      "HBSAG_SCREENING",
+      "LIVER_PROFILE",
+      "US_HBT"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "LIVER_PROFILE",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Hepatic Profile",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "BILI_PANEL",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bilirubin (TB, DB, IB)",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "ALP",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "ALP (Alkaline Phosphatase)",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Markers:"
+    },
+    {
+      "code": "US_HBT",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBT",
+      "section": "Ultrasound:"
+    }
+  ],
+  "primary_mark_style": "diagonal_slash",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1085.83,
+    "usable_bottom_px": 1086.88,
+    "footer_top_px": 1008.62
+  },
+  "box_ink_failures": 0
+}

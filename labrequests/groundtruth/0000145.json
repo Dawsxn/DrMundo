@@ -1,0 +1,72 @@
+{
+  "sample_id": "0000145",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "breast_mass_workup",
+  "clean_image": "filled/0000145.png",
+  "blank_image": "stage1/blank/0000145.png",
+  "image": "media/0000145_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Trinidad U. Duldulao, MD, FPCP, FPCC",
+    "physician_name_plain": "Trinidad U. Duldulao",
+    "specialty": "Cardiology / Internal Medicine",
+    "mobile": "0917-0000-164",
+    "email": "trinidad.duldulao@clinic.example",
+    "license_no": "941248",
+    "ptr_no": "9678502",
+    "s2_no": "976322",
+    "clinics": [
+      {
+        "name": "St. Sylvester Medical Center",
+        "address": "177 Ilang-Ilang St., Bagong Silang, Pangasinan",
+        "days": "Mon - Sat",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(07) 8894-0000",
+        "local": "local 505"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [],
+    "cancelled": [
+      "US_BREAST"
+    ],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "US_BREAST",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "Breast UTZ",
+      "section": "Ultrasound:"
+    }
+  ],
+  "primary_mark_style": "diagonal_slash",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 767.59,
+    "usable_bottom_px": 770.59,
+    "footer_top_px": 716.59
+  },
+  "box_ink_failures": 0
+}

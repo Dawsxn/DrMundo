@@ -1,0 +1,154 @@
+{
+  "sample_id": "0000138",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "preoperative_clearance",
+  "clean_image": "filled/0000138.png",
+  "blank_image": "stage1/blank/0000138.png",
+  "image": "media/0000138_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Edgardo U. Padilla, MD",
+    "physician_name_plain": "Edgardo U. Padilla",
+    "specialty": "General Physician",
+    "mobile": "0918-0000-233",
+    "email": "edgardo.padilla@clinic.example",
+    "license_no": "974718",
+    "ptr_no": "9394629",
+    "s2_no": "948374",
+    "clinics": [
+      {
+        "name": "Liwayway General Hospital",
+        "address": "180 Bougainvillea St., Barangay Masagana, Batangas",
+        "days": "Mon to Fri",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(06) 8881-0000",
+        "local": "local 284"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CBC",
+      "CREATININE",
+      "ECG_12L",
+      "K",
+      "NA",
+      "PTT",
+      "PT_PROTHROMBIN",
+      "URINALYSIS",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PT (Prothrombin)",
+      "section": "Coagulation:"
+    },
+    {
+      "code": "PTT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PTT (Partial Thromboplastin)",
+      "section": "Coagulation:"
+    },
+    {
+      "code": "BUN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "NA",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium (Na)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "UA",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA and lateral",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12-lead ECG",
+      "section": "Cardio:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 762.53,
+    "usable_bottom_px": 765.53,
+    "footer_top_px": 711.67
+  },
+  "box_ink_failures": 0
+}

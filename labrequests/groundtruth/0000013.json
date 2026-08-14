@@ -1,0 +1,71 @@
+{
+  "sample_id": "0000013",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "sparse",
+  "clean_image": "filled/0000013.png",
+  "blank_image": "stage1/blank/0000013.png",
+  "image": "media/0000013_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Lourdes V. Cabral, MD, FSOSP",
+    "physician_name_plain": "Lourdes V. Cabral",
+    "specialty": "Surgical Oncologist / General Surgeon",
+    "mobile": "0917-0000-457",
+    "email": "lourdes.cabral@clinic.example",
+    "license_no": "988189",
+    "ptr_no": "9398023",
+    "s2_no": "996628",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC_PLT",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "URINALYSIS",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "CBC_PLT",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ PLT CT",
+      "section": "Laboratory:"
+    }
+  ],
+  "primary_mark_style": "filled_scribble",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1024.16,
+    "usable_bottom_px": 1024.15,
+    "footer_top_px": 972.19
+  },
+  "box_ink_failures": 0
+}

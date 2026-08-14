@@ -1,0 +1,64 @@
+{
+  "sample_id": "0000183",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "sparse",
+  "clean_image": "filled/0000183.png",
+  "blank_image": "stage1/blank/0000183.png",
+  "image": "media/0000183_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Teresita S. Bulacan, MD, FPCP",
+    "physician_name_plain": "Teresita S. Bulacan",
+    "specialty": "Internal Medicine",
+    "mobile": "0918-0000-949",
+    "email": "teresita.bulacan@clinic.example",
+    "license_no": "929176",
+    "ptr_no": "9607281",
+    "s2_no": "990177",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC_PLT"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC with Platelet Count",
+      "section": "Laboratory:"
+    }
+  ],
+  "primary_mark_style": "circle_around_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 506.92,
+    "usable_bottom_px": 506.92,
+    "footer_top_px": 454.8
+  },
+  "box_ink_failures": 0
+}

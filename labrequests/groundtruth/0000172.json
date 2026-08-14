@@ -1,0 +1,217 @@
+{
+  "sample_id": "0000172",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "broad",
+  "clean_image": "filled/0000172.png",
+  "blank_image": "stage1/blank/0000172.png",
+  "image": "media/0000172_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Dionisio F. Umali, MD, FPCCP",
+    "physician_name_plain": "Dionisio F. Umali",
+    "specialty": "Pulmonary Medicine",
+    "mobile": "0917-0000-320",
+    "email": "dionisio.umali@clinic.example",
+    "license_no": "981598",
+    "ptr_no": "9562654",
+    "s2_no": "939394",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "ALP",
+      "BILI_PANEL",
+      "BUN",
+      "CREATININE",
+      "ECG_12L",
+      "FBS",
+      "FECALYSIS",
+      "FT4",
+      "HBA1C",
+      "HBSAG_SCREENING",
+      "K",
+      "LIPID_PROFILE",
+      "NA",
+      "SGOT_AST",
+      "SGPT_ALT",
+      "URIC_ACID",
+      "URINALYSIS",
+      "VDRL_RPR"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "URINALYSIS",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "FECALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Fecalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "FBS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS",
+      "section": "Glucose:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HbA1c",
+      "section": "Glucose:"
+    },
+    {
+      "code": "LIPID_PROFILE",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "BUN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal:"
+    },
+    {
+      "code": "URIC_ACID",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUA",
+      "section": "Renal:"
+    },
+    {
+      "code": "NA",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Na",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "SGOT_AST",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGOT / AST",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "SGPT_ALT",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGPT/ALT",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "BILI_PANEL",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bilirubin (TBil, B1, B2)",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "ALP",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Alkaline Phosphatase",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "FT4",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT4",
+      "section": "Thyroid:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Electrocardiogram",
+      "section": "Cardio:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VDRL/RPR",
+      "section": "Serology / Hepatitis:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.02,
+    "page_overflow_px": 0.02,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 503.61,
+    "usable_bottom_px": 503.59,
+    "footer_top_px": 452.95
+  },
+  "box_ink_failures": 0
+}
