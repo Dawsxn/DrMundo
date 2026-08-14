@@ -353,7 +353,8 @@ def _render_refine_controls() -> None:
         return
 
     st.divider()
-    st.markdown("**Make this more accurate**")
+    st.subheader("Make this more accurate")
+    st.caption("Each answer re-prices the same slip. No need to upload it again.")
 
     with st.expander("I have an HMO"):
         col1, col2 = st.columns(2)
@@ -474,8 +475,6 @@ with st.sidebar:
                                       type="primary"):
         st.session_state.pending_slip = slip
 
-    _render_refine_controls()
-
     st.divider()
     st.caption(f"API: `{API_URL}`")
     st.caption(f"Session: `{st.session_state.session_id[:8]}…`")
@@ -509,6 +508,10 @@ prompt = st.chat_input("Magtanong tungkol sa presyo…")
 
 if pending_slip is not None:
     _process_slip(pending_slip)
+
+# The refine questions belong under the number they change, not in the sidebar: the
+# sidebar is drawn before the main area, so it cannot know an estimate exists yet.
+_render_refine_controls()
 
 user_msg = prompt or pending or clicked_q
 if user_msg:
