@@ -27,8 +27,13 @@ from config import CHAT_MODEL, get_openai_client
 
 # Slot names, also used as the "asked" keys in session memory.
 Q_DISAMBIGUATE = "disambiguate"
+Q_ADMITTED = "admitted"
 Q_PROCEDURE = "procedure"
+Q_PHILHEALTH = "philhealth"
+Q_ROOM = "room"
+Q_STAY = "stay"
 Q_HMO = "hmo"
+Q_HMO_OUTPATIENT = "hmo_outpatient"
 Q_SENIOR = "senior"
 
 _EXTRACT_SYSTEM = """You turn a patient's reply into structured fields for a medical cost \
@@ -75,7 +80,13 @@ class Question:
 
 
 # Every question the flow can ask, in order. Used for the progress counter.
-ALL_KINDS = (Q_DISAMBIGUATE, Q_PROCEDURE, Q_HMO, Q_SENIOR)
+ALL_KINDS = (Q_DISAMBIGUATE, Q_ADMITTED, Q_PROCEDURE, Q_PHILHEALTH, Q_ROOM, Q_STAY,
+             Q_HMO, Q_HMO_OUTPATIENT, Q_SENIOR)
+
+# Questions that only apply in some situations. Asking all nine every time would cost more
+# in abandonment than the extra precision is worth, so a plain lab slip still finishes in
+# four and only the complicated cases get the longer path.
+CONDITIONAL = (Q_ROOM, Q_STAY, Q_PHILHEALTH, Q_HMO_OUTPATIENT, Q_DISAMBIGUATE)
 
 # Published Maxicare tiers, offered as choices. "Other" exists because most Philippine
 # coverage is employer-negotiated and matches no public tier; we ask for the limit
@@ -108,9 +119,54 @@ def _progress(memory, kind: str) -> tuple:
         done = len([r for r in unclear if r in memory.resolved_choices])
         return (done + 1, len(unclear))
 
-    fixed = [k for k in ALL_KINDS if k != Q_DISAMBIGUATE]
+    fixed = _applicable(memory)
     answered = len([k for k in memory.asked if k in fixed])
     return (answered + 1, max(len(fixed), answered + 1))
+
+
+def _applicable(memory) -> list:
+    """The fixed questions that apply GIVEN WHAT WE KNOW SO FAR.
+
+    The total genuinely depends on the answers: saying "I will be admitted" adds the room
+    and stay questions. Counting all nine up front would promise a longer form than most
+    patients face, and counting only four would understate it for anyone being admitted.
+    The number therefore adjusts as answers arrive, which is honest even if it moves.
+    """
+    kinds = [Q_ADMITTED, Q_PROCEDURE, Q_HMO, Q_SENIOR]
+    if memory.admitted or memory.procedure_source in ("slip", "patient"):
+        kinds.append(Q_PHILHEALTH)
+    if memory.admitted:
+        kinds += [Q_ROOM, Q_STAY]
+    if memory.hmo is not None and not memory.admitted and _is_outpatient_only(memory):
+        kinds.append(Q_HMO_OUTPATIENT)
+    return kinds
+
+
+def _room_options() -> list[str]:
+    """MMC's elective rooms, cheapest first, with the nightly rate in the label.
+
+    A patient choosing between "SEMI PRIVATE" and "REGULAR SUITE" with no figures is
+    choosing blind, and the gap is P19,100 a night.
+    """
+    from db.queries import get_facility_rates
+
+    rows = get_facility_rates()["rates"]
+    seen, options = set(), []
+    for r in rows:
+        name = r["room_type"].title()
+        if name in seen:
+            continue
+        seen.add(name)
+        options.append(f"{name} — ₱{r['rate_low']:,}/night")
+    return options[:8]
+
+
+def _is_outpatient_only(memory) -> bool:
+    """True when nothing on the slip could attract a case rate."""
+    est = memory.estimate
+    if est is None:
+        return True
+    return all(p.item.kind in ("lab", "imaging", "diagnostic") for p in est.priced)
 
 
 def _pending_item(memory):
@@ -139,6 +195,14 @@ def next_question(memory) -> Optional[Question]:
         return Question(Q_DISAMBIGUATE, text, options=options, subject=item.raw_text,
                         progress=_progress(memory, Q_DISAMBIGUATE))
 
+    if Q_ADMITTED not in memory.asked and memory.admitted is None:
+        return Question(
+            Q_ADMITTED,
+            "Will you be admitted, or is this outpatient?",
+            options=["Outpatient", "I will be admitted"],
+            progress=_progress(memory, Q_ADMITTED),
+        )
+
     if Q_PROCEDURE not in memory.asked and memory.procedure_source == "unknown":
         return Question(
             Q_PROCEDURE,
@@ -148,6 +212,38 @@ def next_question(memory) -> Optional[Question]:
             progress=_progress(memory, Q_PROCEDURE),
         )
 
+    # PhilHealth only matters where a case rate could apply: an admission, or a named
+    # operation. Asking a patient with a routine lab slip whether their contributions are
+    # current is a question whose answer changes nothing.
+    if (Q_PHILHEALTH not in memory.asked and memory.philhealth_active is None
+            and (memory.admitted or memory.procedure_source in ("slip", "patient"))):
+        return Question(
+            Q_PHILHEALTH,
+            "Are your PhilHealth contributions up to date? A case rate only applies if "
+            "your membership is active.",
+            options=["Yes", "No", "Not sure"],
+            progress=_progress(memory, Q_PHILHEALTH),
+        )
+
+    if Q_ROOM not in memory.asked and memory.admitted and memory.room_type is None:
+        return Question(
+            Q_ROOM,
+            "Which room will you take? This is billed per day and stays outside the "
+            "total.",
+            options=_room_options(),
+            progress=_progress(memory, Q_ROOM),
+        )
+
+    if Q_STAY not in memory.asked and memory.admitted and memory.length_of_stay is None:
+        return Question(
+            Q_STAY,
+            "How many nights did your doctor say to expect? I will not guess this, so "
+            "skip it if you do not know.",
+            options=["1 night", "2 nights", "3 nights", "Not sure"],
+            field="number",
+            progress=_progress(memory, Q_STAY),
+        )
+
     if Q_HMO not in memory.asked and memory.hmo is None:
         return Question(
             Q_HMO,
@@ -155,6 +251,20 @@ def next_question(memory) -> Optional[Question]:
             options=["No HMO"] + MAXICARE_PLANS,
             field="number",
             progress=_progress(memory, Q_HMO),
+        )
+
+    # Many Philippine plans cover outpatient laboratory work only with a referral or an
+    # LOA. Without asking, we would credit coverage the patient may not actually have on
+    # a slip that is nothing but lab tests.
+    if (Q_HMO_OUTPATIENT not in memory.asked and memory.hmo is not None
+            and memory.hmo_covers_outpatient is None
+            and not memory.admitted and _is_outpatient_only(memory)):
+        return Question(
+            Q_HMO_OUTPATIENT,
+            "Does your plan cover outpatient laboratory tests? Many need a referral or "
+            "an approval letter first.",
+            options=["Yes", "No", "Not sure"],
+            progress=_progress(memory, Q_HMO_OUTPATIENT),
         )
 
     if Q_SENIOR not in memory.asked and memory.senior_or_pwd is None:
@@ -228,6 +338,28 @@ def slots_from_choice(kind: str, value, extra=None) -> dict:
     if kind == Q_SENIOR:
         slots["senior_or_pwd"] = (value == "Yes")
 
+    elif kind == Q_ADMITTED:
+        slots["admitted"] = value.lower().startswith("i will")
+
+    elif kind == Q_PHILHEALTH:
+        # "Not sure" is left unset rather than assumed either way. Assuming yes credits
+        # coverage that may not exist; assuming no removes coverage they probably have.
+        if value in ("Yes", "No"):
+            slots["philhealth_active"] = (value == "Yes")
+
+    elif kind == Q_ROOM:
+        slots["room_type"] = value.split(" — ")[0]
+
+    elif kind == Q_STAY:
+        if value != "Not sure":
+            digits = "".join(c for c in str(extra or value) if c.isdigit())
+            if digits:
+                slots["length_of_stay"] = int(digits)
+
+    elif kind == Q_HMO_OUTPATIENT:
+        if value in ("Yes", "No"):
+            slots["hmo_covers_outpatient"] = (value == "Yes")
+
     elif kind == Q_PROCEDURE:
         if value == "Just a check-up":
             slots["no_procedure_planned"] = True
@@ -292,6 +424,13 @@ def apply_answer(memory, slots: dict, asked_kind: Optional[str]) -> dict:
             remaining_balance=to_decimal(slots.get("hmo_remaining_balance")),
         )
         memory.asked.add(Q_HMO)
+
+    # Slots that live only in memory and gate a leg of the waterfall rather than
+    # adjusting a figure directly.
+    for slot in ("admitted", "philhealth_active", "room_type", "length_of_stay",
+                 "hmo_covers_outpatient"):
+        if slots.get(slot) is not None:
+            setattr(memory, slot, slots[slot])
 
     # Same asymmetry: a "no" is only trusted against the question that was asked, but a
     # volunteered "senior citizen po ako" is unambiguous and taken whenever it appears.
