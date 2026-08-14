@@ -34,6 +34,12 @@ class SessionMemory:
     planned_procedure: Optional[str] = None
     # Answers to disambiguation questions: raw_text -> the test_code the patient chose.
     resolved_choices: dict = field(default_factory=dict)
+    # Which refine questions have been PUT to the patient. A question answered "no" is
+    # still answered, so this is what stops the loop asking the same thing twice.
+    asked: set = field(default_factory=set)
+    # The question the patient is currently answering, so their reply can be
+    # interpreted in context ('yes' means different things to different questions).
+    last_asked: object = None
 
     def remember_estimate(self, estimate: BudgetEstimate) -> None:
         """Keep the latest estimate, and carry its context forward.
@@ -71,6 +77,8 @@ class SessionMemory:
         self.procedure_source = "unknown"
         self.planned_procedure = None
         self.resolved_choices.clear()
+        self.asked.clear()
+        self.last_asked = None
 
     def add(self, role: str, content: str) -> None:
         if not content:
