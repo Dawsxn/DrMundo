@@ -252,7 +252,10 @@ class DrMundoService:
 
             question = None if slots.get("wants_report") else next_question(memory)
             memory.last_asked = question.kind if question else None
-            answer = self._reply(estimate, echo, question, "Got it.")
+            # An incomplete answer re-asks rather than advancing, and says what is missing
+            # instead of repeating the question verbatim as though nothing happened.
+            note = slots.get("_incomplete") or "Got it."
+            answer = self._reply(estimate, echo, question, note)
             answer, report = check_output(answer)
 
         memory.add_user(echo)

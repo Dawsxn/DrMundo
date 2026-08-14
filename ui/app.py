@@ -35,13 +35,6 @@ st.set_page_config(page_title="Dr. Mundo: PH Medical Cost Estimator",
                    page_icon="🩺", layout="centered",
                    initial_sidebar_state="collapsed")
 
-SAMPLES = [
-    "Magkano ang tanggal apdo?",
-    "How much is a lipid profile?",
-    "Magkano ang CBC?",
-    "Magkano ang creatinine?",
-]
-
 
 # ----------------------------------------------------------------- theme
 def _inject_theme() -> None:
@@ -235,6 +228,12 @@ _EXTRA_FIELDS = {
     "stay": ("Number of nights", "e.g. 3", "text"),
 }
 
+# (kind, option) pairs where the option means nothing without the companion field.
+# "Yes, for an operation" with the box empty says a procedure exists but not which one,
+# and the whole point of the answer is which one -- it decides the case rate.
+_NEEDS_EXTRA = {("procedure", "Yes, for an operation"): "Type the operation first, "
+                                                        "then press this."}
+
 
 def _render_question(q: dict) -> None:
     """The pending question, as controls inside one bordered card.
@@ -261,20 +260,28 @@ def _render_question(q: dict) -> None:
             extra = st.text_input(label, key=f"extra_{kind}_{step}",
                                   placeholder=placeholder)
 
+        def _answer(option: str) -> None:
+            """Post the choice, unless it needs the field and the field is empty."""
+            missing = _NEEDS_EXTRA.get((kind, option))
+            if missing and not (extra or "").strip():
+                st.warning(missing)
+                return
+            _send_choice(kind, option, extra)
+
         if len(options) <= 3:
             cols = st.columns(len(options) or 1)
             for i, option in enumerate(options):
                 if cols[i].button(option, key=f"opt_{kind}_{step}_{i}",
                                   use_container_width=True,
                                   type="primary" if i == 0 else "secondary"):
-                    _send_choice(kind, option, extra)
+                    _answer(option)
         else:
             choice = st.radio("Pick one", options, key=f"radio_{kind}_{step}",
                               label_visibility="collapsed")
             left, right = st.columns([3, 1])
             if left.button("Continue", key=f"go_{kind}_{step}",
                            use_container_width=True, type="primary"):
-                _send_choice(kind, choice, extra)
+                _answer(choice)
             if right.button("Skip", key=f"skip_{kind}_{step}",
                             use_container_width=True):
                 _post_turn("/skip", echo="Skipped",
@@ -391,18 +398,11 @@ else:
         "prepare, after PhilHealth and your HMO.</p></div>",
         unsafe_allow_html=True,
     )
-    cols = st.columns(2)
-    for i, q in enumerate(SAMPLES):
-        if cols[i % 2].button(q, key=f"s{i}", use_container_width=True):
-            st.session_state.pending_prompt = q
-            st.rerun()
 
 placeholder = ("Answer above, or type it here…" if st.session_state.question
                else "Ask about a price, or drop your request slip here…")
 submitted = st.chat_input(placeholder, accept_file=True,
                           file_type=["png", "jpg", "jpeg", "webp"])
-
-pending = st.session_state.pop("pending_prompt", None)
 
 if submitted is not None:
     files = getattr(submitted, "files", None) or []
@@ -411,5 +411,3 @@ if submitted is not None:
         _handle_slip(files[0])
     elif text:
         _handle_text(text)
-elif pending:
-    _handle_text(pending)
