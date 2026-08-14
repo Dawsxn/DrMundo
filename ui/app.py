@@ -161,26 +161,34 @@ def _render_budget(answer: dict) -> None:
         st.markdown(f'<div class="dm-note">{caveat}</div>', unsafe_allow_html=True)
 
 
-def _render_report_download() -> None:
-    """Fetch the PDF for this session and offer it inline plus as a download."""
+def _fetch_pdf() -> bytes | None:
+    """Pull the PDF for this session. Called once, when the report is finished."""
     try:
         resp = requests.get(f"{API_URL}/report.pdf",
                             params={"session_id": st.session_state.session_id},
                             timeout=REQUEST_TIMEOUT)
-    except requests.RequestException as exc:
-        st.error(f"Couldn't build the PDF. _{exc}_")
-        return
-    if resp.status_code != 200:
-        st.error("Couldn't build the PDF yet. Upload a request slip first.")
-        return
+    except requests.RequestException:
+        return None
+    return resp.content if resp.status_code == 200 else None
 
-    st.download_button("Download the PDF", resp.content, file_name="dr-mundo-estimate.pdf",
-                       mime="application/pdf", use_container_width=True)
+
+def _render_pdf(payload: bytes, key: str) -> None:
+    """Show the report inline and offer it as a download.
+
+    Rendered in the conversation rather than the sidebar: Streamlit draws the sidebar
+    BEFORE the main area, so anything gated on state set while handling a turn will not
+    appear until some later rerun. That is exactly how the refine controls went missing.
+    """
+    if not payload:
+        return
+    st.download_button("Download the PDF", payload, key=f"dl_{key}",
+                       file_name="dr-mundo-estimate.pdf", mime="application/pdf",
+                       use_container_width=True)
     try:
-        st.pdf(resp.content, height=620)
+        st.pdf(payload, height=620)
     except Exception:
         # Older Streamlit without st.pdf: embed it instead of dropping the preview.
-        b64 = base64.b64encode(resp.content).decode()
+        b64 = base64.b64encode(payload).decode()
         st.markdown(
             f'<iframe src="data:application/pdf;base64,{b64}" width="100%" height="620" '
             f'style="border:1px solid #e5e7eb;border-radius:10px"></iframe>',
@@ -199,6 +207,8 @@ def _render_message(msg: dict, index: int) -> None:
             answer = meta.get("answer") or {}
             if answer.get("budget"):
                 _render_budget(answer)
+                if msg.get("pdf"):
+                    _render_pdf(msg["pdf"], key=f"m{index}")
 
 
 # ----------------------------------------------------------------- turns
@@ -236,9 +246,12 @@ def _handle_slip(file) -> None:
         _render_budget(answer)
         st.session_state.has_slip = True
         st.session_state.has_estimate = bool(answer.get("budget"))
+        pdf = _fetch_pdf() if answer.get("budget") else None
+        if pdf:
+            _render_pdf(pdf, key="live_slip")
         st.session_state.messages.append(
             {"role": "assistant", "text": answer.get("answer_text", ""),
-             "meta": data, "image": None})
+             "meta": data, "image": None, "pdf": pdf})
 
 
 def _handle_text(text: str) -> None:
@@ -261,11 +274,15 @@ def _handle_text(text: str) -> None:
         answer = data.get("answer") or {}
         st.markdown(answer.get("answer_text", ""))
         _render_budget(answer)
+        pdf = None
         if answer.get("budget"):
             st.session_state.has_estimate = True
+            pdf = _fetch_pdf()
+            if pdf:
+                _render_pdf(pdf, key="live_text")
         st.session_state.messages.append(
             {"role": "assistant", "text": answer.get("answer_text", ""),
-             "meta": data, "image": None})
+             "meta": data, "image": None, "pdf": pdf})
 
 
 # ----------------------------------------------------------------- app
@@ -276,10 +293,6 @@ with st.sidebar:
     st.markdown("### Dr. Mundo 🩺")
     st.caption("Cost estimates for Makati Medical Center, grounded in published prices.")
     st.button("New chat", on_click=_new_chat, use_container_width=True)
-    if st.session_state.has_estimate:
-        st.divider()
-        st.markdown("**Your report**")
-        _render_report_download()
     st.divider()
     st.caption(f"API: `{API_URL}`")
     st.caption("Estimates only. Not medical advice.")
