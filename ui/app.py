@@ -1,17 +1,19 @@
 """Streamlit chat UI for Dr. Mundo.
 
-One conversation. The patient drags a photo of their doctor's request into the chat box,
-Dr. Mundo prices it immediately and then asks the remaining questions in plain language,
-one at a time. When there is nothing left to ask it offers the report as a PDF.
+One conversation. The patient drags a photo of their doctor's request into the chat box.
+Dr. Mundo says what it read, then asks the remaining questions in plain language, one at
+a time, and only shows the figure once intake is finished. The report then renders as a
+PDF that can be read inline or downloaded.
 
 Two things are deliberate about the layout:
 
   The uploaded photo is shown in the conversation and opens full size when clicked, so a
-  patient can check that we read the right piece of paper.
+  patient can check that we read the right piece of paper before trusting a number that
+  came off it.
 
-  The first reply asks nothing. Somebody standing in a hospital lobby wants a number, not
-  an intake form; every question after that improves a figure they already have, so
-  abandoning halfway still leaves them with something true.
+  No price appears mid-intake. A half-answered estimate is the one most likely to be
+  wrong in the direction that costs the patient money, so the summary names what was read
+  and holds the total back until HMO, senior status and any planned operation are known.
 
 Run the API first:  uvicorn api.main:app --reload
 Then this UI:       streamlit run ui/app.py
@@ -70,7 +72,8 @@ html,body,.stApp,[data-testid="stAppViewContainer"],[data-testid="stHeader"],[da
 def _init_state() -> None:
     st.session_state.setdefault("session_id", uuid.uuid4().hex)
     st.session_state.setdefault("messages", [])      # {role, text, meta, image}
-    st.session_state.setdefault("has_estimate", False)
+    st.session_state.setdefault("has_estimate", False)   # intake finished
+    st.session_state.setdefault("has_slip", False)       # a slip is in play
 
 
 def _new_chat() -> None:
@@ -82,6 +85,7 @@ def _new_chat() -> None:
     st.session_state.session_id = uuid.uuid4().hex
     st.session_state.messages = []
     st.session_state.has_estimate = False
+    st.session_state.has_slip = False
 
 
 # ----------------------------------------------------------------- rendering
@@ -230,6 +234,7 @@ def _handle_slip(file) -> None:
         answer = data.get("answer") or {}
         st.markdown(answer.get("answer_text", ""))
         _render_budget(answer)
+        st.session_state.has_slip = True
         st.session_state.has_estimate = bool(answer.get("budget"))
         st.session_state.messages.append(
             {"role": "assistant", "text": answer.get("answer_text", ""),
@@ -244,7 +249,7 @@ def _handle_text(text: str) -> None:
 
     # With a slip in play, plain text is an answer to the question we just asked.
     # Without one, it is an ordinary cost question for the v1 path.
-    endpoint = "/converse" if st.session_state.has_estimate else "/ask"
+    endpoint = "/converse" if st.session_state.has_slip else "/ask"
     body = ({"text": text, "session_id": st.session_state.session_id}
             if endpoint == "/converse"
             else {"question": text, "session_id": st.session_state.session_id})

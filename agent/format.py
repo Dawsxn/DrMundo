@@ -97,6 +97,39 @@ def format_budget_answer(answer: Answer) -> str:
     return "\n".join(lines)
 
 
+def format_intake_summary(budget) -> str:
+    """What we read, with NO prices, for the questioning phase.
+
+    The patient is told what came off their slip so they can catch a misread early, but
+    the figure is withheld until the questions are answered. A number shown mid-intake
+    invites them to stop there, and a half-answered estimate is the one most likely to be
+    wrong in the direction that hurts.
+    """
+    def plural(n: int, one: str, many: str) -> str:
+        return one if n == 1 else many
+
+    lines: list[str] = []
+    priced = [p.catalog_name for p in budget.priced]
+    if priced:
+        lines.append(f"I read **{len(priced)} {plural(len(priced), 'test', 'tests')}** "
+                     f"I can price: " + ", ".join(priced) + ".")
+    if budget.unpriced:
+        names = ", ".join(i.normalized or i.raw_text for i in budget.unpriced)
+        lines.append(f"MMC publishes no price for {names}, so "
+                     f"{plural(len(budget.unpriced), 'it is', 'they are')} left out of the total.")
+    if budget.needs_confirmation:
+        names = ", ".join(i.raw_text for i in budget.needs_confirmation)
+        lines.append(f"I could not pin down {names} and will ask about "
+                     f"{plural(len(budget.needs_confirmation), 'it', 'them')}.")
+    if budget.cancelled:
+        names = ", ".join(i.normalized or i.raw_text for i in budget.cancelled)
+        lines.append(f"Your doctor **crossed out** {names}, so I will not charge for "
+                     f"{plural(len(budget.cancelled), 'it', 'them')}.")
+    if not lines:
+        lines.append("I could not read any tests from that image.")
+    return "\n\n".join(lines)
+
+
 def format_answer(answer: Answer) -> str:
     if answer.path == "budget_report" and answer.budget is not None:
         return format_budget_answer(answer)

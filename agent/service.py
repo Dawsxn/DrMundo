@@ -102,14 +102,12 @@ class DrMundoService:
             estimate = estimate_from_slip(slip, hmo=memory.hmo,
                                           senior_or_pwd=bool(memory.senior_or_pwd))
             memory.remember_estimate(estimate)
+            from agent.format import format_intake_summary
             from agent.intake import next_question
-            answer = self._answer_for(estimate, "uploaded request slip")
-            body = format_budget_answer(answer)
             question = next_question(memory)
             memory.last_asked = question.kind if question else None
-            answer.answer_text = (
-                "\n\n".join([body, question.text]) if question else body
-            )
+            answer = self._reply(estimate, "uploaded request slip", question,
+                                 format_intake_summary(estimate))
             answer, report = check_output(answer)
 
         memory.add_user("[uploaded a request slip]")
@@ -223,12 +221,7 @@ class DrMundoService:
 
             question = None if slots.get("wants_report") else next_question(memory)
             memory.last_asked = question.kind if question else None
-
-            answer = self._answer_for(estimate, text)
-            body = format_budget_answer(answer)
-            answer.answer_text = (
-                "\n\n".join([body, question.text]) if question else body
-            )
+            answer = self._reply(estimate, text, question, "Got it.")
             answer, report = check_output(answer)
 
         memory.add_user(text)
@@ -253,6 +246,29 @@ class DrMundoService:
     def _answer_for(estimate, query: str) -> Answer:
         return Answer(status="answered", path="budget_report", query=query,
                       answer_text="", budget=estimate)
+
+    @staticmethod
+    def _reply(estimate, query: str, question, acknowledgement: str) -> Answer:
+        """A question while intake is open; the priced report once it closes.
+
+        The estimate is deliberately withheld from the Answer while questions remain, so
+        no figure reaches the screen until every question has been answered. It still
+        lives in session memory throughout, so the final turn and the PDF are built from
+        the same object rather than a recomputed one.
+        """
+        from agent.format import format_budget_answer
+
+        if question is not None:
+            answer = Answer(status="answered", path="budget_report", query=query,
+                            answer_text="", budget=None)
+            answer.answer_text = acknowledgement + "\n\n" + question.text
+            return answer
+
+        answer = Answer(status="answered", path="budget_report", query=query,
+                        answer_text="", budget=estimate)
+        answer.answer_text = ("That is everything I need. Here is what to prepare.\n\n"
+                              + format_budget_answer(answer))
+        return answer
 
     def handle(self, question: str, session_id: str = "default") -> ServiceResult:
         """Answer one question, accounting token usage and (optionally) logging to MLflow.

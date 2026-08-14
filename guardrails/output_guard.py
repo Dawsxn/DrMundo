@@ -141,8 +141,12 @@ def check_output(answer: Answer) -> tuple[Answer, OutputReport]:
             )
             report.notes.append("Added per-item not-covered note.")
 
-    # Disclaimer is mandatory on every reply.
-    if DISCLAIMER not in answer.answer_text:
+    # Disclaimer is mandatory on every reply that makes a cost claim. A budget_report turn
+    # with no budget attached is an intake QUESTION -- it quotes nothing, and repeating the
+    # disclaimer under every question turns it into wallpaper people stop reading, which
+    # defeats the point of having it on the turn that matters.
+    asks_only = answer.path == "budget_report" and answer.budget is None
+    if not asks_only and DISCLAIMER not in answer.answer_text:
         answer.answer_text = f"{answer.answer_text.rstrip()}\n\n{DISCLAIMER}"
         report.notes.append("Appended disclaimer.")
 

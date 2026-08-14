@@ -76,26 +76,37 @@ def test_oversized_upload_is_rejected(client):
 
 # ------------------------------------------------------------------ pass 1
 @needs_media
-def test_slip_upload_returns_a_priced_report(client):
+def test_slip_upload_summarises_and_asks_without_showing_a_price(client):
+    """Intake holds the figure back until every question is answered.
+
+    The upload reports WHAT was read so a misread can be caught early, then asks the
+    first question. `budget` is deliberately absent from the payload until intake closes,
+    so no partial figure can reach the screen.
+    """
     name, payload = _slip_bytes()
     r = client.post("/ask-slip", files={"file": (name, payload, "image/png")},
                     data={"session_id": "t"})
     assert r.status_code == 200
     body = r.json()
     assert body["answer"]["path"] == "budget_report"
-    budget = body["answer"]["budget"]
-    assert budget["extracted_count"] == 7
-    assert len(budget["priced"]) == 7
-    assert float(budget["prepare_low"]) > 0
+    assert body["answer"]["budget"] is None
+    text = body["answer"]["answer_text"]
+    assert "I read" in text or "could not read" in text
+    assert "?" in text                      # it ended on a question
 
 
 @needs_media
-def test_pass_one_asks_nothing_and_says_before_any_hmo(client):
+def test_the_priced_report_arrives_once_intake_is_answered(client):
     name, payload = _slip_bytes()
-    r = client.post("/ask-slip", files={"file": (name, payload, "image/png")},
-                    data={"session_id": "t"})
-    caveats = r.json()["answer"]["budget"]["caveats"]
-    assert any("before any HMO" in c for c in caveats)
+    client.post("/ask-slip", files={"file": (name, payload, "image/png")},
+                data={"session_id": "t"})
+    # /refine is the programmatic route the UI's buttons used; it prices immediately.
+    r = client.post("/refine", json={"session_id": "t", "senior_or_pwd": False})
+    budget = r.json()["answer"]["budget"]
+    assert budget is not None
+    assert budget["extracted_count"] == 7
+    assert len(budget["priced"]) == 7
+    assert float(budget["prepare_low"]) > 0
 
 
 @needs_media
@@ -111,9 +122,10 @@ def test_upload_leaves_no_file_behind_in_the_repo(client, tmp_path):
 @needs_media
 def test_refine_reprices_without_a_second_upload(client):
     name, payload = _slip_bytes()
-    first = client.post("/ask-slip", files={"file": (name, payload, "image/png")},
-                        data={"session_id": "t"}).json()
-    before = float(first["answer"]["budget"]["prepare_low"])
+    client.post("/ask-slip", files={"file": (name, payload, "image/png")},
+                data={"session_id": "t"})
+    before = float(client.post("/refine", json={"session_id": "t"})
+                   .json()["answer"]["budget"]["prepare_low"])
 
     r = client.post("/refine", json={
         "session_id": "t",
@@ -187,9 +199,9 @@ def test_budget_money_fields_serialise_as_strings(client):
     catch it, so this one asserts the wire type directly.
     """
     name, payload = _slip_bytes()
-    body = client.post("/ask-slip", files={"file": (name, payload, "image/png")},
-                       data={"session_id": "t"}).json()
-    budget = body["answer"]["budget"]
+    client.post("/ask-slip", files={"file": (name, payload, "image/png")},
+                data={"session_id": "t"})
+    budget = client.post("/refine", json={"session_id": "t"}).json()["answer"]["budget"]
 
     for field in ("prepare_low", "prepare_high", "gross_low", "gross_high",
                   "philhealth_low", "hmo_low", "discount_low"):
