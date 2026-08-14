@@ -182,10 +182,13 @@ def apply_answer(memory, slots: dict, asked_kind: Optional[str]) -> dict:
         out["planned_procedure"] = slots["planned_procedure"]
         memory.asked.add(Q_PROCEDURE)
 
-    if slots.get("has_hmo") is False:
-        # An explicit "no HMO" closes the question without inventing a plan.
+    # A NEGATIVE only counts against the question actually asked. "Walang operasyon" means
+    # no operation, but an extractor reading Tagalog "wala" out of context happily returns
+    # has_hmo false, which silently skipped the HMO question entirely and cost the patient
+    # their coverage. Positive HMO details are still accepted whenever volunteered, since
+    # naming a provider and a balance is unambiguous.
+    if slots.get("has_hmo") is False and asked_kind == Q_HMO:
         memory.asked.add(Q_HMO)
-        memory.hmo = memory.hmo or None
     elif any(slots.get(k) for k in ("hmo_provider", "hmo_plan", "hmo_remaining_balance")):
         out["hmo"] = resolve_hmo_plan(
             slots.get("hmo_provider"),
@@ -194,8 +197,11 @@ def apply_answer(memory, slots: dict, asked_kind: Optional[str]) -> dict:
         )
         memory.asked.add(Q_HMO)
 
-    if slots.get("senior_or_pwd") is not None:
-        out["senior_or_pwd"] = bool(slots["senior_or_pwd"])
+    # Same asymmetry: a "no" is only trusted against the question that was asked, but a
+    # volunteered "senior citizen po ako" is unambiguous and taken whenever it appears.
+    senior = slots.get("senior_or_pwd")
+    if senior is True or (senior is False and asked_kind == Q_SENIOR):
+        out["senior_or_pwd"] = bool(senior)
         memory.asked.add(Q_SENIOR)
 
     if slots.get("chosen_test") and memory.estimate:
