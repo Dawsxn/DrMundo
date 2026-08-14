@@ -1,0 +1,91 @@
+{
+  "sample_id": "0000238",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": "stress_cbc_both",
+  "order_profile": "stress_cbc_both",
+  "clean_image": "filled/0000238.png",
+  "blank_image": "stage1/blank/0000238.png",
+  "image": "media/0000238_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Natividad D. Galang, MD, FPCP, FPSEDM",
+    "physician_name_plain": "Natividad D. Galang",
+    "specialty": "Diabetes, Thyroid and Endocrine Diseases",
+    "mobile": "0918-0000-445",
+    "email": "natividad.galang@clinic.example",
+    "license_no": "955103",
+    "ptr_no": "9301983",
+    "s2_no": "939458",
+    "clinics": [
+      {
+        "name": "Masagana Medical Clinic",
+        "address": "230 Almendras St., Bayan Silangan, Tarlac",
+        "days": "Mon - Sat",
+        "hours": "By Appointment",
+        "trunkline": "(08) 8255-0000",
+        "local": "local 922"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC",
+      "CBC_PLT",
+      "PLATELET_COUNT"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Complete Blood Count",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "CBC_PLT",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ PLT CT",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "PLATELET_COUNT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Platelet Count",
+      "section": "Laboratory Test:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1083.41,
+    "usable_bottom_px": 1084.46,
+    "footer_top_px": 1008.03
+  },
+  "box_ink_failures": 0
+}

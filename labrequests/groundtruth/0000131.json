@@ -1,0 +1,136 @@
+{
+  "sample_id": "0000131",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "diabetes_monitoring",
+  "clean_image": "filled/0000131.png",
+  "blank_image": "stage1/blank/0000131.png",
+  "image": "media/0000131_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Amparo K. Malabanan, MD, FPCP, FPSEDM",
+    "physician_name_plain": "Amparo K. Malabanan",
+    "specialty": "Diabetes, Thyroid and Endocrine Diseases",
+    "mobile": "0918-0000-884",
+    "email": "amparo.malabanan@clinic.example",
+    "license_no": "935569",
+    "ptr_no": "9225012",
+    "s2_no": "965867",
+    "clinics": [
+      {
+        "name": "Bagumbayan Family Health Center",
+        "address": "183 Ilang-Ilang St., Barangay Masagana, Cavite",
+        "days": "Mon - Wed - Fri",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(07) 8618-0000",
+        "local": "local 539"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CREATININE",
+      "FBS",
+      "HBA1C",
+      "HDL",
+      "LDL",
+      "TRIGLYCERIDES",
+      "URINALYSIS",
+      "VLDL"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "FBS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HbA1c",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "TRIGLYCERIDES",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triglycerides",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "HDL",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LDL",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "VLDL",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VLDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 760.95,
+    "usable_bottom_px": 763.95,
+    "footer_top_px": 707.61
+  },
+  "box_ink_failures": 0
+}

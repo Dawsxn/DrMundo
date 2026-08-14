@@ -1,0 +1,95 @@
+{
+  "sample_id": "0000215",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": "stress_hepatitis_family",
+  "order_profile": "stress_hepatitis_family",
+  "clean_image": "filled/0000215.png",
+  "blank_image": "stage1/blank/0000215.png",
+  "image": "media/0000215_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Editha D. Duldulao, MD, FPOGS",
+    "physician_name_plain": "Editha D. Duldulao",
+    "specialty": "Obstetrics and Gynecology",
+    "mobile": "0917-0000-625",
+    "email": "editha.duldulao@clinic.example",
+    "license_no": "914873",
+    "ptr_no": "9723765",
+    "s2_no": "984862",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "ANTI_HBC",
+      "ANTI_HBE",
+      "ANTI_HBS",
+      "HBSAG_SCREENING",
+      "HBSAG_TITER"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "HBSAG_TITER",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Quantitative",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "ANTI_HBS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Anti-HBs",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "ANTI_HBC",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Anti-HBc",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "ANTI_HBE",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Anti-HBe",
+      "section": "Serology / Hepatitis:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1022.98,
+    "usable_bottom_px": 1022.97,
+    "footer_top_px": 972.7
+  },
+  "box_ink_failures": 0
+}

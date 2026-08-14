@@ -1,0 +1,95 @@
+{
+  "sample_id": "0000001",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "annual_physical",
+  "clean_image": "filled/0000001.png",
+  "blank_image": "stage1/blank/0000001.png",
+  "image": "media/0000001_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Alfonso H. Sagun, MD, FPCP",
+    "physician_name_plain": "Alfonso H. Sagun",
+    "specialty": "Internal Medicine",
+    "mobile": "0917-0000-988",
+    "email": "alfonso.sagun@clinic.example",
+    "license_no": "924174",
+    "ptr_no": "9266800",
+    "s2_no": "933093",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC_PLT",
+      "FBS",
+      "FECALYSIS",
+      "URINALYSIS",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ Platelet Count",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "FECALYSIS",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Stool Examination",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA / L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "FBS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Fasting Blood Glucose",
+      "section": "Metabolism:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1015.34,
+    "usable_bottom_px": 1015.34,
+    "footer_top_px": 964.22
+  },
+  "box_ink_failures": 0
+}

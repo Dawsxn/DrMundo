@@ -1,0 +1,81 @@
+{
+  "sample_id": "0000166",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "liver_evaluation",
+  "clean_image": "filled/0000166.png",
+  "blank_image": "stage1/blank/0000166.png",
+  "image": "media/0000166_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Isagani B. Villamor, MD, FPAFP",
+    "physician_name_plain": "Isagani B. Villamor",
+    "specialty": "General Physician",
+    "mobile": "0917-0000-590",
+    "email": "isagani.villamor@clinic.example",
+    "license_no": "993722",
+    "ptr_no": "9548071",
+    "s2_no": "963861",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BILI_PANEL",
+      "SGOT_AST"
+    ],
+    "cancelled": [
+      "SGPT_ALT"
+    ],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "SGOT_AST",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGOT/AST",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "SGPT_ALT",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "SGPT/ALT",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "BILI_PANEL",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bilirubin (TBil, B1, B2)",
+      "section": "Liver Function:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 505,
+    "usable_bottom_px": 504.99,
+    "footer_top_px": 453.98
+  },
+  "box_ink_failures": 0
+}

@@ -1,0 +1,160 @@
+{# One-page budget report. Self-contained: no external CSS, fonts or images, so it
+   renders identically inline in Streamlit and through a PDF printer. #}
+<style>
+  .drm { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5;
+         color: #1a1a1a; max-width: 46rem; }
+  .drm .head { display: flex; justify-content: space-between; align-items: baseline;
+               border-bottom: 2px solid #1a1a1a; padding-bottom: .4rem; }
+  .drm .head h1 { font-size: 1rem; letter-spacing: .08em; text-transform: uppercase;
+                  margin: 0; font-weight: 700; }
+  .drm .head .where { font-size: .85rem; color: #555; }
+  .drm .meta { font-size: .78rem; color: #666; margin: .35rem 0 1.4rem; }
+
+  /* Rule 1: the headline is the largest thing on the page. */
+  .drm .headline { margin: 0 0 1.6rem; }
+  .drm .headline .label { font-size: .78rem; letter-spacing: .09em; text-transform: uppercase;
+                          color: #555; }
+  .drm .headline .amount { font-size: 2.3rem; font-weight: 700; line-height: 1.15;
+                           margin-top: .15rem; }
+
+  .drm h2 { font-size: .78rem; letter-spacing: .09em; text-transform: uppercase;
+            color: #555; margin: 1.4rem 0 .45rem; font-weight: 600; }
+  .drm table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  .drm td { padding: .28rem 0; vertical-align: top; }
+  .drm td.amt { text-align: right; white-space: nowrap; padding-left: 1rem; }
+  .drm .sub { font-size: .82rem; color: #666; }
+  .drm .ded td { color: #1a1a1a; }
+
+  /* Rule 2: excluded costs are visually OUTSIDE the total, not a footnote. */
+  .drm .excluded { border: 1px solid #c9c9c9; border-left: 4px solid #8a8a8a;
+                   padding: .7rem .9rem; margin-top: 1.5rem; background: #fafafa; }
+  .drm .excluded h2 { margin-top: 0; }
+
+  /* Rule 3: these buckets never collapse away. */
+  .drm .bucket { margin-top: 1.3rem; }
+  .drm .bucket.unpriced { border-left: 4px solid #b58900; padding-left: .8rem; }
+  .drm .bucket.confirm { border-left: 4px solid #268bd2; padding-left: .8rem; }
+  .drm .bucket.cancelled { border-left: 4px solid #999; padding-left: .8rem; }
+  .drm .bucket.cancelled li { text-decoration: line-through; color: #666; }
+  .drm ul { margin: .3rem 0 0; padding-left: 1.1rem; font-size: .9rem; }
+
+  .drm .caveats { margin-top: 1.5rem; font-size: .82rem; color: #444; }
+  .drm .caveats p { margin: .35rem 0; }
+  .drm .foot { margin-top: 1.5rem; padding-top: .6rem; border-top: 1px solid #ddd;
+               font-size: .75rem; color: #666; }
+  .drm .flag { font-size: .75rem; color: #8a6d00; }
+</style>
+
+<div class="drm">
+  <div class="head">
+    <h1>Dr. Mundo Budget Estimate</h1>
+    <span class="where">{{ hospital }}</span>
+  </div>
+  <div class="meta">
+    Read from your request: {{ e.extracted_count }} item{{ '' if e.extracted_count == 1 else 's' }}
+    {% if as_of %} · prices as of {{ as_of }}{% endif %}
+  </div>
+
+  <div class="headline">
+    <div class="label">What you'll pay</div>
+    <div class="amount">{{ peso(e.prepare_low) }} – {{ peso(e.prepare_high) }}</div>
+  </div>
+
+  {% if e.priced %}
+  <h2>Priced ({{ e.priced|length }})</h2>
+  <table>
+    {% for item in e.priced %}
+    <tr>
+      <td>{{ item.catalog_name }}</td>
+      <td class="amt">{{ peso(item.price_low) }} – {{ peso(item.price_high) }}</td>
+    </tr>
+    {% endfor %}
+    <tr class="sub">
+      <td><strong>Subtotal</strong></td>
+      <td class="amt"><strong>{{ peso(e.gross_low) }} – {{ peso(e.gross_high) }}</strong></td>
+    </tr>
+    {% if has_discount %}
+    <tr class="ded">
+      <td>Senior citizen / PWD reduction</td>
+      <td class="amt">−{{ peso(e.discount_low) }} – −{{ peso(e.discount_high) }}</td>
+    </tr>
+    {% endif %}
+    {% if has_philhealth %}
+    <tr class="ded">
+      <td>PhilHealth case rate</td>
+      <td class="amt">−{{ peso(e.philhealth_low) }} – −{{ peso(e.philhealth_high) }}</td>
+    </tr>
+    {% endif %}
+    {% if has_hmo %}
+    <tr class="ded">
+      <td>
+        HMO benefit
+        {% if hmo_needs_verification %}<span class="flag">‡</span>{% endif %}
+      </td>
+      <td class="amt">−{{ peso(e.hmo_low) }} – −{{ peso(e.hmo_high) }}</td>
+    </tr>
+    {% endif %}
+  </table>
+  {% endif %}
+
+  {% if e.separate_lines %}
+  <div class="excluded">
+    <h2>Not included, ask about these separately</h2>
+    <table>
+      {% for line in e.separate_lines %}
+      <tr>
+        <td>{{ line.label }}{% if line.note %} <span class="sub">({{ line.note }})</span>{% endif %}</td>
+        <td class="amt">
+          {{ peso(line.price_low) }} – {{ peso(line.price_high) }}{% if line.unit %} {{ line.unit }}{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  {% if e.unpriced %}
+  <div class="bucket unpriced">
+    <h2>Not priced ({{ e.unpriced|length }})</h2>
+    <div class="sub">MMC publishes no price for these, so they are <strong>not</strong> in the total above.</div>
+    <ul>
+      {% for item in e.unpriced %}<li>{{ item.normalized or item.raw_text }}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if e.needs_confirmation %}
+  <div class="bucket confirm">
+    <h2>Please confirm ({{ e.needs_confirmation|length }})</h2>
+    <ul>
+      {% for item in e.needs_confirmation %}<li>{{ item.raw_text }}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if e.cancelled %}
+  <div class="bucket cancelled">
+    <h2>Crossed out by your doctor ({{ e.cancelled|length }})</h2>
+    <div class="sub">
+      Not ordered, so <strong>not</strong> charged. If any of these should have been
+      included, tell me and I will price it.
+    </div>
+    <ul>
+      {% for item in e.cancelled %}<li>{{ item.normalized or item.raw_text }}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if caveats %}
+  <div class="caveats">
+    {% for c in caveats %}<p>{{ c }}</p>{% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="foot">
+    {% if hmo_needs_verification %}
+    ‡ Published figures for this plan tier, not your actual policy. Check your own certificate.<br>
+    {% endif %}
+    Estimates only, not a quotation. Every price traces to a Makati Medical Center catalogue item code.
+  </div>
+</div>

@@ -1,0 +1,73 @@
+{
+  "sample_id": "0000022",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "sparse",
+  "clean_image": "filled/0000022.png",
+  "blank_image": "stage1/blank/0000022.png",
+  "image": "media/0000022_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Cesar G. Padilla, MD",
+    "physician_name_plain": "Cesar G. Padilla",
+    "specialty": "General Physician",
+    "mobile": "0917-0000-642",
+    "email": "cesar.padilla@clinic.example",
+    "license_no": "991448",
+    "ptr_no": "9116539",
+    "s2_no": "924847",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC_PLT",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "URINALYSIS",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "CBC_PLT",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ Platelet Count",
+      "section": "Laboratory:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1013,
+    "usable_bottom_px": 1012.99,
+    "footer_top_px": 963.84
+  },
+  "box_ink_failures": 0
+}

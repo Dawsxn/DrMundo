@@ -1,0 +1,13 @@
+# Base theme for Dr. Mundo. The heavy lifting (liquid-glass panels, animated blobs)
+# is done with injected CSS in ui/app.py; this just sets sensible defaults so the
+# native Streamlit widgets match the teal/cyan palette.
+[theme]
+base = "light"
+primaryColor = "#06b6d4"
+backgroundColor = "#dff3f4"
+secondaryBackgroundColor = "#eafafb"
+textColor = "#0e3a42"
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false

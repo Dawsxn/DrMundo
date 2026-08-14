@@ -1,0 +1,49 @@
+{
+  "sample_id": "0000255",
+  "kind": "nonlab",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": null,
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": null,
+  "clean_image": "filled/0000255.png",
+  "blank_image": "stage1/blank/0000255.png",
+  "image": "media/0000255_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Amado H. Galang, MD, FPCP",
+    "physician_name_plain": "Amado H. Galang",
+    "specialty": "Internal Medicine",
+    "mobile": "0918-0000-967",
+    "email": "amado.galang@clinic.example",
+    "license_no": "960183",
+    "ptr_no": "9398906",
+    "s2_no": "949321",
+    "clinics": [
+      {
+        "name": "Malayan Polyclinic and Diagnostics",
+        "address": "51 Ilang-Ilang St., Bagong Silang, Nueva Ecija",
+        "days": "Mon to Fri",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(08) 8452-0000",
+        "local": "local 949"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": false,
+    "codes": [],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [],
+  "primary_mark_style": null,
+  "n_ambiguous_marks": 0,
+  "nonlab_kind": "consent_form",
+  "document": "INFORMED CONSENT"
+}

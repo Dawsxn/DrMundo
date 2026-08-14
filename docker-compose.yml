@@ -1,0 +1,39 @@
+# Dr. Mundo — one image, two services on a shared network.
+#
+#   docker compose up --build
+#
+# OPENAI_API_KEY is read from the host .env (compose interpolates ${...} automatically)
+# and injected at runtime only. The UI reaches the API by its service name (api:8000).
+
+services:
+  api:
+    build: .
+    image: dr-mundo:latest
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:?set OPENAI_API_KEY in your .env}
+      OPENAI_CHAT_MODEL: ${OPENAI_CHAT_MODEL:-gpt-4o-mini}
+      OPENAI_EMBEDDING_MODEL: ${OPENAI_EMBEDDING_MODEL:-text-embedding-3-small}
+      # Per-request MLflow logging lives in the api container (sqlite:///mlflow.db).
+      DR_MUNDO_MLFLOW: ${DR_MUNDO_MLFLOW:-1}
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  ui:
+    build: .
+    image: dr-mundo:latest
+    command: streamlit run ui/app.py --server.port 8501 --server.address 0.0.0.0
+    environment:
+      # Reach the API by its compose service name, not localhost.
+      DR_MUNDO_API_URL: http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      api:
+        condition: service_healthy

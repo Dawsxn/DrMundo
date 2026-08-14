@@ -1,0 +1,53 @@
+{
+  "sample_id": "0000243",
+  "kind": "blank",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "blank_form",
+  "clean_image": "filled/0000243.png",
+  "blank_image": "stage1/blank/0000243.png",
+  "image": "media/0000243_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Hilario F. Sagun, MD, FPCC",
+    "physician_name_plain": "Hilario F. Sagun",
+    "specialty": "Cardiology / Internal Medicine",
+    "mobile": "0918-0000-373",
+    "email": "hilario.sagun@clinic.example",
+    "license_no": "914486",
+    "ptr_no": "9149558",
+    "s2_no": "914998",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [],
+  "primary_mark_style": null,
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 499.25,
+    "usable_bottom_px": 499.25,
+    "footer_top_px": 447.88
+  },
+  "box_ink_failures": 0
+}

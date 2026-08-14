@@ -1,0 +1,275 @@
+{
+  "sample_id": "0000108",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "broad",
+  "clean_image": "filled/0000108.png",
+  "blank_image": "stage1/blank/0000108.png",
+  "image": "media/0000108_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Dionisio L. Fajardo, MD, FPCP, FPSN",
+    "physician_name_plain": "Dionisio L. Fajardo",
+    "specialty": "Nephrology / Internal Medicine",
+    "mobile": "0917-0000-956",
+    "email": "dionisio.fajardo@clinic.example",
+    "license_no": "926926",
+    "ptr_no": "9497143",
+    "s2_no": "941525",
+    "clinics": [
+      {
+        "name": "Masagana General Hospital",
+        "address": "267 Bougainvillea St., Nueva Esperanza, Laguna",
+        "days": "Wed - Fri - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(03) 8467-0000",
+        "local": "local 126"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "ALP",
+      "BILI_PANEL",
+      "BUN",
+      "CBC",
+      "CHOL_TOTAL",
+      "CREATININE",
+      "ECG_12L",
+      "FBS",
+      "FECALYSIS",
+      "FT4",
+      "HBA1C",
+      "HBSAG_SCREENING",
+      "HDL",
+      "K",
+      "LDL",
+      "NA",
+      "SGOT_AST",
+      "SGPT_ALT",
+      "TRIGLYCERIDES",
+      "TSH",
+      "URIC_ACID",
+      "URINALYSIS",
+      "VDRL_RPR",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "FECALYSIS",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Fecalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "FBS",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS (Fasting Blood Sugar)",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HbA1c",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "CHOL_TOTAL",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "TRIGLYCERIDES",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triglycerides",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "HDL",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LDL",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "BUN",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URIC_ACID",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Uric Acid",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "NA",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "SGOT_AST",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGOT / AST",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "SGPT_ALT",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGPT / ALT",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "BILI_PANEL",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bilirubins",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "ALP",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "ALP",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "TSH",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "TSH",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT4",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT-4",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA / L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12L ECG",
+      "section": "Cardio:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Profile:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VDRL/RPR",
+      "section": "Serology:"
+    }
+  ],
+  "primary_mark_style": "circle_around_label",
+  "n_ambiguous_marks": 2,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 762.22,
+    "usable_bottom_px": 765.21,
+    "footer_top_px": 709.91
+  },
+  "box_ink_failures": 0
+}

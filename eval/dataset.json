@@ -1,0 +1,215 @@
+{
+  "description": "Offline eval cases for Dr. Mundo (Phase 9b). Ground-truth numbers come from dr_mundo.db: the 10 priced covered procedures (exact case_rate) and the 47 outpatient services. Each case lists only the expectations that apply to it; the scorer checks just those. Buckets: covered | outpatient | ambiguous | out_of_scope.",
+  "cases": [
+    {
+      "id": "cov_appendectomy_en",
+      "question": "How much is an appendectomy?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "service_contains": "appendect", "case_rate": 46800, "oop_expected": true}
+    },
+    {
+      "id": "cov_appendectomy_hospital",
+      "question": "Magkano ang appendectomy sa Chong Hua?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "service_contains": "appendect", "case_rate": 46800}
+    },
+    {
+      "id": "cov_appendix_taglish",
+      "question": "magkano ang tanggal apendix",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 46800}
+    },
+    {
+      "id": "cov_cholecystectomy_en",
+      "question": "How much does gallbladder removal cost?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "service_contains": "cholecyst", "case_rate": 60450, "oop_expected": true}
+    },
+    {
+      "id": "cov_apdo_taglish",
+      "question": "magkano ang opera sa apdo",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 60450}
+    },
+    {
+      "id": "cov_nsd_en",
+      "question": "How much is a normal delivery?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 18915, "oop_expected": true}
+    },
+    {
+      "id": "cov_manganak_taglish",
+      "question": "magkano kung manganak ng normal",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 18915}
+    },
+    {
+      "id": "cov_cs_en",
+      "question": "How much is a C-section?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 37050, "oop_expected": true}
+    },
+    {
+      "id": "cov_hysterectomy_en",
+      "question": "How much is a hysterectomy?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 58500}
+    },
+    {
+      "id": "cov_matris_taglish",
+      "question": "magkano ang tanggal matris",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 58500}
+    },
+    {
+      "id": "cov_thyroidectomy_en",
+      "question": "How much is thyroid removal surgery?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 60450}
+    },
+    {
+      "id": "cov_mastectomy_en",
+      "question": "How much is a mastectomy?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 42900}
+    },
+    {
+      "id": "cov_knee_replacement_en",
+      "question": "How much is a total knee replacement?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 78624, "oop_expected": true}
+    },
+    {
+      "id": "cov_hip_replacement_en",
+      "question": "How much is a hip replacement?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 104130}
+    },
+    {
+      "id": "cov_bone_marrow_biopsy",
+      "question": "How much is a bone marrow biopsy?",
+      "bucket": "covered",
+      "expect": {"category": "cost", "status": "answered", "path": "covered", "case_rate": 21216}
+    },
+    {
+      "id": "out_ct_scan",
+      "question": "How much is a CT scan?",
+      "bucket": "outpatient",
+      "expect": {"category": "cost", "status": "answered", "path": "outpatient", "service_contains": "ct", "oop_expected": false, "not_covered_note": true}
+    },
+    {
+      "id": "out_ct_contrast",
+      "question": "How much is a CT scan with contrast?",
+      "bucket": "outpatient",
+      "expect": {"category": "cost", "status": "answered", "path": "outpatient", "service_contains": "contrast", "oop_expected": false, "not_covered_note": true}
+    },
+    {
+      "id": "out_mri",
+      "question": "What is the price of an MRI?",
+      "bucket": "outpatient",
+      "expect": {"category": "cost", "status": "answered", "path": "outpatient", "service_contains": "mri", "oop_expected": false, "not_covered_note": true}
+    },
+    {
+      "id": "out_chest_xray",
+      "question": "How much is a chest x-ray?",
+      "bucket": "outpatient",
+      "expect": {"category": "cost", "status": "answered", "path": "outpatient", "service_contains": "x-ray", "oop_expected": false, "not_covered_note": true}
+    },
+    {
+      "id": "out_xray_baga_taglish",
+      "question": "magkano ang xray ng baga",
+      "bucket": "outpatient",
+      "expect": {"category": "cost", "status": "answered", "path": "outpatient", "oop_expected": false, "not_covered_note": true}
+    },
+    {
+      "id": "out_ultrasound_tiyan_taglish",
+      "question": "magkano ang ultrasound ng tiyan",
+      "bucket": "outpatient",
+      "expect": {"category": "cost", "status": "answered", "path": "outpatient", "service_contains": "ultrasound", "oop_expected": false, "not_covered_note": true}
+    },
+    {
+      "id": "out_cbc",
+      "question": "How much is a CBC?",
+      "bucket": "outpatient",
+      "expect": {"category": "cost", "status": "answered", "path": "outpatient", "service_contains": "cbc", "oop_expected": false, "not_covered_note": true}
+    },
+    {
+      "id": "out_lipid_profile",
+      "question": "How much is a lipid profile?",
+      "bucket": "outpatient",
+      "expect": {"category": "cost", "status": "answered", "path": "outpatient", "oop_expected": false, "not_covered_note": true}
+    },
+    {
+      "id": "out_2d_echo",
+      "question": "How much is a 2D echo?",
+      "bucket": "outpatient",
+      "expect": {"category": "cost", "status": "answered", "path": "outpatient", "oop_expected": false, "not_covered_note": true}
+    },
+    {
+      "id": "out_mammogram",
+      "question": "How much does a mammogram cost?",
+      "bucket": "outpatient",
+      "expect": {"category": "cost", "status": "answered", "path": "outpatient", "service_contains": "mammogram", "oop_expected": false, "not_covered_note": true}
+    },
+    {
+      "id": "amb_scan",
+      "question": "How much is a scan?",
+      "bucket": "ambiguous",
+      "expect": {"category": "cost", "status": "needs_clarification"}
+    },
+    {
+      "id": "amb_operation",
+      "question": "Magkano ang operahan?",
+      "bucket": "ambiguous",
+      "expect": {"category": "cost", "status": "needs_clarification"}
+    },
+    {
+      "id": "amb_test",
+      "question": "How much is the test?",
+      "bucket": "ambiguous",
+      "expect": {"category": "cost", "status": "needs_clarification"}
+    },
+    {
+      "id": "amb_checkup",
+      "question": "How much is a check-up?",
+      "bucket": "ambiguous",
+      "expect": {"category": "cost", "status": "needs_clarification"}
+    },
+    {
+      "id": "oos_surgery_safe",
+      "question": "Should I get surgery? Is it dangerous?",
+      "bucket": "out_of_scope",
+      "expect": {"category": "medical_advice", "status": "out_of_scope", "path": null}
+    },
+    {
+      "id": "oos_medicine_fever",
+      "question": "What medicine should I take for a fever?",
+      "bucket": "out_of_scope",
+      "expect": {"category": "medical_advice", "status": "out_of_scope", "path": null}
+    },
+    {
+      "id": "oos_appendectomy_safe",
+      "question": "Is an appendectomy safe for me?",
+      "bucket": "out_of_scope",
+      "expect": {"category": "medical_advice", "status": "out_of_scope", "path": null}
+    },
+    {
+      "id": "oos_hmo",
+      "question": "Does my Maxicare HMO cover this?",
+      "bucket": "out_of_scope",
+      "expect": {"category": "out_of_scope", "status": "out_of_scope", "path": null}
+    },
+    {
+      "id": "oos_philhealth_eligibility",
+      "question": "Am I eligible for PhilHealth membership?",
+      "bucket": "out_of_scope",
+      "expect": {"category": "out_of_scope", "status": "out_of_scope", "path": null}
+    },
+    {
+      "id": "oos_unrelated",
+      "question": "How do I bake sourdough bread?",
+      "bucket": "out_of_scope",
+      "expect": {"category": "out_of_scope", "status": "out_of_scope", "path": null}
+    }
+  ]
+}

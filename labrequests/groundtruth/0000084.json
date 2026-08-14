@@ -1,0 +1,128 @@
+{
+  "sample_id": "0000084",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "prenatal",
+  "clean_image": "filled/0000084.png",
+  "blank_image": "stage1/blank/0000084.png",
+  "image": "media/0000084_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Dalisay X. Escalona, MD, FPCC",
+    "physician_name_plain": "Dalisay X. Escalona",
+    "specialty": "Cardiology / Internal Medicine",
+    "mobile": "0918-0000-586",
+    "email": "dalisay.escalona@clinic.example",
+    "license_no": "958370",
+    "ptr_no": "9489362",
+    "s2_no": "961346",
+    "clinics": [
+      {
+        "name": "Timog General Hospital",
+        "address": "17 Rosal St., Sta. Lucia, Tarlac",
+        "days": "Tue - Thu - Sat",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(08) 8979-0000",
+        "local": "local 813"
+      },
+      {
+        "name": "Balintawak Family Health Center",
+        "address": "233 Ilang-Ilang St., Mataas na Lupa, Cavite",
+        "days": "Tue - Thu - Sat",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(05) 8977-0000",
+        "local": "local 799"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BLOOD_TYPING_RH",
+      "CBC_PLT",
+      "HBSAG_SCREENING",
+      "PREGNANCY_TEST",
+      "URINALYSIS",
+      "VDRL_RPR"
+    ],
+    "cancelled": [],
+    "variants": {
+      "PREGNANCY_TEST": "urine"
+    },
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ Platelet Count",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "BLOOD_TYPING_RH",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Blood Typing",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis (Routine)",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Markers:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "RPR",
+      "section": "Serology:"
+    },
+    {
+      "code": "PREGNANCY_TEST",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Pregnancy Test",
+      "section": "Laboratory Test:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1090.22,
+    "usable_bottom_px": 1091.27,
+    "footer_top_px": 1012.7
+  },
+  "box_ink_failures": 0
+}

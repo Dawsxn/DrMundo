@@ -1,0 +1,6 @@
+# Force LF on files that run inside the Linux container, regardless of the host's
+# core.autocrlf setting. CRLF here would break `bash` and the Docker build.
+*.sh            text eol=lf
+Dockerfile      text eol=lf
+.dockerignore   text eol=lf
+docker/**       text eol=lf

@@ -1,0 +1,136 @@
+{
+  "sample_id": "0000137",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "preoperative_clearance",
+  "clean_image": "filled/0000137.png",
+  "blank_image": "stage1/blank/0000137.png",
+  "image": "media/0000137_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Bayani A. Tolentino, MD, FPCCP",
+    "physician_name_plain": "Bayani A. Tolentino",
+    "specialty": "Pulmonary Medicine",
+    "mobile": "0918-0000-303",
+    "email": "bayani.tolentino@clinic.example",
+    "license_no": "978413",
+    "ptr_no": "9854696",
+    "s2_no": "986427",
+    "clinics": [
+      {
+        "name": "Tanglaw Family Health Center",
+        "address": "265 Ilang-Ilang St., Bayan Silangan, Pampanga",
+        "days": "Tue / Thu",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(04) 8931-0000",
+        "local": "local 205"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CBC",
+      "CREATININE",
+      "ECG_12L",
+      "K",
+      "NA",
+      "PT_PROTHROMBIN",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PT (Prothrombin)",
+      "section": "Coagulation:"
+    },
+    {
+      "code": "BUN",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "NA",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium (Na)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12-lead ECG",
+      "section": "Cardio:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 758.56,
+    "usable_bottom_px": 761.55,
+    "footer_top_px": 705.75
+  },
+  "box_ink_failures": 0
+}

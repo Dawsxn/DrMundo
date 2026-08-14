@@ -1,0 +1,30 @@
+# Dr. Mundo — full application runtime.
+# Install with:  python -m pip install -r requirements.txt
+
+# Vision (Scope v2)
+Pillow>=10.0
+pyyaml>=6.0
+
+# Core agent + data
+openai>=1.30
+python-dotenv>=1.0
+numpy>=1.26
+pydantic>=2.6
+
+# API
+fastapi>=0.110
+# FastAPI 0.128 requires starlette<0.51; starlette 1.x drops the Router(on_startup=...)
+# argument FastAPI still passes, and installing it breaks app construction outright.
+starlette>=0.40,<0.51
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9        # multipart/form-data for the slip upload
+
+# UI
+streamlit>=1.33
+requests>=2.31
+
+# Monitoring + eval (Phase 9)
+mlflow>=2.12
+
+# Dev / tests
+pytest>=8.0

@@ -1,0 +1,132 @@
+{
+  "sample_id": "0000104",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "renal_panel",
+  "clean_image": "filled/0000104.png",
+  "blank_image": "stage1/blank/0000104.png",
+  "image": "media/0000104_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Purificacion P. Casiano, MD",
+    "physician_name_plain": "Purificacion P. Casiano",
+    "specialty": "Internal Medicine",
+    "mobile": "0917-0000-624",
+    "email": "purificacion.casiano@clinic.example",
+    "license_no": "963655",
+    "ptr_no": "9820087",
+    "s2_no": "988910",
+    "clinics": [
+      {
+        "name": "Malayan Family Health Center",
+        "address": "285 Palo Maria St., Sta. Lucia, Tarlac",
+        "days": "Mon - Sat",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(06) 8596-0000",
+        "local": "local 221"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CA_IONIZED",
+      "CA_TOTAL",
+      "CREATININE",
+      "K",
+      "NA",
+      "URIC_ACID"
+    ],
+    "cancelled": [
+      "URINALYSIS"
+    ],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "BUN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URIC_ACID",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Uric Acid",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "NA",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium (Na)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "CA_TOTAL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total Calcium",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CA_IONIZED",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Ionized Calcium",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 759.09,
+    "usable_bottom_px": 762.09,
+    "footer_top_px": 707.38
+  },
+  "box_ink_failures": 0
+}

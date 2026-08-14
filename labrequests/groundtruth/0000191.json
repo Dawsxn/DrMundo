@@ -1,0 +1,110 @@
+{
+  "sample_id": "0000191",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "renal_panel",
+  "clean_image": "filled/0000191.png",
+  "blank_image": "stage1/blank/0000191.png",
+  "image": "media/0000191_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Benigno G. Dalisay, MD",
+    "physician_name_plain": "Benigno G. Dalisay",
+    "specialty": "General Physician",
+    "mobile": "0918-0000-499",
+    "email": "benigno.dalisay@clinic.example",
+    "license_no": "998091",
+    "ptr_no": "9142982",
+    "s2_no": "967209",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CA_SERUM",
+      "CREATININE",
+      "K",
+      "NA",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {
+      "CA_SERUM": "ionized"
+    },
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "BUN",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal:"
+    },
+    {
+      "code": "NA",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium (Na)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "CA_SERUM",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Calcium (Ca)",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 2,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 501.45,
+    "usable_bottom_px": 501.44,
+    "footer_top_px": 450.64
+  },
+  "box_ink_failures": 0
+}

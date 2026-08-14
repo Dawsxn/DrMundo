@@ -1,0 +1,108 @@
+{
+  "sample_id": "0000233",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": "stress_electrolytes_bundle_and_parts",
+  "order_profile": "stress_electrolytes_bundle_and_parts",
+  "clean_image": "filled/0000233.png",
+  "blank_image": "stage1/blank/0000233.png",
+  "image": "media/0000233_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Rosalinda L. Pascual, MD",
+    "physician_name_plain": "Rosalinda L. Pascual",
+    "specialty": "Internal Medicine",
+    "mobile": "0917-0000-213",
+    "email": "rosalinda.pascual@clinic.example",
+    "license_no": "921030",
+    "ptr_no": "9684952",
+    "s2_no": "912017",
+    "clinics": [
+      {
+        "name": "Bagumbayan General Hospital",
+        "address": "170 Yakal St., Pook Ligaya, Laguna",
+        "days": "Mon to Fri",
+        "hours": "By Appointment",
+        "trunkline": "(07) 8398-0000",
+        "local": "local 780"
+      },
+      {
+        "name": "Halamanan Family Health Center",
+        "address": "357 Acacia St., Pook Ligaya, Nueva Ecija",
+        "days": "Mon - Wed - Fri",
+        "hours": "8:00 AM - 11:00 AM",
+        "trunkline": "(02) 8957-0000",
+        "local": "local 920"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CL",
+      "ELECTROLYTES",
+      "K",
+      "NA"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "ELECTROLYTES",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "NA",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium (Na)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CL",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chloride (Cl)",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "diagonal_slash",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1085.06,
+    "usable_bottom_px": 1086.11,
+    "footer_top_px": 1007.02
+  },
+  "box_ink_failures": 0
+}

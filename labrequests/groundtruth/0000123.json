@@ -1,0 +1,145 @@
+{
+  "sample_id": "0000123",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "diabetes_monitoring",
+  "clean_image": "filled/0000123.png",
+  "blank_image": "stage1/blank/0000123.png",
+  "image": "media/0000123_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Gregorio A. Cabantog, MD, FSOSP",
+    "physician_name_plain": "Gregorio A. Cabantog",
+    "specialty": "Surgical Oncologist / General Surgeon",
+    "mobile": "0918-0000-115",
+    "email": "gregorio.cabantog@clinic.example",
+    "license_no": "924898",
+    "ptr_no": "9521856",
+    "s2_no": "951990",
+    "clinics": [
+      {
+        "name": "Tanglaw Family Health Center",
+        "address": "135 Malunggay St., Bagong Silang, Nueva Ecija",
+        "days": "Tue - Thu - Sat",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(05) 8934-0000",
+        "local": "local 305"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CHOL_TOTAL",
+      "CREATININE",
+      "FBS",
+      "HBA1C",
+      "HDL",
+      "LDL",
+      "TRIGLYCERIDES",
+      "URINALYSIS",
+      "VLDL"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "FBS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS (Fasting Blood Sugar)",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HbA1c",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "CHOL_TOTAL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "T. Chole",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "TRIGLYCERIDES",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triglycerides",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "HDL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "High Density Lipoprotein",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LDL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "VLDL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VLDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 762.3,
+    "usable_bottom_px": 765.29,
+    "footer_top_px": 709.98
+  },
+  "box_ink_failures": 0
+}

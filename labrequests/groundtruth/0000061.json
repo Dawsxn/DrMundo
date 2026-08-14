@@ -1,0 +1,115 @@
+{
+  "sample_id": "0000061",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "cardiac_chest_pain",
+  "clean_image": "filled/0000061.png",
+  "blank_image": "stage1/blank/0000061.png",
+  "image": "media/0000061_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Caridad C. Banaag, MD, FPSN",
+    "physician_name_plain": "Caridad C. Banaag",
+    "specialty": "Nephrology / Internal Medicine",
+    "mobile": "0918-0000-894",
+    "email": "caridad.banaag@clinic.example",
+    "license_no": "931402",
+    "ptr_no": "9459472",
+    "s2_no": "945255",
+    "clinics": [
+      {
+        "name": "Sto. Bartholomew Community Hospital",
+        "address": "275 Malunggay St., Pook Ligaya, Cavite",
+        "days": "Mon - Sat",
+        "hours": "By Appointment",
+        "trunkline": "(06) 8969-0000",
+        "local": "local 885"
+      },
+      {
+        "name": "Balintawak Medical Clinic",
+        "address": "239 Malunggay St., Mataas na Lupa, Pangasinan",
+        "days": "Tue - Thu - Sat",
+        "hours": "8:00 AM - 11:00 AM",
+        "trunkline": "(06) 8491-0000",
+        "local": "local 391"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CPK_TOTAL",
+      "ECG_12L",
+      "ECHO_2D",
+      "LDH",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CPK_TOTAL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total CPK",
+      "section": "Cardiac Function:"
+    },
+    {
+      "code": "LDH",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDH",
+      "section": "Cardiac Function:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12-lead ECG",
+      "section": "CT / Advanced:"
+    },
+    {
+      "code": "ECHO_2D",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "2DED",
+      "section": "CT / Advanced:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Chest PA/L",
+      "section": "X-Ray:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1076.16,
+    "usable_bottom_px": 1077.21,
+    "footer_top_px": 998.73
+  },
+  "box_ink_failures": 0
+}

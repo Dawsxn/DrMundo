@@ -1,0 +1,74 @@
+{
+  "sample_id": "0000228",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": "stress_kub_both_sections",
+  "order_profile": "stress_kub_both_sections",
+  "clean_image": "filled/0000228.png",
+  "blank_image": "stage1/blank/0000228.png",
+  "image": "media/0000228_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Nicanor Z. Tiongson, MD, FPCP",
+    "physician_name_plain": "Nicanor Z. Tiongson",
+    "specialty": "Internal Medicine",
+    "mobile": "0917-0000-527",
+    "email": "nicanor.tiongson@clinic.example",
+    "license_no": "957912",
+    "ptr_no": "9283043",
+    "s2_no": "949800",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "US_KUB"
+    ],
+    "cancelled": [
+      "XR_KUB"
+    ],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "US_KUB",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "KUB",
+      "section": "Ultrasound:"
+    },
+    {
+      "code": "XR_KUB",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "KUB",
+      "section": "X-Ray:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 505.95,
+    "usable_bottom_px": 505.95,
+    "footer_top_px": 456.53
+  },
+  "box_ink_failures": 0
+}

@@ -1,0 +1,113 @@
+{
+  "sample_id": "0000002",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "annual_physical",
+  "clean_image": "filled/0000002.png",
+  "blank_image": "stage1/blank/0000002.png",
+  "image": "media/0000002_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Ligaya R. Malabanan, MD, FPSGS",
+    "physician_name_plain": "Ligaya R. Malabanan",
+    "specialty": "General and Laparoscopic Surgery",
+    "mobile": "0918-0000-315",
+    "email": "ligaya.malabanan@clinic.example",
+    "license_no": "991453",
+    "ptr_no": "9951950",
+    "s2_no": "913313",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC_PLT",
+      "FBS",
+      "FECALYSIS",
+      "LIPID_PROFILE",
+      "LIVER_PROFILE",
+      "URINALYSIS",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ PLT CT",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "FECALYSIS",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Fecalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA and lateral",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "FBS",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS",
+      "section": "Metabolism:"
+    },
+    {
+      "code": "LIPID_PROFILE",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LIVER_PROFILE",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Liver Profile",
+      "section": "Liver:"
+    }
+  ],
+  "primary_mark_style": "circle_around_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.02,
+    "page_overflow_px": 0.02,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1012.41,
+    "usable_bottom_px": 1012.39,
+    "footer_top_px": 962.36
+  },
+  "box_ink_failures": 0
+}

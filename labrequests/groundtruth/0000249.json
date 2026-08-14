@@ -1,0 +1,69 @@
+{
+  "sample_id": "0000249",
+  "kind": "blank",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "blank_form",
+  "clean_image": "filled/0000249.png",
+  "blank_image": "stage1/blank/0000249.png",
+  "image": "media/0000249_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Wilfredo S. Gatchalian, MD, FSOSP",
+    "physician_name_plain": "Wilfredo S. Gatchalian",
+    "specialty": "Surgical Oncologist / General Surgeon",
+    "mobile": "0918-0000-505",
+    "email": "wilfredo.gatchalian@clinic.example",
+    "license_no": "968415",
+    "ptr_no": "9726718",
+    "s2_no": "921600",
+    "clinics": [
+      {
+        "name": "Sto. Wenceslaus Community Hospital",
+        "address": "377 Sampaguita St., Nueva Esperanza, Cavite",
+        "days": "Wed - Fri - Sat",
+        "hours": "By Appointment",
+        "trunkline": "(07) 8841-0000",
+        "local": "local 407"
+      },
+      {
+        "name": "Malayan General Hospital",
+        "address": "155 Camia St., Barangay Masagana, Laguna",
+        "days": "Tue / Thu",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(05) 8861-0000",
+        "local": "local 964"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [],
+  "primary_mark_style": null,
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1088.41,
+    "usable_bottom_px": 1089.46,
+    "footer_top_px": 1009.98
+  },
+  "box_ink_failures": 0
+}
