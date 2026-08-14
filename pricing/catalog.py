@@ -141,18 +141,35 @@ def find_price(code: str) -> Optional[dict]:
         if row:
             return row
 
-    # 2. Otherwise rank the containment candidates and take the best.
+    # 2. Otherwise rank the token-aligned candidates and take the best.
     best = None
     for name in _candidate_names(code):
         key = _norm(name)
         if len(key) < 4:
             continue                       # "CL", "K", "MG" would match everything
-        hits = [r for k, r in idx.items() if key in k]
-        for row in hits:
+        for row in idx.values():
+            if not _aligns(key, row["service"]):
+                continue
             r = _rank(row["service"], specimen)
             if best is None or r < best[0]:
                 best = (r, row)
     return best[1] if best else None
+
+
+def _aligns(key: str, service: str) -> bool:
+    """Does `key` match `service` starting at a WORD boundary?
+
+    Raw substring matching on normalised text is how CREATININE, whose surface form is
+    "Crea", matched PANCREAS: "crea" sits inside "pan-crea-s". The shortest-name rule then
+    preferred the 8-character PANCREAS over CREATININE SERUM, and a P740 blood test was
+    priced as a P16,800 study. The taxonomy says `substring_matching: false` for exactly
+    this reason.
+
+    So the key must begin at a token boundary. Tokens are still joined afterwards, because
+    MMC punctuates inconsistently and "Chest PA/L" has to reach "CHEST PA & LATERAL".
+    """
+    tokens = re.findall(r"[a-z0-9]+", service.lower())
+    return any("".join(tokens[i:]).startswith(key) for i in range(len(tokens)))
 
 
 def _is_exact(code: Optional[str], row: dict) -> bool:
