@@ -360,3 +360,30 @@ def test_hmo_not_applied_when_the_plan_excludes_outpatient_labs():
     assert est.hmo_low == Decimal("0")
     assert est.prepare_low == Decimal("5000")
     assert any("does not cover outpatient" in c for c in est.caveats)
+
+
+# ------------------------------------------------------------------ HMO realism
+def test_unknown_balance_says_it_is_assuming_the_full_limit():
+    """Capping at the annual MBL assumes the patient has claimed nothing all year.
+
+    For anyone mid-year that is optimistic in the direction that under-quotes them, and
+    the difference is the whole benefit. The arithmetic still uses it -- refusing any HMO
+    credit would be useless to the many people who do not know their balance -- but the
+    assumption has to be said, with the amount at stake.
+    """
+    plan = HMOPlan(plan_name="Gold", mbl_annual=Decimal("150000"))
+    assert plan.limit_assumed_untouched is True
+    est = compute_budget(priced=[_priced(low="80000", high="80000", name="PANEL")],
+                         hmo=plan)
+    assert any("annual HMO limit is still available" in c for c in est.caveats)
+    assert any("member portal" in c for c in est.caveats)
+
+
+def test_a_stated_balance_is_not_flagged_as_an_assumption():
+    plan = HMOPlan(plan_name="Gold", mbl_annual=Decimal("150000"),
+                   remaining_balance=Decimal("20000"))
+    assert plan.limit_assumed_untouched is False
+    est = compute_budget(priced=[_priced(low="80000", high="80000", name="PANEL")],
+                         hmo=plan)
+    assert est.hmo_low == Decimal("20000")
+    assert not any("annual HMO limit is still available" in c for c in est.caveats)

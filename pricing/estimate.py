@@ -11,11 +11,11 @@ The item count is conserved end to end. Whatever the reader saw lands in exactly
 the four buckets, and `BudgetEstimate` raises if it does not.
 """
 
+import re
+from decimal import Decimal
 from typing import Optional
 
 from pricing.catalog import price_items
-from decimal import Decimal
-
 from pricing.schemas import BudgetEstimate, HMOPlan, SeparateLine
 from pricing.waterfall import compute_budget
 from vision.extract_request import triage
@@ -55,6 +55,7 @@ def estimate_from_slip(
     room = _room_line(room_type, length_of_stay)
     if room is not None:
         lines.append(room)
+    upgrade = _room_upgrade_note(hmo, room_type)
 
     return compute_budget(
         priced=priced,
@@ -69,7 +70,49 @@ def estimate_from_slip(
         planned_procedure=planned_procedure or slip.planned_procedure,
         philhealth_active=philhealth_active,
         hmo_covers_outpatient=hmo_covers_outpatient,
+        extra_caveats=[upgrade] if upgrade else [],
     )
+
+
+# MMC room names, cheapest first. Used to tell whether a chosen room sits above what the
+# patient's plan entitles them to.
+_ROOM_LADDER = ["ward", "semi private", "small private", "regular private", "large private",
+                "premium large private", "regular suite", "presidential suite"]
+
+
+def _rank_room(name: Optional[str]) -> Optional[int]:
+    """Where a room name sits on the ladder, or None if we do not recognise it.
+
+    Maxicare writes "Semi - Private" and MMC writes "SEMI PRIVATE", so whitespace and
+    hyphens are flattened before matching. Scanning the ladder from the dearest end
+    matters too: "large private" contains "private", and checking cheapest-first would
+    rank a large private room as a plain one.
+    """
+    if not name:
+        return None
+    key = re.sub(r"[^a-z0-9]+", " ", name.lower()).strip()
+    for i in range(len(_ROOM_LADDER) - 1, -1, -1):
+        if _ROOM_LADDER[i] in key:
+            return i
+    return None
+
+
+def _room_upgrade_note(hmo: Optional[HMOPlan], room_type: Optional[str]) -> Optional[str]:
+    """Warn when the chosen room sits above the plan's entitlement.
+
+    HMO plans cover room and board only up to the tier you bought. Take a suite on a
+    semi-private entitlement and the difference is yours every night, which on MMC's
+    ladder is P19,100 a night between those two. We hold both figures, so saying nothing
+    would be a choice rather than a limitation.
+    """
+    if hmo is None or not room_type or not hmo.room_entitlement:
+        return None
+    chosen, allowed = _rank_room(room_type), _rank_room(hmo.room_entitlement)
+    if chosen is None or allowed is None or chosen <= allowed:
+        return None
+    return (f"Your plan covers a {hmo.room_entitlement.lower()} room. You chose "
+            f"{room_type.title()}, so your HMO will not pay the difference in room rate "
+            f"and you will settle it yourself.")
 
 
 def _room_line(room_type: Optional[str], nights: Optional[int]) -> Optional[SeparateLine]:

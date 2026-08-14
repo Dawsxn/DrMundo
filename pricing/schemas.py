@@ -63,6 +63,17 @@ class HMOPlan(BaseModel):
     exclusions: list[str] = Field(default_factory=list)
 
     @property
+    def limit_assumed_untouched(self) -> bool:
+        """True when we are capping at the ANNUAL limit with no balance stated.
+
+        That silently assumes the patient has claimed nothing all year, which for anyone
+        mid-year is optimistic in the direction that under-quotes them. The arithmetic
+        still uses it, because refusing to credit any HMO would be useless to the many
+        people who do not know their balance -- but it must be said out loud.
+        """
+        return self.remaining_balance is None and self.mbl_annual is not None
+
+    @property
     def needs_verification_note(self) -> bool:
         """True when any figure came from the published-tier table rather than the patient.
 
