@@ -1,0 +1,5 @@
+provider,plan_name,mbl_annual,room_entitlement,mmc_room_type,source,as_of,is_published
+Maxicare,Platinum Plus,250000,Large Private,LARGE PRIVATE,https://www.maxicare.com.ph/maxicare-plans/mymaxicare/,2026-08-15,true
+Maxicare,Platinum,200000,Regular Private,,https://www.maxicare.com.ph/maxicare-plans/mymaxicare/,2026-08-15,true
+Maxicare,Gold,150000,Regular Private,,https://www.maxicare.com.ph/maxicare-plans/mymaxicare/,2026-08-15,true
+Maxicare,Silver,100000,Semi - Private,SEMI PRIVATE,https://www.maxicare.com.ph/maxicare-plans/mymaxicare/,2026-08-15,true
