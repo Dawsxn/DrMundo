@@ -148,3 +148,31 @@ def test_item_count_is_conserved_across_the_whole_pipeline():
         est = estimate_from_slip(slip)
         assert (len(est.priced) + len(est.unpriced)
                 + len(est.needs_confirmation) + len(est.cancelled)) == len(slip.items)
+
+
+# ------------------------------------------------------------------ HMO room entitlement
+def test_taking_a_room_above_the_entitlement_is_flagged():
+    """Silver entitles semi-private. A suite is P19,100 a night more, and the HMO will
+    not pay the difference. We hold both figures, so staying silent would be a choice."""
+    plan = resolve_hmo_plan("Maxicare", "Silver")        # entitlement: Semi - Private
+    est = estimate_from_slip(_slip_for("0000000"), hmo=plan,
+                             room_type="PRESIDENTIAL SUITE", length_of_stay=2)
+    assert any("will not pay the difference" in c for c in est.caveats)
+
+
+def test_a_room_within_the_entitlement_is_not_flagged():
+    plan = resolve_hmo_plan("Maxicare", "Silver")
+    est = estimate_from_slip(_slip_for("0000000"), hmo=plan, room_type="WARD")
+    assert not any("will not pay the difference" in c for c in est.caveats)
+
+
+def test_the_room_line_multiplies_only_when_nights_were_given():
+    est = estimate_from_slip(_slip_for("0000000"), room_type="WARD", length_of_stay=3)
+    line = next(l for l in est.separate_lines if "Room" in l.label)
+    assert line.price_low == Decimal("1810") * 3
+    assert "as you told me" in (line.note or "")
+
+    est2 = estimate_from_slip(_slip_for("0000000"), room_type="WARD")
+    line2 = next(l for l in est2.separate_lines if "Room" in l.label)
+    assert line2.price_low == Decimal("1810")
+    assert line2.unit == "per day"
