@@ -103,10 +103,22 @@ def triage(slip: RequestSlip) -> dict:
     }
 
 
+class ReadFailed(RuntimeError):
+    """The reader could not read the image at all.
+
+    Raised rather than returning an empty slip, because an empty slip prices to P0 and
+    "prepare P0" is a far worse answer than "I could not read that" -- it looks like a
+    result. A quota error, a network failure or an unreadable photo must all surface as
+    failures, not as a free estimate.
+    """
+
+
 def read_and_extract(reader, image_path: Path, *, synthetic: bool = False) -> RequestSlip:
-    """Convenience path used by the benchmark: reader -> slip, redaction included."""
+    """Convenience path used by the benchmark and the service: reader -> slip."""
     from vision.redact import load_and_redact
 
     red = load_and_redact(Path(image_path), synthetic=synthetic)
     result = reader.read(Path(image_path))
+    if not result.ok:
+        raise ReadFailed(result.error or "the reader returned no result")
     return extract_request(result, red.sha256, synthetic=synthetic)

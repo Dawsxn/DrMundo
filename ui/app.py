@@ -28,13 +28,17 @@ st.set_page_config(page_title="Dr. Mundo: PH Medical Cost Estimator",
 
 # Curated sample prompts: (emoji, short label, full question). A deliberate mix of
 # Path A (covered) and Path B (outpatient), English and Taglish.
+# Scope v2 is Makati Medical Center only, so a hospital name in the prompt is stale --
+# "Chong Hua" was a v1 hospital and no longer exists in the data. Appendectomy is also
+# gone: MMC publishes professional fees for it but no operating-room package (handoff
+# §6.1), so it makes a poor first impression.
 SAMPLES = [
-    ("🩺", "Appendectomy", "Magkano ang appendectomy sa Chong Hua?"),
-    ("👶", "Normal delivery", "How much is a normal delivery?"),
-    ("🧠", "CT scan (contrast)", "How much is a CT scan with contrast?"),
+    ("🩺", "Gallbladder surgery", "Magkano ang tanggal apdo?"),
+    ("🧪", "Lipid profile", "How much is a lipid profile?"),
     ("🩻", "Chest X-ray", "Magkano ang xray ng baga?"),
+    ("🔬", "CBC", "Magkano ang CBC?"),
+    ("❓", "Creatinine", "Magkano ang creatinine?"),
     ("🦴", "Knee replacement", "How much is a total knee replacement?"),
-    ("🧪", "Blood tests", "How much is a CBC and lipid profile?"),
 ]
 
 
@@ -91,6 +95,8 @@ h1,h2,h3{letter-spacing:-0.01em;}
 def _init_state() -> None:
     if "session_id" not in st.session_state:
         st.session_state.session_id = uuid.uuid4().hex
+    if "has_estimate" not in st.session_state:
+        st.session_state.has_estimate = False
     if "messages" not in st.session_state:
         # Each item: {"role": "user"|"assistant", "text": str, "meta": dict|None}
         st.session_state.messages = []
@@ -105,6 +111,7 @@ def _new_chat() -> None:
         pass  # a failed reset is harmless; we rotate the id locally anyway.
     st.session_state.session_id = uuid.uuid4().hex
     st.session_state.messages = []
+    st.session_state.has_estimate = False
 
 
 # ----------------------------------------------------------------- rendering
@@ -253,6 +260,156 @@ def _process_turn(prompt: str) -> None:
             st.session_state.messages.append({"role": "assistant", "text": msg, "meta": None})
 
 
+_BUDGET_CSS = """
+<style>
+.lg-budget-headline { margin: .6rem 0 1rem; }
+.lg-budget-headline span { display:block; font-size:.72rem; letter-spacing:.09em;
+  text-transform:uppercase; opacity:.65; }
+.lg-budget-headline strong { display:block; font-size:2rem; line-height:1.2; }
+</style>
+"""
+
+
+def _render_budget(answer: dict) -> None:
+    """Render a Scope v2 budget report: the headline, then every bucket.
+
+    The buckets are rendered even when the headline looks tidy. An item quietly missing
+    from a report is how an understated bill becomes invisible.
+    """
+    budget = answer.get("budget")
+    if not budget:
+        return
+
+    st.markdown(_BUDGET_CSS, unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="lg-budget-headline">'
+        f"<span>What you&rsquo;ll pay</span>"
+        f'<strong>{_peso(budget.get("prepare_low"))} – {_peso(budget.get("prepare_high"))}</strong>'
+        f'</div>', unsafe_allow_html=True)
+
+    priced = budget.get("priced") or []
+    if priced:
+        st.markdown(f"**Priced ({len(priced)})**")
+        st.table([
+            {"Test": p.get("catalog_name"),
+             "Price": f'{_peso(p.get("price_low"))} – {_peso(p.get("price_high"))}'}
+            for p in priced
+        ])
+
+    for key, title, note in (
+        ("unpriced", "Not priced", "MMC publishes no price for these, so they are **not** in the total."),
+        ("needs_confirmation", "Please confirm", "I need a little more to price these."),
+        ("cancelled", "Crossed out by your doctor", "Not ordered, so **not** charged."),
+    ):
+        items = budget.get(key) or []
+        if items:
+            with st.expander(f"{title} ({len(items)})", expanded=True):
+                st.caption(note)
+                for it in items:
+                    st.markdown(f"- {it.get('normalized') or it.get('raw_text')}")
+
+    for caveat in budget.get("caveats") or []:
+        st.caption(caveat)
+
+
+def _refine(payload: dict) -> None:
+    """Send one refine answer and re-render. No re-upload."""
+    payload["session_id"] = st.session_state.session_id
+    try:
+        resp = requests.post(f"{API_URL}/refine", json=payload, timeout=REQUEST_TIMEOUT)
+    except requests.RequestException as exc:
+        st.error(f"⚠️ Couldn't reach the API. _{exc}_")
+        return
+    if resp.status_code != 200:
+        st.error(f"⚠️ Refine failed (HTTP {resp.status_code}).")
+        return
+    data = resp.json()
+    st.session_state.messages.append(
+        {"role": "assistant", "text": data["answer"].get("answer_text", ""), "meta": data}
+    )
+    st.rerun()
+
+
+def _render_refine_controls() -> None:
+    """The §14 refine loop: offered AFTER a number is already on screen.
+
+    Deliberately not a form shown before Pass 1. Somebody standing in a hospital lobby
+    wants a figure first; every question here is an offer to improve one they already
+    have, so abandoning halfway still leaves them with something true.
+    """
+    if not st.session_state.get("has_estimate"):
+        return
+
+    st.divider()
+    st.markdown("**Make this more accurate**")
+
+    with st.expander("I have an HMO"):
+        col1, col2 = st.columns(2)
+        provider = col1.text_input("Provider", value="Maxicare", key="hmo_provider")
+        plan = col2.text_input("Plan", placeholder="e.g. Gold", key="hmo_plan")
+        balance = st.text_input(
+            "Remaining benefit, if you know it",
+            placeholder="e.g. 40000",
+            help="This is never on your card or certificate -- check your member portal.",
+            key="hmo_balance",
+        )
+        if st.button("Apply HMO", use_container_width=True):
+            _refine({"hmo_provider": provider or None, "hmo_plan": plan or None,
+                     "hmo_remaining_balance": balance or None})
+
+    col1, col2 = st.columns(2)
+    if col1.button("I'm a senior citizen / PWD", use_container_width=True):
+        _refine({"senior_or_pwd": True})
+    if col2.button("No operation planned", use_container_width=True,
+                   help="Routine or precautionary work-up."):
+        _refine({"no_procedure_planned": True})
+
+    proc = st.text_input("This work-up is for a planned operation:",
+                         placeholder="e.g. cholecystectomy", key="planned_proc")
+    if proc and st.button("Add the operation", use_container_width=True):
+        _refine({"planned_procedure": proc})
+
+
+def _process_slip(uploaded) -> None:
+    """Upload a slip and render Pass 1. Asks nothing."""
+    st.session_state.messages.append(
+        {"role": "user", "text": f"📄 Uploaded **{uploaded.name}**", "meta": None})
+    with st.chat_message("user"):
+        st.markdown(f"📄 Uploaded **{uploaded.name}**")
+
+    with st.chat_message("assistant"):
+        try:
+            with st.spinner("Reading your request slip…"):
+                resp = requests.post(
+                    f"{API_URL}/ask-slip",
+                    files={"file": (uploaded.name, uploaded.getvalue(),
+                                    uploaded.type or "image/png")},
+                    data={"session_id": st.session_state.session_id},
+                    timeout=REQUEST_TIMEOUT,
+                )
+        except requests.RequestException as exc:
+            st.error(f"⚠️ Couldn't reach the API at `{API_URL}`. _{exc}_")
+            return
+
+        if resp.status_code != 200:
+            detail = ""
+            try:
+                detail = resp.json().get("detail", "")
+            except ValueError:
+                detail = resp.text[:200]
+            st.error(f"⚠️ {detail or f'Upload failed (HTTP {resp.status_code}).'}")
+            return
+
+        data = resp.json()
+        answer = data.get("answer") or {}
+        st.markdown(answer.get("answer_text", ""))
+        _render_budget(answer)
+        _render_meta(data)
+        st.session_state.has_estimate = bool(answer.get("budget"))
+        st.session_state.messages.append(
+            {"role": "assistant", "text": answer.get("answer_text", ""), "meta": data})
+
+
 def _render_welcome() -> str | None:
     """Hero + tappable sample cards, shown when the chat is empty. Returns a clicked
     question, or None."""
@@ -282,6 +439,7 @@ _init_state()
 # A sample prompt clicked on a previous run (set + rerun) is picked up here so the
 # welcome screen disappears cleanly before the answer renders.
 pending = st.session_state.pop("pending_prompt", None)
+pending_slip = st.session_state.pop("pending_slip", None)
 clicked_q = None
 
 with st.sidebar:
@@ -297,12 +455,22 @@ with st.sidebar:
             st.rerun()
 
     st.divider()
+    st.markdown("**Have a doctor's request?**")
+    slip = st.file_uploader("Upload a photo or scan", type=["png", "jpg", "jpeg", "webp"],
+                            key="slip_upload", label_visibility="collapsed")
+    if slip is not None and st.button("Price this slip", use_container_width=True,
+                                      type="primary"):
+        st.session_state.pending_slip = slip
+
+    _render_refine_controls()
+
+    st.divider()
     st.caption(f"API: `{API_URL}`")
     st.caption(f"Session: `{st.session_state.session_id[:8]}…`")
     st.caption("Estimates only. Not medical advice.")
 
 # Main area: welcome cards when empty, otherwise the conversation.
-if st.session_state.messages or pending:
+if st.session_state.messages or pending or pending_slip:
     st.title("Dr. Mundo")
     st.caption("Ask about the cost of a covered procedure or an outpatient service. English or Taglish.")
     for msg in st.session_state.messages:
@@ -310,7 +478,13 @@ if st.session_state.messages or pending:
             st.markdown(msg["text"])
             if msg["role"] == "assistant" and msg.get("meta"):
                 meta = msg["meta"]
-                _render_breakdown(meta.get("answer") or {})
+                answer = meta.get("answer") or {}
+                # A budget report renders its own buckets; the flat breakdown is for the
+                # v1 single-figure answers and would show nothing useful here.
+                if answer.get("budget"):
+                    _render_budget(answer)
+                else:
+                    _render_breakdown(answer)
                 _render_trace(meta.get("trace") or [])
                 _render_meta(meta)
 else:
@@ -320,6 +494,9 @@ else:
         st.rerun()
 
 prompt = st.chat_input("Magtanong tungkol sa presyo…")
+
+if pending_slip is not None:
+    _process_slip(pending_slip)
 
 user_msg = prompt or pending or clicked_q
 if user_msg:
