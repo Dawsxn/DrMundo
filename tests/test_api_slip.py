@@ -173,3 +173,29 @@ def test_reset_clears_the_slip_too(client):
     client.post("/reset", json={"session_id": "t"})
     r = client.post("/refine", json={"session_id": "t", "senior_or_pwd": True})
     assert "Upload a request slip" in r.json()["answer"]["answer_text"]
+
+
+# ------------------------------------------------------------------ serialisation contract
+@needs_media
+def test_budget_money_fields_serialise_as_strings(client):
+    """Pydantic renders Decimal as a JSON STRING, not a number.
+
+    This is the right choice (a float would lose precision on money) but it means every
+    consumer must coerce before formatting. The Streamlit UI did not, and crashed with
+    "Unknown format code 'f' for object of type 'str'" on the first real upload. The
+    other tests in this file wrap values in float(), which is precisely why they did not
+    catch it, so this one asserts the wire type directly.
+    """
+    name, payload = _slip_bytes()
+    body = client.post("/ask-slip", files={"file": (name, payload, "image/png")},
+                       data={"session_id": "t"}).json()
+    budget = body["answer"]["budget"]
+
+    for field in ("prepare_low", "prepare_high", "gross_low", "gross_high",
+                  "philhealth_low", "hmo_low", "discount_low"):
+        assert isinstance(budget[field], str), f"{field} is {type(budget[field]).__name__}"
+        float(budget[field])          # and it must still parse
+
+    for item in budget["priced"]:
+        assert isinstance(item["price_low"], str)
+        float(item["price_low"])
