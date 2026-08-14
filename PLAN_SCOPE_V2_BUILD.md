@@ -37,7 +37,23 @@ where §2 says so explicitly.
 | Handwriting | **In scope**, printed and handwritten, **metrics reported separately** | Synthetic gives volume, real gives the honest denominator. A blended F1 is indefensible in Q&A |
 | Slip corpus | **Mix of real (redacted) and synthetic** | See the stratification rule in §9 — this is the main threat to metric validity |
 | Procedure on slip | **Mixed** — some slips name it, some are work-up only | The pipeline **must branch**: no procedure ⇒ PhilHealth leg never fires ⇒ report says so explicitly rather than showing ₱0 coverage |
-| OCR runtime | **Local model**, no API vision in the primary path | No per-call cost and **no patient image leaves the box** — pairs with raster redaction into a real privacy story for the deck. Costs image size and CPU latency (§8) |
+| OCR runtime | **Local model**, no API vision in the primary path | Superseded 2026-08-15, see below. Retained for the record |
+
+### 0.2 Decisions locked 2026-08-15, after the gold set arrived
+
+The dataset (260 synthetic PH lab request forms, `labrequests-.../labrequests/`) turned out to be
+built against a different contract than §0.1 assumed. Three rulings follow.
+
+| Decision | Ruling | Consequence |
+|---|---|---|
+| CV approach | **Both, benchmarked against each other.** Vision LLM *and* local OCR over the same 260 images | Supersedes §0.1's local-only ruling. This is the strongest RRL for spec #14: accuracy per media class, with `photocopy_gen3` and `fax` as the arms that separate them. Roughly double the integration work, and it is the deliverable that answers "when to use one over another" |
+| Cancelled rows | **Visible line, never billed** | A struck-through row means the doctor cancelled that test. 45 rows across 40 forms. Rendering it proves the agent read the strike-through, and lets a patient catch a mis-read — if extraction wrongly cancels a real order, they can see it and say so |
+| Planned procedure | **Tri-state, and "none" is a valid answer** | Take it from the slip when present; ask when unknown; and accept *"no operation planned"* as a terminal answer for routine or precautionary work-up. The agent must not keep asking a patient who is just getting bloodwork |
+
+**On the third:** the current dataset is entirely lab requests, so nothing names a procedure today.
+The pipeline still supports slip-named procedures, because test cases for that are expected later.
+Until then the PhilHealth leg fires from the conversation rather than the image, and the deck must
+say so.
 
 ---
 

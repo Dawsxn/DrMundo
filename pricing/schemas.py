@@ -24,7 +24,7 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field, model_validator
 
-from vision.schemas import ExtractedItem
+from vision.schemas import ExtractedItem, ProcedureSource
 
 # A PhilHealth case rate is all-in for an episode. When it exceeds MMC's ceiling price,
 # MMC cannot be billing the whole episode -- it is a component charge, and reporting
@@ -113,9 +113,17 @@ class BudgetEstimate(BaseModel):
     priced: list[PricedItem] = Field(default_factory=list)
     unpriced: list[ExtractedItem] = Field(default_factory=list)
     needs_confirmation: list[ExtractedItem] = Field(default_factory=list)
+    # Struck-through rows: shown to the patient, never billed. A visible line proves the
+    # reader saw the strike-through, and lets a patient catch a mis-read -- if extraction
+    # wrongly cancels a real order, they can see it and say so (plan §0.2).
+    cancelled: list[ExtractedItem] = Field(default_factory=list)
     extracted_count: int = Field(
         ..., description="len(RequestSlip.items) this estimate was built from."
     )
+    # "none_planned" is a real answer, not a missing one. Routine work-up has no operation
+    # behind it, and PhilHealth simply does not apply.
+    procedure_source: ProcedureSource = "unknown"
+    planned_procedure: str | None = None
 
     # Every leg is a RANGE, not a scalar. A deduction is min(entitlement, what's left to
     # pay), and "what's left" differs between the low and high ends of the price range --
@@ -143,13 +151,14 @@ class BudgetEstimate(BaseModel):
         # A silently dropped item understates someone's bill and is invisible in the
         # output -- exactly the class of error that survives review (handoff §10.5).
         # Hard failure, never a warning.
-        triaged = len(self.priced) + len(self.unpriced) + len(self.needs_confirmation)
+        triaged = (len(self.priced) + len(self.unpriced)
+                   + len(self.needs_confirmation) + len(self.cancelled))
         if triaged != self.extracted_count:
             raise ValueError(
                 f"item accounting broken: {len(self.priced)} priced + {len(self.unpriced)} "
-                f"unpriced + {len(self.needs_confirmation)} needs_confirmation = {triaged}, "
-                f"but {self.extracted_count} were extracted. Every item must land in "
-                f"exactly one bucket."
+                f"unpriced + {len(self.needs_confirmation)} needs_confirmation + "
+                f"{len(self.cancelled)} cancelled = {triaged}, but {self.extracted_count} "
+                f"were extracted. Every item must land in exactly one bucket."
             )
         # A range whose low end exceeds its high end is a arithmetic bug, and it would be
         # rendered to a patient as "prepare P90,000 - P40,000" without this.

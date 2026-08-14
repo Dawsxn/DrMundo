@@ -29,7 +29,7 @@ from pricing.schemas import (
     PricedItem,
     SeparateLine,
 )
-from vision.schemas import ExtractedItem
+from vision.schemas import ExtractedItem, ProcedureSource
 
 # RA 9994: seniors and PWDs get VAT exemption AND 20% off medical services.
 #   1 / 1.12 x 0.80 = 0.714285714...  -> a ~28.6% reduction.
@@ -76,18 +76,33 @@ def compute_budget(
     priced: Iterable[PricedItem] = (),
     unpriced: Iterable[ExtractedItem] = (),
     needs_confirmation: Iterable[ExtractedItem] = (),
+    cancelled: Iterable[ExtractedItem] = (),
     extracted_count: Optional[int] = None,
     hmo: Optional[HMOPlan] = None,
     senior_or_pwd: bool = False,
     separate_lines: Iterable[SeparateLine] = (),
+    procedure_source: ProcedureSource = "unknown",
+    planned_procedure: Optional[str] = None,
 ) -> BudgetEstimate:
     """Run the whole waterfall and return the structured estimate."""
     priced = list(priced)
     unpriced = list(unpriced)
     needs_confirmation = list(needs_confirmation)
+    cancelled = list(cancelled)
     separate_lines = list(separate_lines)
     if extracted_count is None:
-        extracted_count = len(priced) + len(unpriced) + len(needs_confirmation)
+        extracted_count = (len(priced) + len(unpriced)
+                           + len(needs_confirmation) + len(cancelled))
+
+    # Cancelled rows must never have been priced in the first place. If one reached here
+    # as a PricedItem the caller has a bug, and the patient would be billed for a test
+    # their doctor crossed out -- fail loudly rather than quietly charge them.
+    billed_cancelled = [p.catalog_name for p in priced if p.item.is_cancelled]
+    if billed_cancelled:
+        raise ValueError(
+            f"cancelled items reached pricing: {', '.join(billed_cancelled)}. A "
+            f"struck-through row is a test the doctor crossed out and must never be billed."
+        )
 
     # -------------------------------------------------------------- W0  gross
     gross_low = sum((p.price_low for p in priced), ZERO)
@@ -136,7 +151,10 @@ def compute_budget(
         priced=priced,
         unpriced=unpriced,
         needs_confirmation=needs_confirmation,
+        cancelled=cancelled,
         extracted_count=extracted_count,
+        procedure_source=procedure_source,
+        planned_procedure=planned_procedure,
         gross_low=gross_low,
         gross_high=gross_high,
         discount_low=discount_low,
@@ -148,7 +166,8 @@ def compute_budget(
         prepare_low=prepare_low,
         prepare_high=prepare_high,
         separate_lines=separate_lines,
-        caveats=_build_caveats(priced, unpriced, needs_confirmation, hmo, senior_or_pwd),
+        caveats=_build_caveats(priced, unpriced, needs_confirmation, cancelled,
+                               hmo, senior_or_pwd, procedure_source),
         hmo=hmo,
         senior_or_pwd=senior_or_pwd,
     )
@@ -158,8 +177,10 @@ def _build_caveats(
     priced: list[PricedItem],
     unpriced: list[ExtractedItem],
     needs_confirmation: list[ExtractedItem],
+    cancelled: list[ExtractedItem],
     hmo: Optional[HMOPlan],
     senior_or_pwd: bool,
+    procedure_source: ProcedureSource = "unknown",
 ) -> list[str]:
     """Everything the patient must be told for the number above to be honest.
 
@@ -196,6 +217,31 @@ def _build_caveats(
     if needs_confirmation:
         out.append(
             f"{len(needs_confirmation)} item(s) need confirmation before they can be priced."
+        )
+
+    if cancelled:
+        names = ", ".join(i.normalized or i.raw_text for i in cancelled)
+        subject = "these" if len(cancelled) > 1 else "it"
+        out.append(
+            f"Your doctor crossed out {names}, so {subject} are not included. If that "
+            f"looks wrong, tell me and I will price them."
+            if len(cancelled) > 1 else
+            f"Your doctor crossed out {names}, so it is not included. If that looks "
+            f"wrong, tell me and I will price it."
+        )
+
+    # The PhilHealth prompt is stateful on purpose. "unknown" invites the question once;
+    # "none_planned" closes it, because routine work-up genuinely has no operation behind
+    # it and a patient getting bloodwork should not be asked twice.
+    if procedure_source == "unknown":
+        out.append(
+            "If this work-up is for a planned operation, tell me which one and I can add "
+            "PhilHealth coverage to the estimate."
+        )
+    elif procedure_source == "none_planned":
+        out.append(
+            "No operation is planned, so PhilHealth case rates do not apply to these "
+            "outpatient tests."
         )
 
     if hmo is None or _hmo_cap(hmo) is None:

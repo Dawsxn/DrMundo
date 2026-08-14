@@ -34,6 +34,8 @@
   .drm .bucket { margin-top: 1.3rem; }
   .drm .bucket.unpriced { border-left: 4px solid #b58900; padding-left: .8rem; }
   .drm .bucket.confirm { border-left: 4px solid #268bd2; padding-left: .8rem; }
+  .drm .bucket.cancelled { border-left: 4px solid #999; padding-left: .8rem; }
+  .drm .bucket.cancelled li { text-decoration: line-through; color: #666; }
   .drm ul { margin: .3rem 0 0; padding-left: 1.1rem; font-size: .9rem; }
 
   .drm .caveats { margin-top: 1.5rem; font-size: .82rem; color: #444; }
@@ -126,6 +128,19 @@
     <h2>Please confirm ({{ e.needs_confirmation|length }})</h2>
     <ul>
       {% for item in e.needs_confirmation %}<li>{{ item.raw_text }}</li>{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if e.cancelled %}
+  <div class="bucket cancelled">
+    <h2>Crossed out by your doctor ({{ e.cancelled|length }})</h2>
+    <div class="sub">
+      Not ordered, so <strong>not</strong> charged. If any of these should have been
+      included, tell me and I will price it.
+    </div>
+    <ul>
+      {% for item in e.cancelled %}<li>{{ item.normalized or item.raw_text }}</li>{% endfor %}
     </ul>
   </div>
   {% endif %}

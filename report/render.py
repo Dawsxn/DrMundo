@@ -99,7 +99,11 @@ def displayed_pesos(estimate: BudgetEstimate) -> set[int]:
 # BudgetEstimate.caveats -- the guardrail's plain-text fallback has no buckets and needs
 # them -- but repeating them under a "Not priced (2)" heading that says the same thing
 # reads as padding and buries the caveats that carry real information.
-_BUCKET_ECHO_PREFIXES = ("no published MMC price", "need confirmation")
+_BUCKET_ECHO_PREFIXES = (
+    "no published MMC price",
+    "need confirmation",
+    "Your doctor crossed out",
+)
 
 
 def visible_caveats(estimate: BudgetEstimate) -> list[str]:
