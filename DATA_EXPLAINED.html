@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dr. Mundo — The Data</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 14mm 15mm; }
+  :root{
+    --ink:#0E3A42; --teal:#028090; --deep:#075E68; --muted:#5A7A80;
+    --line:#CDE7EA; --card:#F4FBFC; --chip:#EAF7F8; --green:#00A896;
+    --code-bg:#07333A; --code-txt:#E6F7F8; --amber:#B4661E;
+  }
+  *{ box-sizing:border-box; }
+  body{ font-family:Calibri,"Segoe UI",Arial,sans-serif; color:var(--ink);
+        font-size:10.2pt; line-height:1.5; margin:0; }
+  h1{ font-size:24pt; margin:0 0 2mm; letter-spacing:-0.02em; }
+  h2{ font-size:14pt; color:var(--teal); margin:0 0 3mm;
+      padding-bottom:1.5mm; border-bottom:1.5px solid var(--line); }
+  h3{ font-size:11.2pt; color:var(--deep); margin:5mm 0 1.5mm; }
+  p{ margin:0 0 2.5mm; }
+  .sub{ color:var(--muted); font-size:10.5pt; }
+  .small{ font-size:9pt; color:var(--muted); }
+  section{ page-break-before:always; padding-top:1mm; }
+  section.first{ page-break-before:avoid; }
+  .lead{ font-size:11pt; color:var(--deep); }
+  table{ border-collapse:collapse; width:100%; margin:2.5mm 0 3mm; font-size:9.3pt; }
+  th{ background:var(--chip); color:var(--deep); text-align:left; font-weight:700;
+      padding:1.6mm 2.2mm; border:1px solid var(--line); }
+  td{ padding:1.5mm 2.2mm; border:1px solid var(--line); vertical-align:top; }
+  td.num,th.num{ text-align:right; font-variant-numeric:tabular-nums; }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:2.5mm;
+         padding:3mm 3.5mm; margin:0 0 3mm; }
+  .card h3{ margin-top:0; }
+  .flag{ background:#FFF7EC; border:1px solid #F0D3AE; border-radius:2.5mm;
+         padding:3mm 3.5mm; margin:0 0 3mm; }
+  .flag b{ color:var(--amber); }
+  .good{ background:#EEFBF6; border:1px solid #B9E8D6; border-radius:2.5mm;
+         padding:3mm 3.5mm; margin:0 0 3mm; }
+  .good b{ color:#0B7A5A; }
+  code{ font-family:Consolas,monospace; font-size:8.8pt; background:var(--chip);
+        padding:0.3mm 1mm; border-radius:1mm; }
+  pre{ background:var(--code-bg); color:var(--code-txt); border-radius:2.5mm;
+       padding:3mm 3.5mm; font-family:Consolas,monospace; font-size:8.4pt;
+       line-height:1.45; margin:0 0 3mm; overflow:visible; white-space:pre-wrap; }
+  pre .c{ color:#6FD0C6; } pre .s{ color:#FFD27D; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:3mm; }
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:3mm; }
+  .stat{ background:var(--chip); border:1px solid var(--line); border-radius:2.5mm;
+         padding:2.5mm; text-align:center; }
+  .stat .n{ font-size:17pt; font-weight:700; color:var(--teal); line-height:1.1; }
+  .stat .l{ font-size:8.2pt; color:var(--muted); }
+  ul{ margin:0 0 2.5mm; padding-left:5mm; } li{ margin-bottom:1.2mm; }
+  .cap{ font-size:8.6pt; color:var(--muted); font-style:italic; margin:1mm 0 4mm; }
+  .cap b{ color:var(--teal); font-style:normal; }
+  .toc td{ border:none; padding:1.1mm 0; }
+  .toc .n{ color:var(--teal); font-weight:700; width:9mm; }
+  .hero{ background:linear-gradient(135deg,#EAF7F8,#F4FBFC);
+         border:1px solid var(--line); border-radius:3mm; padding:6mm; margin-bottom:5mm; }
+  .badge{ display:inline-block; font-size:8pt; letter-spacing:.12em; text-transform:uppercase;
+          color:var(--teal); background:rgba(2,128,144,.10); border:1px solid rgba(2,128,144,.28);
+          padding:1mm 3mm; border-radius:10mm; margin-bottom:2.5mm; }
+  .kv{ font-size:9.2pt; }
+  .kv td:first-child{ color:var(--muted); width:34%; }
+  .nowrap{ white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<!-- ============================ COVER / OVERVIEW ============================ -->
+<section class="first">
+  <div class="hero">
+    <div class="badge">Dr. Mundo &middot; Scope v2</div>
+    <h1>The Data</h1>
+    <p class="sub">Where every number comes from, how the tables fit together,<br>
+       and the reasoning behind each decision.</p>
+    <p class="small" style="margin-top:4mm">Makati Medical Center &middot; PhilHealth Annex B &middot; built and verified August 2026</p>
+  </div>
+
+  <h2>The one rule</h2>
+  <div class="good">
+    <b>No number exists unless it was published.</b> If a price isn't in an official source, there is
+    no row for it &mdash; and the app says so rather than estimating. Every figure in the database
+    traces to either a Makati Medical Center catalogue item code or a PhilHealth Annex B case rate.
+    <b>Nothing is synthetic.</b>
+  </div>
+  <p>This is the claim worth defending in the presentation. It is also why several things are
+     deliberately <i>missing</i> from the dataset &mdash; each gap is a choice to be honest rather than
+     to fill space with a plausible-looking figure.</p>
+
+  <h2>The dataset at a glance</h2>
+  <div class="grid3">
+    <div class="stat"><div class="n">6,167</div><div class="l">items extracted from MMC</div></div>
+    <div class="stat"><div class="n">2,446</div><div class="l">priced rows kept</div></div>
+    <div class="stat"><div class="n">4,312</div><div class="l">PhilHealth case rates</div></div>
+  </div>
+  <div class="grid3" style="margin-top:3mm">
+    <div class="stat"><div class="n">7</div><div class="l">database tables</div></div>
+    <div class="stat"><div class="n">51</div><div class="l">procedures mapped to PhilHealth</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">invented numbers</div></div>
+  </div>
+
+  <h2>What this document covers</h2>
+  <table class="toc">
+    <tr><td class="n">1</td><td><b>Where the data came from</b> &mdash; the two sources, and the trap that nearly cost us the whole dataset</td></tr>
+    <tr><td class="n">2</td><td><b>How it was extracted</b> &mdash; and two bugs that would have shipped silently</td></tr>
+    <tr><td class="n">3</td><td><b>The ERD</b> &mdash; seven tables and why each one is separate</td></tr>
+    <tr><td class="n">4</td><td><b>Where the data sits in the flow</b> &mdash; from question to answer</td></tr>
+    <tr><td class="n">5</td><td><b>The crosswalk</b> &mdash; the hardest part, done by hand, and why</td></tr>
+    <tr><td class="n">6</td><td><b>Two safeguards</b> &mdash; the flags that stop the app lying politely</td></tr>
+    <tr><td class="n">7</td><td><b>Known gaps</b> &mdash; stated plainly, because they are the point</td></tr>
+  </table>
+</section>
+
+<!-- ============================ 1. SOURCES ============================ -->
+<section>
+  <h2>1 &nbsp;Where the data came from</h2>
+  <p class="lead">Two sources. One national and public, one hospital-specific and easy to miss.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>PhilHealth Annex B</h3>
+      <p><b>4,312 procedure case rates.</b> The national list of what PhilHealth pays per procedure,
+         keyed by RVS code. Published as a PDF; scraped once into CSV.</p>
+      <p class="small">Verified current: PhilHealth Circular 2024-0037 applied a 50% uplift to select
+         case rates. We checked &mdash; <b>98.4%</b> of the 4,312 rates divide cleanly by 1.5 into
+         whole pesos (appendectomy = &#8369;31,200 &times; 1.5 = &#8369;46,800). The data already
+         includes the adjustment.</p>
+    </div>
+    <div class="card">
+      <h3>MakatiMed price list</h3>
+      <p><b>6,167 catalogue items.</b> The hospital's own published prices &mdash; every item with a
+         low price, a high price, a department, an official item code, and an "as of" date.</p>
+      <p class="small">This is what makes the project defensible: these are not estimates or
+         market averages. They are the hospital's own published figures, and anyone can look up any
+         item code and check.</p>
+    </div>
+  </div>
+
+  <div class="flag">
+    <b>The trap.</b> Fetching <code>makatimed.net.ph/price-list</code> returns a blank page, and it is
+    easy to conclude the hospital publishes nothing &mdash; which is what most large Philippine private
+    hospitals actually do. St. Luke's and Asian Hospital genuinely publish no itemised prices.
+    But MakatiMed's page is a <b>searchable database that renders empty until you search.</b>
+    We nearly abandoned Makati Med and switched hospitals over this.
+  </div>
+
+  <h3>Why this matters for the business case</h3>
+  <p>The project's premise is that hospital prices are opaque. Confirming by direct search that the
+     country's major private hospitals publish nothing itemised &mdash; and that the one exception hides
+     its data behind a search box &mdash; is <b>evidence for the thesis</b>, not just a research
+     inconvenience. It is worth saying out loud in the presentation.</p>
+
+  <h3>What a raw extracted row looks like</h3>
+<pre><span class="c"># one item, exactly as published by Makati Medical Center</span>
+mmc_code   : 04360316
+name       : LIPID PROFILE (HDL LDL CHOL TRIG) SERUM
+mmc_type   : LAB-CHEMISTRY          <span class="c">← department, not a category</span>
+price_low  : <span class="s">4,450</span>
+price_high : <span class="s">8,700</span>
+as_of      : March 10, 2026         <span class="c">← varies per item</span></pre>
+  <p class="cap"><b>Note:</b> <code>mmc_type</code> is the hospital's internal department, not a
+     clinical category. "DELIVERY SURGERY" contains real operations, a blood test, and four
+     room-rental charges. Classification therefore had to be done per item, not per department.</p>
+</section>
+
+<!-- ============================ 2. EXTRACTION ============================ -->
+<section>
+  <h2>2 &nbsp;How it was extracted</h2>
+
+  <svg viewBox="0 0 700 96" width="100%" height="96" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L7,3 z" fill="#028090"/></marker></defs>
+    <g font-family="Calibri,Arial" font-size="11" text-anchor="middle">
+      <rect x="2" y="24" width="126" height="46" rx="7" fill="#EAF7F8" stroke="#CDE7EA"/>
+      <text x="65" y="43" fill="#0E3A42" font-weight="bold">POST search=A…Z</text>
+      <text x="65" y="58" fill="#5A7A80" font-size="9">36 requests</text>
+      <line x1="132" y1="47" x2="164" y2="47" stroke="#028090" stroke-width="1.6" marker-end="url(#ar)"/>
+      <rect x="168" y="24" width="126" height="46" rx="7" fill="#EAF7F8" stroke="#CDE7EA"/>
+      <text x="231" y="43" fill="#0E3A42" font-weight="bold">Parse HTML</text>
+      <text x="231" y="58" fill="#5A7A80" font-size="9">prices already inside</text>
+      <line x1="298" y1="47" x2="330" y2="47" stroke="#028090" stroke-width="1.6" marker-end="url(#ar)"/>
+      <rect x="334" y="24" width="126" height="46" rx="7" fill="#EAF7F8" stroke="#CDE7EA"/>
+      <text x="397" y="43" fill="#0E3A42" font-weight="bold">Dedupe by code</text>
+      <text x="397" y="58" fill="#5A7A80" font-size="9">6,167 unique</text>
+      <line x1="464" y1="47" x2="496" y2="47" stroke="#028090" stroke-width="1.6" marker-end="url(#ar)"/>
+      <rect x="500" y="24" width="198" height="46" rx="7" fill="#00A896" stroke="#CDE7EA"/>
+      <text x="599" y="43" fill="#FFFFFF" font-weight="bold">Classify &amp; write CSVs</text>
+      <text x="599" y="58" fill="#EAF7F8" font-size="9">2,446 priced rows</text>
+    </g>
+  </svg>
+  <p class="cap"><b>Figure 1:</b> The extraction pipeline. A one-time offline build step &mdash; the app
+     itself never contacts the internet when answering a question.</p>
+
+  <p>The search is a plain form POST, and crucially the <b>prices are already inside the returned
+     HTML</b>, embedded in a per-row script that builds the "See Price" pop-up. So one request returns
+     fully-priced rows; no clicking through 6,167 modals.</p>
+
+  <h3>Two bugs that would have shipped silently</h3>
+
+  <div class="flag">
+    <b>Bug 1 &mdash; the wrong vocabulary.</b> The first sweep searched by modality: "X-RAY",
+    "ULTRASOUND", "CT SCAN". But MakatiMed names imaging by <i>body part</i> &mdash;
+    <code>CHEST PA</code>, <code>WHOLE ABDOMEN</code>, <code>KIDNEYS COLOR DOPPLER</code>. The result
+    looked impressive (1,204 items) and was missing chest X-ray, ECG, abdominal ultrasound and HbA1c
+    &mdash; <b>the most common items on a real doctor's request.</b>
+    <br><br>
+    <b>Fix:</b> stop guessing their vocabulary. The search is unbounded &mdash; a single letter "A"
+    returns 5,195 rows &mdash; so the catalogue can be enumerated exhaustively instead.
+  </div>
+
+  <div class="flag">
+    <b>Bug 2 &mdash; vowels.</b> The enumeration first swept vowels only (A, E, I, O, U). But
+    <code>HDL</code> and <code>LDL</code> <b>contain no vowels</b>, so the method structurally could
+    not see them. Those two tests are members of the lipid panel &mdash; the centrepiece of the
+    panel-vs-individual feature.
+    <br><br>
+    <b>Fix:</b> sweep the full alphabet. Every catalogue name contains at least one letter, so
+    coverage is now provably complete.
+  </div>
+
+  <div class="good">
+    <b>How Bug 2 was caught.</b> Not by review &mdash; by a guard written into the build. The panel
+    table refuses to emit a panel unless <i>every</i> member test is priced. Rather than silently
+    publishing a half-grounded comparison, it produced zero rows and named the missing members.
+    <b>The dataset told us it was wrong.</b> This is worth mentioning if anyone asks how you know
+    the data is trustworthy.
+  </div>
+</section>
+
+<!-- ============================ 3. ERD ============================ -->
+<section>
+  <h2>3 &nbsp;The database &mdash; entity relationship diagram</h2>
+
+  <svg viewBox="0 0 700 430" width="100%" height="430" xmlns="http://www.w3.org/2000/svg"
+       font-family="Calibri,Arial">
+    <defs>
+      <marker id="one" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#075E68"/></marker>
+    </defs>
+
+    <!-- philhealth_procedure_rates -->
+    <rect x="6" y="8" width="212" height="84" rx="6" fill="#F4FBFC" stroke="#028090" stroke-width="1.6"/>
+    <rect x="6" y="8" width="212" height="20" rx="6" fill="#028090"/>
+    <text x="14" y="22" fill="#fff" font-size="10.5" font-weight="bold">philhealth_procedure_rates</text>
+    <text x="14" y="41" font-size="9" fill="#075E68" font-weight="bold">rvs_code</text>
+    <text x="72" y="41" font-size="8.4" fill="#5A7A80">PK · TEXT</text>
+    <text x="14" y="55" font-size="9" fill="#0E3A42">procedure</text>
+    <text x="14" y="69" font-size="9" fill="#0E3A42">case_rate</text>
+    <text x="14" y="84" font-size="8.4" fill="#5A7A80" font-style="italic">4,312 rows · PhilHealth Annex B</text>
+
+    <!-- hospitals -->
+    <rect x="482" y="8" width="212" height="84" rx="6" fill="#F4FBFC" stroke="#028090" stroke-width="1.6"/>
+    <rect x="482" y="8" width="212" height="20" rx="6" fill="#028090"/>
+    <text x="490" y="22" fill="#fff" font-size="10.5" font-weight="bold">hospitals</text>
+    <text x="490" y="41" font-size="9" fill="#075E68" font-weight="bold">id</text>
+    <text x="530" y="41" font-size="8.4" fill="#5A7A80">PK · INTEGER</text>
+    <text x="490" y="55" font-size="9" fill="#0E3A42">hospital</text>
+    <text x="490" y="69" font-size="9" fill="#0E3A42">city</text>
+    <text x="490" y="84" font-size="8.4" fill="#5A7A80" font-style="italic">1 row · Makati Medical Center</text>
+
+    <!-- hospital_procedure_prices -->
+    <rect x="6" y="140" width="240" height="126" rx="6" fill="#F4FBFC" stroke="#075E68" stroke-width="1.6"/>
+    <rect x="6" y="140" width="240" height="20" rx="6" fill="#075E68"/>
+    <text x="14" y="154" fill="#fff" font-size="10.5" font-weight="bold">hospital_procedure_prices</text>
+    <text x="14" y="173" font-size="9" fill="#075E68" font-weight="bold">rvs_code</text>
+    <text x="72" y="173" font-size="8.4" fill="#5A7A80">FK → rates</text>
+    <text x="14" y="187" font-size="9" fill="#075E68" font-weight="bold">hospital_id</text>
+    <text x="84" y="187" font-size="8.4" fill="#5A7A80">FK → hospitals</text>
+    <text x="14" y="201" font-size="9" fill="#0E3A42">price_low / price_high</text>
+    <text x="14" y="215" font-size="9" fill="#0E3A42">mmc_code</text>
+    <text x="88" y="215" font-size="8.4" fill="#5A7A80">provenance</text>
+    <text x="14" y="229" font-size="9" fill="#B4661E">confidence</text>
+    <text x="14" y="243" font-size="9" fill="#B4661E">price_basis</text>
+    <text x="14" y="258" font-size="8.4" fill="#5A7A80" font-style="italic">51 rows · has a case rate</text>
+
+    <!-- hospital_prices -->
+    <rect x="290" y="140" width="240" height="126" rx="6" fill="#F4FBFC" stroke="#075E68" stroke-width="1.6"/>
+    <rect x="290" y="140" width="240" height="20" rx="6" fill="#075E68"/>
+    <text x="298" y="154" fill="#fff" font-size="10.5" font-weight="bold">hospital_prices</text>
+    <text x="298" y="173" font-size="9" fill="#075E68" font-weight="bold">id</text>
+    <text x="330" y="173" font-size="8.4" fill="#5A7A80">PK</text>
+    <text x="298" y="187" font-size="9" fill="#075E68" font-weight="bold">hospital_id</text>
+    <text x="368" y="187" font-size="8.4" fill="#5A7A80">FK → hospitals</text>
+    <text x="298" y="201" font-size="9" fill="#0E3A42">category</text>
+    <text x="298" y="215" font-size="9" fill="#0E3A42">service</text>
+    <text x="298" y="229" font-size="9" fill="#0E3A42">price_low / price_high</text>
+    <text x="298" y="243" font-size="9" fill="#0E3A42">mmc_code</text>
+    <text x="298" y="258" font-size="8.4" fill="#5A7A80" font-style="italic">1,605 rows · NO case rate</text>
+
+    <!-- lab_panels -->
+    <rect x="290" y="298" width="240" height="76" rx="6" fill="#F4FBFC" stroke="#00A896" stroke-width="1.6"/>
+    <rect x="290" y="298" width="240" height="20" rx="6" fill="#00A896"/>
+    <text x="298" y="312" fill="#fff" font-size="10.5" font-weight="bold">lab_panels</text>
+    <text x="298" y="331" font-size="9" fill="#0E3A42">panel_service</text>
+    <text x="298" y="345" font-size="9" fill="#0E3A42">member_service</text>
+    <text x="298" y="366" font-size="8.4" fill="#5A7A80" font-style="italic">9 rows · matched by name, not FK</text>
+
+    <!-- professional_fees -->
+    <rect x="574" y="140" width="120" height="126" rx="6" fill="#F4FBFC" stroke="#075E68" stroke-width="1.6"/>
+    <rect x="574" y="140" width="120" height="20" rx="6" fill="#075E68"/>
+    <text x="582" y="154" fill="#fff" font-size="10" font-weight="bold">professional_fees</text>
+    <text x="582" y="174" font-size="9" fill="#075E68" font-weight="bold">hospital_id</text>
+    <text x="582" y="188" font-size="8.6" fill="#5A7A80">FK</text>
+    <text x="582" y="204" font-size="9" fill="#0E3A42">service</text>
+    <text x="582" y="218" font-size="9" fill="#0E3A42">price_low</text>
+    <text x="582" y="232" font-size="9" fill="#0E3A42">price_high</text>
+    <text x="582" y="256" font-size="8.4" fill="#5A7A80" font-style="italic">756 rows</text>
+
+    <!-- facility_rates -->
+    <rect x="574" y="298" width="120" height="76" rx="6" fill="#FFF7EC" stroke="#B4661E" stroke-width="1.6"/>
+    <rect x="574" y="298" width="120" height="20" rx="6" fill="#B4661E"/>
+    <text x="582" y="312" fill="#fff" font-size="10" font-weight="bold">facility_rates</text>
+    <text x="582" y="331" font-size="9" fill="#0E3A42">room_type</text>
+    <text x="582" y="345" font-size="9" fill="#0E3A42">rate_low / high</text>
+    <text x="582" y="359" font-size="8.6" fill="#B4661E" font-weight="bold">unit = PER DAY</text>
+
+    <!-- relationships -->
+    <path d="M112,140 L112,92" stroke="#075E68" stroke-width="1.5" fill="none" marker-end="url(#one)"/>
+    <text x="118" y="118" font-size="8.4" fill="#5A7A80" font-style="italic">rvs_code</text>
+    <path d="M246,175 L588,175 L588,92" stroke="#075E68" stroke-width="1.5" fill="none" marker-end="url(#one)"/>
+    <path d="M410,140 L410,116 L588,116 L588,92" stroke="#075E68" stroke-width="1.5" fill="none" marker-end="url(#one)"/>
+    <text x="430" y="112" font-size="8.4" fill="#5A7A80" font-style="italic">hospital_id</text>
+    <path d="M410,298 L410,266" stroke="#00A896" stroke-width="1.5" stroke-dasharray="3,2" fill="none"/>
+    <text x="416" y="286" font-size="8.4" fill="#5A7A80" font-style="italic">service name</text>
+    <path d="M634,298 L634,266" stroke="#075E68" stroke-width="1.5" fill="none"/>
+    <text x="386" y="410" font-size="8.6" fill="#B4661E" font-style="italic">facility_rates has NO link into the priced tables — that separation is deliberate (§6)</text>
+  </svg>
+  <p class="cap"><b>Figure 2:</b> Seven tables. Arrows point from the many side to the one side.
+     Solid = enforced foreign key. Dashed = matched by service name, because a service name is not
+     unique.</p>
+
+  <h3>Why the split between the two price tables</h3>
+  <p>This is the design decision most worth understanding. <code>hospital_procedure_prices</code>
+     holds only procedures we could tie to a PhilHealth RVS code &mdash; so a case rate can be
+     subtracted. <code>hospital_prices</code> holds everything else: lab tests, imaging, and the 19
+     procedures whose RVS code could not be honestly determined.
+     <b>The table an item lands in decides whether coverage math is even possible.</b></p>
+
+  <table>
+    <tr><th>Table</th><th class="num">Rows</th><th>Contents</th></tr>
+    <tr><td>hospital_prices</td><td class="num">1,605</td><td>842 laboratory · 566 imaging · 178 diagnostic · 19 procedures without a case rate</td></tr>
+    <tr><td>professional_fees</td><td class="num">756</td><td>Surgeon and anaesthesiologist, itemised by specialty</td></tr>
+    <tr><td>hospital_procedure_prices</td><td class="num">51</td><td>Procedures with a verified RVS code</td></tr>
+    <tr><td>facility_rates</td><td class="num">34</td><td>Room &amp; board, per day</td></tr>
+    <tr><td>lab_panels</td><td class="num">9</td><td>Panel → member test mappings</td></tr>
+  </table>
+</section>
+
+<!-- ============================ 4. FLOW ============================ -->
+<section>
+  <h2>4 &nbsp;Where the data sits in the flow</h2>
+
+  <svg viewBox="0 0 700 300" width="100%" height="300" xmlns="http://www.w3.org/2000/svg"
+       font-family="Calibri,Arial">
+    <defs><marker id="a2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L7,3 z" fill="#028090"/></marker></defs>
+
+    <rect x="4" y="10" width="150" height="40" rx="6" fill="#EAF7F8" stroke="#CDE7EA"/>
+    <text x="79" y="28" text-anchor="middle" font-size="10" font-weight="bold" fill="#0E3A42">Question or</text>
+    <text x="79" y="41" text-anchor="middle" font-size="10" font-weight="bold" fill="#0E3A42">doctor's request</text>
+
+    <line x1="158" y1="30" x2="192" y2="30" stroke="#028090" stroke-width="1.6" marker-end="url(#a2)"/>
+    <rect x="196" y="10" width="150" height="40" rx="6" fill="#EAF7F8" stroke="#CDE7EA"/>
+    <text x="271" y="34" text-anchor="middle" font-size="10" font-weight="bold" fill="#0E3A42">Match to catalogue</text>
+
+    <line x1="350" y1="30" x2="384" y2="30" stroke="#028090" stroke-width="1.6" marker-end="url(#a2)"/>
+    <rect x="388" y="10" width="150" height="40" rx="6" fill="#EAF7F8" stroke="#CDE7EA"/>
+    <text x="463" y="28" text-anchor="middle" font-size="10" font-weight="bold" fill="#0E3A42">Which table?</text>
+    <text x="463" y="41" text-anchor="middle" font-size="8.6" fill="#5A7A80">decides the math</text>
+
+    <!-- three branches -->
+    <path d="M430,54 L430,74 L150,74 L150,92" stroke="#028090" stroke-width="1.4" fill="none" marker-end="url(#a2)"/>
+    <path d="M463,54 L463,92" stroke="#028090" stroke-width="1.4" fill="none" marker-end="url(#a2)"/>
+    <path d="M500,54 L500,74 L640,74 L640,92" stroke="#B4661E" stroke-width="1.4" fill="none" marker-end="url(#a2)"/>
+
+    <rect x="40" y="96" width="220" height="52" rx="6" fill="#F4FBFC" stroke="#075E68"/>
+    <text x="150" y="114" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#075E68">hospital_procedure_prices</text>
+    <text x="150" y="128" text-anchor="middle" font-size="8.8" fill="#0E3A42">gross − PhilHealth case rate</text>
+    <text x="150" y="141" text-anchor="middle" font-size="8.8" fill="#0E3A42">= out-of-pocket</text>
+
+    <rect x="356" y="96" width="214" height="52" rx="6" fill="#F4FBFC" stroke="#075E68"/>
+    <text x="463" y="114" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#075E68">hospital_prices</text>
+    <text x="463" y="128" text-anchor="middle" font-size="8.8" fill="#0E3A42">price range only</text>
+    <text x="463" y="141" text-anchor="middle" font-size="8.8" fill="#0E3A42">not PhilHealth-covered</text>
+
+    <rect x="588" y="96" width="108" height="52" rx="6" fill="#FFF7EC" stroke="#B4661E"/>
+    <text x="642" y="114" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#B4661E">unpriced[]</text>
+    <text x="642" y="128" text-anchor="middle" font-size="8.6" fill="#0E3A42">reported,</text>
+    <text x="642" y="141" text-anchor="middle" font-size="8.6" fill="#0E3A42">never guessed</text>
+
+    <!-- converge -->
+    <path d="M150,152 L150,170 L340,170 L340,188" stroke="#028090" stroke-width="1.4" fill="none"/>
+    <path d="M463,152 L463,170 L340,170" stroke="#028090" stroke-width="1.4" fill="none"/>
+    <rect x="196" y="192" width="290" height="34" rx="6" fill="#EAF7F8" stroke="#CDE7EA"/>
+    <text x="341" y="213" text-anchor="middle" font-size="10" font-weight="bold" fill="#0E3A42">HMO benefit — only if the patient uploads a plan</text>
+
+    <path d="M341,230 L341,246" stroke="#028090" stroke-width="1.6" fill="none" marker-end="url(#a2)"/>
+    <rect x="120" y="250" width="442" height="40" rx="6" fill="#00A896" stroke="#CDE7EA"/>
+    <text x="341" y="266" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#fff">"Prepare ₱X – ₱Y"</text>
+    <text x="341" y="281" text-anchor="middle" font-size="8.8" fill="#EAF7F8">+ separate lines: professional fees · room &amp; board per day</text>
+  </svg>
+  <p class="cap"><b>Figure 3:</b> The data's role in answering. The branch at the top is the whole
+     design: which table an item lives in determines whether PhilHealth math applies at all.</p>
+
+  <div class="good">
+    <b>The conservation rule.</b> Every item read from a request must end up in exactly one bucket:
+    <code>priced + unpriced + needs_confirmation = extracted</code>. Silently dropping an item would
+    understate someone's hospital bill and would be <i>invisible</i> in the output. This is enforced
+    as a hard failure, not a warning.
+  </div>
+
+  <h3>Retrieval — how a Taglish phrase reaches a clinical name</h3>
+  <p>MakatiMed's names are long and clinical. Nobody types
+     <code>LIPID PROFILE (HDL LDL CHOL TRIG) SERUM</code>. Two layers work together: semantic
+     embeddings over all 1,602 service names, plus a curated alias list that boosts common lay and
+     Taglish phrasings. Verified working:</p>
+  <table>
+    <tr><th>What the user types</th><th>What it resolves to</th><th class="num">Score</th></tr>
+    <tr><td>magkano ang cbc</td><td>CBC (COMPLETE BLOOD COUNT)</td><td class="num">1.49</td></tr>
+    <tr><td>chest xray</td><td>CHEST PA</td><td class="num">1.55</td></tr>
+    <tr><td>ultrasound ng tiyan</td><td>WHOLE ABDOMEN</td><td class="num">1.23</td></tr>
+    <tr><td>tanggal apdo</td><td>LAPAROSCOPY, SURGICAL; CHOLECYSTECTOMY</td><td class="num">1.09</td></tr>
+    <tr><td>magkano ang tuli</td><td>CIRCUMCISION, USING CLAMP OR OTHER DEVICE</td><td class="num">1.07</td></tr>
+  </table>
+</section>
+
+<!-- ============================ 5. CROSSWALK ============================ -->
+<section>
+  <h2>5 &nbsp;The crosswalk — the hardest part</h2>
+  <p class="lead">MakatiMed uses its own item codes. PhilHealth pays by RVS code.
+     <b>Nobody publishes a mapping between them.</b></p>
+
+  <p>Without this link there is no coverage math at all &mdash; you have a hospital price and a
+     national case-rate list with no way to connect them. Building it was the single largest piece of
+     judgement in the dataset.</p>
+
+  <h3>Why it could not be automated</h3>
+  <p>An automatic matcher was built first. It scored candidates on surgical word endings
+     (&ndash;ECTOMY, &ndash;OSTOMY, &ndash;PLASTY). That works for
+     <code>LAPAROSCOPIC CHOLECYSTECTOMY</code> and collapses entirely on acronyms &mdash; CABG,
+     TAHBSO, FESS, ACL, VATS have no such word. With nothing to grip on, it fell back to generic word
+     overlap and produced confident nonsense:</p>
+
+  <table>
+    <tr><th>MakatiMed item</th><th>It proposed</th><th>Which is actually…</th></tr>
+    <tr><td>CESAREAN SECTION MOTHER</td><td>88331</td><td>Pathology consultation with frozen section</td></tr>
+    <tr><td>CABG 3 VESSELS</td><td>11403</td><td>Excision of a benign skin lesion</td></tr>
+    <tr><td>Endoscopic sinus surgery</td><td>11770</td><td>Excision of a pilonidal cyst</td></tr>
+    <tr><td>USE OF WATERPROOF DOPPLER</td><td>93556</td><td>Not a procedure at all &mdash; rated <b>"high confidence"</b></td></tr>
+  </table>
+
+  <div class="flag">
+    <b>Why this is the dangerous kind of error.</b> A wrong code still returns a real number from a
+    real table. The answer looks perfectly reasonable and is tens of thousands of pesos wrong.
+    Cholecystectomy alone has three case rates &mdash; &#8369;60,450 / &#8369;90,675 / &#8369;104,130
+    &mdash; so picking the wrong variant is a &#8369;43,680 error that nothing downstream would catch.
+  </div>
+
+  <h3>How the 51 mappings were actually made</h3>
+  <p>By hand: expand the acronym into the clinical operation, read the candidate RVS descriptions,
+     and confirm the operation, the surgical approach and the extent all agree. PhilHealth codes
+     laparoscopic and open operations separately, so approach must match. A worked example:</p>
+
+  <table>
+    <tr><th>Candidate for "LAPAROSCOPIC CHOLECYSTECTOMY PACKAGE"</th><th class="num">Case rate</th><th>Verdict</th></tr>
+    <tr style="background:#EEFBF6"><td><b>47562</b> — Laparoscopy, surgical; cholecystectomy</td><td class="num"><b>₱60,450</b></td><td><b>Chosen</b></td></tr>
+    <tr><td>47563 — …with cholangiography</td><td class="num">₱60,450</td><td>Bundles work MMC never mentions</td></tr>
+    <tr><td>47564 — …with common-duct exploration</td><td class="num">₱90,675</td><td>₱30k richer — wrong operation</td></tr>
+    <tr><td>47600 — Cholecystectomy</td><td class="num">₱60,450</td><td>The <i>open</i> operation</td></tr>
+  </table>
+
+  <div class="card">
+    <h3>The tie-breaking rule</h3>
+    <p style="margin-bottom:0">Where two codes are both defensible, take the <b>lower</b> case rate.
+    Less assumed PhilHealth help means a <i>higher</i> estimated out-of-pocket, so an uncertain
+    mapping makes the patient over-prepare rather than under-quote.
+    <b>Over-preparing is survivable. Under-quoting a hospital bill is not.</b></p>
+  </div>
+
+  <div class="grid3">
+    <div class="stat"><div class="n">41</div><div class="l">high confidence</div></div>
+    <div class="stat"><div class="n">9</div><div class="l">medium confidence</div></div>
+    <div class="stat"><div class="n">19</div><div class="l">honestly unmapped</div></div>
+  </div>
+  <p class="cap">Every mapping records its reasoning and the alternatives it rejected. The 19 unmapped
+     keep their real price and report PhilHealth coverage as <b>undetermined</b> — not zero.</p>
+</section>
+
+<!-- ============================ 6. SAFEGUARDS ============================ -->
+<section>
+  <h2>6 &nbsp;Two safeguards built into the data</h2>
+  <p class="lead">Both exist to stop the app saying something reasonable-sounding and false.</p>
+
+  <h3>Safeguard 1 &mdash; <code>price_basis</code></h3>
+  <p>A PhilHealth case rate is <b>all-in</b>: it covers the facility fee and the doctor's fee together.
+     So if a case rate is <i>larger</i> than the most MakatiMed charges, MakatiMed cannot be billing
+     the whole episode &mdash; it is billing a component. Four rows behave this way:</p>
+  <table>
+    <tr><th>Item</th><th class="num">MMC charges</th><th class="num">PhilHealth pays</th><th>Flag</th></tr>
+    <tr><td>Colposcopy</td><td class="num">₱4,100</td><td class="num">₱15,639</td><td>component</td></tr>
+    <tr><td>LEEP</td><td class="num">₱4,860</td><td class="num">₱18,915</td><td>component</td></tr>
+    <tr><td>IUD insertion</td><td class="num">₱2,060</td><td class="num">₱3,900</td><td>component</td></tr>
+    <tr><td>Vaginal hysterectomy</td><td class="num">₱40,590</td><td class="num">₱59,085</td><td>component</td></tr>
+  </table>
+  <p>Without this flag the app concludes <b>"fully covered"</b> from a partial price &mdash; and the
+     patient turns up expecting to pay nothing. The flag makes that impossible.</p>
+  <div class="flag">
+    <b>A subtlety worth knowing.</b> The comparison is against the <i>ceiling</i> price, not the floor.
+    A case rate that merely sits <i>inside</i> a wide range is ordinary partial coverage &mdash;
+    lithotripsy is &#8369;22,700–70,900 against a &#8369;35,100 case rate, which is normal. An earlier
+    version compared against the floor and wrongly flagged it. Only a case rate above the ceiling
+    proves a partial price.
+  </div>
+
+  <h3>Safeguard 2 &mdash; facility rates cannot be summed</h3>
+  <p>Room and board is real, published, and <b>charged per day</b>: ward &#8369;1,810, ICU
+     &#8369;9,900, private &#8369;10,900, suite &#8369;21,800 per day. To add it to a bill estimate
+     you would need the length of stay &mdash; which a doctor's request never states.</p>
+  <p>Assuming one would invent the single largest number on the page: a 3-day versus 7-day suite stay
+     is an <b>&#8369;87,000 swing</b>, a fabricated multiplier sitting on top of carefully sourced
+     figures. So facility rates live in <b>their own table</b>, with no link into the priced tables.
+     The separation is structural &mdash; not a convention someone can forget.</p>
+  <div class="good">
+    <b>How it is shown instead:</b> <i>"If admitted, room &amp; board is billed separately:
+    &#8369;1,810/day (ward) to &#8369;21,800/day (suite)."</i> Real numbers, useful for planning,
+    nothing invented.
+  </div>
+
+  <h3>Why the gap is narrower than it looks</h3>
+  <ul>
+    <li>MakatiMed's operating-room prices are <b>all-in packages</b> — theatre time and room use are
+        already inside them.</li>
+    <li>PhilHealth case rates <b>already bundle a facility fee</b>, so adding room charges <i>and</i>
+        subtracting a full case rate would double-count in the patient's favour — the more harmful
+        direction to be wrong in.</li>
+  </ul>
+</section>
+
+<!-- ============================ 7. GAPS ============================ -->
+<section>
+  <h2>7 &nbsp;Known gaps — and why they are the point</h2>
+  <p class="lead">These are the strongest evidence that the "no invented numbers" rule was actually
+     enforced, including where it was inconvenient.</p>
+
+  <div class="flag">
+    <b>Appendectomy has no hospital package price.</b> MakatiMed publishes only professional fees for
+    it &mdash; surgeon &#8369;75,000–105,000 open, &#8369;100,000–140,000 laparoscopic &mdash; and no
+    operating-room package.
+    <br><br>
+    This was the midterm's flagship demo, so <b>the demo needs changing.</b> The app can still answer
+    usefully (case rate &#8369;46,800 plus real surgeon fees) but must state that the hospital portion
+    is missing. It would have been easy to invent a package price here. We didn't.
+  </div>
+
+  <table>
+    <tr><th>Gap</th><th>Why</th></tr>
+    <tr><td>19 procedures with no case rate</td><td>No honest RVS match exists — e.g. "VATS" names the approach, not the operation; 16 candidate codes span ₱23,634–90,675 and nothing selects among them</td></tr>
+    <tr><td>No cataract package mapping</td><td>The PhilHealth catalogue has no primary cataract-extraction-with-lens code</td></tr>
+    <tr><td>No fecalysis</td><td>Not in MakatiMed's catalogue under any name we could find</td></tr>
+    <tr><td>No HMO table</td><td>By design — the patient uploads their own plan, so nothing synthetic is committed</td></tr>
+    <tr><td>Consultations not extracted</td><td>Outside the three agreed scope categories</td></tr>
+  </table>
+
+  <div class="good">
+    <b>Why this section matters most.</b> Each gap above is a place where inventing a plausible
+    number would have been easy and nobody would have noticed. The dataset is trustworthy precisely
+    because these are empty.
+  </div>
+</section>
+
+<!-- ============================ 8. WHAT IT DELIVERS ============================ -->
+<section>
+  <h2>What the data delivers</h2>
+  <p class="lead">All three agreed scope categories, every figure from a published price.</p>
+  <table>
+    <tr><th>Scope category</th><th class="num">Coverage</th><th>Source</th></tr>
+    <tr><td><b>(a)</b> Procedures</td><td class="num">51 + 19</td><td>MMC operating-room and delivery packages; 51 linked to PhilHealth</td></tr>
+    <tr><td><b>(b)</b> Radiologic studies</td><td class="num">566</td><td>X-ray, ultrasound, CT, MRI, nuclear medicine, mammography</td></tr>
+    <tr><td><b>(c)</b> Blood tests &mdash; individual <i>and</i> panels</td><td class="num">842</td><td>Chemistry, haematology, immunology, microbiology, plus panel mappings</td></tr>
+  </table>
+
+  <h3 style="margin-top:3mm">Scope (c) proved on real numbers</h3>
+  <p style="margin-bottom:1mm">The panel-versus-individual claim &mdash; that a bundled panel is
+     cheaper than buying its components separately &mdash; holds across all three lipid panels:</p>
+  <table>
+    <tr><th>Panel</th><th class="num">As a panel</th><th class="num">Bought separately</th><th class="num">You save</th></tr>
+    <tr><td>HDL · LDL · Cholesterol · Triglycerides</td><td class="num">₱4,450–8,700</td><td class="num">₱4,520–9,400</td><td class="num">₱70–700</td></tr>
+    <tr><td>HDL · LDL · Triglycerides</td><td class="num">₱3,750–6,700</td><td class="num">₱3,810–8,100</td><td class="num">₱60–1,400</td></tr>
+    <tr><td>HDL · LDL</td><td class="num">₱2,400–4,400</td><td class="num">₱2,550–5,400</td><td class="num">₱150–1,000</td></tr>
+  </table>
+  <p class="cap" style="margin-bottom:2mm">Every figure above is a published MakatiMed price &mdash;
+     the strongest single demo in the dataset, and a real insight a patient could act on.</p>
+
+  <div class="good">
+    <b>The one-sentence version.</b> Six thousand published hospital prices and four thousand
+    PhilHealth case rates, joined by a hand-verified crosswalk, with every figure traceable to an
+    official item code &mdash; and where the source was silent, the dataset stays silent too.
+  </div>
+</section>
+
+</body>
+</html>
