@@ -1,0 +1,257 @@
+{
+  "sample_id": "0000106",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "broad",
+  "clean_image": "filled/0000106.png",
+  "blank_image": "stage1/blank/0000106.png",
+  "image": "media/0000106_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Remedios E. Zaragoza, MD, FPCS, FSOSP",
+    "physician_name_plain": "Remedios E. Zaragoza",
+    "specialty": "Surgical Oncologist / General Surgeon",
+    "mobile": "0917-0000-961",
+    "email": "remedios.zaragoza@clinic.example",
+    "license_no": "935061",
+    "ptr_no": "9105921",
+    "s2_no": "986086",
+    "clinics": [
+      {
+        "name": "Halamanan Family Health Center",
+        "address": "237 Kamagong St., Nueva Esperanza, Cavite",
+        "days": "Tue / Thu",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(02) 8112-0000",
+        "local": "local 910"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "ALP",
+      "BILI_PANEL",
+      "BUN",
+      "CBC",
+      "CHOL_TOTAL",
+      "CREATININE",
+      "ECG_12L",
+      "FT4",
+      "HBA1C",
+      "HBSAG_SCREENING",
+      "HDL",
+      "K",
+      "LDL",
+      "NA",
+      "SGOT_AST",
+      "SGPT_ALT",
+      "TRIGLYCERIDES",
+      "TSH",
+      "URIC_ACID",
+      "URINALYSIS",
+      "VDRL_RPR",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Glycosylated Hemoglobin",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "CHOL_TOTAL",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "TRIGLYCERIDES",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triglycerides",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "HDL",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LDL",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "BUN",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URIC_ACID",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Uric Acid",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "NA",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium (Na)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "SGOT_AST",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGOT/AST",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "SGPT_ALT",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGPT/ALT",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "BILI_PANEL",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bilirubins",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "ALP",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "ALP (Alkaline Phosphatase)",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "TSH",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "TSH",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT4",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Free T4",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest X-ray PA and Lateral",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Electrocardiography",
+      "section": "Cardio:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Profile:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VDRL/RPR",
+      "section": "Serology:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 3,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 757.62,
+    "usable_bottom_px": 760.62,
+    "footer_top_px": 705.31
+  },
+  "box_ink_failures": 0
+}

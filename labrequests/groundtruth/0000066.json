@@ -1,0 +1,98 @@
+{
+  "sample_id": "0000066",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "thyroid_workup",
+  "clean_image": "filled/0000066.png",
+  "blank_image": "stage1/blank/0000066.png",
+  "image": "media/0000066_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Arturo D. Galang, MD, FPCCP",
+    "physician_name_plain": "Arturo D. Galang",
+    "specialty": "Pulmonary Medicine",
+    "mobile": "0917-0000-731",
+    "email": "arturo.galang@clinic.example",
+    "license_no": "998331",
+    "ptr_no": "9436471",
+    "s2_no": "964677",
+    "clinics": [
+      {
+        "name": "St. Sylvester Medical Center",
+        "address": "351 Almendras St., Barangay Masagana, Batangas",
+        "days": "Wed - Fri - Sat",
+        "hours": "By Appointment",
+        "trunkline": "(02) 8349-0000",
+        "local": "local 731"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "FT3",
+      "FT4",
+      "TSH",
+      "US_THYROID"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "TSH",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Thyroid Stimulating Hormone",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT3",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT3",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT4",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT4",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "US_THYROID",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Thyroid",
+      "section": "Ultrasound:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1084.31,
+    "usable_bottom_px": 1085.36,
+    "footer_top_px": 1007.88
+  },
+  "box_ink_failures": 0
+}

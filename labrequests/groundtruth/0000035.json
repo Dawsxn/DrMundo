@@ -1,0 +1,100 @@
+{
+  "sample_id": "0000035",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "diabetes_monitoring",
+  "clean_image": "filled/0000035.png",
+  "blank_image": "stage1/blank/0000035.png",
+  "image": "media/0000035_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Arturo T. Villamor, MD, FPCP",
+    "physician_name_plain": "Arturo T. Villamor",
+    "specialty": "Internal Medicine",
+    "mobile": "0917-0000-473",
+    "email": "arturo.villamor@clinic.example",
+    "license_no": "944229",
+    "ptr_no": "9133264",
+    "s2_no": "952516",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "FBS",
+      "HBA1C",
+      "LIPID_PROFILE",
+      "T3",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "FBS",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS (Fasting Blood Sugar)",
+      "section": "Metabolism:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HbA1c",
+      "section": "Metabolism:"
+    },
+    {
+      "code": "LIPID_PROFILE",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "T3",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "T3",
+      "section": "Thyroid Function:"
+    }
+  ],
+  "primary_mark_style": "diagonal_slash",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1011.25,
+    "usable_bottom_px": 1011.24,
+    "footer_top_px": 959.58
+  },
+  "box_ink_failures": 0
+}

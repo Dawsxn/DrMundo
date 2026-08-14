@@ -1,0 +1,54 @@
+{
+  "sample_id": "0000253",
+  "kind": "nonlab",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": null,
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": null,
+  "clean_image": "filled/0000253.png",
+  "blank_image": "stage1/blank/0000253.png",
+  "image": "media/0000253_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Tomas V. Quintos, MD, FPSN",
+    "physician_name_plain": "Tomas V. Quintos",
+    "specialty": "Nephrology / Internal Medicine",
+    "mobile": "0917-0000-410",
+    "email": "tomas.quintos@clinic.example",
+    "license_no": "975251",
+    "ptr_no": "9798048",
+    "s2_no": "993986",
+    "clinics": [
+      {
+        "name": "Balintawak Diagnostic Center",
+        "address": "119 Kamagong St., Pook Ligaya, Bulacan",
+        "days": "Mon to Fri",
+        "hours": "By Appointment",
+        "trunkline": "(08) 8757-0000",
+        "local": "local 447"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": false,
+    "codes": [],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [],
+  "primary_mark_style": null,
+  "n_ambiguous_marks": 0,
+  "nonlab_kind": "medical_certificate",
+  "document": "MEDICAL CERTIFICATE"
+}

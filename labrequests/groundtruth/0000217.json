@@ -1,0 +1,109 @@
+{
+  "sample_id": "0000217",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": "stress_hepatitis_family",
+  "order_profile": "stress_hepatitis_family",
+  "clean_image": "filled/0000217.png",
+  "blank_image": "stage1/blank/0000217.png",
+  "image": "media/0000217_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Lourdes N. Dalisay, MD, FPCP, FPCC",
+    "physician_name_plain": "Lourdes N. Dalisay",
+    "specialty": "Cardiology / Internal Medicine",
+    "mobile": "0918-0000-867",
+    "email": "lourdes.dalisay@clinic.example",
+    "license_no": "981183",
+    "ptr_no": "9304975",
+    "s2_no": "922994",
+    "clinics": [
+      {
+        "name": "Katipunan Polyclinic and Diagnostics",
+        "address": "321 Malunggay St., San Ignacio, Cavite",
+        "days": "Mon - Sat",
+        "hours": "8:00 AM - 11:00 AM",
+        "trunkline": "(06) 8937-0000",
+        "local": "local 549"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "ANTI_HBC",
+      "ANTI_HBE",
+      "ANTI_HBS",
+      "HBSAG_SCREENING",
+      "HBSAG_TITER"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Profile:"
+    },
+    {
+      "code": "HBSAG_TITER",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg with Titer",
+      "section": "Hepatitis Profile:"
+    },
+    {
+      "code": "ANTI_HBS",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Anti HBs",
+      "section": "Hepatitis Profile:"
+    },
+    {
+      "code": "ANTI_HBC",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Anti-HBc",
+      "section": "Hepatitis Profile:"
+    },
+    {
+      "code": "ANTI_HBE",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Anti-HBe",
+      "section": "Hepatitis Profile:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 769.16,
+    "usable_bottom_px": 772.15,
+    "footer_top_px": 716.06
+  },
+  "box_ink_failures": 0
+}

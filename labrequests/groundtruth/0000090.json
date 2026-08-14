@@ -1,0 +1,129 @@
+{
+  "sample_id": "0000090",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "cardiac_chest_pain",
+  "clean_image": "filled/0000090.png",
+  "blank_image": "stage1/blank/0000090.png",
+  "image": "media/0000090_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Victoria T. Lansangan, MD, FPCS, FPSGS",
+    "physician_name_plain": "Victoria T. Lansangan",
+    "specialty": "General Surgeon",
+    "mobile": "0918-0000-370",
+    "email": "victoria.lansangan@clinic.example",
+    "license_no": "976692",
+    "ptr_no": "9847023",
+    "s2_no": "937560",
+    "clinics": [
+      {
+        "name": "Maharlika Medical Clinic",
+        "address": "135 Yakal St., Pook Ligaya, Nueva Ecija",
+        "days": "Mon to Fri",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(08) 8331-0000",
+        "local": "local 846"
+      },
+      {
+        "name": "Silangan Family Health Center",
+        "address": "341 Gumamela St., Mataas na Lupa, Rizal",
+        "days": "Wed - Fri - Sat",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(06) 8774-0000",
+        "local": "local 452"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CPK_TOTAL",
+      "CT_CHEST",
+      "ECG_12L",
+      "ECHO_2D",
+      "LDH",
+      "TROPONIN_I"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {
+      "CT_CHEST": [
+        "triple_contrast"
+      ]
+    }
+  },
+  "marks": [
+    {
+      "code": "TROPONIN_I",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Troponin-I",
+      "section": "Cardiac Function:"
+    },
+    {
+      "code": "CPK_TOTAL",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total CPK",
+      "section": "Cardiac Function:"
+    },
+    {
+      "code": "LDH",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDH",
+      "section": "Cardiac Function:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12L ECG",
+      "section": "CT / Advanced:"
+    },
+    {
+      "code": "ECHO_2D",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "2D Echo",
+      "section": "CT / Advanced:"
+    },
+    {
+      "code": "CT_CHEST",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest CT",
+      "section": "CT / Advanced:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1089.84,
+    "usable_bottom_px": 1090.9,
+    "footer_top_px": 1011.19
+  },
+  "box_ink_failures": 0
+}

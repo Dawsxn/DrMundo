@@ -1,0 +1,107 @@
+{
+  "sample_id": "0000062",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "liver_evaluation",
+  "clean_image": "filled/0000062.png",
+  "blank_image": "stage1/blank/0000062.png",
+  "image": "media/0000062_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Tomas O. Arceo, MD",
+    "physician_name_plain": "Tomas O. Arceo",
+    "specialty": "Internal Medicine",
+    "mobile": "0917-0000-541",
+    "email": "tomas.arceo@clinic.example",
+    "license_no": "942006",
+    "ptr_no": "9909908",
+    "s2_no": "948606",
+    "clinics": [
+      {
+        "name": "St. Oswald Medical Center",
+        "address": "130 Malunggay St., Bayan Silangan, Nueva Ecija",
+        "days": "Tue / Thu",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(06) 8429-0000",
+        "local": "local 144"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "ALP",
+      "BILI_PANEL",
+      "HBSAG_SCREENING",
+      "LIVER_PROFILE",
+      "US_HBT"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "LIVER_PROFILE",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Liver Profile",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "BILI_PANEL",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bilirubin (TB, DB, IB)",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "ALP",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Alkaline Phosphatase",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Markers:"
+    },
+    {
+      "code": "US_HBT",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBT",
+      "section": "Ultrasound:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1090.81,
+    "usable_bottom_px": 1091.87,
+    "footer_top_px": 1013.16
+  },
+  "box_ink_failures": 0
+}

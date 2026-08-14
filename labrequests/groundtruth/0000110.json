@@ -1,0 +1,107 @@
+{
+  "sample_id": "0000110",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "cardiac_chest_pain",
+  "clean_image": "filled/0000110.png",
+  "blank_image": "stage1/blank/0000110.png",
+  "image": "media/0000110_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Jovito I. Alcantara, MD",
+    "physician_name_plain": "Jovito I. Alcantara",
+    "specialty": "Pediatrics",
+    "mobile": "0918-0000-566",
+    "email": "jovito.alcantara@clinic.example",
+    "license_no": "995943",
+    "ptr_no": "9883986",
+    "s2_no": "913235",
+    "clinics": [
+      {
+        "name": "Pinagbuhatan General Hospital",
+        "address": "88 Palo Maria St., Nueva Esperanza, Rizal",
+        "days": "Tue / Thu",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(03) 8474-0000",
+        "local": "local 601"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CPK_TOTAL",
+      "ECG_12L",
+      "ECHO_2D",
+      "TROPONIN_I",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "TROPONIN_I",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Troponin-I",
+      "section": "Cardiac Markers:"
+    },
+    {
+      "code": "CPK_TOTAL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total CPK",
+      "section": "Cardiac Markers:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12L ECG",
+      "section": "Cardio:"
+    },
+    {
+      "code": "ECHO_2D",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "2D Echo",
+      "section": "Cardio:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA/L",
+      "section": "X-Ray:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 770.69,
+    "usable_bottom_px": 773.68,
+    "footer_top_px": 718.98
+  },
+  "box_ink_failures": 0
+}

@@ -1,0 +1,73 @@
+{
+  "sample_id": "0000195",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "sparse",
+  "clean_image": "filled/0000195.png",
+  "blank_image": "stage1/blank/0000195.png",
+  "image": "media/0000195_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Anselmo S. Alcantara, MD",
+    "physician_name_plain": "Anselmo S. Alcantara",
+    "specialty": "Internal Medicine",
+    "mobile": "0918-0000-486",
+    "email": "anselmo.alcantara@clinic.example",
+    "license_no": "966582",
+    "ptr_no": "9457790",
+    "s2_no": "953371",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC_PLT"
+    ],
+    "cancelled": [
+      "URINALYSIS"
+    ],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "URINALYSIS",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "CBC_PLT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "CBC w/ PLT CT",
+      "section": "Laboratory:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 502.64,
+    "usable_bottom_px": 502.63,
+    "footer_top_px": 452.12
+  },
+  "box_ink_failures": 0
+}

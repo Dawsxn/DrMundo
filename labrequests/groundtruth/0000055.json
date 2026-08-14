@@ -1,0 +1,104 @@
+{
+  "sample_id": "0000055",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "thyroid_workup",
+  "clean_image": "filled/0000055.png",
+  "blank_image": "stage1/blank/0000055.png",
+  "image": "media/0000055_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Adoracion Z. Galang, MD",
+    "physician_name_plain": "Adoracion Z. Galang",
+    "specialty": "Pediatrics",
+    "mobile": "0917-0000-673",
+    "email": "adoracion.galang@clinic.example",
+    "license_no": "935499",
+    "ptr_no": "9281560",
+    "s2_no": "945160",
+    "clinics": [
+      {
+        "name": "Pag-asa Diagnostic Center",
+        "address": "282 Narra St., San Ignacio, Cavite",
+        "days": "Tue - Thu - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(07) 8172-0000",
+        "local": "local 394"
+      },
+      {
+        "name": "Tanglaw Medical Clinic",
+        "address": "116 Malunggay St., Pook Ligaya, Cavite",
+        "days": "Mon - Sat",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(03) 8975-0000",
+        "local": "local 771"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "FT3",
+      "FT4"
+    ],
+    "cancelled": [
+      "TSH",
+      "US_THYROID"
+    ],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "TSH",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "TSH",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT3",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT3",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT4",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT4",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "US_THYROID",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "Thyroid",
+      "section": "Ultrasound:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1079.3,
+    "usable_bottom_px": 1080.35,
+    "footer_top_px": 1001.47
+  },
+  "box_ink_failures": 0
+}

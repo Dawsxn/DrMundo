@@ -1,0 +1,101 @@
+{
+  "sample_id": "0000232",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": "stress_electrolytes_bundle_and_parts",
+  "order_profile": "stress_electrolytes_bundle_and_parts",
+  "clean_image": "filled/0000232.png",
+  "blank_image": "stage1/blank/0000232.png",
+  "image": "media/0000232_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Danilo D. Bantug, MD",
+    "physician_name_plain": "Danilo D. Bantug",
+    "specialty": "Family Medicine",
+    "mobile": "0918-0000-517",
+    "email": "danilo.bantug@clinic.example",
+    "license_no": "914126",
+    "ptr_no": "9808986",
+    "s2_no": "975671",
+    "clinics": [
+      {
+        "name": "Timog General Hospital",
+        "address": "114 Dama de Noche St., Pook Ligaya, Pangasinan",
+        "days": "Mon - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(08) 8287-0000",
+        "local": "local 202"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CL",
+      "ELECTROLYTES",
+      "K"
+    ],
+    "cancelled": [
+      "NA"
+    ],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "ELECTROLYTES",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "NA",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Sodium",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CL",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chloride (Cl)",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1077.67,
+    "usable_bottom_px": 1078.72,
+    "footer_top_px": 998.09
+  },
+  "box_ink_failures": 0
+}

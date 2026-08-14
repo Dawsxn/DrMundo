@@ -231,3 +231,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Vision eval dataset. The canonical copy is `labrequests/`, committed to main by the
+# generator's author -- media included. Nothing here is a privacy exclusion: the images
+# are fully synthetic and carry SYNTHETIC-DATA metadata.
+#
+# These rules only stop a RE-EXPORT being committed a second time. A fresh download from
+# the generator arrives as `labrequests-<timestamp>/` beside an equally large zip, and
+# committing it would duplicate ~380MB that is already in history. Delete the export and
+# use `labrequests/` instead.
+labrequests-*.zip
+labrequests-*/

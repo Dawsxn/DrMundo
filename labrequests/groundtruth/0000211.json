@@ -1,0 +1,106 @@
+{
+  "sample_id": "0000211",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": "stress_pt_ptt",
+  "order_profile": "stress_pt_ptt",
+  "clean_image": "filled/0000211.png",
+  "blank_image": "stage1/blank/0000211.png",
+  "image": "media/0000211_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Amparo B. Ylagan, MD",
+    "physician_name_plain": "Amparo B. Ylagan",
+    "specialty": "Family Medicine",
+    "mobile": "0917-0000-941",
+    "email": "amparo.ylagan@clinic.example",
+    "license_no": "976013",
+    "ptr_no": "9318879",
+    "s2_no": "926475",
+    "clinics": [
+      {
+        "name": "Sto. Bartholomew Community Hospital",
+        "address": "367 Gumamela St., Barangay Masagana, Nueva Ecija",
+        "days": "Tue - Thu - Sat",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(04) 8258-0000",
+        "local": "local 857"
+      },
+      {
+        "name": "Malayan Medical Clinic",
+        "address": "359 Palo Maria St., Villa Aurora, Tarlac",
+        "days": "Mon - Sat",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(06) 8507-0000",
+        "local": "local 338"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BLEEDING_TIME",
+      "CLOTTING_TIME",
+      "PTT",
+      "PT_PROTHROMBIN"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PT (Prothrombin Time)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "PTT",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PTT (Partial Thromboplastin)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "BLEEDING_TIME",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bleeding Time",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "CLOTTING_TIME",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Clotting Time",
+      "section": "Bleeding Parameters:"
+    }
+  ],
+  "primary_mark_style": "diagonal_slash",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1080.41,
+    "usable_bottom_px": 1081.47,
+    "footer_top_px": 1002.91
+  },
+  "box_ink_failures": 0
+}

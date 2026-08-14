@@ -1,0 +1,98 @@
+{
+  "sample_id": "0000160",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "diabetes_monitoring",
+  "clean_image": "filled/0000160.png",
+  "blank_image": "stage1/blank/0000160.png",
+  "image": "media/0000160_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Herminia E. Yabut, MD",
+    "physician_name_plain": "Herminia E. Yabut",
+    "specialty": "Family Medicine",
+    "mobile": "0917-0000-804",
+    "email": "herminia.yabut@clinic.example",
+    "license_no": "915063",
+    "ptr_no": "9404398",
+    "s2_no": "988390",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CREATININE",
+      "FBS",
+      "HBA1C",
+      "LIPID_PROFILE",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "FBS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Fasting Blood Sugar",
+      "section": "Glucose:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HbA1c",
+      "section": "Glucose:"
+    },
+    {
+      "code": "LIPID_PROFILE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.02,
+    "page_overflow_px": 0.02,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 502.86,
+    "usable_bottom_px": 502.84,
+    "footer_top_px": 451.52
+  },
+  "box_ink_failures": 0
+}

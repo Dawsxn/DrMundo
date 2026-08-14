@@ -1,0 +1,105 @@
+{
+  "sample_id": "0000053",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "diabetes_monitoring",
+  "clean_image": "filled/0000053.png",
+  "blank_image": "stage1/blank/0000053.png",
+  "image": "media/0000053_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Pacifico E. Salazar, MD, FPSN",
+    "physician_name_plain": "Pacifico E. Salazar",
+    "specialty": "Nephrology / Internal Medicine",
+    "mobile": "0917-0000-441",
+    "email": "pacifico.salazar@clinic.example",
+    "license_no": "925809",
+    "ptr_no": "9887611",
+    "s2_no": "927702",
+    "clinics": [
+      {
+        "name": "Sto. Dominic Community Hospital",
+        "address": "113 Yakal St., Mataas na Lupa, Quezon",
+        "days": "Tue / Thu",
+        "hours": "8:00 AM - 11:00 AM",
+        "trunkline": "(04) 8269-0000",
+        "local": "local 839"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "FBS",
+      "LIPID_PROFILE",
+      "URINALYSIS"
+    ],
+    "cancelled": [
+      "HBA1C"
+    ],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "FBS",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS (Fasting Blood Sugar)",
+      "section": "Metabolism:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "HbA1c",
+      "section": "Metabolism:"
+    },
+    {
+      "code": "LIPID_PROFILE",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "BUN",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1081.86,
+    "usable_bottom_px": 1082.91,
+    "footer_top_px": 1003.67
+  },
+  "box_ink_failures": 0
+}

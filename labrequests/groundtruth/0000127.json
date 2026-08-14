@@ -1,0 +1,145 @@
+{
+  "sample_id": "0000127",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "diabetes_monitoring",
+  "clean_image": "filled/0000127.png",
+  "blank_image": "stage1/blank/0000127.png",
+  "image": "media/0000127_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Clarita X. Banaag, MD, FPCP",
+    "physician_name_plain": "Clarita X. Banaag",
+    "specialty": "Internal Medicine",
+    "mobile": "0917-0000-849",
+    "email": "clarita.banaag@clinic.example",
+    "license_no": "997988",
+    "ptr_no": "9900079",
+    "s2_no": "947649",
+    "clinics": [
+      {
+        "name": "Matahimik Medical Clinic",
+        "address": "44 Kamagong St., Sta. Lucia, Pampanga",
+        "days": "Wed - Fri - Sat",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(05) 8591-0000",
+        "local": "local 198"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CHOL_TOTAL",
+      "CREATININE",
+      "FBS",
+      "HBA1C",
+      "HDL",
+      "LDL",
+      "TRIGLYCERIDES",
+      "URINALYSIS",
+      "VLDL"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "FBS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HbA1c",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "CHOL_TOTAL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "TRIGLYCERIDES",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triglycerides",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "HDL",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LDL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "VLDL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VLDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 766.62,
+    "usable_bottom_px": 769.62,
+    "footer_top_px": 714.66
+  },
+  "box_ink_failures": 0
+}

@@ -1,0 +1,300 @@
+{
+ "resolver": {
+  "labels": 1452,
+  "correct": 1452,
+  "accuracy": 1.0,
+  "without_sections": 0.9683195592286501,
+  "wrong_without_sections": 0
+ },
+ "matching": {
+  "labels": 1407,
+  "priced": 1284,
+  "accuracy": 0.9125799573560768,
+  "unresolved": 0,
+  "no_mmc_price": 123,
+  "top_unpriced": [
+   [
+    "BUN",
+    62
+   ],
+   [
+    "FECALYSIS",
+    30
+   ],
+   [
+    "VLDL",
+    20
+   ],
+   [
+    "HBSAG_TITER",
+    5
+   ],
+   [
+    "PLATELET_COUNT",
+    5
+   ],
+   [
+    "XR_CHEST_AP_L",
+    1
+   ]
+  ]
+ },
+ "catalogue": {
+  "codes": 87,
+  "priced": 77,
+  "unpriced": [
+   "BILI_INDIRECT",
+   "BUN",
+   "FECALYSIS",
+   "HBSAG_TITER",
+   "NM_BONE_SCAN",
+   "PLATELET_COUNT",
+   "US_BPS",
+   "US_INGUINOSCROTAL",
+   "VLDL",
+   "XR_CHEST_AP_L"
+  ],
+  "known_unpriced": [
+   "BILI_INDIRECT",
+   "BUN",
+   "FECALYSIS",
+   "HBSAG_TITER",
+   "NM_BONE_SCAN",
+   "PLATELET_COUNT",
+   "US_BPS",
+   "US_INGUINOSCROTAL",
+   "VLDL",
+   "XR_CHEST_AP_L"
+  ],
+  "unexplained": []
+ },
+ "readers": {
+  "oracle": {
+   "reader": "oracle",
+   "samples": 40,
+   "recall": 1.0,
+   "precision": 1.0,
+   "f1": 1.0,
+   "invented": 0,
+   "cancelled_not_billed": [
+    11,
+    11
+   ],
+   "nonlab_detected": [
+    2,
+    2
+   ],
+   "blank_empty": [
+    1,
+    1
+   ],
+   "seconds_mean": 0.0,
+   "seconds_max": 0.0,
+   "per_class": {
+    "clean": {
+     "tp": 60,
+     "fn": 0,
+     "invented": 0,
+     "n": 8,
+     "seconds": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "fax": {
+     "tp": 48,
+     "fn": 0,
+     "invented": 0,
+     "n": 8,
+     "seconds": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "photocopy_gen1": {
+     "tp": 40,
+     "fn": 0,
+     "invented": 0,
+     "n": 8,
+     "seconds": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "photocopy_gen3": {
+     "tp": 44,
+     "fn": 0,
+     "invented": 0,
+     "n": 8,
+     "seconds": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    "scan": {
+     "tp": 58,
+     "fn": 0,
+     "invented": 0,
+     "n": 8,
+     "seconds": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "errors": []
+  },
+  "vlm": {
+   "reader": "vlm:gpt-4.1",
+   "samples": 40,
+   "recall": 0.672,
+   "precision": 0.9081081081081082,
+   "f1": 0.7724137931034483,
+   "invented": 17,
+   "cancelled_not_billed": [
+    10,
+    11
+   ],
+   "nonlab_detected": [
+    2,
+    2
+   ],
+   "blank_empty": [
+    1,
+    1
+   ],
+   "seconds_mean": 3.6332580875008715,
+   "seconds_max": 7.245090299998992,
+   "per_class": {
+    "clean": {
+     "tp": 49,
+     "fn": 11,
+     "invented": 3,
+     "n": 8,
+     "seconds": [
+      7.245090299998992,
+      2.1092057000059867,
+      1.7223446000134572,
+      2.1549486000003526,
+      2.3465846000035526,
+      3.3528992000065045,
+      4.070727900005295,
+      2.4959865999990143
+     ]
+    },
+    "fax": {
+     "tp": 24,
+     "fn": 24,
+     "invented": 2,
+     "n": 8,
+     "seconds": [
+      1.9142124000063632,
+      1.8216194999986328,
+      1.5716580000007525,
+      3.3835836999933235,
+      1.9820132999884663,
+      1.63004039999214,
+      3.1831645000056596,
+      2.4588543999998365
+     ]
+    },
+    "photocopy_gen1": {
+     "tp": 25,
+     "fn": 15,
+     "invented": 3,
+     "n": 8,
+     "seconds": [
+      4.002347500005271,
+      3.668124500007252,
+      4.1771522000053665,
+      5.268421100001433,
+      5.324680499994429,
+      4.473419699992519,
+      4.146804299991345,
+      7.031189400004223
+     ]
+    },
+    "photocopy_gen3": {
+     "tp": 27,
+     "fn": 17,
+     "invented": 6,
+     "n": 8,
+     "seconds": [
+      4.434957200006465,
+      3.4613226000074064,
+      4.460256799997296,
+      5.482665600007749,
+      4.445796800006065,
+      5.594631700005266,
+      6.252195399996708,
+      2.932124400002067
+     ]
+    },
+    "scan": {
+     "tp": 43,
+     "fn": 15,
+     "invented": 3,
+     "n": 8,
+     "seconds": [
+      3.2050255999929504,
+      2.6497741999919526,
+      6.356025700006285,
+      2.058596699993359,
+      3.6218328999966616,
+      2.551617899996927,
+      3.4721408000041265,
+      2.816286300003412
+     ]
+    }
+   },
+   "errors": []
+  }
+ },
+ "grounding": {
+  "reports": 40,
+  "ungrounded": 0,
+  "rate": 0.0,
+  "offenders": []
+ },
+ "trajectory": {
+  "ambiguous_probes": 5,
+  "asked": 5,
+  "priced_anyway": 0,
+  "rate": 1.0
+ },
+ "cancelled": {
+  "cancelled_rows": 45,
+  "billed": 0,
+  "rate": 0.0
+ }
+}

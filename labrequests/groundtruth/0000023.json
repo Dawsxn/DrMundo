@@ -1,0 +1,199 @@
+{
+  "sample_id": "0000023",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "broad",
+  "clean_image": "filled/0000023.png",
+  "blank_image": "stage1/blank/0000023.png",
+  "image": "media/0000023_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Amparo N. Bautista, MD, FPCS",
+    "physician_name_plain": "Amparo N. Bautista",
+    "specialty": "General Surgeon",
+    "mobile": "0918-0000-526",
+    "email": "amparo.bautista@clinic.example",
+    "license_no": "987638",
+    "ptr_no": "9143368",
+    "s2_no": "965096",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CBC_PLT",
+      "CREATININE",
+      "ECG_12L",
+      "ELECTROLYTES",
+      "FBS",
+      "FECALYSIS",
+      "FT4",
+      "HBA1C",
+      "HBSAG_SCREENING",
+      "LIPID_PROFILE",
+      "LIVER_PROFILE",
+      "URIC_ACID",
+      "URINALYSIS",
+      "VDRL_RPR",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ Platelet Count",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "FECALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Fecalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "FBS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS",
+      "section": "Metabolism:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HbA1c",
+      "section": "Metabolism:"
+    },
+    {
+      "code": "LIPID_PROFILE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "BUN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Creatinine",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URIC_ACID",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUA",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "ELECTROLYTES",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LIVER_PROFILE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Liver Profile",
+      "section": "Liver:"
+    },
+    {
+      "code": "FT4",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT4",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA-L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Electrocardiography",
+      "section": "Cardiac Diagnostics:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VDRL / RPR",
+      "section": "Serology / Hepatitis:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1013.03,
+    "usable_bottom_px": 1013.03,
+    "footer_top_px": 962.98
+  },
+  "box_ink_failures": 0
+}

@@ -1,0 +1,118 @@
+{
+  "sample_id": "0000202",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": "stress_bundle_and_components",
+  "order_profile": "stress_bundle_and_components",
+  "clean_image": "filled/0000202.png",
+  "blank_image": "stage1/blank/0000202.png",
+  "image": "media/0000202_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Arturo S. Olivar, MD, FPCP, FPCCP",
+    "physician_name_plain": "Arturo S. Olivar",
+    "specialty": "Pulmonary Medicine",
+    "mobile": "0917-0000-278",
+    "email": "arturo.olivar@clinic.example",
+    "license_no": "913547",
+    "ptr_no": "9755327",
+    "s2_no": "986759",
+    "clinics": [
+      {
+        "name": "St. Norbert Medical Center",
+        "address": "177 Sampaguita St., Barangay Masagana, Cavite",
+        "days": "Mon - Sat",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(06) 8841-0000",
+        "local": "local 929"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CHOL_TOTAL",
+      "HDL",
+      "LDL",
+      "LIPID_PROFILE",
+      "TRIGLYCERIDES",
+      "VLDL"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "LIPID_PROFILE",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CHOL_TOTAL",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "TRIGLYCERIDES",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triglycerides",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "HDL",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "HDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LDL",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDL Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "VLDL",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VLDL",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "filled_scribble",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1089.97,
+    "usable_bottom_px": 1091.03,
+    "footer_top_px": 1011.83
+  },
+  "box_ink_failures": 0
+}

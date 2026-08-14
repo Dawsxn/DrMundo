@@ -1,0 +1,122 @@
+{
+  "sample_id": "0000153",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "preoperative_clearance",
+  "clean_image": "filled/0000153.png",
+  "blank_image": "stage1/blank/0000153.png",
+  "image": "media/0000153_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Norma L. Bulacan, MD, FPCS",
+    "physician_name_plain": "Norma L. Bulacan",
+    "specialty": "General and Laparoscopic Surgery",
+    "mobile": "0918-0000-204",
+    "email": "norma.bulacan@clinic.example",
+    "license_no": "932018",
+    "ptr_no": "9486943",
+    "s2_no": "940324",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CBC_PLT",
+      "CREATININE",
+      "ECG_12L",
+      "NA",
+      "PT_PROTHROMBIN",
+      "URINALYSIS",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ PLT CT",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PT (Prothrombin Time)",
+      "section": "Coagulation:"
+    },
+    {
+      "code": "BUN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal:"
+    },
+    {
+      "code": "NA",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium (Na)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA/L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12-lead ECG",
+      "section": "Cardio:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 497.09,
+    "usable_bottom_px": 497.09,
+    "footer_top_px": 446.67
+  },
+  "box_ink_failures": 0
+}

@@ -48,6 +48,138 @@ class DrMundoService:
     def reset_session(self, session_id: str) -> None:
         self._sessions.pop(session_id, None)
 
+    # ------------------------------------------------------------------ Scope v2: slips
+    def handle_slip(
+        self,
+        image_path,
+        session_id: str = "default",
+        *,
+        synthetic: bool = False,
+        reader=None,
+    ) -> ServiceResult:
+        """Price an uploaded request slip. Pass 1 of the §14 flow: asks NOTHING.
+
+        A patient who just uploaded a slip wants a number, not an intake form. This
+        produces a complete report immediately, labelled "before any HMO"; the refine
+        questions come afterwards and each one re-prices through `refine` without another
+        upload.
+        """
+        import time as _time
+        from pathlib import Path as _Path
+
+        from agent.format import format_budget_answer
+        from pricing.estimate import estimate_from_slip
+        from vision.extract_request import ReadFailed, read_and_extract
+
+        start = _time.perf_counter()
+        memory = self._memory(session_id)
+
+        if reader is None:
+            from vision.readers.vlm import VLMReader
+            reader = VLMReader()
+
+        with track_usage() as usage:
+            try:
+                slip = read_and_extract(reader, _Path(image_path), synthetic=synthetic)
+            except ReadFailed as exc:
+                # Never fall through to an empty estimate: "prepare P0" reads as an
+                # answer, and a failed read is not one.
+                answer = Answer(
+                    status="no_data", path=None, query="uploaded request slip",
+                    answer_text=(
+                        "I couldn't read that image. Try a clearer, well-lit photo of the "
+                        "whole request slip, or type the tests instead."
+                    ),
+                )
+                answer, report = check_output(answer)
+                return ServiceResult(
+                    answer=answer, category="cost", output_report=report,
+                    latency_ms=int((_time.perf_counter() - start) * 1000),
+                    prompt_version=self.prompt_name,
+                )
+            memory.clear_estimate()
+            memory.slip = slip
+            estimate = estimate_from_slip(slip, hmo=memory.hmo,
+                                          senior_or_pwd=bool(memory.senior_or_pwd))
+            memory.remember_estimate(estimate)
+            answer = self._answer_for(estimate, "uploaded request slip")
+            answer.answer_text = format_budget_answer(answer)
+            answer, report = check_output(answer)
+
+        memory.add_user("[uploaded a request slip]")
+        memory.add_assistant(answer.answer_text)
+
+        result = ServiceResult(
+            answer=answer, pii_found=[], category="cost", output_report=report,
+            latency_ms=int((_time.perf_counter() - start) * 1000),
+            prompt_version=self.prompt_name, usage=usage,
+        )
+        result.estimated_cost_usd = estimate_cost(usage)
+        if self.enable_mlflow:
+            log_service_result("[slip upload]", result)
+        return result
+
+    def refine(
+        self,
+        session_id: str = "default",
+        *,
+        hmo=None,
+        senior_or_pwd: Optional[bool] = None,
+        procedure_source=None,
+        planned_procedure: Optional[str] = None,
+    ) -> ServiceResult:
+        """Re-price the slip already in memory. Pass 2 of the §14 flow.
+
+        No re-upload: the slip and every answer given so far live in SessionMemory, so a
+        patient answering "yes, Maxicare Gold" does not start over.
+        """
+        import time as _time
+
+        from agent.format import format_budget_answer
+        from pricing.estimate import estimate_from_slip
+
+        start = _time.perf_counter()
+        memory = self._memory(session_id)
+        if memory.slip is None:
+            answer = Answer(status="no_data", path=None, query="refine",
+                            answer_text="Upload a request slip first and I'll price it.")
+            answer, report = check_output(answer)
+            return ServiceResult(answer=answer, output_report=report,
+                                 prompt_version=self.prompt_name)
+
+        if hmo is not None:
+            memory.hmo = hmo
+        if senior_or_pwd is not None:
+            memory.senior_or_pwd = senior_or_pwd
+        if procedure_source is not None:
+            memory.procedure_source = procedure_source
+        if planned_procedure is not None:
+            memory.planned_procedure = planned_procedure
+
+        estimate = estimate_from_slip(
+            memory.slip,
+            hmo=memory.hmo,
+            senior_or_pwd=bool(memory.senior_or_pwd),
+            procedure_source=memory.procedure_source,
+            planned_procedure=memory.planned_procedure,
+        )
+        memory.remember_estimate(estimate)
+        answer = self._answer_for(estimate, "refined estimate")
+        answer.answer_text = format_budget_answer(answer)
+        answer, report = check_output(answer)
+        memory.add_assistant(answer.answer_text)
+
+        return ServiceResult(
+            answer=answer, category="cost", output_report=report,
+            latency_ms=int((_time.perf_counter() - start) * 1000),
+            prompt_version=self.prompt_name,
+        )
+
+    @staticmethod
+    def _answer_for(estimate, query: str) -> Answer:
+        return Answer(status="answered", path="budget_report", query=query,
+                      answer_text="", budget=estimate)
+
     def handle(self, question: str, session_id: str = "default") -> ServiceResult:
         """Answer one question, accounting token usage and (optionally) logging to MLflow.
 

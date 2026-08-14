@@ -1,0 +1,224 @@
+{
+  "sample_id": "0000091",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "broad",
+  "clean_image": "filled/0000091.png",
+  "blank_image": "stage1/blank/0000091.png",
+  "image": "media/0000091_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Luzviminda T. Ventura, MD, FPAFP",
+    "physician_name_plain": "Luzviminda T. Ventura",
+    "specialty": "General Physician",
+    "mobile": "0917-0000-108",
+    "email": "luzviminda.ventura@clinic.example",
+    "license_no": "964560",
+    "ptr_no": "9590106",
+    "s2_no": "951862",
+    "clinics": [
+      {
+        "name": "Malayan Medical Clinic",
+        "address": "8 Gumamela St., Pook Ligaya, Bulacan",
+        "days": "Tue - Thu - Sat",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(08) 8620-0000",
+        "local": "local 101"
+      },
+      {
+        "name": "Sto. Anselm Community Hospital",
+        "address": "61 Malunggay St., Barangay Masagana, Pampanga",
+        "days": "Mon - Sat",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(07) 8285-0000",
+        "local": "local 620"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "ALP",
+      "BILI_PANEL",
+      "BUN",
+      "CBC_PLT",
+      "CREATININE",
+      "ECG_12L",
+      "ELECTROLYTES",
+      "FBS",
+      "FT4",
+      "HBSAG_SCREENING",
+      "LIPID_PROFILE",
+      "LIVER_PROFILE",
+      "TSH",
+      "URIC_ACID",
+      "URINALYSIS",
+      "VDRL_RPR",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ Platelet Count",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis (UA)",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "FBS",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Fasting Blood Glucose",
+      "section": "Metabolism:"
+    },
+    {
+      "code": "LIPID_PROFILE",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "BUN",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URIC_ACID",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUA",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "ELECTROLYTES",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LIVER_PROFILE",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Liver Profile",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "BILI_PANEL",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bilirubins",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "ALP",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Alk Phos",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "TSH",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "TSH",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT4",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT4",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA/L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12L ECG",
+      "section": "CT / Advanced:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Markers:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VDRL/RPR",
+      "section": "Serology:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1091.14,
+    "usable_bottom_px": 1092.2,
+    "footer_top_px": 1015.84
+  },
+  "box_ink_failures": 0
+}

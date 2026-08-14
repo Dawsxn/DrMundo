@@ -1,0 +1,109 @@
+{
+  "sample_id": "0000120",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "liver_evaluation",
+  "clean_image": "filled/0000120.png",
+  "blank_image": "stage1/blank/0000120.png",
+  "image": "media/0000120_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Ramon A. Katigbak, MD, FPAFP",
+    "physician_name_plain": "Ramon A. Katigbak",
+    "specialty": "Family Medicine",
+    "mobile": "0918-0000-681",
+    "email": "ramon.katigbak@clinic.example",
+    "license_no": "914008",
+    "ptr_no": "9645180",
+    "s2_no": "971126",
+    "clinics": [
+      {
+        "name": "Sto. Quentin Community Hospital",
+        "address": "45 Bougainvillea St., Sta. Lucia, Rizal",
+        "days": "Mon to Fri",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(08) 8400-0000",
+        "local": "local 663"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BILI_PANEL",
+      "HBSAG_SCREENING",
+      "SGOT_AST",
+      "SGPT_ALT",
+      "US_HBT"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "SGOT_AST",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGOT / AST",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "SGPT_ALT",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGPT / ALT",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "BILI_PANEL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bilirubin (TB, DB, IB)",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Profile:"
+    },
+    {
+      "code": "US_HBT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBT (Liver)",
+      "section": "Ultrasound:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 756.94,
+    "usable_bottom_px": 759.93,
+    "footer_top_px": 702.92
+  },
+  "box_ink_failures": 0
+}

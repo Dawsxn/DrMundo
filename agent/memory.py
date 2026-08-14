@@ -1,18 +1,76 @@
-"""Short-term session memory: a FIFO buffer of the conversation's text turns.
+"""Short-term session memory: text turns, plus the estimate currently under discussion.
 
 Just enough context for follow-ups like "...and at Chong Hua?" or "...how about an MRI
 instead?". We store only the user/assistant *text* turns (not the intermediate tool
-calls), capped so the buffer stays small. Nothing is persisted to disk -- health-related
-questions must not survive the session (privacy).
+calls), capped so the buffer stays small.
+
+Scope v2 adds STRUCTURED state. The §14 refine loop asks one question per turn -- "serum
+or 24-hour urine?", "do you have an HMO?" -- and each answer re-prices the SAME slip.
+Without somewhere to keep the estimate, every answer would need the patient to upload
+their request again, which is the fastest way to make them give up.
+
+Nothing is persisted to disk. Health questions, an extracted slip and a stated HMO
+balance must not survive the session.
 """
 
 from dataclasses import dataclass, field
+from typing import Optional
+
+from pricing.schemas import BudgetEstimate, HMOPlan
+from vision.schemas import ProcedureSource, RequestSlip
 
 
 @dataclass
 class SessionMemory:
     max_turns: int = 20  # keep the last N text turns
     turns: list[dict] = field(default_factory=list)
+
+    # ---- the estimate under discussion (Scope v2) -------------------------------------
+    slip: Optional[RequestSlip] = None
+    estimate: Optional[BudgetEstimate] = None
+    hmo: Optional[HMOPlan] = None
+    senior_or_pwd: Optional[bool] = None
+    procedure_source: ProcedureSource = "unknown"
+    planned_procedure: Optional[str] = None
+    # Answers to disambiguation questions: raw_text -> the test_code the patient chose.
+    resolved_choices: dict = field(default_factory=dict)
+
+    def remember_estimate(self, estimate: BudgetEstimate) -> None:
+        """Keep the latest estimate, and carry its context forward.
+
+        The context fields are what let the next turn re-price without re-asking. They
+        are copied out of the estimate rather than read through it, so a later partial
+        update cannot silently revert an answer the patient already gave.
+        """
+        self.estimate = estimate
+        if estimate.hmo is not None:
+            self.hmo = estimate.hmo
+        if estimate.senior_or_pwd:
+            self.senior_or_pwd = True
+        if estimate.procedure_source != "unknown":
+            self.procedure_source = estimate.procedure_source
+            self.planned_procedure = estimate.planned_procedure
+
+    def record_choice(self, raw_text: str, test_code: str) -> None:
+        """Remember how the patient disambiguated a label, so we never ask twice."""
+        self.resolved_choices[raw_text] = test_code
+
+    def pending_question_count(self) -> int:
+        """How many items still need the patient's input on the current estimate."""
+        return len(self.estimate.needs_confirmation) if self.estimate else 0
+
+    def has_estimate(self) -> bool:
+        return self.estimate is not None
+
+    def clear_estimate(self) -> None:
+        """Drop the slip and everything derived from it. A new upload starts clean."""
+        self.slip = None
+        self.estimate = None
+        self.hmo = None
+        self.senior_or_pwd = None
+        self.procedure_source = "unknown"
+        self.planned_procedure = None
+        self.resolved_choices.clear()
 
     def add(self, role: str, content: str) -> None:
         if not content:
@@ -33,3 +91,4 @@ class SessionMemory:
 
     def clear(self) -> None:
         self.turns.clear()
+        self.clear_estimate()
