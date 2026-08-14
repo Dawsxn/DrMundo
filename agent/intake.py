@@ -387,7 +387,13 @@ def slots_from_choice(kind: str, value, extra=None) -> dict:
         elif extra:
             slots["planned_procedure"] = str(extra)
         else:
-            slots["no_procedure_planned"] = True
+            # Saying "yes, for an operation" and naming none is not an answer, and it
+            # certainly is not "no operation" -- which is what this used to record, the
+            # exact opposite of what the patient pressed, silently removing their
+            # PhilHealth coverage.
+            slots["_incomplete"] = (
+                "Which operation is it? Tell me and I can add PhilHealth coverage."
+            )
 
     elif kind == Q_HMO:
         if value == "No HMO":
@@ -419,6 +425,11 @@ def apply_answer(memory, slots: dict, asked_kind: Optional[str]) -> dict:
     from pricing.hmo import resolve_hmo_plan
 
     out: dict = {}
+
+    # An incomplete answer must not close the question. Marking it asked would move the
+    # patient on from something they were trying to answer.
+    if slots.get("_incomplete"):
+        return out
 
     if asked_kind:
         memory.asked.add(asked_kind)
