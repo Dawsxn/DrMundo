@@ -56,6 +56,18 @@ class OutputReportOut(BaseModel):
     notes: list[str] = Field(default_factory=list)
 
 
+class QuestionOut(BaseModel):
+    """The pending intake question, described well enough for a UI to render controls."""
+
+    kind: str
+    text: str
+    options: list[str] = Field(default_factory=list)
+    field: Optional[str] = None          # "text" | "number" | None
+    subject: Optional[str] = None
+    step: int = 0
+    total: int = 0
+
+
 class AskResponse(BaseModel):
     answer: Answer
     trace: list[TraceStepOut] = Field(default_factory=list)
@@ -66,6 +78,7 @@ class AskResponse(BaseModel):
     estimated_cost_usd: float = 0.0
     prompt_version: str = "system_v2"
     output_report: OutputReportOut = Field(default_factory=OutputReportOut)
+    question: Optional[QuestionOut] = None
 
 
 class RefineRequest(BaseModel):
@@ -86,6 +99,20 @@ class RefineRequest(BaseModel):
     no_procedure_planned: Optional[bool] = Field(
         None, description="True for routine or precautionary work-up. A real answer, not a refusal."
     )
+
+
+class ChoiceRequest(BaseModel):
+    """A widget answer. Deterministic, so it never reaches the extractor."""
+
+    kind: str = Field(..., min_length=1, max_length=40)
+    value: str = Field(..., max_length=200)
+    extra: Optional[str] = Field(None, max_length=200,
+                                 description="Free text or amount beside the choice.")
+    session_id: str = Field("default", min_length=1, max_length=128)
+
+
+class SkipRequest(BaseModel):
+    session_id: str = Field("default", min_length=1, max_length=128)
 
 
 class ConverseRequest(BaseModel):
@@ -113,8 +140,23 @@ def _json_safe(value):
     return json.loads(json.dumps(value, default=str))
 
 
-def _to_response(result) -> "AskResponse":
-    """Shared shaping for /ask, /ask-slip and /refine."""
+def _pending_question(session_id: str) -> Optional[QuestionOut]:
+    """Describe the question the session is waiting on, if any."""
+    from agent.intake import next_question
+
+    memory = SERVICE._memory(session_id)
+    if memory.estimate is None or memory.last_asked is None:
+        return None
+    q = next_question(memory)
+    if q is None:
+        return None
+    return QuestionOut(kind=q.kind, text=q.text, options=list(q.options or []),
+                       field=q.field, subject=q.subject,
+                       step=q.progress[0], total=q.progress[1])
+
+
+def _to_response(result, session_id: Optional[str] = None) -> "AskResponse":
+    """Shared shaping for every endpoint that returns an Answer."""
     trace = [
         TraceStepOut(
             thought=step.thought,
@@ -140,6 +182,7 @@ def _to_response(result) -> "AskResponse":
             violations=list(getattr(report, "violations", []) or []),
             notes=list(getattr(report, "notes", []) or []),
         ),
+        question=_pending_question(session_id) if session_id else None,
     )
 
 
@@ -230,7 +273,7 @@ async def ask_slip(
         except OSError:
             pass
 
-    return _to_response(result)
+    return _to_response(result, session_id)
 
 
 @app.post("/refine", response_model=AskResponse, tags=["cost"])
@@ -264,7 +307,7 @@ def refine(req: RefineRequest) -> AskResponse:
         )
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(status_code=500, detail=f"Refine error: {exc}") from exc
-    return _to_response(result)
+    return _to_response(result, req.session_id)
 
 
 @app.post("/converse", response_model=AskResponse, tags=["cost"])
@@ -274,7 +317,28 @@ def converse(req: ConverseRequest) -> AskResponse:
         result = SERVICE.converse(req.text, session_id=req.session_id)
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(status_code=500, detail=f"Conversation error: {exc}") from exc
-    return _to_response(result)
+    return _to_response(result, req.session_id)
+
+
+@app.post("/choice", response_model=AskResponse, tags=["cost"])
+def choice(req: ChoiceRequest) -> AskResponse:
+    """Answer the current question by picking an option. No model call."""
+    try:
+        result = SERVICE.answer_choice(req.kind, req.value, req.extra,
+                                       session_id=req.session_id)
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"Choice error: {exc}") from exc
+    return _to_response(result, req.session_id)
+
+
+@app.post("/skip", response_model=AskResponse, tags=["cost"])
+def skip(req: SkipRequest) -> AskResponse:
+    """Move past the current question without answering it."""
+    try:
+        result = SERVICE.skip_question(session_id=req.session_id)
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"Skip error: {exc}") from exc
+    return _to_response(result, req.session_id)
 
 
 @app.get("/report.pdf", tags=["cost"])

@@ -179,6 +179,18 @@ class DrMundoService:
             prompt_version=self.prompt_name,
         )
 
+    def answer_choice(self, kind: str, value, extra=None,
+                      session_id: str = "default") -> ServiceResult:
+        """A widget answer. Deterministic: no model call, so a click costs nothing."""
+        from agent.intake import slots_from_choice
+        return self._advance(session_id, slots_from_choice(kind, value, extra),
+                             asked_kind=kind, echo=str(value))
+
+    def skip_question(self, session_id: str = "default") -> ServiceResult:
+        """Move past the current question without answering it."""
+        memory = self._memory(session_id)
+        return self._advance(session_id, {}, asked_kind=memory.last_asked, echo="Skip")
+
     def converse(self, text: str, session_id: str = "default") -> ServiceResult:
         """One conversational turn of the §14 refine loop.
 
@@ -193,14 +205,29 @@ class DrMundoService:
         from agent.intake import apply_answer, next_question, parse_answer
         from pricing.estimate import estimate_from_slip
 
+        memory = self._memory(session_id)
+        if memory.slip is None:
+            return self._no_slip_result()
+        with track_usage() as usage:
+            slots = parse_answer(text, memory.last_asked)
+        return self._advance(session_id, slots, asked_kind=memory.last_asked, echo=text,
+                             usage=usage)
+
+    def _advance(self, session_id: str, slots: dict, asked_kind, echo: str,
+                 usage=None) -> ServiceResult:
+        """Fold an answer in, re-price, and ask the next question (or finish)."""
+        import time as _time
+
+        from agent.intake import apply_answer, next_question
+        from pricing.estimate import estimate_from_slip
+
         start = _time.perf_counter()
         memory = self._memory(session_id)
         if memory.slip is None:
             return self._no_slip_result()
 
-        with track_usage() as usage:
-            slots = parse_answer(text, memory.last_asked)
-            refine_kwargs = apply_answer(memory, slots, memory.last_asked)
+        if True:
+            refine_kwargs = apply_answer(memory, slots, asked_kind)
 
             if "hmo" in refine_kwargs:
                 memory.hmo = refine_kwargs["hmo"]
@@ -221,18 +248,18 @@ class DrMundoService:
 
             question = None if slots.get("wants_report") else next_question(memory)
             memory.last_asked = question.kind if question else None
-            answer = self._reply(estimate, text, question, "Got it.")
+            answer = self._reply(estimate, echo, question, "Got it.")
             answer, report = check_output(answer)
 
-        memory.add_user(text)
+        memory.add_user(echo)
         memory.add_assistant(answer.answer_text)
 
         result = ServiceResult(
             answer=answer, category="cost", output_report=report,
             latency_ms=int((_time.perf_counter() - start) * 1000),
-            prompt_version=self.prompt_name, usage=usage,
+            prompt_version=self.prompt_name, usage=usage or UsageTotals(),
         )
-        result.estimated_cost_usd = estimate_cost(usage)
+        result.estimated_cost_usd = estimate_cost(result.usage)
         return result
 
     def _no_slip_result(self) -> ServiceResult:
