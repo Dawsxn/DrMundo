@@ -32,6 +32,12 @@ class SessionMemory:
     senior_or_pwd: Optional[bool] = None
     procedure_source: ProcedureSource = "unknown"
     planned_procedure: Optional[str] = None
+    # Answers that gate whole legs of the waterfall rather than adjusting a figure.
+    admitted: Optional[bool] = None            # inpatient vs outpatient
+    philhealth_active: Optional[bool] = None   # no contributions, no case rate
+    room_type: Optional[str] = None            # which MMC room, if admitted
+    length_of_stay: Optional[int] = None       # days, ASKED never assumed
+    hmo_covers_outpatient: Optional[bool] = None
     # Answers to disambiguation questions: raw_text -> the test_code the patient chose.
     resolved_choices: dict = field(default_factory=dict)
     # Which refine questions have been PUT to the patient. A question answered "no" is
@@ -76,6 +82,11 @@ class SessionMemory:
         self.senior_or_pwd = None
         self.procedure_source = "unknown"
         self.planned_procedure = None
+        self.admitted = None
+        self.philhealth_active = None
+        self.room_type = None
+        self.length_of_stay = None
+        self.hmo_covers_outpatient = None
         self.resolved_choices.clear()
         self.asked.clear()
         self.last_asked = None

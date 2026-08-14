@@ -227,47 +227,63 @@ def _render_message(msg: dict, index: int) -> None:
 
 
 # ----------------------------------------------------------------- the question card
+# A companion field only makes sense on some questions, and the label has to say what it
+# is for. An unlabelled box next to a row of buttons is the thing that felt arbitrary.
+_EXTRA_FIELDS = {
+    "procedure": ("Which operation?", "e.g. gallbladder surgery", "text"),
+    "hmo": ("How much of your benefit is left?", "e.g. 40000", "text"),
+    "stay": ("Number of nights", "e.g. 3", "text"),
+}
+
+
 def _render_question(q: dict) -> None:
-    """The pending question, as controls.
+    """The pending question, as controls inside one bordered card.
 
-    Clicking sends a deterministic choice to /choice, which never reaches the extractor.
-    Anyone who would rather type can still use the chat box instead.
+    Two shapes, chosen by how many answers there are. Two or three options are buttons,
+    because a single click is the whole interaction. More than that becomes a radio list
+    with one Continue button, since eight buttons in a grid is a wall, not a choice.
+
+    Clicking posts to /choice, which is deterministic and never reaches the extractor.
+    Typing in the chat box still works for anyone who prefers it.
     """
+    kind = q["kind"]
     step, total = q.get("step", 0), q.get("total", 0)
-    # Disambiguation repeats once per unclear item, so it gets its own wording rather
-    # than sharing the main question count.
-    noun = "Confirming" if q["kind"] == "disambiguate" else "Question"
-    counter = f"{noun} {step} of {total}" if total else "One more thing"
-    st.markdown(
-        f'<div class="dm-q"><div class="step">{counter}</div>'
-        f'<div class="ask">{q["text"]}</div></div>',
-        unsafe_allow_html=True,
-    )
+    noun = "Confirming" if kind == "disambiguate" else "Question"
+    options = q.get("options") or []
 
-    kind, options = q["kind"], q.get("options") or []
-    extra_key = f"extra_{kind}_{step}"
+    with st.container(border=True):
+        st.caption(f"{noun} {step} of {total}" if total else "One more thing")
+        st.markdown(f"**{q['text']}**")
 
-    # The optional companion input: an operation name, or a remaining balance.
-    extra = None
-    if q.get("field") == "text" and kind == "procedure":
-        extra = st.text_input("Which operation?", key=extra_key,
-                              placeholder="If it is for an operation, name it here",
+        extra = None
+        if q.get("field") and kind in _EXTRA_FIELDS:
+            label, placeholder, _ = _EXTRA_FIELDS[kind]
+            extra = st.text_input(label, key=f"extra_{kind}_{step}",
+                                  placeholder=placeholder)
+
+        if len(options) <= 3:
+            cols = st.columns(len(options) or 1)
+            for i, option in enumerate(options):
+                if cols[i].button(option, key=f"opt_{kind}_{step}_{i}",
+                                  use_container_width=True,
+                                  type="primary" if i == 0 else "secondary"):
+                    _send_choice(kind, option, extra)
+        else:
+            choice = st.radio("Pick one", options, key=f"radio_{kind}_{step}",
                               label_visibility="collapsed")
-    elif q.get("field") == "number" and kind == "hmo":
-        extra = st.text_input("Benefit remaining", key=extra_key,
-                              placeholder="Benefit remaining, if you know it (e.g. 40000)",
-                              label_visibility="collapsed")
+            left, right = st.columns([3, 1])
+            if left.button("Continue", key=f"go_{kind}_{step}",
+                           use_container_width=True, type="primary"):
+                _send_choice(kind, choice, extra)
+            if right.button("Skip", key=f"skip_{kind}_{step}",
+                            use_container_width=True):
+                _post_turn("/skip", echo="Skipped",
+                           json={"session_id": st.session_state.session_id})
+            return
 
-    if options:
-        cols = st.columns(min(len(options), 3))
-        for i, option in enumerate(options):
-            if cols[i % len(cols)].button(option, key=f"opt_{kind}_{step}_{i}",
-                                          use_container_width=True):
-                _send_choice(kind, option, extra)
-
-    if st.button("Skip this", key=f"skip_{kind}_{step}"):
-        _post_turn("/skip", echo="Skipped",
-                   json={"session_id": st.session_state.session_id})
+        if st.button("Skip this question", key=f"skip_{kind}_{step}"):
+            _post_turn("/skip", echo="Skipped",
+                       json={"session_id": st.session_state.session_id})
 
 
 # ----------------------------------------------------------------- turns

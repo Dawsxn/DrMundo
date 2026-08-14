@@ -14,6 +14,8 @@ the four buckets, and `BudgetEstimate` raises if it does not.
 from typing import Optional
 
 from pricing.catalog import price_items
+from decimal import Decimal
+
 from pricing.schemas import BudgetEstimate, HMOPlan, SeparateLine
 from pricing.waterfall import compute_budget
 from vision.extract_request import triage
@@ -28,6 +30,10 @@ def estimate_from_slip(
     separate_lines: Optional[list[SeparateLine]] = None,
     procedure_source: Optional[ProcedureSource] = None,
     planned_procedure: Optional[str] = None,
+    philhealth_active: Optional[bool] = None,
+    hmo_covers_outpatient: Optional[bool] = None,
+    room_type: Optional[str] = None,
+    length_of_stay: Optional[int] = None,
 ) -> BudgetEstimate:
     """Price a whole request slip.
 
@@ -45,6 +51,11 @@ def estimate_from_slip(
     buckets = triage(slip)
     priced, unpriced = price_items(buckets["priceable"])
 
+    lines = list(separate_lines or [])
+    room = _room_line(room_type, length_of_stay)
+    if room is not None:
+        lines.append(room)
+
     return compute_budget(
         priced=priced,
         unpriced=unpriced,
@@ -53,7 +64,35 @@ def estimate_from_slip(
         extracted_count=len(slip.items),
         hmo=hmo,
         senior_or_pwd=senior_or_pwd,
-        separate_lines=separate_lines or [],
+        separate_lines=lines,
         procedure_source=procedure_source or slip.procedure_source,
         planned_procedure=planned_procedure or slip.planned_procedure,
+        philhealth_active=philhealth_active,
+        hmo_covers_outpatient=hmo_covers_outpatient,
     )
+
+
+def _room_line(room_type: Optional[str], nights: Optional[int]) -> Optional[SeparateLine]:
+    """Room and board as a separate line, never folded into the total.
+
+    Length of stay is ASKED, never assumed (handoff §8). When the patient gives one we
+    multiply and say so on the line; when they do not, the per-day rate stands on its own.
+    """
+    if not room_type:
+        return None
+    from db.queries import get_facility_rates
+
+    match = next((r for r in get_facility_rates()["rates"]
+                  if r["room_type"].lower() == room_type.lower()), None)
+    if match is None:
+        return None
+
+    low, high = Decimal(str(match["rate_low"])), Decimal(str(match["rate_high"]))
+    if nights and nights > 0:
+        return SeparateLine(
+            label=f"Room & board, {match['room_type'].title()}",
+            price_low=low * nights, price_high=high * nights,
+            note=f"{nights} night(s) at {low:,.0f}/night, as you told me",
+        )
+    return SeparateLine(label=f"Room & board, {match['room_type'].title()}",
+                        price_low=low, price_high=high, unit="per day")
