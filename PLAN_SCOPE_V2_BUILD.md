@@ -347,7 +347,7 @@ Ready-to-paste prompts for every phase below live in
 
 | # | Phase | Owner | Depends on | Definition of done |
 |---|---|---|---|---|
-| **0** | **Foundation.** Rebuild the DB (`python data/load_db.py`, then `python -m data.build_embeddings`). Today's `dr_mundo.db` is still the v1 build — 34 procedures, no `price_basis`. Add `data/samples/` to `.gitignore` **before any patient document exists**. Kick off track **P**. | team | — | `load_db.py` runs with no `IntegrityError`; `professional_fees`, `facility_rates`, `lab_panels` present |
+| **0** | **Foundation.** Rebuild the DB (`python data/load_db.py`, then `python -m data.build_embeddings`). Today's `dr_mundo.db` is still the v1 build — 34 procedures, no `price_basis`. Add `data/samples/` to `.gitignore` **before any patient document exists**. Confirm a delivery date for track **P**. | team | — | `load_db.py` runs with no `IntegrityError`; `professional_fees`, `facility_rates`, `lab_panels` present |
 | **1** | **Contracts.** `vision/schemas.py` + `pricing/schemas.py` per §4, and nothing else. Small, but it is what lets A/B/C work in parallel. | team | 0 | Models import; the §4 count invariant has a test |
 | **2** | **Query layer.** Extend [`db/queries.py`](db/queries.py): `get_panel_comparison`, `get_professional_fees`, `get_facility_rates`; surface `price_basis` + `confidence`. Pre-written parameterised SQL — the model never writes SQL. | B | 1 | Typed rows; unit tests on known values |
 | **3** | **Waterfall.** `pricing/waterfall.py` per §5. No LLM, no I/O. | B | 1, 2 | Golden-number tests incl. all four `component` rows and both discount orderings |
@@ -360,10 +360,11 @@ Ready-to-paste prompts for every phase below live in
 | **10** | **Report renderer.** `report/render.py` → the one-pager (§11), inline + PDF. | A | 7, 9 | PDF renders; every peso traces to a `BudgetEstimate` field |
 | **11** | **Eval suite.** §9, §9.1, §9.2. | C | P, 10 | 3+ quantitative metrics, reported per source, with interpretation |
 | **12** | **Deck + write-up.** Spec §6.2/§6.3 format. | team | 11 | Spec §11 checklist fully ticked |
-| **P** | **Gold set** — request slips only; collect, redact, annotate (§9.2). **Runs in parallel from Phase 0.** No HMO documents needed since §2.3 went conversational. | team | 0 | 40 slips (floor 24), four cells non-empty, ~20% double-annotated |
+| **P** | **Gold set** (request slips) and **`data/hmo_published_tiers.csv`** — **built externally, not by this team.** Nothing in this plan creates data. See §9.2 for what the eval suite needs from the gold set. | *external* | — | Delivered and annotated; §9.1 stratification satisfiable |
 
-**Track P is the critical path, not Phase 12.** It starts at Phase 0 and gates Phases 5 and 11.
-Everything else can slip a week; this can't.
+**Track P is built externally and still gates Phases 5 and 11.** It is off this team's plate but
+not off the dependency graph — Phase 5 cannot be benchmarked and Phase 11 cannot be run without it.
+Agree a delivery date with whoever owns it, because no amount of local progress substitutes.
 
 **Docker note:** WeasyPrint needs `libpango`/`libcairo`, which `python:3.11-slim` does not ship
 (handoff §11). Add them in Phase 10, alongside the OCR weights (§8) — the two together are the
@@ -457,10 +458,11 @@ the repo.
 The spec is explicit that the Midterm was graded on your own sample outputs and the Final wants a
 rigorous suite. This is the largest gap between the repo today and the rubric.
 
-**Gold set:** 30–50 request slips — printed and handwritten, redacted — each annotated with a
-ground-truth item list. Include slips containing items MMC does not price (fecalysis, sodium):
-`unpriced[]` being busy is the honest outcome, not a bug. This set does double duty as the RRL
-benchmark (§8).
+**Gold set — supplied externally (§6, track P), not built here.** What arrives should be 30–50
+request slips, printed and handwritten, redacted, each annotated with a ground-truth item list, and
+it does double duty as the RRL benchmark (§8). Worth requesting explicitly: slips containing items
+MMC does not price (fecalysis, sodium), since `unpriced[]` being busy is the honest outcome rather
+than a bug, and a gold set without them cannot test that branch at all.
 
 ### 9.1 Stratification — the main threat to metric validity
 
@@ -484,37 +486,25 @@ Retrofitting these tags after the fact is far more painful than adding two field
 was identified and PhilHealth therefore does not apply — not one showing ₱0 of coverage, which
 reads as "PhilHealth covers nothing" and is a different, wrong claim.
 
-### 9.2 Annotation protocol
+### 9.2 What the eval suite needs from the gold set
 
-The team annotates its own gold set, which makes the protocol a design artefact rather than an
-afterthought. Write it down *before* the first slip is labelled — retrofitting a rule means
-re-labelling everything done under the old one.
+**The gold set is built externally (§6, track P). This section is not a work instruction — it is
+the list of properties Phase 11 depends on.** Hand it to whoever owns the data; if a property is
+missing, the corresponding metric cannot be computed and Phase 11 should say so rather than
+improvise.
 
-**How many.** Item-level metrics care about item count, not slip count. At roughly 8 items per
-slip, **40 slips ≈ 320 items**, which is enough for an F1 you can quote with a straight face and
-gives ~10 per stratification cell (§9.1). Treat **24 slips (6/cell) as the floor** — below that the
-per-cell numbers are anecdotes. If time is short, cut *synthetic* slips, never real ones.
+| Needed | Why Phase 11 can't proceed without it |
+|---|---|
+| `source: real \| synthetic` per item | §9.1 — metrics are reported per source; a blended F1 is indefensible |
+| `names_procedure: bool` per slip | The second stratification axis; without it the axes can't be crossed |
+| `raw_text` verbatim **and** intended catalogue item, stored separately | The first scores OCR, the second scores matching. Collapsed, you cannot tell which stage failed — and they're owned by different people (§12) |
+| Illegible items **flagged, not guessed** | They are the ground truth for `needs_confirmation`. An annotator quietly resolving one destroys the only signal for the branch that protects patients from confident wrong prices |
+| A stated rule for what counts as one item | `CBC with platelet count` — one or two? Whichever, applied consistently. It silently changes every precision and recall figure |
+| ~20% double-annotated | Establishes the **human ceiling**. If annotators agree on 92% of items, an OCR F1 of 0.90 is near-optimal rather than mediocre — and you can say so with evidence |
 
-**Rules to fix in advance** — each of these will otherwise be decided inconsistently three times:
-
-- **What is one item?** `CBC with platelet count` — one item or two? Pick a rule and apply it
-  everywhere, because it silently changes every precision and recall figure you report.
-- **Record `raw_text` verbatim *and* the intended catalogue item**, separately. The first scores
-  OCR, the second scores matching. Collapsing them makes it impossible to tell which stage failed —
-  and those are owned by two different people (§12).
-- **Illegible items get flagged, never guessed.** They are the ground truth for
-  `needs_confirmation`, and an annotator quietly resolving one destroys the only signal you have
-  for the branch that protects patients from confident wrong prices.
-- **Order doesn't count.** Score as a set; a slip read bottom-to-top is not an error.
-- **Redact first, annotate second.** Nobody should be looking at an unredacted slip in a
-  spreadsheet.
-
-**Double-annotate ~20% and report inter-annotator agreement.** With three annotators this costs
-about 8 slips of duplicated effort and buys two things the spec rewards directly: it is exactly the
-"more rigorous eval suite" the Final asks for over the Midterm, and it establishes a **human
-ceiling** — if two of you agree on only 92% of items, an OCR F1 of 0.90 is near-optimal rather than
-mediocre, and you can say so with evidence. Disagreements are also the fastest way to find the
-holes in the rules above.
+**Volume:** item count matters, not slip count. At ~8 items per slip, **40 slips ≈ 320 items** and
+gives ~10 per stratification cell. Below ~24 slips the per-cell numbers are anecdotes. Order is
+irrelevant — score as a set.
 
 | Layer | Metric | Why it answers the thesis |
 |---|---|---|
@@ -644,12 +634,11 @@ which depend only on the committed dataset and can start immediately.
 
 1. **The OCR latency budget (§8)** — one number, agreed before benchmarking. It is the only
    remaining decision that changes an outcome rather than a schedule.
-2. **Gold-set size, confirmed against the calendar.** §9.2 recommends 40 slips and floors it at 24.
-   Collection + annotation is track **P** in §6 and the **critical path of the whole project** — it
-   gates Phase 5 and Phase 11, and §0.1 made it harder on both axes (handwriting in scope, benefits
-   letters rather than cards). It starts at Phase 0 and runs alongside everything else.
+2. **A delivery date for track P**, agreed with whoever owns the data. It gates Phase 5's benchmark
+   and all of Phase 11, and no local progress substitutes for it. Hand them §9.2 — every property
+   in that table is one a metric depends on, and several are painful to retrofit.
 
-**Settled:** team of 3 (§12) · team annotates its own gold set (§9.2) · no GPU, CPU-only (§8).
+**Settled:** team of 3 (§12) · no GPU, CPU-only (§8) · gold set and HMO tiers built externally (§6).
 
 **Defaults if nobody decides — override knowingly:**
 

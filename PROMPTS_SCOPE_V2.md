@@ -37,12 +37,16 @@ You are working in the Dr. Mundo repository at D:\Libraries\Documents\STAI100\Dr
 Read PLAN_SCOPE_V2_BUILD.md §0 and §0.1, then HANDOFF_SCOPE_V2_DATA.md §4. The 2026-08-09
 commits are authoritative.
 
+This phase does NOT create data — the gold set and data/hmo_published_tiers.csv are built
+externally (track P). Everything here runs existing build scripts over already-committed CSVs.
+
 Do these four things:
 
 1. Add `data/samples/` and `data/samples_raw/` to .gitignore, with a comment explaining that
    they hold un-redactable patient documents and must never be committed. Do this FIRST, before
    anything else in this phase — no patient document may exist in the working tree before the
-   ignore rule does.
+   ignore rule does. (The gold set itself is built externally, but slips will land in these
+   directories locally when Phase 5 runs against them.)
 
 2. Rebuild the database from the committed Scope v2 CSVs:
        python data/load_db.py
@@ -338,23 +342,19 @@ Two facts drive this design:
 - Handoff §7 rejected INVENTED tiers, not published ones. A table of published figures with source
   URLs satisfies the project rule that no number exists unless it was published.
 
-Build three things:
+data/hmo_published_tiers.csv is built EXTERNALLY (track P) — you consume it, you do not create it.
+Expect columns: provider, plan_name, mbl_annual, room_entitlement, source (URL), as_of,
+is_published. If the file is missing, STOP and report that rather than seeding your own figures;
+inventing HMO numbers is precisely what handoff §7 rejected.
 
-1. data/hmo_published_tiers.csv — published tier figures with columns: provider, plan_name,
-   mbl_annual, room_entitlement, source (URL), as_of, is_published. Seed it from published
-   individual/family tiers, e.g. Maxicare Platinum Plus 200000 (large private), Platinum 150000
-   (regular private), Gold 100000, Silver 60000; MediCard Standard ~50000-60000 (ward/semi-private)
-   with higher tiers 100000-120000. VERIFY each figure against the provider's own page before
-   committing it and put the URL in the source column — do not carry over a number from this prompt
-   without checking it. If a figure cannot be verified, omit the row rather than guessing.
-   Room entitlement values should map onto the room types in facility_rates.
+Build two things:
 
-2. A lookup: plan name -> HMOPlan (vision/schemas.py, Phase 1) pre-filled with mbl_annual,
+1. A lookup: plan name -> HMOPlan (vision/schemas.py, Phase 1) pre-filled with mbl_annual,
    room_entitlement, and mbl_source="published_tier". Matching should be forgiving of casing and
    partial names. A plan that matches nothing is the EXPECTED case, not an error — most PH coverage
    is employer-provided and negotiated, and corporate plans match no public tier.
 
-3. The three refine questions for the §14 flow, in order:
+2. The three refine questions for the §14 flow, in order:
      "Do you have an HMO? Which provider and plan?"
      "Roughly how much of your benefit is left?"      <- always typed, never looked up
      (ask for MBL directly only if the plan matched no tier)
@@ -371,11 +371,12 @@ Rules:
   help rather than a computed balance.
 - Never persist a patient's stated plan details alongside anything identifying.
 
-Do NOT build any image handling here. Do NOT modify the waterfall — W3 is already specified in §5
-and takes an HMOPlan regardless of how it was assembled.
+Do NOT build any image handling here. Do NOT create or edit data/hmo_published_tiers.csv. Do NOT
+modify the waterfall — W3 is already specified in §5 and takes an HMOPlan regardless of how it was
+assembled.
 
-Report: the table with every source URL you verified, which seed figures you could NOT verify and
-therefore omitted, the matching behaviour, and how an unmatched plan is handled.
+Report: the matching behaviour, how an unmatched plan is handled, and any column you expected in
+hmo_published_tiers.csv that was missing or shaped differently than assumed.
 ```
 
 ---
@@ -671,61 +672,17 @@ outstanding.
 
 ---
 
-## Track P — Gold set (runs in parallel from Phase 0)
+## Track P — Gold set and HMO tiers (external)
 
-```
-You are working in the Dr. Mundo repository at D:\Libraries\Documents\STAI100\DrMundo.
+**No prompt. This team does not create data.**
 
-Read PLAN_SCOPE_V2_BUILD.md §0.1, §9.1 and §9.2, plus HANDOFF_SCOPE_V2_DATA.md §12.
+The annotated gold set of request slips and `data/hmo_published_tiers.csv` are built outside this
+plan. They remain hard dependencies: **Phase 5 cannot be benchmarked and Phase 11 cannot be run
+without the gold set**, and Phase 6 is a lookup over a table it does not create.
 
-This is the CRITICAL PATH of the whole project. It starts at Phase 0 and gates Phase 5 and Phase
-11. Everything else can slip a week; this cannot.
+What to hand whoever owns the data: **plan §9.2**. Every row in that table is a property some
+metric depends on, and `source`, `names_procedure`, verbatim-vs-normalised text, and the illegible
+flag are all far more painful to retrofit than to capture at annotation time. Plan §9.1 explains
+why the two stratification axes must be crossed rather than left correlated.
 
-PRECONDITION: data/samples/ must already be gitignored (Phase 0, step 1). Verify this before a
-single document enters the working tree. If it is not ignored, stop and do that first.
-
-Build the annotated gold set:
-
-TARGET: 40 slips (~320 items at ~8 items per slip). FLOOR: 24. If time runs short, cut SYNTHETIC
-slips, never real ones — the real ones are the only honest denominator.
-
-STRATIFY across four cells, none empty:
-  real / names-a-procedure        real / work-up-only
-  synthetic / names-a-procedure   synthetic / work-up-only
-The two axes must not correlate. If every synthetic slip names a procedure and every real one does
-not, no metric you produce afterwards is interpretable — you will not be able to tell whether the
-model struggled with handwriting or with procedure lines.
-
-Include slips containing items MMC does not price (fecalysis, sodium). unpriced[] being busy is the
-honest outcome, not a bug.
-
-ANNOTATION PROTOCOL — write it down BEFORE labelling the first slip. Retrofitting a rule means
-re-labelling everything done under the old one:
-- What counts as ONE item? "CBC with platelet count" — one or two? Pick a rule, apply it
-  everywhere. It silently changes every precision and recall figure you report.
-- Record raw_text VERBATIM and the intended catalogue item SEPARATELY. The first scores OCR, the
-  second scores matching. Collapsing them makes it impossible to tell which stage failed — and
-  those stages are owned by two different people.
-- Illegible items are FLAGGED, never guessed. They are the ground truth for needs_confirmation, and
-  an annotator quietly resolving one destroys the only signal protecting patients from confident
-  wrong prices.
-- Order does not count. Score as a set.
-- Redact FIRST, annotate SECOND. Nobody looks at an unredacted slip in a spreadsheet.
-- Tag every item with source: real|synthetic and names_procedure: bool at annotation time. Adding
-  these later is far more painful than now.
-
-DOUBLE-ANNOTATE ~20% (about 8 slips) across different annotators and report inter-annotator
-agreement. With three people this costs little and buys two things: it is exactly the rigour the
-Final asks for over the Midterm, and it establishes a human ceiling for interpreting OCR F1.
-Disagreements are also the fastest way to find holes in the rules above.
-
-Redaction: in the RASTER, never via PDF annotations, which can be peeled off. No unredacted
-intermediate anywhere under the repo.
-
-Request slips are the ONLY document type. Do NOT collect HMO cards, certificates or benefits
-letters — HMO intake went conversational on 2026-08-14 (plan §2.3) and no HMO document is used
-anywhere in this project.
-
-Report: counts per cell, the annotation rules as written, inter-annotator agreement, and the
-real/synthetic split.
-```
+Agree a delivery date. No local progress substitutes for it.
