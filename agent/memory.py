@@ -38,6 +38,7 @@ class SessionMemory:
     room_type: Optional[str] = None            # which MMC room, if admitted
     length_of_stay: Optional[int] = None       # days, ASKED never assumed
     hmo_covers_outpatient: Optional[bool] = None
+    preexisting: Optional[bool] = None
     # Answers to disambiguation questions: raw_text -> the test_code the patient chose.
     resolved_choices: dict = field(default_factory=dict)
     # Which refine questions have been PUT to the patient. A question answered "no" is
@@ -87,6 +88,7 @@ class SessionMemory:
         self.room_type = None
         self.length_of_stay = None
         self.hmo_covers_outpatient = None
+        self.preexisting = None
         self.resolved_choices.clear()
         self.asked.clear()
         self.last_asked = None

@@ -357,10 +357,16 @@ def _build_caveats(
 
     if hmo is not None and hmo.limit_assumed_untouched and (hmo_low or hmo_high):
         out.append(
-            f"This assumes your full ₱{hmo.mbl_annual:,.0f} annual HMO limit is still "
-            f"available. If you have already claimed against it this year, you will pay "
-            f"up to ₱{hmo_high:,.0f} more than shown. Your member portal has the real "
-            f"balance."
+            f"Your plan's limit is ₱{hmo.mbl_annual:,.0f} per illness per year, and this "
+            f"assumes none of it has gone on this particular condition yet. If you have "
+            f"already claimed for it this year, you will pay up to ₱{hmo_high:,.0f} more "
+            f"than shown."
+        )
+    if hmo is not None and hmo.preexisting:
+        out.append(
+            "You said this condition predates your plan. Pre-existing conditions are "
+            "capped at a lower amount during the first year of membership, so the HMO "
+            "figure above may be too generous. Your certificate states the actual cap."
         )
 
     if hmo_covers_outpatient is False:
