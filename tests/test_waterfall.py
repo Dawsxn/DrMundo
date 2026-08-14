@@ -53,31 +53,33 @@ def test_multiplier_includes_the_vat_exemption():
 # ------------------------------------------------------------------ W0 / W2 basics
 def test_package_procedure_deducts_its_case_rate():
     # Laparoscopic cholecystectomy: P150,000-184,000 against a P60,450 case rate.
-    #   low  150,000 - 60,450 =  89,550
-    #   high 184,000 - 60,450 = 123,550
+    # Only the FACILITY share offsets a facility-only gross: 60,450 x 0.70 = 42,315.
+    #   low  150,000 - 42,315 = 107,685
+    #   high 184,000 - 42,315 = 141,685
     est = compute_budget(
         priced=[_priced(low="150000", high="184000", kind="procedure",
                         name="LAPAROSCOPIC CHOLECYSTECTOMY", rvs="47562",
                         case_rate="60450", basis="package")]
     )
     assert est.gross_low == Decimal("150000")
-    assert est.philhealth_low == Decimal("60450")
-    assert est.prepare_low == Decimal("89550")
-    assert est.prepare_high == Decimal("123550")
+    assert est.philhealth_low == Decimal("42315.00")
+    assert est.prepare_low == Decimal("107685.00")
+    assert est.prepare_high == Decimal("141685.00")
 
 
 def test_case_rate_straddling_the_range_gives_a_range_of_coverage():
     # ESWL: P22,700-70,900 against a P35,100 case rate. THIS is why every leg is a range.
-    #   low  min(35,100, 22,700) = 22,700  -> 22,700 - 22,700 =      0
-    #   high min(35,100, 70,900) = 35,100  -> 70,900 - 35,100 = 35,800
+    # Facility share: 35,100 x 0.70 = 24,570.
+    #   low  min(24,570, 22,700) = 22,700  -> 22,700 - 22,700 =      0
+    #   high min(24,570, 70,900) = 24,570  -> 70,900 - 24,570 = 46,330
     est = compute_budget(
         priced=[_priced(low="22700", high="70900", kind="procedure", name="ESWL",
                         rvs="50590", case_rate="35100", basis="package")]
     )
     assert est.philhealth_low == Decimal("22700")
-    assert est.philhealth_high == Decimal("35100")
+    assert est.philhealth_high == Decimal("24570.00")
     assert est.prepare_low == Decimal("0")
-    assert est.prepare_high == Decimal("35800")
+    assert est.prepare_high == Decimal("46330.00")
 
 
 def test_excess_case_rate_does_not_subsidise_other_items():
@@ -132,18 +134,18 @@ def test_procedure_without_an_rvs_code_reports_undetermined_not_zero():
 
 # ------------------------------------------------------------------ W1 ordering
 def test_senior_discount_is_applied_before_philhealth():
-    # P100,000 procedure, P46,800 case rate, senior.
-    #   discount first : 100,000 x 0.714286 = 71,428.60 ; -46,800 = 24,628.60
-    #   philhealth first: (100,000-46,800) x 0.714286 = 38,000.02
-    # They differ by ~P13,371. Practice is discount-first (plan §2.4).
+    # P100,000 procedure, P46,800 case rate (facility share 32,760), senior.
+    #   discount first : 100,000 x 0.714286 = 71,428.60 ; -32,760 = 38,668.60
+    #   philhealth first: (100,000-32,760) x 0.714286 = 48,028.60
+    # They differ by ~P9,360. Practice is discount-first (plan §2.4).
     est = compute_budget(
         priced=[_priced(low="100000", high="100000", kind="procedure", name="APPY",
                         rvs="44950", case_rate="46800", basis="package")],
         senior_or_pwd=True,
     )
-    assert est.prepare_low == Decimal("24628.600000")
-    wrong_order = (Decimal("100000") - Decimal("46800")) * SENIOR_PWD_MULTIPLIER
-    assert abs(wrong_order - est.prepare_low) > Decimal("13000")
+    assert est.prepare_low == Decimal("38668.600000")
+    wrong_order = (Decimal("100000") - Decimal("32760")) * SENIOR_PWD_MULTIPLIER
+    assert abs(wrong_order - est.prepare_low) > Decimal("9000")
 
 
 def test_vat_exemption_is_not_silently_dropped():
@@ -222,18 +224,18 @@ def test_published_tier_figures_are_labelled_for_verification():
 # ------------------------------------------------------------------ W4 / whole thing
 def test_all_four_legs_together():
     #   gross      100,000
-    #   senior     100,000 x 0.714286      = 71,428.60
-    #   philhealth min(46,800, 71,428.60)  = 46,800    -> 24,628.60
-    #   hmo        min(20,000, 24,628.60)  = 20,000    ->  4,628.60
+    #   senior     100,000 x 0.714286        = 71,428.60
+    #   philhealth 46,800 x 0.70 = 32,760    -> 38,668.60
+    #   hmo        min(20,000, 38,668.60)    = 20,000  -> 18,668.60
     est = compute_budget(
         priced=[_priced(low="100000", high="100000", kind="procedure", name="APPY",
                         rvs="44950", case_rate="46800", basis="package")],
         senior_or_pwd=True,
         hmo=HMOPlan(remaining_balance=Decimal("20000")),
     )
-    assert est.philhealth_low == Decimal("46800")
+    assert est.philhealth_low == Decimal("32760.00")
     assert est.hmo_low == Decimal("20000")
-    assert to_display_pesos(est.prepare_low) == 4629
+    assert to_display_pesos(est.prepare_low) == 18669
 
 
 def test_prepare_never_goes_negative():
@@ -279,3 +281,82 @@ def test_explicit_extracted_count_mismatch_raises():
     # The waterfall must not paper over a dropped item.
     with pytest.raises(Exception):
         compute_budget(priced=[_priced(low="1", high="1")], extracted_count=5)
+
+
+# ------------------------------------------------------------------ PhilHealth realism
+def test_only_the_facility_share_offsets_a_facility_only_gross():
+    """A case rate splits ~70/30 between the hospital and the doctor.
+
+    Professional fees are out of scope and shown as a separate line, so the gross here is
+    facility only. Deducting the WHOLE case rate from it hands the patient the surgeon's
+    subsidy too, and understates what they owe by 30% of the rate. On a P60,450
+    cholecystectomy that is P18,135.
+    """
+    est = compute_budget(
+        priced=[_priced(low="150000", high="184000", kind="procedure", name="CHOLE",
+                        rvs="47562", case_rate="60450", basis="package")]
+    )
+    assert est.philhealth_low == Decimal("60450") * Decimal("0.70")
+
+
+def test_second_procedure_is_paid_at_half():
+    """PhilHealth pays the largest case rate in full and the next at 50%.
+
+    Summing both at 100% invents coverage that will not arrive.
+      first  60,450 x 0.70          = 42,315
+      second 46,800 x 0.70 x 0.50   = 16,380
+    """
+    est = compute_budget(priced=[
+        _priced(low="200000", high="200000", kind="procedure", name="BIG",
+                rvs="47562", case_rate="60450", basis="package"),
+        _priced(low="200000", high="200000", kind="procedure", name="SMALLER",
+                rvs="44950", case_rate="46800", basis="package"),
+    ])
+    assert est.philhealth_low == Decimal("42315.00") + Decimal("16380.00")
+
+
+def test_third_procedure_draws_nothing():
+    est = compute_budget(priced=[
+        _priced(low="200000", high="200000", kind="procedure", name="A",
+                rvs="1", case_rate="60000", basis="package"),
+        _priced(low="200000", high="200000", kind="procedure", name="B",
+                rvs="2", case_rate="50000", basis="package"),
+        _priced(low="200000", high="200000", kind="procedure", name="C",
+                rvs="3", case_rate="40000", basis="package"),
+    ])
+    expected = Decimal("60000") * Decimal("0.70") + Decimal("50000") * Decimal("0.70") * Decimal("0.5")
+    assert est.philhealth_low == expected
+
+
+def test_the_largest_case_rate_is_the_one_paid_in_full():
+    # Order of the items must not decide who gets the full rate; value does, because
+    # ranking the other way would quietly cost the patient money.
+    a = compute_budget(priced=[
+        _priced(low="200000", high="200000", kind="procedure", name="SMALL",
+                rvs="1", case_rate="20000", basis="package"),
+        _priced(low="200000", high="200000", kind="procedure", name="BIG",
+                rvs="2", case_rate="60000", basis="package"),
+    ])
+    expected = Decimal("60000") * Decimal("0.70") + Decimal("20000") * Decimal("0.70") * Decimal("0.5")
+    assert a.philhealth_low == expected
+
+
+def test_inactive_philhealth_deducts_nothing():
+    est = compute_budget(
+        priced=[_priced(low="150000", high="184000", kind="procedure", name="CHOLE",
+                        rvs="47562", case_rate="60450", basis="package")],
+        philhealth_active=False,
+    )
+    assert est.philhealth_low == Decimal("0")
+    assert any("not active" in c for c in est.caveats)
+
+
+def test_hmo_not_applied_when_the_plan_excludes_outpatient_labs():
+    est = compute_budget(
+        priced=[_priced(low="5000", high="5000", kind="lab", name="PANEL")],
+        hmo=HMOPlan(remaining_balance=Decimal("40000")),
+        hmo_covers_outpatient=False,
+    )
+    assert est.hmo_low == Decimal("0")
+    assert est.prepare_low == Decimal("5000")
+    assert any("does not cover outpatient" in c for c in est.caveats)
