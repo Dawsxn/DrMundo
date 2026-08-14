@@ -71,6 +71,22 @@ def test_a_combination_mmc_does_not_sell_is_reported_unpriced():
     assert find_price("XR_CHEST_AP_L") is None
 
 
+def test_short_surface_form_does_not_match_mid_word():
+    """CREATININE's surface form is "Crea", and "crea" sits inside "pan-crea-s".
+
+    Raw substring matching paired it with the PANCREAS row at P3,860-16,800, and the
+    shortest-name rule then preferred that 8-character name over CREATININE SERUM. A P740
+    blood test was priced as a P16,800 study. A match must begin at a word boundary.
+    """
+    assert find_price("CREATININE")["service"] == "CREATININE SERUM"
+
+
+def test_word_boundary_rule_still_spans_punctuation():
+    # "Chest PA/L" must still reach "CHEST PA & LATERAL": tokens are joined after the
+    # boundary check, because MMC punctuates inconsistently.
+    assert find_price("XR_CHEST_PA_L")["service"] == "CHEST PA & LATERAL"
+
+
 def test_hand_verified_mapping_is_exact_confidence():
     priced, _ = price_items([_item("TROPONIN_I")])
     assert priced[0].catalog_name == "TROPONIN I HIGH SENSITIVITY"

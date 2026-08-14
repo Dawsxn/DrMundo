@@ -102,8 +102,14 @@ class DrMundoService:
             estimate = estimate_from_slip(slip, hmo=memory.hmo,
                                           senior_or_pwd=bool(memory.senior_or_pwd))
             memory.remember_estimate(estimate)
+            from agent.intake import next_question
             answer = self._answer_for(estimate, "uploaded request slip")
-            answer.answer_text = format_budget_answer(answer)
+            body = format_budget_answer(answer)
+            question = next_question(memory)
+            memory.last_asked = question.kind if question else None
+            answer.answer_text = (
+                "\n\n".join([body, question.text]) if question else body
+            )
             answer, report = check_output(answer)
 
         memory.add_user("[uploaded a request slip]")
@@ -174,6 +180,74 @@ class DrMundoService:
             latency_ms=int((_time.perf_counter() - start) * 1000),
             prompt_version=self.prompt_name,
         )
+
+    def converse(self, text: str, session_id: str = "default") -> ServiceResult:
+        """One conversational turn of the §14 refine loop.
+
+        The patient answers in their own words; this extracts the slots, re-prices, and
+        asks the next question. Never blocks: "just show me the report" is honoured
+        immediately, because a figure that arrived before every question was answered is
+        still a true figure.
+        """
+        import time as _time
+
+        from agent.format import format_budget_answer
+        from agent.intake import apply_answer, next_question, parse_answer
+        from pricing.estimate import estimate_from_slip
+
+        start = _time.perf_counter()
+        memory = self._memory(session_id)
+        if memory.slip is None:
+            return self._no_slip_result()
+
+        with track_usage() as usage:
+            slots = parse_answer(text, memory.last_asked)
+            refine_kwargs = apply_answer(memory, slots, memory.last_asked)
+
+            if "hmo" in refine_kwargs:
+                memory.hmo = refine_kwargs["hmo"]
+            if "senior_or_pwd" in refine_kwargs:
+                memory.senior_or_pwd = refine_kwargs["senior_or_pwd"]
+            if "procedure_source" in refine_kwargs:
+                memory.procedure_source = refine_kwargs["procedure_source"]
+                memory.planned_procedure = refine_kwargs.get("planned_procedure")
+
+            estimate = estimate_from_slip(
+                memory.slip,
+                hmo=memory.hmo,
+                senior_or_pwd=bool(memory.senior_or_pwd),
+                procedure_source=memory.procedure_source,
+                planned_procedure=memory.planned_procedure,
+            )
+            memory.remember_estimate(estimate)
+
+            question = None if slots.get("wants_report") else next_question(memory)
+            memory.last_asked = question.kind if question else None
+
+            answer = self._answer_for(estimate, text)
+            body = format_budget_answer(answer)
+            answer.answer_text = (
+                "\n\n".join([body, question.text]) if question else body
+            )
+            answer, report = check_output(answer)
+
+        memory.add_user(text)
+        memory.add_assistant(answer.answer_text)
+
+        result = ServiceResult(
+            answer=answer, category="cost", output_report=report,
+            latency_ms=int((_time.perf_counter() - start) * 1000),
+            prompt_version=self.prompt_name, usage=usage,
+        )
+        result.estimated_cost_usd = estimate_cost(usage)
+        return result
+
+    def _no_slip_result(self) -> ServiceResult:
+        answer = Answer(status="no_data", path=None, query="refine",
+                        answer_text="Upload a request slip first and I'll price it.")
+        answer, report = check_output(answer)
+        return ServiceResult(answer=answer, output_report=report,
+                             prompt_version=self.prompt_name)
 
     @staticmethod
     def _answer_for(estimate, query: str) -> Answer:

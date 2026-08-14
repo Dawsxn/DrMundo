@@ -88,6 +88,13 @@ class RefineRequest(BaseModel):
     )
 
 
+class ConverseRequest(BaseModel):
+    """A free-text reply in the refine loop. The model extracts the slots."""
+
+    text: str = Field(..., min_length=1, max_length=2000)
+    session_id: str = Field("default", min_length=1, max_length=128)
+
+
 class ResetRequest(BaseModel):
     session_id: str = Field("default", min_length=1, max_length=128)
 
@@ -258,6 +265,41 @@ def refine(req: RefineRequest) -> AskResponse:
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(status_code=500, detail=f"Refine error: {exc}") from exc
     return _to_response(result)
+
+
+@app.post("/converse", response_model=AskResponse, tags=["cost"])
+def converse(req: ConverseRequest) -> AskResponse:
+    """Answer one refine question in plain language, then ask the next one."""
+    try:
+        result = SERVICE.converse(req.text, session_id=req.session_id)
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"Conversation error: {exc}") from exc
+    return _to_response(result)
+
+
+@app.get("/report.pdf", tags=["cost"])
+def report_pdf(session_id: str = "default"):
+    """The current estimate as a downloadable one-page PDF.
+
+    Generated from the structured estimate, never from the prose, so the document cannot
+    contain a figure the report did not.
+    """
+    from fastapi.responses import Response
+
+    from report.pdf import build_pdf
+
+    memory = SERVICE._memory(session_id)
+    if memory.estimate is None:
+        raise HTTPException(404, "No estimate for this session yet. Upload a slip first.")
+    try:
+        payload = build_pdf(memory.estimate)
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(500, f"Could not render the PDF: {exc}") from exc
+    return Response(
+        content=payload,
+        media_type="application/pdf",
+        headers={"Content-Disposition": 'inline; filename="dr-mundo-estimate.pdf"'},
+    )
 
 
 @app.post("/reset", response_model=ResetResponse, tags=["cost"])
