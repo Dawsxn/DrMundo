@@ -116,7 +116,19 @@ def _new_chat() -> None:
 
 # ----------------------------------------------------------------- rendering
 def _peso(v) -> str:
-    return f"₱{v:,.0f}" if v is not None else "n/a"
+    """Format a peso amount that may arrive as a number OR a string.
+
+    Scope v2 money is Decimal, and Pydantic serialises Decimal to JSON as a STRING to
+    avoid float precision loss. So the v1 answer fields arrive as numbers while every
+    budget field arrives as "30230". Formatting the string with :,.0f raises, which is
+    what this function used to do.
+    """
+    if v is None or v == "":
+        return "n/a"
+    try:
+        return f"₱{float(v):,.0f}"
+    except (TypeError, ValueError):
+        return str(v)
 
 
 def _render_breakdown(answer: dict) -> None:
