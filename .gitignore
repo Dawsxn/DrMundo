@@ -58,6 +58,13 @@ cover/
 # Dr. Mundo build artifact (regenerate with: python data/load_db.py)
 dr_mundo.db
 
+# Patient documents (Scope v2). Doctor's request slips and anything uploaded by a
+# patient. These carry names, policy numbers and clinical detail; redaction happens
+# in the raster at ingest, but NOTHING from these directories is ever committed --
+# not even a "redacted" copy, since a failed redaction is invisible in review.
+data/samples/
+data/samples_raw/
+
 # MLflow local tracking store (Phase 9 monitoring)
 mlruns/
 mlartifacts/
