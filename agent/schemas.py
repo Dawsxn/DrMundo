@@ -44,6 +44,7 @@ class HospitalBreakdown(BaseModel):
     hospital: str
     city: Optional[str] = None
     service: Optional[str] = None          # outpatient: the actual service name used
+    package: Optional[str] = None          # covered: MMC's own name for this package
     price_low: Optional[float] = None
     price_high: Optional[float] = None
     oop_low: Optional[float] = None        # covered only

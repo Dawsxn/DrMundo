@@ -9,10 +9,30 @@ function raising:
     "needs_clarification" -> ambiguous hospital name; `candidates` lists the options
 """
 
+import csv
 import sqlite3
+from functools import lru_cache
+from pathlib import Path
 
 from db.aliases import equivalent_services
 from db.connection import get_connection
+
+_CROSSWALK = Path(__file__).resolve().parent.parent / "data" / "mmc_rvs_crosswalk.csv"
+
+
+@lru_cache(maxsize=1)
+def _package_names() -> dict:
+    """mmc_code -> the package name MMC prints on its price list.
+
+    Scope v2 has ONE hospital, so a procedure with several rows is not several hospitals,
+    it is several packages: RVS 47562 is both "LAPAROSCOPIC CHOLECYSTECTOMY PACKAGE" and
+    the "W/ ICG" version at P24,500 more. The name lives in the crosswalk rather than the
+    price table, so it is read from there instead of widening the schema.
+    """
+    if not _CROSSWALK.exists():
+        return {}
+    with _CROSSWALK.open(encoding="utf-8") as fh:
+        return {r["mmc_code"]: r["mmc_name"] for r in csv.DictReader(fh) if r.get("mmc_code")}
 
 
 # --------------------------------------------------------------------------------------
@@ -193,6 +213,9 @@ def get_covered_cost(rvs_code: str, hospital=None) -> dict:
                 "fully_covered": oop["fully_covered"],
                 "price_basis": r["price_basis"], "confidence": r["confidence"],
                 "mmc_code": r["mmc_code"],
+                # What MMC calls this package, so several rows for one hospital read as
+                # the variants they are rather than as a repeated hospital name.
+                "package": _package_names().get(r["mmc_code"]),
             })
 
         price_low = min(r["price_low"] for r in price_rows)
