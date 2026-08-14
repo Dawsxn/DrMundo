@@ -61,6 +61,14 @@ class ExtractedItem(BaseModel):
             "resolvable from its heading."
         ),
     )
+    candidates: list[str] = Field(
+        default_factory=list,
+        description=(
+            "Canonical names this label could mean, when it is ambiguous. The resolver "
+            "already works these out; keeping them lets the UI offer the patient the "
+            "actual choices instead of asking them to guess what we meant."
+        ),
+    )
     state: ItemState = "ordered"
     read_confidence: Optional[float] = Field(
         None, ge=0.0, le=1.0,

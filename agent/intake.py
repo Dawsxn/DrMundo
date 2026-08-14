@@ -59,10 +59,28 @@ Guidance:
 
 @dataclass
 class Question:
-    """One question to put to the patient, and the slot it fills."""
+    """One question to put to the patient, and the slot it fills.
+
+    `options` and `field` describe how to ASK it, so the UI can render real controls
+    rather than parse the prose. A patient offered the actual candidate tests answers
+    correctly; one asked to describe them in free text often does not.
+    """
 
     kind: str
     text: str
+    options: list[str] = None          # buttons or a radio list
+    field: str = None                  # "text" | "number" | None
+    subject: str = None                # the raw label a disambiguation is about
+    progress: tuple = (0, 0)           # (this question, total) for a quiet counter
+
+
+# Every question the flow can ask, in order. Used for the progress counter.
+ALL_KINDS = (Q_DISAMBIGUATE, Q_PROCEDURE, Q_HMO, Q_SENIOR)
+
+# Published Maxicare tiers, offered as choices. "Other" exists because most Philippine
+# coverage is employer-negotiated and matches no public tier; we ask for the limit
+# instead of pretending one of these fits.
+MAXICARE_PLANS = ["Platinum Plus", "Platinum", "Gold", "Silver", "Other / not sure"]
 
 
 def _pending_disambiguation(memory) -> Optional[str]:
@@ -75,39 +93,77 @@ def _pending_disambiguation(memory) -> Optional[str]:
     return None
 
 
+def _progress(memory, kind: str) -> tuple:
+    """(nth, total) for the counter shown above a question.
+
+    Disambiguation gets its own count, because it repeats once per unclear item: a slip
+    with three faint marks asks three times. Folding those into the main sequence made
+    the counter sit on "1 of 4" and then jump backwards, which reads as a bug.
+
+    The fixed questions are counted only when they actually apply, since promising four
+    and asking three is a small lie and an overstating progress bar is worse than none.
+    """
+    if kind == Q_DISAMBIGUATE and memory.estimate is not None:
+        unclear = [i.raw_text for i in memory.estimate.needs_confirmation]
+        done = len([r for r in unclear if r in memory.resolved_choices])
+        return (done + 1, len(unclear))
+
+    fixed = [k for k in ALL_KINDS if k != Q_DISAMBIGUATE]
+    answered = len([k for k in memory.asked if k in fixed])
+    return (answered + 1, max(len(fixed), answered + 1))
+
+
+def _pending_item(memory):
+    raw = _pending_disambiguation(memory)
+    if raw is None or memory.estimate is None:
+        return None
+    return next((i for i in memory.estimate.needs_confirmation if i.raw_text == raw), None)
+
+
 def next_question(memory) -> Optional[Question]:
     """The next thing worth asking, or None when there is nothing left."""
     if memory.estimate is None:
         return None
 
-    raw = _pending_disambiguation(memory)
-    if raw is not None and Q_DISAMBIGUATE not in memory.asked:
-        return Question(
-            Q_DISAMBIGUATE,
-            f'Your slip says "{raw}" and I could not pin that down. Which test did your '
-            f"doctor mean?",
-        )
+    item = _pending_item(memory)
+    if item is not None and Q_DISAMBIGUATE not in memory.asked:
+        if item.candidates:
+            text = f'Your slip says "{item.raw_text}". Which test did your doctor mean?'
+            options = item.candidates + ["Leave it out"]
+        else:
+            # The mark was faint rather than the name unclear, so the real question is
+            # whether it is on the slip at all.
+            name = item.normalized or item.raw_text
+            text = f'The mark next to "{name}" is faint. Did your doctor order it?'
+            options = ["Yes, include it", "No, leave it out"]
+        return Question(Q_DISAMBIGUATE, text, options=options, subject=item.raw_text,
+                        progress=_progress(memory, Q_DISAMBIGUATE))
 
     if Q_PROCEDURE not in memory.asked and memory.procedure_source == "unknown":
         return Question(
             Q_PROCEDURE,
-            "Is this work-up for a planned operation? If it is, tell me which one and I "
-            "can add PhilHealth coverage. If it is just a check-up, say so and I will "
-            "leave it out.",
+            "Is this work-up for a planned operation?",
+            options=["Just a check-up", "Yes, for an operation"],
+            field="text",
+            progress=_progress(memory, Q_PROCEDURE),
         )
 
     if Q_HMO not in memory.asked and memory.hmo is None:
         return Question(
             Q_HMO,
-            "Do you have an HMO? If you do, tell me the provider and plan, and roughly "
-            "how much of your benefit is left this year.",
+            "Do you have a Maxicare HMO?",
+            options=["No HMO"] + MAXICARE_PLANS,
+            field="number",
+            progress=_progress(memory, Q_HMO),
         )
 
     if Q_SENIOR not in memory.asked and memory.senior_or_pwd is None:
         return Question(
             Q_SENIOR,
-            "Last one: are you a senior citizen or a PWD? That is a 28.6% reduction on "
-            "hospital charges, so it is worth checking.",
+            "Are you a senior citizen or a PWD? That is a 28.6% reduction on hospital "
+            "charges.",
+            options=["Yes", "No"],
+            progress=_progress(memory, Q_SENIOR),
         )
 
     return None
@@ -161,6 +217,46 @@ def to_decimal(value) -> Optional[Decimal]:
         return None
 
 
+def slots_from_choice(kind: str, value, extra=None) -> dict:
+    """Turn a widget answer into slots, with no model call.
+
+    A click is unambiguous, so sending it through the extractor would only add latency,
+    cost and a chance of misreading it. Typed replies still go through `parse_answer`.
+    """
+    slots: dict = {}
+
+    if kind == Q_SENIOR:
+        slots["senior_or_pwd"] = (value == "Yes")
+
+    elif kind == Q_PROCEDURE:
+        if value == "Just a check-up":
+            slots["no_procedure_planned"] = True
+        elif extra:
+            slots["planned_procedure"] = str(extra)
+        else:
+            slots["no_procedure_planned"] = True
+
+    elif kind == Q_HMO:
+        if value == "No HMO":
+            slots["has_hmo"] = False
+        else:
+            slots["hmo_provider"] = "Maxicare"
+            if value and value != "Other / not sure":
+                slots["hmo_plan"] = value
+            if extra:
+                slots["hmo_remaining_balance"] = extra
+
+    elif kind == Q_DISAMBIGUATE:
+        if value in ("Leave it out", "No, leave it out"):
+            slots["drop_item"] = True
+        elif value == "Yes, include it":
+            slots["keep_item"] = True
+        else:
+            slots["chosen_test"] = value
+
+    return slots
+
+
 def apply_answer(memory, slots: dict, asked_kind: Optional[str]) -> dict:
     """Fold extracted slots into session memory. Returns the refine kwargs to re-price with.
 
@@ -204,9 +300,14 @@ def apply_answer(memory, slots: dict, asked_kind: Optional[str]) -> dict:
         out["senior_or_pwd"] = bool(senior)
         memory.asked.add(Q_SENIOR)
 
-    if slots.get("chosen_test") and memory.estimate:
-        pending = _pending_disambiguation(memory)
-        if pending:
-            memory.record_choice(pending, str(slots["chosen_test"]))
+    pending = _pending_disambiguation(memory)
+    if pending and (slots.get("chosen_test") or slots.get("keep_item")
+                    or slots.get("drop_item")):
+        # Record the decision either way. "Leave it out" is an answer, and without
+        # recording it the same item would be asked about on every subsequent turn.
+        choice = ("__drop__" if slots.get("drop_item")
+                  else str(slots.get("chosen_test") or "__keep__"))
+        memory.record_choice(pending, choice)
+        memory.asked.discard(Q_DISAMBIGUATE)   # allow the NEXT unclear item to be asked
 
     return out

@@ -27,6 +27,14 @@ from vision.schemas import ExtractedItem, RequestSlip
 CONFIDENCE_FLOOR = 0.55
 
 
+def _candidate_names(res) -> list[str]:
+    """Human-readable names for an ambiguous label, for the UI to offer as choices."""
+    from vision.resolve import _index
+
+    by_code = _index()["by_code"]
+    return [by_code[c]["canonical_name"] for c in res.candidates if c in by_code]
+
+
 def _to_item(mark, res) -> ExtractedItem:
     return ExtractedItem(
         raw_text=mark.label,
@@ -34,6 +42,7 @@ def _to_item(mark, res) -> ExtractedItem:
         test_code=res.test_code,
         kind=res.kind,
         section=mark.section,
+        candidates=_candidate_names(res),
         state="cancelled" if mark.cancelled else "ordered",
         read_confidence=mark.confidence,
         uncertain=mark.uncertain,
