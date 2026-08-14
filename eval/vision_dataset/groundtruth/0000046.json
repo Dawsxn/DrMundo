@@ -1,0 +1,81 @@
+{
+  "sample_id": "0000046",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "hepatitis_screen",
+  "clean_image": "filled/0000046.png",
+  "blank_image": "stage1/blank/0000046.png",
+  "image": "media/0000046_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Bayani Z. Zaragoza, MD",
+    "physician_name_plain": "Bayani Z. Zaragoza",
+    "specialty": "Pediatrics",
+    "mobile": "0918-0000-984",
+    "email": "bayani.zaragoza@clinic.example",
+    "license_no": "923276",
+    "ptr_no": "9322986",
+    "s2_no": "982907",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "HBSAG_SCREENING",
+      "LIVER_PROFILE",
+      "VDRL_RPR"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "RPR",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "LIVER_PROFILE",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Liver Profile",
+      "section": "Liver:"
+    }
+  ],
+  "primary_mark_style": "diagonal_slash",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1013.33,
+    "usable_bottom_px": 1013.33,
+    "footer_top_px": 962.14
+  },
+  "box_ink_failures": 0
+}

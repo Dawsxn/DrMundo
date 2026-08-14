@@ -1,0 +1,135 @@
+{
+  "sample_id": "0000094",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "preoperative_clearance",
+  "clean_image": "filled/0000094.png",
+  "blank_image": "stage1/blank/0000094.png",
+  "image": "media/0000094_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Reynaldo K. Agbayani, MD, FSOSP",
+    "physician_name_plain": "Reynaldo K. Agbayani",
+    "specialty": "Surgical Oncologist / General Surgeon",
+    "mobile": "0917-0000-804",
+    "email": "reynaldo.agbayani@clinic.example",
+    "license_no": "952051",
+    "ptr_no": "9956737",
+    "s2_no": "975467",
+    "clinics": [
+      {
+        "name": "Sto. Isidore Community Hospital",
+        "address": "344 Palo Maria St., San Roque Norte, Pampanga",
+        "days": "Tue / Thu",
+        "hours": "By Appointment",
+        "trunkline": "(07) 8136-0000",
+        "local": "local 857"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CBC_PLT",
+      "CREATININE",
+      "ECG_12L",
+      "ELECTROLYTES",
+      "PTT",
+      "URINALYSIS",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC with Platelet Count",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "PTT",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PTT (Partial Thromboplastin)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "BUN",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creat",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "ELECTROLYTES",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CXR PA/L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Electrocardiogram",
+      "section": "CT / Advanced:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1086.33,
+    "usable_bottom_px": 1087.38,
+    "footer_top_px": 1008.14
+  },
+  "box_ink_failures": 0
+}

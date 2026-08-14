@@ -1,0 +1,77 @@
+{
+  "sample_id": "0000102",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "sparse",
+  "clean_image": "filled/0000102.png",
+  "blank_image": "stage1/blank/0000102.png",
+  "image": "media/0000102_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Dalisay N. Ledesma, MD, FPCP, FPCC",
+    "physician_name_plain": "Dalisay N. Ledesma",
+    "specialty": "Cardiology / Internal Medicine",
+    "mobile": "0918-0000-680",
+    "email": "dalisay.ledesma@clinic.example",
+    "license_no": "958907",
+    "ptr_no": "9673567",
+    "s2_no": "951431",
+    "clinics": [
+      {
+        "name": "Sto. Placid Community Hospital",
+        "address": "102 Dama de Noche St., Bagong Silang, Bulacan",
+        "days": "Mon - Sat",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(03) 8983-0000",
+        "local": "local 776"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "CBC",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Complete Blood Count (CBC)",
+      "section": "Hematology / Clinical Microscopy:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 770.02,
+    "usable_bottom_px": 773.01,
+    "footer_top_px": 716.67
+  },
+  "box_ink_failures": 0
+}

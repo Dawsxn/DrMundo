@@ -1,0 +1,153 @@
+{
+  "sample_id": "0000080",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "preoperative_clearance",
+  "clean_image": "filled/0000080.png",
+  "blank_image": "stage1/blank/0000080.png",
+  "image": "media/0000080_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Nicanor O. Canlas, MD, FPSEDM",
+    "physician_name_plain": "Nicanor O. Canlas",
+    "specialty": "Diabetes, Thyroid and Endocrine Diseases",
+    "mobile": "0917-0000-425",
+    "email": "nicanor.canlas@clinic.example",
+    "license_no": "921757",
+    "ptr_no": "9191787",
+    "s2_no": "987287",
+    "clinics": [
+      {
+        "name": "Timog Diagnostic Center",
+        "address": "108 Camia St., Pook Ligaya, Laguna",
+        "days": "Wed - Fri - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(03) 8795-0000",
+        "local": "local 948"
+      },
+      {
+        "name": "Balintawak Family Health Center",
+        "address": "47 Talisay St., Sta. Lucia, Pangasinan",
+        "days": "Tue / Thu",
+        "hours": "By Appointment",
+        "trunkline": "(03) 8395-0000",
+        "local": "local 885"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CBC_PLT",
+      "CREATININE",
+      "ECG_12L",
+      "ELECTROLYTES",
+      "PTT",
+      "PT_PROTHROMBIN",
+      "URINALYSIS",
+      "VDRL_RPR"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ Platelet Count",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Protime",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "PTT",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PTT (Partial Thromboplastin)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "BUN",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Blood Urea Nitrogen",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "ELECTROLYTES",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Electrocardiogram",
+      "section": "CT / Advanced:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VDRL",
+      "section": "Serology:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1080.62,
+    "usable_bottom_px": 1081.67,
+    "footer_top_px": 1004.03
+  },
+  "box_ink_failures": 0
+}

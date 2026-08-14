@@ -1,0 +1,88 @@
+{
+  "sample_id": "0000226",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": "stress_kub_both_sections",
+  "order_profile": "stress_kub_both_sections",
+  "clean_image": "filled/0000226.png",
+  "blank_image": "stage1/blank/0000226.png",
+  "image": "media/0000226_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Emelita W. Ebreo, MD",
+    "physician_name_plain": "Emelita W. Ebreo",
+    "specialty": "Obstetrics and Gynecology",
+    "mobile": "0917-0000-630",
+    "email": "emelita.ebreo@clinic.example",
+    "license_no": "919766",
+    "ptr_no": "9683447",
+    "s2_no": "936113",
+    "clinics": [
+      {
+        "name": "Bayanihan Diagnostic Center",
+        "address": "70 Rosal St., Pook Ligaya, Cavite",
+        "days": "Wed - Fri - Sat",
+        "hours": "8:00 AM - 11:00 AM",
+        "trunkline": "(04) 8651-0000",
+        "local": "local 569"
+      },
+      {
+        "name": "Sto. Bartholomew Community Hospital",
+        "address": "196 Acacia St., Mataas na Lupa, Cavite",
+        "days": "Tue / Thu",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(06) 8812-0000",
+        "local": "local 914"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "US_KUB",
+      "XR_KUB"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "US_KUB",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "KUB",
+      "section": "Ultrasound:"
+    },
+    {
+      "code": "XR_KUB",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "KUB",
+      "section": "X-Ray:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1087.08,
+    "usable_bottom_px": 1088.14,
+    "footer_top_px": 1011.33
+  },
+  "box_ink_failures": 0
+}

@@ -1,0 +1,99 @@
+{
+  "sample_id": "0000209",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": "stress_ldl_ldh",
+  "order_profile": "stress_ldl_ldh",
+  "clean_image": "filled/0000209.png",
+  "blank_image": "stage1/blank/0000209.png",
+  "image": "media/0000209_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Nestor Y. Villamor, MD, FPSGS",
+    "physician_name_plain": "Nestor Y. Villamor",
+    "specialty": "General and Laparoscopic Surgery",
+    "mobile": "0918-0000-732",
+    "email": "nestor.villamor@clinic.example",
+    "license_no": "961616",
+    "ptr_no": "9964916",
+    "s2_no": "971394",
+    "clinics": [
+      {
+        "name": "Sto. Wenceslaus Community Hospital",
+        "address": "371 Gumamela St., Barangay Masagana, Rizal",
+        "days": "Wed - Fri - Sat",
+        "hours": "By Appointment",
+        "trunkline": "(05) 8672-0000",
+        "local": "local 685"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CPK_TOTAL",
+      "HDL",
+      "LDH",
+      "LDL"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "LDL",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDL Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LDH",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDH",
+      "section": "Cardiac Function:"
+    },
+    {
+      "code": "HDL",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CPK_TOTAL",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total CPK",
+      "section": "Cardiac Function:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1076.3,
+    "usable_bottom_px": 1077.35,
+    "footer_top_px": 1000.38
+  },
+  "box_ink_failures": 0
+}

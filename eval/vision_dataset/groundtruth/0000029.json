@@ -1,0 +1,102 @@
+{
+  "sample_id": "0000029",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "prenatal",
+  "clean_image": "filled/0000029.png",
+  "blank_image": "stage1/blank/0000029.png",
+  "image": "media/0000029_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Felicidad V. Alcantara, MD",
+    "physician_name_plain": "Felicidad V. Alcantara",
+    "specialty": "Pediatrics",
+    "mobile": "0917-0000-874",
+    "email": "felicidad.alcantara@clinic.example",
+    "license_no": "994829",
+    "ptr_no": "9960840",
+    "s2_no": "926234",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC_PLT",
+      "HBSAG_SCREENING",
+      "PREGNANCY_TEST",
+      "URINALYSIS",
+      "VDRL_RPR"
+    ],
+    "cancelled": [],
+    "variants": {
+      "PREGNANCY_TEST": "urine"
+    },
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ Platelet Count",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "VDRL/RPR",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "PREGNANCY_TEST",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Pregnancy Test",
+      "section": "Laboratory:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1022.62,
+    "usable_bottom_px": 1022.61,
+    "footer_top_px": 971.98
+  },
+  "box_ink_failures": 0
+}

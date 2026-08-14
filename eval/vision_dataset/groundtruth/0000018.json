@@ -1,0 +1,98 @@
+{
+  "sample_id": "0000018",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "annual_physical",
+  "clean_image": "filled/0000018.png",
+  "blank_image": "stage1/blank/0000018.png",
+  "image": "media/0000018_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Jomar N. Tiongson, MD, FPAFP",
+    "physician_name_plain": "Jomar N. Tiongson",
+    "specialty": "General Physician",
+    "mobile": "0918-0000-102",
+    "email": "jomar.tiongson@clinic.example",
+    "license_no": "965224",
+    "ptr_no": "9364141",
+    "s2_no": "998672",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "FBS",
+      "FECALYSIS",
+      "PPBS_2HR",
+      "URINALYSIS",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "URINALYSIS",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "FECALYSIS",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Fecalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA / L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "FBS",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS",
+      "section": "Metabolism:"
+    },
+    {
+      "code": "PPBS_2HR",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "2-hr PPBS",
+      "section": "Metabolism:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.02,
+    "page_overflow_px": 0.02,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1011.7,
+    "usable_bottom_px": 1011.69,
+    "footer_top_px": 960.67
+  },
+  "box_ink_failures": 0
+}

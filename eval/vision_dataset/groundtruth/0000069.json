@@ -1,0 +1,125 @@
+{
+  "sample_id": "0000069",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "preoperative_clearance",
+  "clean_image": "filled/0000069.png",
+  "blank_image": "stage1/blank/0000069.png",
+  "image": "media/0000069_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Bonifacio Q. Olivar, MD, FPCS, FSOSP",
+    "physician_name_plain": "Bonifacio Q. Olivar",
+    "specialty": "Surgical Oncologist / General Surgeon",
+    "mobile": "0918-0000-935",
+    "email": "bonifacio.olivar@clinic.example",
+    "license_no": "982665",
+    "ptr_no": "9989232",
+    "s2_no": "951169",
+    "clinics": [
+      {
+        "name": "Bayanihan Medical Clinic",
+        "address": "350 Almendras St., Bagong Silang, Rizal",
+        "days": "Mon - Sat",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(08) 8286-0000",
+        "local": "local 290"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CBC_PLT",
+      "ECG_12L",
+      "ELECTROLYTES",
+      "PTT",
+      "PT_PROTHROMBIN",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "CBC with Platelet Count",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PT (Prothrombin)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "PTT",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PTT (Partial Thromboplastin)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "BUN",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "ELECTROLYTES",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA / L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12-lead ECG",
+      "section": "CT / Advanced:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 2,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1088.75,
+    "usable_bottom_px": 1089.8,
+    "footer_top_px": 1013.84
+  },
+  "box_ink_failures": 0
+}

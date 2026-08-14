@@ -1,0 +1,117 @@
+{
+  "sample_id": "0000099",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "annual_physical",
+  "clean_image": "filled/0000099.png",
+  "blank_image": "stage1/blank/0000099.png",
+  "image": "media/0000099_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Zenaida K. Gatchalian, MD, FPCP, FPSN",
+    "physician_name_plain": "Zenaida K. Gatchalian",
+    "specialty": "Nephrology / Internal Medicine",
+    "mobile": "0918-0000-523",
+    "email": "zenaida.gatchalian@clinic.example",
+    "license_no": "918657",
+    "ptr_no": "9532652",
+    "s2_no": "998632",
+    "clinics": [
+      {
+        "name": "Silangan General Hospital",
+        "address": "40 Palo Maria St., Bayan Silangan, Cavite",
+        "days": "Tue - Thu - Sat",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(05) 8136-0000",
+        "local": "local 905"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC_PLT",
+      "FBS",
+      "FECALYSIS",
+      "LIPID_PROFILE",
+      "URINALYSIS",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ PLT CT",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "FECALYSIS",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Fecalysis",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA and lateral",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "FBS",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS",
+      "section": "Metabolism:"
+    },
+    {
+      "code": "LIPID_PROFILE",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile (TC/TG/HDL/LDL/VLDL)",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "circle_around_label",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1078.88,
+    "usable_bottom_px": 1079.93,
+    "footer_top_px": 1002.14
+  },
+  "box_ink_failures": 0
+}

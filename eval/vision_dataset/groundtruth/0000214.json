@@ -1,0 +1,91 @@
+{
+  "sample_id": "0000214",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": "stress_pt_ptt",
+  "order_profile": "stress_pt_ptt",
+  "clean_image": "filled/0000214.png",
+  "blank_image": "stage1/blank/0000214.png",
+  "image": "media/0000214_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Leonardo W. Katigbak, MD, FPCS",
+    "physician_name_plain": "Leonardo W. Katigbak",
+    "specialty": "General and Laparoscopic Surgery",
+    "mobile": "0918-0000-206",
+    "email": "leonardo.katigbak@clinic.example",
+    "license_no": "925889",
+    "ptr_no": "9462648",
+    "s2_no": "919938",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BLEEDING_TIME",
+      "CLOTTING_TIME",
+      "PTT"
+    ],
+    "cancelled": [
+      "PT_PROTHROMBIN"
+    ],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "PT (Prothrombin)",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "PTT",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "aPTT",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "BLEEDING_TIME",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Bleeding Time",
+      "section": "Bleeding Parameters:"
+    },
+    {
+      "code": "CLOTTING_TIME",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Clotting Time",
+      "section": "Bleeding Parameters:"
+    }
+  ],
+  "primary_mark_style": "circle_around_label",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1013.61,
+    "usable_bottom_px": 1013.6,
+    "footer_top_px": 963.56
+  },
+  "box_ink_failures": 0
+}

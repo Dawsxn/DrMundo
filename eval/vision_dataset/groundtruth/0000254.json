@@ -1,0 +1,53 @@
+{
+  "sample_id": "0000254",
+  "kind": "nonlab",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": null,
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": null,
+  "clean_image": "filled/0000254.png",
+  "blank_image": "stage1/blank/0000254.png",
+  "image": "media/0000254_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Imelda C. Galang, MD",
+    "physician_name_plain": "Imelda C. Galang",
+    "specialty": "General Physician",
+    "mobile": "0918-0000-750",
+    "email": "imelda.galang@clinic.example",
+    "license_no": "987089",
+    "ptr_no": "9382395",
+    "s2_no": "927336",
+    "clinics": [
+      {
+        "name": "St. Norbert Medical Center",
+        "address": "22 Gumamela St., Bayan Silangan, Bulacan",
+        "days": "Wed - Fri - Sat",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(06) 8452-0000",
+        "local": "local 880"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": false,
+    "codes": [],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [],
+  "primary_mark_style": null,
+  "n_ambiguous_marks": 0,
+  "nonlab_kind": "referral_letter",
+  "document": "LETTER OF REFERRAL"
+}

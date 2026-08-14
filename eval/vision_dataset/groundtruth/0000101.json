@@ -1,0 +1,131 @@
+{
+  "sample_id": "0000101",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "preoperative_clearance",
+  "clean_image": "filled/0000101.png",
+  "blank_image": "stage1/blank/0000101.png",
+  "image": "media/0000101_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Gregorio Q. Ilagan, MD",
+    "physician_name_plain": "Gregorio Q. Ilagan",
+    "specialty": "Obstetrics and Gynecology",
+    "mobile": "0917-0000-779",
+    "email": "gregorio.ilagan@clinic.example",
+    "license_no": "920968",
+    "ptr_no": "9555436",
+    "s2_no": "982005",
+    "clinics": [
+      {
+        "name": "Kalayaan Family Health Center",
+        "address": "174 Bougainvillea St., Barangay Masagana, Batangas",
+        "days": "Mon - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(04) 8723-0000",
+        "local": "local 266"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CBC",
+      "CREATININE",
+      "ECG_12L",
+      "K",
+      "PTT",
+      "PT_PROTHROMBIN",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PT (Prothrombin Time)",
+      "section": "Coagulation:"
+    },
+    {
+      "code": "PTT",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "aPTT",
+      "section": "Coagulation:"
+    },
+    {
+      "code": "BUN",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "K",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "12-lead ECG",
+      "section": "Cardio:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 760.03,
+    "usable_bottom_px": 763.03,
+    "footer_top_px": 707.23
+  },
+  "box_ink_failures": 0
+}

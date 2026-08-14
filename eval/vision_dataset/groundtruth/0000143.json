@@ -1,0 +1,144 @@
+{
+  "sample_id": "0000143",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "annual_physical",
+  "clean_image": "filled/0000143.png",
+  "blank_image": "stage1/blank/0000143.png",
+  "image": "media/0000143_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Ignacio D. Nacpil, MD",
+    "physician_name_plain": "Ignacio D. Nacpil",
+    "specialty": "General Physician",
+    "mobile": "0917-0000-849",
+    "email": "ignacio.nacpil@clinic.example",
+    "license_no": "935683",
+    "ptr_no": "9240471",
+    "s2_no": "998190",
+    "clinics": [
+      {
+        "name": "St. Isidore Medical Center",
+        "address": "71 Acacia St., Mataas na Lupa, Batangas",
+        "days": "Mon - Wed - Fri",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(02) 8532-0000",
+        "local": "local 139"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC",
+      "CHOL_TOTAL",
+      "FBS",
+      "FECALYSIS",
+      "HDL",
+      "TRIGLYCERIDES",
+      "URINALYSIS",
+      "VLDL",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Complete Blood Count (CBC)",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "FECALYSIS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Stool Examination",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA and lateral",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "FBS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS (Fasting Blood Sugar)",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "CHOL_TOTAL",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "TRIGLYCERIDES",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triglycerides",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "HDL",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "VLDL",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VLDL",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 762.5,
+    "usable_bottom_px": 765.49,
+    "footer_top_px": 711.33
+  },
+  "box_ink_failures": 0
+}

@@ -1,0 +1,100 @@
+{
+  "sample_id": "0000170",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "diabetes_monitoring",
+  "clean_image": "filled/0000170.png",
+  "blank_image": "stage1/blank/0000170.png",
+  "image": "media/0000170_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Rosalinda C. Ventura, MD, FPSGS",
+    "physician_name_plain": "Rosalinda C. Ventura",
+    "specialty": "General Surgeon",
+    "mobile": "0918-0000-675",
+    "email": "rosalinda.ventura@clinic.example",
+    "license_no": "952851",
+    "ptr_no": "9385842",
+    "s2_no": "962067",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CREATININE",
+      "FBS",
+      "HBA1C",
+      "LIPID_PROFILE",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "FBS",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS",
+      "section": "Glucose:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "HbA1c",
+      "section": "Glucose:"
+    },
+    {
+      "code": "LIPID_PROFILE",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 501.11,
+    "usable_bottom_px": 501.11,
+    "footer_top_px": 448.98
+  },
+  "box_ink_failures": 0
+}
