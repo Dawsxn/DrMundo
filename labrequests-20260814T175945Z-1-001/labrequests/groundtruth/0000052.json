@@ -1,0 +1,94 @@
+{
+  "sample_id": "0000052",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "hepatitis_screen",
+  "clean_image": "filled/0000052.png",
+  "blank_image": "stage1/blank/0000052.png",
+  "image": "media/0000052_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Teresita Z. Umali, MD",
+    "physician_name_plain": "Teresita Z. Umali",
+    "specialty": "Obstetrics and Gynecology",
+    "mobile": "0918-0000-753",
+    "email": "teresita.umali@clinic.example",
+    "license_no": "972614",
+    "ptr_no": "9400074",
+    "s2_no": "958258",
+    "clinics": [
+      {
+        "name": "Kalayaan General Hospital",
+        "address": "236 Malunggay St., Pook Ligaya, Quezon",
+        "days": "Mon - Sat",
+        "hours": "By Appointment",
+        "trunkline": "(05) 8743-0000",
+        "local": "local 730"
+      },
+      {
+        "name": "Sto. Sylvester Community Hospital",
+        "address": "322 Yakal St., Nueva Esperanza, Bulacan",
+        "days": "Mon - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(02) 8695-0000",
+        "local": "local 562"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "HBSAG_SCREENING",
+      "LIVER_PROFILE",
+      "VDRL_RPR"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Markers:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VDRL/RPR",
+      "section": "Serology:"
+    },
+    {
+      "code": "LIVER_PROFILE",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Liver Profile",
+      "section": "Liver Profile:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1083.73,
+    "usable_bottom_px": 1084.78,
+    "footer_top_px": 1007.83
+  },
+  "box_ink_failures": 0
+}

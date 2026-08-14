@@ -1,0 +1,117 @@
+{
+  "sample_id": "0000070",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "liver_evaluation",
+  "clean_image": "filled/0000070.png",
+  "blank_image": "stage1/blank/0000070.png",
+  "image": "media/0000070_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Mariano L. Marasigan, MD",
+    "physician_name_plain": "Mariano L. Marasigan",
+    "specialty": "Obstetrics and Gynecology",
+    "mobile": "0918-0000-641",
+    "email": "mariano.marasigan@clinic.example",
+    "license_no": "992320",
+    "ptr_no": "9279186",
+    "s2_no": "910449",
+    "clinics": [
+      {
+        "name": "Halamanan Polyclinic and Diagnostics",
+        "address": "70 Almendras St., Sta. Lucia, Bulacan",
+        "days": "Mon to Fri",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(03) 8288-0000",
+        "local": "local 826"
+      },
+      {
+        "name": "St. Wenceslaus Medical Center",
+        "address": "32 Rosal St., Mataas na Lupa, Laguna",
+        "days": "Mon - Wed - Fri",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(03) 8612-0000",
+        "local": "local 460"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "ALP",
+      "BILI_PANEL",
+      "HBSAG_SCREENING",
+      "LIVER_PROFILE",
+      "US_HBT"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "LIVER_PROFILE",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Liver Profile",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "BILI_PANEL",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bilirubin (TBil, B1, B2)",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "ALP",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "ALP (Alkaline Phosphatase)",
+      "section": "Liver Profile:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Hepatitis Markers:"
+    },
+    {
+      "code": "US_HBT",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBT (Liver)",
+      "section": "Ultrasound:"
+    }
+  ],
+  "primary_mark_style": "circle_around_label",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1090.2,
+    "usable_bottom_px": 1091.26,
+    "footer_top_px": 1013
+  },
+  "box_ink_failures": 0
+}

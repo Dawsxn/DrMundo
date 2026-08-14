@@ -1,0 +1,106 @@
+{
+  "sample_id": "0000067",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "cardiac_chest_pain",
+  "clean_image": "filled/0000067.png",
+  "blank_image": "stage1/blank/0000067.png",
+  "image": "media/0000067_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Lorenzo N. Mangahas, MD, FPPS",
+    "physician_name_plain": "Lorenzo N. Mangahas",
+    "specialty": "Pediatrics",
+    "mobile": "0918-0000-392",
+    "email": "lorenzo.mangahas@clinic.example",
+    "license_no": "947246",
+    "ptr_no": "9912949",
+    "s2_no": "925562",
+    "clinics": [
+      {
+        "name": "Pinagbuhatan Diagnostic Center",
+        "address": "113 Gumamela St., Pook Ligaya, Rizal",
+        "days": "Mon - Sat",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(06) 8584-0000",
+        "local": "local 836"
+      },
+      {
+        "name": "Matahimik Polyclinic and Diagnostics",
+        "address": "62 Malunggay St., Mataas na Lupa, Quezon",
+        "days": "Tue / Thu",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(05) 8331-0000",
+        "local": "local 593"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CT_CHEST",
+      "ECG_12L",
+      "ECHO_2D",
+      "LDH"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "LDH",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lactate Dehydrogenase",
+      "section": "Cardiac Function:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12L ECG",
+      "section": "CT / Advanced:"
+    },
+    {
+      "code": "ECHO_2D",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "2D Echocardiogram",
+      "section": "CT / Advanced:"
+    },
+    {
+      "code": "CT_CHEST",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest CT",
+      "section": "CT / Advanced:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1078.34,
+    "usable_bottom_px": 1079.4,
+    "footer_top_px": 1001.36
+  },
+  "box_ink_failures": 0
+}

@@ -1,0 +1,131 @@
+{
+  "sample_id": "0000125",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen1",
+  "difficulty": "medium",
+  "stress_profile": null,
+  "order_profile": "cardiac_chest_pain",
+  "clean_image": "filled/0000125.png",
+  "blank_image": "stage1/blank/0000125.png",
+  "image": "media/0000125_photocopy_gen1.png",
+  "augmentations": [
+    "skew",
+    "BadPhotoCopy",
+    "edge_shade",
+    "contrast_crush",
+    "SubtleNoise",
+    "jpeg_q74"
+  ],
+  "physician": {
+    "physician_name": "Caridad T. Quintos, MD, FPCP, FPCC",
+    "physician_name_plain": "Caridad T. Quintos",
+    "specialty": "Cardiology / Internal Medicine",
+    "mobile": "0917-0000-856",
+    "email": "caridad.quintos@clinic.example",
+    "license_no": "926423",
+    "ptr_no": "9924591",
+    "s2_no": "943352",
+    "clinics": [
+      {
+        "name": "Sto. Wenceslaus Community Hospital",
+        "address": "314 Ilang-Ilang St., Nueva Esperanza, Quezon",
+        "days": "Wed - Fri - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(06) 8835-0000",
+        "local": "local 189"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CPK_TOTAL",
+      "CT_CHEST",
+      "ECG_12L",
+      "ECHO_2D",
+      "LDH",
+      "TROPONIN_I",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {
+      "CT_CHEST": [
+        "triple_contrast"
+      ]
+    }
+  },
+  "marks": [
+    {
+      "code": "TROPONIN_I",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Troponin-I",
+      "section": "Cardiac Markers:"
+    },
+    {
+      "code": "CPK_TOTAL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total CPK",
+      "section": "Cardiac Markers:"
+    },
+    {
+      "code": "LDH",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDH",
+      "section": "Cardiac Markers:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12L ECG",
+      "section": "Cardio:"
+    },
+    {
+      "code": "ECHO_2D",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "2D Echo",
+      "section": "Cardio:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA/L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "CT_CHEST",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Chest CT",
+      "section": "CT / Special:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 763.97,
+    "usable_bottom_px": 766.96,
+    "footer_top_px": 710.69
+  },
+  "box_ink_failures": 0
+}

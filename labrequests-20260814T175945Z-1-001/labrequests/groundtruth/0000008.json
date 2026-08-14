@@ -1,0 +1,105 @@
+{
+  "sample_id": "0000008",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "renal_panel",
+  "clean_image": "filled/0000008.png",
+  "blank_image": "stage1/blank/0000008.png",
+  "image": "media/0000008_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Soledad Q. Mangahas, MD, FPCCP",
+    "physician_name_plain": "Soledad Q. Mangahas",
+    "specialty": "Pulmonary Medicine",
+    "mobile": "0917-0000-494",
+    "email": "soledad.mangahas@clinic.example",
+    "license_no": "978169",
+    "ptr_no": "9990018",
+    "s2_no": "927188",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CREATININE",
+      "ELECTROLYTES",
+      "URIC_ACID",
+      "URINALYSIS"
+    ],
+    "cancelled": [
+      "CA_SERUM"
+    ],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "BUN",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "BUN",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "Creat",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URIC_ACID",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUA",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "ELECTROLYTES",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "CA_SERUM",
+      "style": "line_through_row",
+      "state": "cancelled",
+      "ambiguous": false,
+      "label_text_on_form": "Calcium (Ca)",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "filled_scribble",
+  "n_ambiguous_marks": 2,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1015.94,
+    "usable_bottom_px": 1015.92,
+    "footer_top_px": 965.7
+  },
+  "box_ink_failures": 0
+}

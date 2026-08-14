@@ -1,0 +1,89 @@
+{
+  "sample_id": "0000236",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": "stress_cbc_both",
+  "order_profile": "stress_cbc_both",
+  "clean_image": "filled/0000236.png",
+  "blank_image": "stage1/blank/0000236.png",
+  "image": "media/0000236_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Danilo M. Mercado, MD",
+    "physician_name_plain": "Danilo M. Mercado",
+    "specialty": "General Physician",
+    "mobile": "0917-0000-685",
+    "email": "danilo.mercado@clinic.example",
+    "license_no": "949976",
+    "ptr_no": "9452497",
+    "s2_no": "947162",
+    "clinics": [
+      {
+        "name": "Sampaguita General Hospital",
+        "address": "209 Dama de Noche St., San Ignacio, Laguna",
+        "days": "Tue / Thu",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(04) 8903-0000",
+        "local": "local 427"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC",
+      "CBC_PLT",
+      "PLATELET_COUNT"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "CBC_PLT",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC w/ PLT CT",
+      "section": "Laboratory Test:"
+    },
+    {
+      "code": "PLATELET_COUNT",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Platelet Count",
+      "section": "Laboratory Test:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1086.36,
+    "usable_bottom_px": 1087.41,
+    "footer_top_px": 1009
+  },
+  "box_ink_failures": 0
+}

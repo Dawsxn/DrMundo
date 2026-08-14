@@ -1,0 +1,134 @@
+{
+  "sample_id": "0000111",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "diabetes_monitoring",
+  "clean_image": "filled/0000111.png",
+  "blank_image": "stage1/blank/0000111.png",
+  "image": "media/0000111_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Delfina V. Fortich, MD",
+    "physician_name_plain": "Delfina V. Fortich",
+    "specialty": "Obstetrics and Gynecology",
+    "mobile": "0918-0000-603",
+    "email": "delfina.fortich@clinic.example",
+    "license_no": "981153",
+    "ptr_no": "9374586",
+    "s2_no": "935786",
+    "clinics": [
+      {
+        "name": "Timog Family Health Center",
+        "address": "76 Lawaan St., Barangay Masagana, Tarlac",
+        "days": "Wed - Fri - Sat",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(05) 8456-0000",
+        "local": "local 807"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CHOL_TOTAL",
+      "CREATININE",
+      "FBS",
+      "HBA1C",
+      "HDL",
+      "TRIGLYCERIDES",
+      "URINALYSIS",
+      "VLDL"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "FBS",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS (Fasting Blood Sugar)",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "HBA1C",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "HbA1c",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "CHOL_TOTAL",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "TRIGLYCERIDES",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triglycerides",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "HDL",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "VLDL",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VLDL Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal Function:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    }
+  ],
+  "primary_mark_style": "circle_around_box",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 758.73,
+    "usable_bottom_px": 761.73,
+    "footer_top_px": 706.91
+  },
+  "box_ink_failures": 0
+}

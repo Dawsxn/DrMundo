@@ -1,0 +1,134 @@
+{
+  "sample_id": "0000167",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "preoperative_clearance",
+  "clean_image": "filled/0000167.png",
+  "blank_image": "stage1/blank/0000167.png",
+  "image": "media/0000167_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Macario L. Ilagan, MD, FPSEDM",
+    "physician_name_plain": "Macario L. Ilagan",
+    "specialty": "Diabetes, Thyroid and Endocrine Diseases",
+    "mobile": "0917-0000-715",
+    "email": "macario.ilagan@clinic.example",
+    "license_no": "924339",
+    "ptr_no": "9292971",
+    "s2_no": "969995",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BUN",
+      "CREATININE",
+      "ECG_12L",
+      "K",
+      "NA",
+      "PTT",
+      "PT_PROTHROMBIN",
+      "URINALYSIS",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "PT_PROTHROMBIN",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": true,
+      "label_text_on_form": "PT (Prothrombin Time)",
+      "section": "Coagulation:"
+    },
+    {
+      "code": "PTT",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "PTT (Partial Thromboplastin)",
+      "section": "Coagulation:"
+    },
+    {
+      "code": "BUN",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "BUN",
+      "section": "Renal:"
+    },
+    {
+      "code": "CREATININE",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Creatinine",
+      "section": "Renal:"
+    },
+    {
+      "code": "NA",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium (Na)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA-L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "ECG_12L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "12-lead ECG",
+      "section": "Cardio:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 1,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 505.91,
+    "usable_bottom_px": 505.91,
+    "footer_top_px": 455.52
+  },
+  "box_ink_failures": 0
+}

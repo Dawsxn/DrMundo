@@ -1,0 +1,118 @@
+{
+  "sample_id": "0000203",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": "stress_bundle_and_components",
+  "order_profile": "stress_bundle_and_components",
+  "clean_image": "filled/0000203.png",
+  "blank_image": "stage1/blank/0000203.png",
+  "image": "media/0000203_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Arturo J. Buendia, MD, FPOGS",
+    "physician_name_plain": "Arturo J. Buendia",
+    "specialty": "Obstetrics and Gynecology",
+    "mobile": "0918-0000-369",
+    "email": "arturo.buendia@clinic.example",
+    "license_no": "970061",
+    "ptr_no": "9628385",
+    "s2_no": "937753",
+    "clinics": [
+      {
+        "name": "Liwayway Family Health Center",
+        "address": "370 Palo Maria St., Nueva Esperanza, Pampanga",
+        "days": "Mon to Fri",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(03) 8560-0000",
+        "local": "local 193"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CHOL_TOTAL",
+      "HDL",
+      "LDL",
+      "LIPID_PROFILE",
+      "TRIGLYCERIDES",
+      "VLDL"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "LIPID_PROFILE",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Lipid Profile",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CHOL_TOTAL",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "TRIGLYCERIDES",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triglycerides",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "HDL",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LDL",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "VLDL",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VLDL",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1076.64,
+    "usable_bottom_px": 1077.69,
+    "footer_top_px": 1001.5
+  },
+  "box_ink_failures": 0
+}

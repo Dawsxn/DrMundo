@@ -1,0 +1,124 @@
+{
+  "sample_id": "0000221",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": "stress_thyroid_panel_and_us",
+  "order_profile": "stress_thyroid_panel_and_us",
+  "clean_image": "filled/0000221.png",
+  "blank_image": "stage1/blank/0000221.png",
+  "image": "media/0000221_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Jovito W. Pascual, MD",
+    "physician_name_plain": "Jovito W. Pascual",
+    "specialty": "Family Medicine",
+    "mobile": "0917-0000-462",
+    "email": "jovito.pascual@clinic.example",
+    "license_no": "987453",
+    "ptr_no": "9818713",
+    "s2_no": "984410",
+    "clinics": [
+      {
+        "name": "St. Anselm Medical Center",
+        "address": "346 Dama de Noche St., Mataas na Lupa, Batangas",
+        "days": "Mon - Wed - Fri",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(04) 8204-0000",
+        "local": "local 609"
+      },
+      {
+        "name": "Timog Diagnostic Center",
+        "address": "117 Kamagong St., Villa Aurora, Rizal",
+        "days": "Tue - Thu - Sat",
+        "hours": "1:00 PM - 5:00 PM",
+        "trunkline": "(06) 8852-0000",
+        "local": "local 272"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "FT3",
+      "FT4",
+      "T3",
+      "T4",
+      "TSH",
+      "US_THYROID"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "T3",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triiodothyronine",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "T4",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "T4",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT3",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Free Triiodothyronine",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT4",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT4",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "TSH",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "TSH",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "US_THYROID",
+      "style": "cross",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Thyroid",
+      "section": "Ultrasound:"
+    }
+  ],
+  "primary_mark_style": "cross",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1080,
+    "usable_bottom_px": 1081.05,
+    "footer_top_px": 1002.42
+  },
+  "box_ink_failures": 0
+}

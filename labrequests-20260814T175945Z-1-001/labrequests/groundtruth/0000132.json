@@ -1,0 +1,154 @@
+{
+  "sample_id": "0000132",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "photocopy_gen3",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "annual_physical",
+  "clean_image": "filled/0000132.png",
+  "blank_image": "stage1/blank/0000132.png",
+  "image": "media/0000132_photocopy_gen3.png",
+  "augmentations": [
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "BadPhotoCopy",
+    "three_generations",
+    "SubtleNoise",
+    "jpeg_q62"
+  ],
+  "physician": {
+    "physician_name": "Teodoro I. Quiambao, MD, FPCP",
+    "physician_name_plain": "Teodoro I. Quiambao",
+    "specialty": "Internal Medicine",
+    "mobile": "0917-0000-649",
+    "email": "teodoro.quiambao@clinic.example",
+    "license_no": "985942",
+    "ptr_no": "9771559",
+    "s2_no": "934745",
+    "clinics": [
+      {
+        "name": "Masagana Family Health Center",
+        "address": "60 Talisay St., Sta. Lucia, Tarlac",
+        "days": "Mon to Fri",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(08) 8100-0000",
+        "local": "local 172"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC",
+      "CHOL_TOTAL",
+      "FBS",
+      "FECALYSIS",
+      "HDL",
+      "LDL",
+      "TRIGLYCERIDES",
+      "URINALYSIS",
+      "VLDL",
+      "XR_CHEST_PA_L"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "FECALYSIS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Fecal Analysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "XR_CHEST_PA_L",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chest PA / L",
+      "section": "X-Ray:"
+    },
+    {
+      "code": "FBS",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FBS (Fasting Blood Sugar)",
+      "section": "Glucose Studies:"
+    },
+    {
+      "code": "CHOL_TOTAL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Total Cholesterol",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "TRIGLYCERIDES",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Triglycerides",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "HDL",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HDL-C",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "LDL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "LDL",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "VLDL",
+      "style": "tick_in_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "VLDL",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "tick_in_box",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 760.56,
+    "usable_bottom_px": 763.55,
+    "footer_top_px": 707.62
+  },
+  "box_ink_failures": 0
+}

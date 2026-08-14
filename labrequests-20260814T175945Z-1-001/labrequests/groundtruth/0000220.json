@@ -1,0 +1,104 @@
+{
+  "sample_id": "0000220",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_01_onecol_sans",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": "stress_thyroid_panel_and_us",
+  "order_profile": "stress_thyroid_panel_and_us",
+  "clean_image": "filled/0000220.png",
+  "blank_image": "stage1/blank/0000220.png",
+  "image": "media/0000220_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Remedios Z. Ylagan, MD",
+    "physician_name_plain": "Remedios Z. Ylagan",
+    "specialty": "Family Medicine",
+    "mobile": "0918-0000-852",
+    "email": "remedios.ylagan@clinic.example",
+    "license_no": "998833",
+    "ptr_no": "9454589",
+    "s2_no": "911407",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "FT3",
+      "FT4",
+      "T3",
+      "T4",
+      "TSH",
+      "US_THYROID"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "T3",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "T3",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "T4",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "T4",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT3",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT3",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "FT4",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "FT4",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "TSH",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "TSH",
+      "section": "Thyroid Function:"
+    },
+    {
+      "code": "US_THYROID",
+      "style": "circle_around_label",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Thyroid",
+      "section": "Ultrasound:"
+    }
+  ],
+  "primary_mark_style": "circle_around_label",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1015.12,
+    "usable_bottom_px": 1015.12,
+    "footer_top_px": 965.25
+  },
+  "box_ink_failures": 0
+}

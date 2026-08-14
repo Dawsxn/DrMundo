@@ -1,0 +1,61 @@
+{
+  "sample_id": "0000096",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "sparse",
+  "clean_image": "filled/0000096.png",
+  "blank_image": "stage1/blank/0000096.png",
+  "image": "media/0000096_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Dalisay J. Calderon, MD, FPCP, FPCCP",
+    "physician_name_plain": "Dalisay J. Calderon",
+    "specialty": "Pulmonary Medicine",
+    "mobile": "0917-0000-237",
+    "email": "dalisay.calderon@clinic.example",
+    "license_no": "912471",
+    "ptr_no": "9477693",
+    "s2_no": "969039",
+    "clinics": [
+      {
+        "name": "Pag-asa Diagnostic Center",
+        "address": "81 Kamagong St., San Roque Norte, Tarlac",
+        "days": "Mon - Sat",
+        "hours": "9:00 AM - 12:00 NN",
+        "trunkline": "(06) 8868-0000",
+        "local": "local 668"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [],
+  "primary_mark_style": null,
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1090.09,
+    "usable_bottom_px": 1091.15,
+    "footer_top_px": 1013.66
+  },
+  "box_ink_failures": 0
+}

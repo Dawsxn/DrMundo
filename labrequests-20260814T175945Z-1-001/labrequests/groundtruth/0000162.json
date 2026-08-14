@@ -1,0 +1,98 @@
+{
+  "sample_id": "0000162",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "scan",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "liver_evaluation",
+  "clean_image": "filled/0000162.png",
+  "blank_image": "stage1/blank/0000162.png",
+  "image": "media/0000162_scan.png",
+  "augmentations": [
+    "skew",
+    "SubtleNoise",
+    "contrast",
+    "jpeg_q88"
+  ],
+  "physician": {
+    "physician_name": "Cristina H. Cadiz, MD",
+    "physician_name_plain": "Cristina H. Cadiz",
+    "specialty": "Pediatrics",
+    "mobile": "0918-0000-175",
+    "email": "cristina.cadiz@clinic.example",
+    "license_no": "924465",
+    "ptr_no": "9366200",
+    "s2_no": "966484",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "ALP",
+      "BILI_PANEL",
+      "HBSAG_SCREENING",
+      "SGOT_AST",
+      "SGPT_ALT"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "SGOT_AST",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGOT / AST",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "SGPT_ALT",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "SGPT / ALT",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "BILI_PANEL",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Bilirubins",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "ALP",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Alk Phos",
+      "section": "Liver Function:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "diagonal_slash",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Serology / Hepatitis:"
+    }
+  ],
+  "primary_mark_style": "diagonal_slash",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 504.72,
+    "usable_bottom_px": 504.72,
+    "footer_top_px": 454.25
+  },
+  "box_ink_failures": 0
+}

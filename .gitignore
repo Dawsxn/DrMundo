@@ -231,3 +231,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Vision eval dataset (labrequests). NOT a privacy exclusion -- the images are fully
+# synthetic and carry SYNTHETIC-DATA metadata, so they are safe to share. This is a SIZE
+# exclusion: 381MB of PNGs plus a 395MB zip. The zip alone exceeds GitHub's 100MB
+# per-file limit and would reject the push.
+#
+# The labels ARE committed (see the un-ignore rules below): groundtruth/, taxonomy/,
+# answer_key.*, samples.json come to ~2MB, they diff usefully, and they are the actual
+# contract the extraction stage is graded against. The media is regenerable from master
+# seed 20260814 in the separate `labrequests` generator repo.
+labrequests-*.zip
+labrequests-*/labrequests/media/
+labrequests-*/labrequests/contact_sheet.png

@@ -1,0 +1,81 @@
+{
+  "sample_id": "0000146",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_03_threecol_dense",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": null,
+  "order_profile": "sparse",
+  "clean_image": "filled/0000146.png",
+  "blank_image": "stage1/blank/0000146.png",
+  "image": "media/0000146_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Leandro K. Tabuena, MD",
+    "physician_name_plain": "Leandro K. Tabuena",
+    "specialty": "Pediatrics",
+    "mobile": "0918-0000-601",
+    "email": "leandro.tabuena@clinic.example",
+    "license_no": "951122",
+    "ptr_no": "9615092",
+    "s2_no": "911661",
+    "clinics": [
+      {
+        "name": "Liwayway Polyclinic and Diagnostics",
+        "address": "7 Bougainvillea St., San Ignacio, Quezon",
+        "days": "Wed - Fri - Sat",
+        "hours": "2:00 PM - 6:00 PM",
+        "trunkline": "(06) 8476-0000",
+        "local": "local 827"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CBC",
+      "URINALYSIS"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "URINALYSIS",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Hematology / Clinical Microscopy:"
+    },
+    {
+      "code": "CBC",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC",
+      "section": "Hematology / Clinical Microscopy:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 770.48,
+    "usable_bottom_px": 773.47,
+    "footer_top_px": 719.64
+  },
+  "box_ink_failures": 0
+}

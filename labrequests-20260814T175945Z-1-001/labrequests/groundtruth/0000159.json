@@ -1,0 +1,115 @@
+{
+  "sample_id": "0000159",
+  "kind": "coverage",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_04_halfsheet_compact",
+  "media_class": "clean",
+  "difficulty": "easy",
+  "stress_profile": null,
+  "order_profile": "prenatal",
+  "clean_image": "filled/0000159.png",
+  "blank_image": "stage1/blank/0000159.png",
+  "image": "media/0000159_clean.png",
+  "augmentations": [
+    "none"
+  ],
+  "physician": {
+    "physician_name": "Elvira G. Mercado, MD, FPAFP",
+    "physician_name_plain": "Elvira G. Mercado",
+    "specialty": "General Physician",
+    "mobile": "0918-0000-302",
+    "email": "elvira.mercado@clinic.example",
+    "license_no": "930146",
+    "ptr_no": "9989361",
+    "s2_no": "934773",
+    "clinics": []
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "BLOOD_TYPING_RH",
+      "CBC_PLT",
+      "HBSAG_SCREENING",
+      "OGTT",
+      "PREGNANCY_TEST",
+      "URINALYSIS",
+      "VDRL_RPR"
+    ],
+    "cancelled": [],
+    "variants": {
+      "OGTT": "g100"
+    },
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "CBC_PLT",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "CBC with Platelet Count",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "BLOOD_TYPING_RH",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Blood Typing / Rh",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "URINALYSIS",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Urinalysis",
+      "section": "Laboratory:"
+    },
+    {
+      "code": "HBSAG_SCREENING",
+      "style": "circle_around_box",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "HBsAg Screening",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "VDRL_RPR",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Syphilis Screening",
+      "section": "Serology / Hepatitis:"
+    },
+    {
+      "code": "OGTT",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "OGTT",
+      "section": "Glucose:"
+    },
+    {
+      "code": "PREGNANCY_TEST",
+      "style": "filled_scribble",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Pregnancy Test",
+      "section": "Laboratory:"
+    }
+  ],
+  "primary_mark_style": "filled_scribble",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.01,
+    "page_overflow_px": 0.01,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 500.14,
+    "usable_bottom_px": 500.13,
+    "footer_top_px": 448.5
+  },
+  "box_ink_failures": 0
+}

@@ -1,0 +1,107 @@
+{
+  "sample_id": "0000234",
+  "kind": "stress",
+  "synthetic": true,
+  "seed": 20260814,
+  "template_id": "tpl_02_twocol_serif",
+  "media_class": "fax",
+  "difficulty": "hard",
+  "stress_profile": "stress_electrolytes_bundle_and_parts",
+  "order_profile": "stress_electrolytes_bundle_and_parts",
+  "clean_image": "filled/0000234.png",
+  "blank_image": "stage1/blank/0000234.png",
+  "image": "media/0000234_fax.png",
+  "augmentations": [
+    "skew",
+    "binarise_adaptive",
+    "Dithering",
+    "downscale_1100px",
+    "jpeg_q45"
+  ],
+  "physician": {
+    "physician_name": "Leonardo G. Casiano, MD",
+    "physician_name_plain": "Leonardo G. Casiano",
+    "specialty": "General Physician",
+    "mobile": "0917-0000-433",
+    "email": "leonardo.casiano@clinic.example",
+    "license_no": "922592",
+    "ptr_no": "9866517",
+    "s2_no": "934912",
+    "clinics": [
+      {
+        "name": "Bayanihan Medical Clinic",
+        "address": "299 Narra St., Mataas na Lupa, Laguna",
+        "days": "Mon - Wed - Fri",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(06) 8914-0000",
+        "local": "local 977"
+      },
+      {
+        "name": "Dalandan Diagnostic Center",
+        "address": "198 Dama de Noche St., Nueva Esperanza, Pampanga",
+        "days": "Tue - Thu - Sat",
+        "hours": "10:00 AM - 3:00 PM",
+        "trunkline": "(07) 8627-0000",
+        "local": "local 428"
+      }
+    ]
+  },
+  "expected": {
+    "is_laboratory_request": true,
+    "codes": [
+      "CL",
+      "ELECTROLYTES",
+      "K",
+      "NA"
+    ],
+    "cancelled": [],
+    "variants": {},
+    "modifiers": {}
+  },
+  "marks": [
+    {
+      "code": "ELECTROLYTES",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Serum Electrolytes (Na, K, Cl)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "NA",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Sodium (Na)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "K",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Potassium (K)",
+      "section": "Blood Chemistry:"
+    },
+    {
+      "code": "CL",
+      "style": "tick_overflowing",
+      "state": "ordered",
+      "ambiguous": false,
+      "label_text_on_form": "Chloride (Cl)",
+      "section": "Blood Chemistry:"
+    }
+  ],
+  "primary_mark_style": "tick_overflowing",
+  "n_ambiguous_marks": 0,
+  "overflow": {
+    "overflows": false,
+    "overflow_px": 0.0,
+    "page_overflow_px": 0.0,
+    "column_overflow_px": 0.0,
+    "content_bottom_px": 1088.47,
+    "usable_bottom_px": 1089.52,
+    "footer_top_px": 1010.34
+  },
+  "box_ink_failures": 0
+}
