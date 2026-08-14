@@ -1,0 +1,147 @@
+[
+  {
+    "document": "individual_certificate_gold.pdf",
+    "doc_type": "certificate_of_coverage",
+    "provider": "Maxicare",
+    "plan_name": "Gold",
+    "mbl_annual": 150000,
+    "mbl_basis": "per_illness_per_year",
+    "room_entitlement": "Regular Private",
+    "coverage_pct": 1.0,
+    "professional_fees_within_mbl": true,
+    "philhealth_applied_first": true,
+    "outpatient_diagnostics_limit": 20000,
+    "outpatient_requires_loa": true,
+    "outpatient_no_loa_reimbursement_pct": 0.8,
+    "procedure_sublimits": {
+      "LAPAROSCOPIC CHOLECYSTECTOMY": 60000,
+      "LAPAROSCOPIC APPENDECTOMY": 50000,
+      "MRI": 18000,
+      "CT SCAN": 15000,
+      "EXTRACORPOREAL SHOCK WAVE LITHOTRIPSY": 45000,
+      "HYSTEROSCOPIC MYOMA RESECTION": 45000,
+      "CATARACT EXTRACTION": 40000,
+      "HAEMODIALYSIS": 4000
+    },
+    "default_procedure_sublimit": 10000,
+    "emergency_non_accredited_pct": 0.8,
+    "emergency_non_accredited_cap": 30000,
+    "preexisting_first_year_limit": 20000,
+    "preexisting_subsequent": "up_to_mbl",
+    "exclusion_count": 11,
+    "pages": 2
+  },
+  {
+    "document": "corporate_summary_of_benefits.pdf",
+    "doc_type": "summary_of_benefits",
+    "provider": "Maxicare",
+    "plan_name": null,
+    "employer": "Northgate Logistics Corporation (specimen)",
+    "principal_members": 246,
+    "mbl_basis": "per_illness_per_year",
+    "categories": {
+      "Officers and Managers": {
+        "mbl_annual": 200000,
+        "room_entitlement": "Regular Private",
+        "coverage_pct": 1.0
+      },
+      "Supervisory": {
+        "mbl_annual": 150000,
+        "room_entitlement": "Regular Private",
+        "coverage_pct": 1.0
+      },
+      "Rank and File": {
+        "mbl_annual": 100000,
+        "room_entitlement": "Semi - Private",
+        "coverage_pct": 0.8,
+        "coinsurance_applies_above": 80000
+      }
+    },
+    "professional_fees_within_mbl": true,
+    "philhealth_applied_first": true,
+    "room_excess_for_member_account": true,
+    "outpatient_diagnostics_limit": 25000,
+    "outpatient_requires_loa": true,
+    "procedure_sublimits": {
+      "LAPAROSCOPIC CHOLECYSTECTOMY": {
+        "officers": 50000,
+        "rank_and_file": 35000
+      },
+      "LAPAROSCOPIC APPENDECTOMY": {
+        "officers": 45000,
+        "rank_and_file": 30000
+      },
+      "PERCUTANEOUS ULTRASONIC NEPHROLITHOTOMY": {
+        "officers": 45000,
+        "rank_and_file": 30000
+      },
+      "EXTRACORPOREAL SHOCK WAVE LITHOTRIPSY": {
+        "officers": 40000,
+        "rank_and_file": 25000
+      },
+      "HYSTEROSCOPIC MYOMA RESECTION": {
+        "officers": 40000,
+        "rank_and_file": 25000
+      },
+      "MRI": {
+        "officers": 15000,
+        "rank_and_file": 10000
+      },
+      "CT SCAN": {
+        "officers": 12000,
+        "rank_and_file": 9000
+      },
+      "2D ECHOCARDIOGRAPHY": {
+        "officers": 8000,
+        "rank_and_file": 6000
+      },
+      "CATARACT EXTRACTION": {
+        "officers": 35000,
+        "rank_and_file": 25000
+      },
+      "HAEMODIALYSIS": {
+        "officers": 4000,
+        "rank_and_file": 3500
+      },
+      "SLEEP STUDY": {
+        "officers": 15000,
+        "rank_and_file": 10000
+      },
+      "CRYOSURGERY": {
+        "officers": 15000,
+        "rank_and_file": 10000
+      }
+    },
+    "default_procedure_sublimit": {
+      "officers": 10000,
+      "rank_and_file": 5000
+    },
+    "preexisting_pct_of_mbl": 1.0,
+    "preexisting_rule": "scaled_by_group_size",
+    "preexisting_dreaded_first_year_limit": 50000,
+    "emergency_non_accredited_pct": 0.8,
+    "emergency_non_accredited_cap": 40000,
+    "accreditation_subject_to_change": true,
+    "exclusion_count": 11,
+    "pages": 3
+  },
+  {
+    "document": "hr_one_pager.pdf",
+    "doc_type": "hr_advisory",
+    "provider": "Maxicare",
+    "plan_name": "Silver",
+    "mbl_annual": 100000,
+    "mbl_basis": "per_illness_per_year",
+    "room_entitlement": "Semi - Private",
+    "philhealth_applied_first": true,
+    "outpatient_requires_loa": true,
+    "coverage_pct": null,
+    "professional_fees_within_mbl": null,
+    "outpatient_diagnostics_limit": null,
+    "procedure_sublimits": null,
+    "preexisting_first_year_limit": null,
+    "emergency_non_accredited_pct": null,
+    "exclusion_count": null,
+    "pages": 1
+  }
+]
