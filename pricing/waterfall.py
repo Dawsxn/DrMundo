@@ -137,6 +137,7 @@ def compute_budget(
     planned_procedure: Optional[str] = None,
     philhealth_active: Optional[bool] = None,
     hmo_covers_outpatient: Optional[bool] = None,
+    extra_caveats: Iterable[str] = (),
 ) -> BudgetEstimate:
     """Run the whole waterfall and return the structured estimate."""
     priced = list(priced)
@@ -237,8 +238,9 @@ def compute_budget(
         prepare_high=prepare_high,
         separate_lines=separate_lines,
         caveats=_build_caveats(priced, unpriced, needs_confirmation, cancelled,
-                               hmo, senior_or_pwd, procedure_source,
-                               philhealth_active, hmo_covers_outpatient),
+                               hmo, senior_or_pwd, hmo_low, hmo_high, procedure_source,
+                               philhealth_active, hmo_covers_outpatient)
+                + list(extra_caveats),
         hmo=hmo,
         senior_or_pwd=senior_or_pwd,
     )
@@ -251,6 +253,8 @@ def _build_caveats(
     cancelled: list[ExtractedItem],
     hmo: Optional[HMOPlan],
     senior_or_pwd: bool,
+    hmo_low: Decimal = Decimal(0),
+    hmo_high: Decimal = Decimal(0),
     procedure_source: ProcedureSource = "unknown",
     philhealth_active: Optional[bool] = None,
     hmo_covers_outpatient: Optional[bool] = None,
@@ -349,6 +353,14 @@ def _build_caveats(
         out.append(
             "You said your PhilHealth is not active, so no case rate is deducted. If you "
             "settle your contributions before admission, this could drop considerably."
+        )
+
+    if hmo is not None and hmo.limit_assumed_untouched and (hmo_low or hmo_high):
+        out.append(
+            f"This assumes your full ₱{hmo.mbl_annual:,.0f} annual HMO limit is still "
+            f"available. If you have already claimed against it this year, you will pay "
+            f"up to ₱{hmo_high:,.0f} more than shown. Your member portal has the real "
+            f"balance."
         )
 
     if hmo_covers_outpatient is False:
