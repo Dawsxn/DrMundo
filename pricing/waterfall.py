@@ -6,14 +6,19 @@ someone worked out by hand.
 
     W0  gross        sum of item ranges, facility/service charges only
     W1  discount     x 0.714286 for senior/PWD  (VAT exemption THEN 20%)
-    W2  PhilHealth   case rates, package rows only, procedures only
+    W2  PhilHealth   case rates, package rows only, procedures only. FACILITY SHARE of
+                     each rate (~70%), largest paid in full and the second at half
     W3  HMO          min(remaining balance, MBL, coverage% x what's left)
     W4  prepare      max(0, what's left)
 
-Order matters: W1 runs BEFORE W2 because the two do not commute. Discounting first then
-deducting the case rate differs from the reverse by about P13,400 on a P46,800 case rate
-(plan §2.4). Practice is discount-first -- the discount applies to the hospital's charges
-and PhilHealth is deducted from the discounted bill.
+Order matters: W1 runs BEFORE W2 because the two do not commute. Practice is
+discount-first -- the discount applies to the hospital's charges and PhilHealth is
+deducted from the discounted bill (plan §2.4).
+
+W2 encodes two PhilHealth rules that a naive reading gets wrong in the patient's
+disfavour, both of which used to overstate coverage here:
+  a case rate splits ~70/30 between hospital and doctor, and our gross is facility only;
+  across one admission the largest rate is paid in full and the second at half.
 
 Everything is computed PER ITEM and then summed, because the deductions clamp per item:
 a case rate larger than its own procedure's price means that procedure is covered in
@@ -37,6 +42,24 @@ from vision.schemas import ExtractedItem, ProcedureSource
 # 20%, which is why this is ONE constant and not two multiplications at the call site.
 SENIOR_PWD_MULTIPLIER = Decimal("0.714286")
 
+# A PhilHealth case rate is not one pot: it splits into a health-facility fee and a
+# professional fee, roughly 70/30. PhilHealth publishes the exact split per code in its
+# circular annexes ("Case Rate | Health Facility Fee | Professional Fee"); our dataset
+# carries only the total, so the standard ratio stands in for it.
+#
+# This matters because our gross is FACILITY ONLY -- professional fees are out of scope
+# and shown as a separate line. Deducting the whole case rate from a facility-only gross
+# credits the patient with the doctor's share as well, and understates what they pay by
+# about 30% of the case rate. On a P60,450 cholecystectomy that is P18,135.
+PHILHEALTH_FACILITY_SHARE = Decimal("0.70")
+PHILHEALTH_PF_SHARE = Decimal("0.30")
+
+# With several case-ratable procedures in one admission, PhilHealth pays the FIRST in
+# full and the second at half; later ones draw nothing. Summing them all at 100%, which
+# is what this did before, invents coverage that will not arrive.
+# Source: PhilHealth All Case Rates policy (PC 0031/0035 s.2013 and successors).
+SECOND_CASE_RATE_SHARE = Decimal("0.50")
+
 ZERO = Decimal(0)
 
 
@@ -57,6 +80,35 @@ def _eligible_for_case_rate(p: PricedItem) -> bool:
         and p.case_rate is not None
         and p.price_basis == "package"
     )
+
+
+def _case_rate_entitlements(priced: list[PricedItem]) -> dict:
+    """How much of each case rate PhilHealth will actually put against the FACILITY bill.
+
+    Two rules compound here, and both cut the figure the naive version produced:
+
+      Only the facility share offsets our gross. The rest of the case rate pays the
+      doctor, and professional fees are not in our total, so crediting the whole rate
+      would hand the patient the surgeon's subsidy as well.
+
+      Across one admission the largest case rate is paid in full and the second at half.
+      Later ones draw nothing. Summing every rate at 100% invents money.
+
+    Returns {id(item): peso amount available against that item's facility charge}.
+    """
+    eligible = [p for p in priced if _eligible_for_case_rate(p)]
+    eligible.sort(key=lambda p: p.case_rate, reverse=True)
+
+    out: dict = {}
+    for rank, p in enumerate(eligible):
+        if rank == 0:
+            portion = Decimal(1)
+        elif rank == 1:
+            portion = SECOND_CASE_RATE_SHARE
+        else:
+            portion = ZERO
+        out[id(p)] = p.case_rate * PHILHEALTH_FACILITY_SHARE * portion
+    return out
 
 
 def _hmo_cap(hmo: Optional[HMOPlan]) -> Optional[Decimal]:
@@ -127,12 +179,18 @@ def compute_budget(
     # patient will not receive; told nothing, we behave as before rather than assume.
     philhealth_applies = philhealth_active is not False
 
+    # PhilHealth pays the largest case rate in full and the next at half, so rank them
+    # before deducting. Ranking by value is what makes the rule favour the patient
+    # correctly: the biggest one is the one paid whole.
+    entitlement = _case_rate_entitlements(priced) if philhealth_applies else {}
+
     for p in priced:
         item_low = p.price_low * multiplier
         item_high = p.price_high * multiplier
-        if philhealth_applies and _eligible_for_case_rate(p):
-            covered_low = min(p.case_rate, item_low)
-            covered_high = min(p.case_rate, item_high)
+        share = entitlement.get(id(p), ZERO)
+        if share:
+            covered_low = min(share, item_low)
+            covered_high = min(share, item_high)
         else:
             covered_low = covered_high = ZERO
         philhealth_low += covered_low
@@ -271,6 +329,20 @@ def _build_caveats(
         out.append(
             "Includes the senior citizen / PWD reduction of 28.6% (VAT exemption plus 20%), "
             "applied to hospital charges before PhilHealth."
+        )
+
+    case_rated = [p for p in priced if _eligible_for_case_rate(p)]
+    if case_rated and philhealth_active is not False:
+        out.append(
+            "PhilHealth's case rate is split between the hospital and the doctor, roughly "
+            "70/30. Only the hospital share is deducted above; the rest goes against your "
+            "surgeon's and anaesthesiologist's fees, which are billed separately."
+        )
+    if len(case_rated) > 1:
+        out.append(
+            f"You have {len(case_rated)} procedures that carry a case rate. PhilHealth "
+            f"pays the largest in full and the next at half, so the total credited is less "
+            f"than the sum of the individual rates."
         )
 
     if philhealth_active is False:
