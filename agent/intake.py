@@ -34,6 +34,7 @@ Q_ROOM = "room"
 Q_STAY = "stay"
 Q_HMO = "hmo"
 Q_HMO_OUTPATIENT = "hmo_outpatient"
+Q_PREEXISTING = "preexisting"
 Q_SENIOR = "senior"
 
 _EXTRACT_SYSTEM = """You turn a patient's reply into structured fields for a medical cost \
@@ -81,7 +82,7 @@ class Question:
 
 # Every question the flow can ask, in order. Used for the progress counter.
 ALL_KINDS = (Q_DISAMBIGUATE, Q_ADMITTED, Q_PROCEDURE, Q_PHILHEALTH, Q_ROOM, Q_STAY,
-             Q_HMO, Q_HMO_OUTPATIENT, Q_SENIOR)
+             Q_HMO, Q_HMO_OUTPATIENT, Q_PREEXISTING, Q_SENIOR)
 
 # Questions that only apply in some situations. Asking all nine every time would cost more
 # in abandonment than the extra precision is worth, so a plain lab slip still finishes in
@@ -139,6 +140,8 @@ def _applicable(memory) -> list:
         kinds += [Q_ROOM, Q_STAY]
     if memory.hmo is not None and not memory.admitted and _is_outpatient_only(memory):
         kinds.append(Q_HMO_OUTPATIENT)
+    if memory.hmo is not None:
+        kinds.append(Q_PREEXISTING)
     return kinds
 
 
@@ -267,6 +270,18 @@ def next_question(memory) -> Optional[Question]:
             progress=_progress(memory, Q_HMO_OUTPATIENT),
         )
 
+    # Only worth asking of someone who has a plan: pre-existing rules are an HMO concept,
+    # and PhilHealth does not care.
+    if (Q_PREEXISTING not in memory.asked and memory.hmo is not None
+            and memory.preexisting is None):
+        return Question(
+            Q_PREEXISTING,
+            "Is this for a condition you already had before your HMO started? Plans cap "
+            "those at a lower amount in the first year.",
+            options=["No", "Yes", "Not sure"],
+            progress=_progress(memory, Q_PREEXISTING),
+        )
+
     if Q_SENIOR not in memory.asked and memory.senior_or_pwd is None:
         return Question(
             Q_SENIOR,
@@ -360,6 +375,12 @@ def slots_from_choice(kind: str, value, extra=None) -> dict:
         if value in ("Yes", "No"):
             slots["hmo_covers_outpatient"] = (value == "Yes")
 
+    elif kind == Q_PREEXISTING:
+        # "Not sure" stays unset. Marking it pre-existing would understate their cover;
+        # marking it not would overstate it. Neither guess is ours to make.
+        if value in ("Yes", "No"):
+            slots["preexisting"] = (value == "Yes")
+
     elif kind == Q_PROCEDURE:
         if value == "Just a check-up":
             slots["no_procedure_planned"] = True
@@ -431,6 +452,13 @@ def apply_answer(memory, slots: dict, asked_kind: Optional[str]) -> dict:
                  "hmo_covers_outpatient"):
         if slots.get(slot) is not None:
             setattr(memory, slot, slots[slot])
+
+    # Pre-existing lives on the plan, not the session, since it changes what the plan pays.
+    if slots.get("preexisting") is not None:
+        memory.preexisting = slots["preexisting"]
+        if memory.hmo is not None:
+            memory.hmo.preexisting = slots["preexisting"]
+        memory.asked.add(Q_PREEXISTING)
 
     # Same asymmetry: a "no" is only trusted against the question that was asked, but a
     # volunteered "senior citizen po ako" is unambiguous and taken whenever it appears.

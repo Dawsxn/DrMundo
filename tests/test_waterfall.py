@@ -364,19 +364,30 @@ def test_hmo_not_applied_when_the_plan_excludes_outpatient_labs():
 
 # ------------------------------------------------------------------ HMO realism
 def test_unknown_balance_says_it_is_assuming_the_full_limit():
-    """Capping at the annual MBL assumes the patient has claimed nothing all year.
+    """The limit is PER ILLNESS per year, not one annual pot.
 
-    For anyone mid-year that is optimistic in the direction that under-quotes them, and
-    the difference is the whole benefit. The arithmetic still uses it -- refusing any HMO
-    credit would be useless to the many people who do not know their balance -- but the
-    assumption has to be said, with the amount at stake.
+    So a new condition genuinely gets the whole limit even if the member claimed for
+    something unrelated last month, which makes this a milder assumption than an annual
+    aggregate would be. It is still an assumption when they have already claimed for THIS
+    condition, so it is stated with the amount at stake.
     """
     plan = HMOPlan(plan_name="Gold", mbl_annual=Decimal("150000"))
     assert plan.limit_assumed_untouched is True
     est = compute_budget(priced=[_priced(low="80000", high="80000", name="PANEL")],
                          hmo=plan)
-    assert any("annual HMO limit is still available" in c for c in est.caveats)
-    assert any("member portal" in c for c in est.caveats)
+    assert any("per illness per year" in c for c in est.caveats)
+    assert any("this particular condition" in c for c in est.caveats)
+
+
+def test_a_preexisting_condition_is_flagged_as_capped_lower():
+    # Maxicare covers pre-existing conditions in year one, but at a reduced cap. We
+    # cannot know the figure, so we flag rather than invent one.
+    plan = HMOPlan(plan_name="Gold", mbl_annual=Decimal("150000"),
+                   remaining_balance=Decimal("50000"), preexisting=True)
+    est = compute_budget(priced=[_priced(low="80000", high="80000", name="PANEL")],
+                         hmo=plan)
+    assert any("predates your plan" in c for c in est.caveats)
+    assert any("first year" in c for c in est.caveats)
 
 
 def test_a_stated_balance_is_not_flagged_as_an_assumption():
