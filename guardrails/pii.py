@@ -29,3 +29,17 @@ def redact(text: str) -> tuple[str, list[str]]:
             found.add(label)
             redacted = pattern.sub(f"[{label}_REDACTED]", redacted)
     return redacted, sorted(found)
+
+
+# Labels the RASTER redactor (vision/redact.py) may report. These live in pixels, not
+# text, so nothing above will ever find them -- a patient's name printed on a request
+# slip is invisible to a regex. Kept here so both mechanisms share one vocabulary and
+# every redaction shows up in the same pii_found list.
+RASTER_PII_LABELS = frozenset(
+    {"PATIENT_NAME", "PATIENT_ADDRESS", "POLICY_NUMBER", "PHILHEALTH_ID", "SIGNATURE", "BARCODE"}
+)
+
+
+def merge_raster_findings(text_findings: list[str], raster_findings: list[str]) -> list[str]:
+    """Combine text-regex and raster-redaction findings into one sorted list."""
+    return sorted(set(text_findings) | set(raster_findings))

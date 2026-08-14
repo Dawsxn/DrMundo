@@ -11,6 +11,8 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 
+from pricing.schemas import BudgetEstimate
+
 
 # ------------------------------------------------------------------ tool arguments
 class SearchCatalogArgs(BaseModel):
@@ -51,7 +53,10 @@ class HospitalBreakdown(BaseModel):
 
 class Answer(BaseModel):
     status: Literal["answered", "needs_clarification", "out_of_scope", "no_data"]
-    path: Optional[Literal["covered", "outpatient"]] = None
+    # "budget_report" is the Scope v2 multi-item path. It is deliberately NOT expressible
+    # as "covered" or "outpatient": a slip is usually a mix of both, and forcing one label
+    # made the not-covered note fire on the whole report or not at all.
+    path: Optional[Literal["covered", "outpatient", "budget_report"]] = None
     query: str
     answer_text: str = Field(..., description="Natural-language reply shown to the user.")
 
@@ -67,6 +72,10 @@ class Answer(BaseModel):
 
     hospitals: Optional[list[HospitalBreakdown]] = None
     as_of: Optional[str] = None
+
+    # Scope v2: the whole multi-item estimate. Every peso the report shows lives in here,
+    # and guardrails/output_guard.py grounds the prose against it.
+    budget: Optional[BudgetEstimate] = None
 
     disclaimer: str = (
         "Estimates only -- not medical or financial advice. Price ranges are indicative "

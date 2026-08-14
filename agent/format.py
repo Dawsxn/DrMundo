@@ -6,6 +6,7 @@ fields instead -- which are, by construction, grounded in tool results.
 """
 
 from agent.schemas import Answer
+from pricing.schemas import to_display_pesos
 
 DISCLAIMER = (
     "Estimates only — not medical or financial advice. Price ranges are indicative and "
@@ -35,7 +36,70 @@ def _oop_text(answer: Answer) -> str:
     return "n/a"
 
 
+def format_budget_answer(answer: Answer) -> str:
+    """Deterministic rendering of a Scope v2 budget report.
+
+    This is the guardrail's SAFETY FALLBACK, not the patient-facing report -- it is
+    deliberately plain and dependency-free so it cannot itself introduce an ungrounded
+    number. The designed one-pager lives in report/.
+
+    Every bucket is rendered even when empty-ish, because a dropped bucket is how an
+    understated bill becomes invisible.
+    """
+    b = answer.budget
+    if b is None:
+        return format_answer(answer)
+
+    p = lambda d: peso(to_display_pesos(d))  # noqa: E731 -- local shorthand, one file
+    lines: list[str] = ["**Budget estimate — Makati Medical Center**", ""]
+    lines.append(f"Read from your request: {b.extracted_count} item(s)")
+    lines.append("")
+    lines.append(f"**Prepare: {p(b.prepare_low)} – {p(b.prepare_high)}**")
+    lines.append("")
+
+    if b.priced:
+        lines.append(f"Priced ({len(b.priced)}) — {p(b.gross_low)} – {p(b.gross_high)}")
+        for it in b.priced:
+            lines.append(f"  • {it.catalog_name}: {p(it.price_low)} – {p(it.price_high)}")
+    if b.discount_low or b.discount_high:
+        lines.append(f"Senior/PWD reduction: −{p(b.discount_low)} – −{p(b.discount_high)}")
+    if b.philhealth_low or b.philhealth_high:
+        lines.append(f"PhilHealth: −{p(b.philhealth_low)} – −{p(b.philhealth_high)}")
+    if b.hmo_low or b.hmo_high:
+        lines.append(f"HMO: −{p(b.hmo_low)} – −{p(b.hmo_high)}")
+
+    if b.separate_lines:
+        lines.append("")
+        lines.append("Not included in the total above:")
+        for s in b.separate_lines:
+            unit = f" {s.unit}" if s.unit else ""
+            lines.append(f"  • {s.label}: {p(s.price_low)} – {p(s.price_high)}{unit}")
+
+    if b.unpriced:
+        lines.append("")
+        lines.append(f"Not priced ({len(b.unpriced)}) — MMC publishes no price; NOT in the total:")
+        for it in b.unpriced:
+            lines.append(f"  • {it.normalized or it.raw_text}")
+
+    if b.needs_confirmation:
+        lines.append("")
+        lines.append(f"Please confirm ({len(b.needs_confirmation)}):")
+        for it in b.needs_confirmation:
+            lines.append(f"  • {it.raw_text}")
+
+    if b.caveats:
+        lines.append("")
+        for c in b.caveats:
+            lines.append(f"_{c}_")
+
+    lines.append("")
+    lines.append(DISCLAIMER)
+    return "\n".join(lines)
+
+
 def format_answer(answer: Answer) -> str:
+    if answer.path == "budget_report" and answer.budget is not None:
+        return format_budget_answer(answer)
     if answer.status != "answered" or answer.path is None:
         # refusals / clarifications / no-data already carry their own message.
         text = answer.answer_text.strip()
