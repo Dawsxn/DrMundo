@@ -100,9 +100,20 @@ def test_empty_slip_is_valid():
 
 # ------------------------------------------------------------------ money
 def test_decimal_survives_construction_exactly():
-    est = BudgetEstimate(extracted_count=0, prepare_low=Decimal("1810.50"))
+    est = BudgetEstimate(
+        extracted_count=0, prepare_low=Decimal("1810.50"), prepare_high=Decimal("2400.75")
+    )
     assert est.prepare_low == Decimal("1810.50")
+    assert est.prepare_high == Decimal("2400.75")
     assert isinstance(est.prepare_low, Decimal)
+
+
+def test_inverted_range_is_rejected():
+    # Would render to a patient as "prepare P90,000 - P40,000".
+    with pytest.raises(ValidationError):
+        BudgetEstimate(
+            extracted_count=0, prepare_low=Decimal("90000"), prepare_high=Decimal("40000")
+        )
 
 
 def test_display_rounding_is_half_up_not_bankers():

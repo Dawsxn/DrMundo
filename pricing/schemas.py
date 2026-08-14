@@ -117,11 +117,19 @@ class BudgetEstimate(BaseModel):
         ..., description="len(RequestSlip.items) this estimate was built from."
     )
 
+    # Every leg is a RANGE, not a scalar. A deduction is min(entitlement, what's left to
+    # pay), and "what's left" differs between the low and high ends of the price range --
+    # e.g. ESWL is P22,700-70,900 against a P35,100 case rate, so PhilHealth pays P22,700
+    # at the low end and P35,100 at the high end. Reporting one number there is false
+    # precision of exactly the kind this project exists to avoid.
     gross_low: Decimal = Decimal(0)
     gross_high: Decimal = Decimal(0)
-    discount_applied: Decimal = Decimal(0)
-    philhealth_applied: Decimal = Decimal(0)
-    hmo_applied: Decimal = Decimal(0)
+    discount_low: Decimal = Decimal(0)
+    discount_high: Decimal = Decimal(0)
+    philhealth_low: Decimal = Decimal(0)
+    philhealth_high: Decimal = Decimal(0)
+    hmo_low: Decimal = Decimal(0)
+    hmo_high: Decimal = Decimal(0)
     prepare_low: Decimal = Decimal(0)
     prepare_high: Decimal = Decimal(0)
 
@@ -142,6 +150,13 @@ class BudgetEstimate(BaseModel):
                 f"unpriced + {len(self.needs_confirmation)} needs_confirmation = {triaged}, "
                 f"but {self.extracted_count} were extracted. Every item must land in "
                 f"exactly one bucket."
+            )
+        # A range whose low end exceeds its high end is a arithmetic bug, and it would be
+        # rendered to a patient as "prepare P90,000 - P40,000" without this.
+        if self.prepare_low > self.prepare_high:
+            raise ValueError(
+                f"inverted range: prepare_low={self.prepare_low} > "
+                f"prepare_high={self.prepare_high}"
             )
         return self
 
