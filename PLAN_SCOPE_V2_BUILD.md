@@ -31,8 +31,9 @@ where §2 says so explicitly.
 
 | Decision | Ruling | Consequence |
 |---|---|---|
-| HMO document type | **Benefits letter / certificate**, not the membership card | Carries MBL and remaining balance ⇒ **W3 is numeric** and the thesis is fully answerable. `HMOPlan` (§4) stands as written. Harder to source — patients request these from the HMO, so budget effort for obtaining samples |
-| HMO source | **Patient upload only.** No HMO table in `data/` | Handoff §7 wins outright (§2.3). `eval/fixtures/hmo_reference_plan.yaml` exists solely for reproducible evals and the demo fallback |
+| HMO intake | **Conversational. No document upload, no card OCR.** | The agent asks for provider/plan, confirms MBL, and takes remaining balance as typed input. Phase 6 shrinks to near-nothing and track P loses its hardest sourcing requirement |
+| HMO reference figures | **`data/hmo_published_tiers.csv`** — published tier figures with `source:` URLs | Revised 2026-08-14, see §2.3. Handoff §7 rejected *invented* tiers, not published ones. Pre-fills MBL and room entitlement from a named plan; **always overridable by the patient** |
+| Remaining balance | **Always typed by the patient** | It is portal-only and changes with every claim. No card, certificate or letter carries it — this was the assumption that broke the earlier document-upload design |
 | Handwriting | **In scope**, printed and handwritten, **metrics reported separately** | Synthetic gives volume, real gives the honest denominator. A blended F1 is indefensible in Q&A |
 | Slip corpus | **Mix of real (redacted) and synthetic** | See the stratification rule in §9 — this is the main threat to metric validity |
 | Procedure on slip | **Mixed** — some slips name it, some are work-up only | The pipeline **must branch**: no procedure ⇒ PhilHealth leg never fires ⇒ report says so explicitly rather than showing ₱0 coverage |
@@ -104,29 +105,44 @@ Consequence to accept: appendectomy has *neither* a package price (handoff §6.1
 in the total. It becomes an almost-empty answer. Drop it as a demo — use **laparoscopic
 cholecystectomy** and **lipid profile**, exactly as handoff §6.1 recommends.
 
-### 2.3 The HMO reference plan vs. "no number exists unless it was published" ← **the real one**
+### 2.3 HMO — resolved 2026-08-14, and it is not the contradiction it looked like
 
-This is the only head-on contradiction. The adviser wants one standard public plan (e.g.
-Medicard). Handoff §7 dropped exactly this, on the owner's call, because invented tiers can only
-ever be wrong — and it is the sole reason the project can claim *every committed number traces to
-a published source*.
+**Earlier readings of this section, including in this document, were wrong.** Handoff §7 dropped
+"a synthetic `hmo_plans.csv` with **invented** Maxicare tiers." The objection was to *fabrication*,
+not to the existence of a table. A table of **published** tier figures with source URLs satisfies
+the project's actual rule — *no number exists unless it was published* — and is not what the owner
+rejected. The adviser's "get 1 public standard package" was legitimate all along.
 
-Under §0, the handoff wins: **the upload is the feature, and there is no HMO table in `data/`.**
-Patient's certificate → CV → extracted fields → waterfall. That is also where CV surface #2 lives,
-so it earns its keep twice.
+What also turned out to be wrong: the assumption that a benefits letter carries a **remaining
+balance**. It does not. A certificate issued at enrolment shows the *annual* MBL; the balance
+changes with every claim and lives in the member portal. No document carries it. That single fact
+collapsed the document-upload design, because the field W3 most depends on could never be
+extracted.
 
-The adviser's ask still gets satisfied, but as a **test fixture, not a dataset**:
+**The design:**
 
-- Put it in **`eval/fixtures/hmo_reference_plan.yaml`**, not `data/`. The directory is the
-  guarantee — nothing in `eval/fixtures/` can be mistaken for scraped MMC data.
-- It serves as the deterministic seed for §9 (the eval numbers move between runs without a fixed
-  plan) and as the demo fallback when nothing is uploaded.
-- Carry `source:` and `is_illustrative: true`; the renderer **must** surface the flag as a
-  footnote on any figure derived from it.
-- No upload and no fixture ⇒ label the figure *"before any HMO"* (handoff §7), never imply HMO
-  doesn't exist.
+1. **HMO intake is conversational.** No upload, no card OCR. The agent asks for the provider and
+   plan, confirms the MBL, and takes the remaining balance as typed input.
+2. **`data/hmo_published_tiers.csv`** carries published tier figures — MBL, room entitlement,
+   `source:` URL, `is_published: true`. Maxicare publishes individual/family tiers (Platinum Plus
+   ₱200k large private · Platinum ₱150k regular private · Gold ₱100k · Silver ₱60k); MediCard
+   Standard runs ~₱50–60k ward/semi-private with higher tiers at ₱100–120k. Room entitlements map
+   onto `facility_rates`.
+3. **The table pre-fills, it never decides.** Naming a plan fills MBL and room entitlement; the
+   patient can override any of it. An uploaded or stated figure always beats the table.
+4. **No plan given ⇒ *"before any HMO"*** (handoff §7), never a quiet zero.
 
-Never commit an extracted patient plan — it carries their name and policy number (handoff §7).
+**The limitation, to be labelled rather than hidden.** Published tiers are *individual/family*
+plans. Most PH coverage is employer-provided and negotiated, so a corporate plan may match no
+public tier. This is handoff §7's second objection — that a static table "could only ever be
+wrong" for a given patient — and it is real. The fix is labelling, not omission: any figure taken
+from the table must read as *"published figures for that plan tier — check your own certificate."*
+
+**Why CV was dropped here.** Two of the three fields aren't on any document, so card OCR would have
+saved the patient typing one string, at the cost of the hardest sample-acquisition problem in the
+project. Component #14 is fully satisfied by the slip pipeline (§8), which is where the grade is.
+
+Never store or commit a patient's stated plan details alongside anything identifying.
 
 ### 2.4 Senior/PWD ordering vs. PhilHealth does not commute
 
@@ -186,8 +202,8 @@ vision/                    ★ NEW — CV component (capstone #14)
   redact.py                raster redaction; runs before anything touches disk
   ocr.py                   the CV model, wrapped as a callable tool
   extract_request.py       OCR spans + LLM normalisation → RequestSlip
-  extract_hmo.py           OCR spans + LLM normalisation → HMOPlan
   models/                  RRL candidates behind one interface (§8)
+                           (no HMO extractor — intake is conversational, §2.3)
 
 pricing/                   ★ NEW — pure Python, zero LLM, fully unit-testable
   waterfall.py             gross → discount → PhilHealth → HMO → prepare
@@ -203,7 +219,8 @@ db/queries.py              EXTEND — panels, professional fees, facility rates;
 agent/tools.py             EXTEND — new tools (§7)
 guardrails/output_guard.py EXTEND — nested grounding, per-item not-covered note (§2.5a/b)
 guardrails/pii.py          EXTEND — accept raster redaction results into pii_found (§2.5c)
-eval/fixtures/             ★ NEW — hmo_reference_plan.yaml (§2.3), gold-set annotations
+data/hmo_published_tiers.csv ★ NEW — published tier figures with source URLs (§2.3)
+eval/fixtures/             ★ NEW — gold-set annotations
 eval/                      EXTEND — gold set, metrics, LLM-as-judge (§9)
 data/samples/              ★ gitignored BEFORE the first sample lands
 ```
@@ -237,8 +254,10 @@ class HMOPlan(BaseModel):
     room_entitlement: str | None
     covers_outpatient_diagnostics: bool | None
     accredited_at_mmc: bool | None
-    is_illustrative: bool = False  # True for the reference fixture (§2.3)
+    mbl_source: Literal["published_tier", "patient_stated"] | None
     exclusions: list[str] = []
+    # Assembled CONVERSATIONALLY (§2.3) — never extracted from an image.
+    # remaining_balance is ALWAYS patient-stated: it appears on no document.
 ```
 
 ```python
@@ -334,14 +353,14 @@ Ready-to-paste prompts for every phase below live in
 | **3** | **Waterfall.** `pricing/waterfall.py` per §5. No LLM, no I/O. | B | 1, 2 | Golden-number tests incl. all four `component` rows and both discount orderings |
 | **4** | **Panels.** `pricing/panels.py` — panel vs. sum of members. | B | 2, 3 | Correct on all 9 `lab_panels` mappings |
 | **5** | **CV: request slip.** `vision/redact.py` → `vision/ocr.py` → `vision/extract_request.py`. Redaction runs **first**. Includes the RRL benchmark (§8). | A | 1, P (partial) | Runs on the gold set; per-source item-level P/R reported (§9.1) |
-| **6** | **CV: HMO letter.** `vision/extract_hmo.py` → `HMOPlan`. | A | 1, 5 | Extracted plan drives W3; nothing patient-identifying written under the repo |
+| **6** | **HMO intake (conversational).** `data/hmo_published_tiers.csv` + a plan-name lookup + the three refine questions. **No CV, no upload** (§2.3). Much smaller than it was. | B | 1, 3 | A named plan pre-fills MBL and room entitlement; patient-stated figures override; W3 computes |
 | **7** | **Guardrail retrofit (§2.5).** Nested `_grounded_values`, per-item not-covered note, `path="budget_report"`, raster redactions into `pii_found`, `check_input` with an attachment. **Must land before Phase 10.** | C | 1, 3 | A multi-item report survives the pipeline intact; a hallucinated peso in it is still caught |
 | **8** | **Tools, routing, memory.** New tools (§7); `SessionMemory` carries the `BudgetEstimate` between turns so the §14 refine loop re-prices without re-upload. | C | 3, 4, 5, 6 | Agent completes an image → Pass 1 → refine → Pass 2 trajectory |
 | **9** | **API + UI upload.** Multipart image on the FastAPI endpoint; Streamlit file upload + Pass 1/Pass 2 rendering. | C | 8 | A slip can be uploaded and priced through the real UI |
 | **10** | **Report renderer.** `report/render.py` → the one-pager (§11), inline + PDF. | A | 7, 9 | PDF renders; every peso traces to a `BudgetEstimate` field |
 | **11** | **Eval suite.** §9, §9.1, §9.2. | C | P, 10 | 3+ quantitative metrics, reported per source, with interpretation |
 | **12** | **Deck + write-up.** Spec §6.2/§6.3 format. | team | 11 | Spec §11 checklist fully ticked |
-| **P** | **Gold set** — collect, redact, annotate (§9.2). **Runs in parallel from Phase 0.** | team | 0 | 40 slips (floor 24), four cells non-empty, ~20% double-annotated |
+| **P** | **Gold set** — request slips only; collect, redact, annotate (§9.2). **Runs in parallel from Phase 0.** No HMO documents needed since §2.3 went conversational. | team | 0 | 40 slips (floor 24), four cells non-empty, ~20% double-annotated |
 
 **Track P is the critical path, not Phase 12.** It starts at Phase 0 and gates Phases 5 and 11.
 Everything else can slip a week; this can't.
@@ -359,7 +378,7 @@ Keep descriptions carrying the routing logic, matching the existing style in `ag
 | Tool | Purpose |
 |---|---|
 | `extract_doctor_request(image)` | CV + normalisation → `RequestSlip`. Entry point for the image path. |
-| `extract_hmo_plan(image)` | CV + normalisation → `HMOPlan`. Optional; absent ⇒ label *"before any HMO."* |
+| `resolve_hmo_plan(provider, plan_name)` | Published-tier lookup → `HMOPlan` (§2.3). **Not an image tool.** No plan given ⇒ label *"before any HMO."* |
 | `price_item_list(items, hmo, senior_pwd)` | Deterministic. Runs the whole waterfall → `BudgetEstimate`. |
 | `compare_panel(service)` | Panel vs. components. |
 | `get_room_rates()` | Separate line only. Must not be summable into the total. |
@@ -505,7 +524,7 @@ holes in the rules above.
 | Component | Item → catalogue **top-1 match accuracy** | Wrong match = confidently wrong price |
 | Trajectory | Tool-sequence validity; `ask_user` fires when confidence is low | Does it clarify rather than guess? |
 | End-to-end | **Hallucinated-peso rate** — every figure in prose present in the structured result | Target 0%; this is the trust metric |
-| LLM-as-judge | Honesty rubric: does it name what's missing, avoid "fully covered" on `component` rows, flag illustrative HMO? | The gaps are the design (handoff §2) |
+| LLM-as-judge | Honesty rubric: does it name what's missing, avoid "fully covered" on `component` rows, label published-tier MBLs as needing verification? | The gaps are the design (handoff §2) |
 
 Pick **three headline numbers** for the deck: OCR F1, top-1 match accuracy, hallucinated-peso
 rate. Report each with interpretation, not just the value.
@@ -571,7 +590,7 @@ NOT PRICED (2) — MMC publishes no price; NOT in the total above
 PLEASE CONFIRM (1)
   Your slip says "CREA" — Creatinine serum, or 24-hour urine?
 
-‡ illustrative reference plan, not your actual policy
+‡ published figures for this plan tier — check your own certificate
 Estimates only, not a quotation. Every price traces to an MMC catalogue item code.
 ```
 
@@ -690,7 +709,9 @@ PATIENT OPENS CHAT
       │
       ├─ 1. "Your slip says CREA — serum, or 24-hour urine?"        → correctness
       ├─ 2. "Is this work-up for a planned operation?"              → unlocks PhilHealth
-      ├─ 3. "Do you have an HMO? Upload your benefits letter."      → unlocks W3
+      ├─ 3. "Do you have an HMO? Which provider and plan?"          → pre-fills MBL from
+      │       then: "Roughly how much of your benefit is left?"        published tiers;
+      │       (balance is always typed — it's on no document)          balance unlocks W3
       └─ 4. "Are you a senior citizen or PWD?"                      → unlocks −28.6%
       │       (each answer re-runs the waterfall; no re-upload)
       ▼
@@ -736,7 +757,8 @@ PATIENT OPENS CHAT
 | Not a medical document | Decline and say what's needed. The existing topic guard covers text; the image path needs its own check |
 | Zero items extracted | Distinct from "all unpriced" — say the slip couldn't be read, not that MMC prices nothing on it |
 | Every item unpriced | A real, honest outcome. Report it as such; the total is ₱0 *known*, not ₱0 *owed* |
-| HMO letter uploaded but unreadable | Fall back to *"before any HMO"* and say why. Never fall back to the `eval/fixtures/` reference plan in a patient-facing answer |
+| Plan named but not in the published tiers | Ask for the MBL directly. A corporate plan matching no public tier is the *expected* case, not an error (§2.3) |
+| Plan given, balance unknown | Show the MBL-capped figure and label it clearly as an upper bound on HMO help, not a computed balance |
 
 ### 14.3 Two integration points this flow depends on
 

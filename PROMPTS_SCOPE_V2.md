@@ -87,7 +87,9 @@ against these in parallel, so they must land before anything else and must not c
 1. vision/schemas.py — ExtractedItem, RequestSlip, HMOPlan exactly as specified in plan §4.
    - RequestSlip.redacted must have a validator that REJECTS False. An unredacted slip must not
      be constructible.
-   - HMOPlan.is_illustrative defaults to False and is set True only by the eval fixture loader.
+   - HMOPlan is assembled CONVERSATIONALLY, never from an image (plan §2.3). Its mbl_source field
+     is Literal["published_tier", "patient_stated"] | None, and remaining_balance is always
+     patient-stated — it appears on no document.
 
 2. pricing/schemas.py — PricedItem, BudgetEstimate, SeparateLine per plan §4.
    - MONEY REPRESENTATION. The existing codebase uses int pesos throughout: data/load_db.py has
@@ -309,7 +311,8 @@ model and collapses under one question in Q&A.
 Also benchmark on the container, not a dev laptop. More cores or an integrated GPU will mislead you
 about all four candidates.
 
-Do NOT build the HMO extractor (Phase 6), the tools, or the renderer.
+Request slips are the ONLY document type in this project. HMO intake is conversational (plan §2.3),
+so there is no second document pipeline to design for. Do NOT build the tools or the renderer.
 
 Report: the pipeline, the RRL table, the latency budget and when it was fixed, and per-source
 metrics. If a candidate was infeasible, say so and give the number that made it infeasible.
@@ -317,43 +320,62 @@ metrics. If a candidate was infeasible, say so and give the number that made it 
 
 ---
 
-## Phase 6 — CV: HMO benefits letter
+## Phase 6 — HMO intake (conversational)
 
 ```
 You are working in the Dr. Mundo repository at D:\Libraries\Documents\STAI100\DrMundo.
 
-Read PLAN_SCOPE_V2_BUILD.md §0, §0.1, §2.3 (why there is no HMO dataset) and §5 (W3), plus
-HANDOFF_SCOPE_V2_DATA.md §7. The 2026-08-09 commits are authoritative.
+Read PLAN_SCOPE_V2_BUILD.md §0, §0.1, §2.3 (in full — it was revised on 2026-08-14 and earlier
+versions of this plan said the opposite) and §5 (W3), plus HANDOFF_SCOPE_V2_DATA.md §7.
 
-Build vision/extract_hmo.py: an uploaded HMO benefits letter or certificate -> HMOPlan
-(vision/schemas.py, Phase 1). Reuse the redaction and OCR stages from Phase 5; this is a second
-document type through the same pipeline, not a second pipeline.
+HMO intake is CONVERSATIONAL. There is no upload, no card OCR, and no vision/extract_hmo.py. If
+you find instructions anywhere describing an HMO document-extraction pipeline, they are superseded
+by §2.3.
 
-Locked decisions you must respect (plan §0.1 and §2.3):
-- The document is a BENEFITS LETTER / CERTIFICATE, not a membership card. That choice was made
-  precisely because a card does not carry MBL or remaining balance, and without those W3 cannot
-  compute anything.
-- There is NO HMO table in data/. The patient upload is the only source of a real plan. Handoff §7
-  dropped a committed HMO table on the owner's call, and that is what lets this project claim every
-  committed number traces to a published source.
-- The reference plan lives at eval/fixtures/hmo_reference_plan.yaml — create it here, with a
-  `source:` field and `is_illustrative: true`. It exists ONLY to make eval runs reproducible and to
-  power the demo when nothing is uploaded.
+Two facts drive this design:
+- Remaining balance appears on NO document. A certificate shows the ANNUAL MBL; the balance changes
+  with every claim and lives in the member portal. It must be typed by the patient.
+- Handoff §7 rejected INVENTED tiers, not published ones. A table of published figures with source
+  URLs satisfies the project rule that no number exists unless it was published.
 
-Two rules that protect patients:
-- NEVER commit an extracted patient plan. It carries their name and policy number. Same redaction
-  discipline as the slips.
-- NEVER fall back to the reference fixture in a patient-facing answer. If the letter is unreadable,
-  fall back to "before any HMO" and say why. A patient shown an illustrative MBL as though it were
-  theirs is exactly the failure the no-synthetic rule exists to prevent. Enforce this in code — the
-  fixture loader should be unreachable from the patient path, not merely discouraged.
+Build three things:
 
-Extraction targets: provider, plan name, annual MBL, remaining balance, coverage percentage, room
-entitlement, whether outpatient diagnostics are covered, MMC accreditation, exclusions. Any field
-not present in the document is None — do not infer it from the plan name.
+1. data/hmo_published_tiers.csv — published tier figures with columns: provider, plan_name,
+   mbl_annual, room_entitlement, source (URL), as_of, is_published. Seed it from published
+   individual/family tiers, e.g. Maxicare Platinum Plus 200000 (large private), Platinum 150000
+   (regular private), Gold 100000, Silver 60000; MediCard Standard ~50000-60000 (ward/semi-private)
+   with higher tiers 100000-120000. VERIFY each figure against the provider's own page before
+   committing it and put the URL in the source column — do not carry over a number from this prompt
+   without checking it. If a figure cannot be verified, omit the row rather than guessing.
+   Room entitlement values should map onto the room types in facility_rates.
 
-Report: fields extracted reliably vs unreliably, how the "unreadable letter" path behaves, and the
-mechanism preventing the fixture from reaching a patient-facing answer.
+2. A lookup: plan name -> HMOPlan (vision/schemas.py, Phase 1) pre-filled with mbl_annual,
+   room_entitlement, and mbl_source="published_tier". Matching should be forgiving of casing and
+   partial names. A plan that matches nothing is the EXPECTED case, not an error — most PH coverage
+   is employer-provided and negotiated, and corporate plans match no public tier.
+
+3. The three refine questions for the §14 flow, in order:
+     "Do you have an HMO? Which provider and plan?"
+     "Roughly how much of your benefit is left?"      <- always typed, never looked up
+     (ask for MBL directly only if the plan matched no tier)
+
+Rules:
+- The table PRE-FILLS, it never decides. Any patient-stated figure overrides it, and mbl_source
+  flips to "patient_stated".
+- Any figure taken from the table must be labelled in the output as published figures for that
+  plan tier, with a nudge to check their own certificate. Handoff §7's objection that a static
+  table "could only ever be wrong" for a given patient is real; the answer is labelling, not
+  omission.
+- No plan given => "before any HMO", never a quiet zero.
+- Plan given but balance unknown => show the MBL-capped figure, labelled as an upper bound on HMO
+  help rather than a computed balance.
+- Never persist a patient's stated plan details alongside anything identifying.
+
+Do NOT build any image handling here. Do NOT modify the waterfall — W3 is already specified in §5
+and takes an HMOPlan regardless of how it was assembled.
+
+Report: the table with every source URL you verified, which seed figures you could NOT verify and
+therefore omitted, the matching behaviour, and how an unmatched plan is handled.
 ```
 
 ---
@@ -428,7 +450,7 @@ Wire the pieces into the agent.
    routing logic the model depends on, so write them in the same voice and with the same
    directiveness:
      extract_doctor_request(image)   -> RequestSlip
-     extract_hmo_plan(image)         -> HMOPlan
+     resolve_hmo_plan(provider, plan_name) -> HMOPlan   (Phase 6 lookup; NOT an image tool)
      price_item_list(items, hmo, senior_pwd) -> BudgetEstimate   (deterministic, runs the waterfall)
      compare_panel(service)
      get_room_rates()                -> separate line ONLY; must not be summable into the total
@@ -444,9 +466,10 @@ Wire the pieces into the agent.
    - PASS 1 asks NOTHING and always produces a report: gross, plus PhilHealth only if a procedure
      was identified, labelled "before any HMO or discounts".
    - Then refine, ONE question per turn via the existing ask_user contract, in this order:
-     (a) disambiguation, (b) "is this work-up for a planned operation?", (c) HMO upload,
-     (d) senior/PWD. Order is by what each changes, not what it is worth — a wrong item invalidates
-     everything downstream, so disambiguation goes first even though it moves the number least.
+     (a) disambiguation, (b) "is this work-up for a planned operation?", (c) HMO provider/plan then
+     remaining balance (conversational — see Phase 6), (d) senior/PWD. Order is by what each
+     changes, not what it is worth — a wrong item invalidates everything downstream, so
+     disambiguation goes first even though it moves the number least.
    - unpriced[] and needs_confirmation[] appear on EVERY render including Pass 1. They never
      collapse away.
    - No HMO answer => "before any HMO", never a quiet zero. No procedure identified => "no procedure
@@ -455,7 +478,8 @@ Wire the pieces into the agent.
 
 4. Failure branches from §14.2, built deliberately: unreadable slip (ask for a retake, do not price
    low-confidence guesses); not a medical document; zero items extracted (distinct from all-unpriced);
-   every item unpriced (a real outcome — P0 KNOWN, not P0 owed); unreadable HMO letter.
+   every item unpriced (a real outcome — P0 KNOWN, not P0 owed); a plan name matching no published
+   tier (expected, not an error); a plan given with no known balance.
 
 Do NOT build the renderer (Phase 10) or the UI (Phase 9).
 
@@ -519,8 +543,9 @@ Design rules, in priority order:
 - NOT PRICED and PLEASE CONFIRM are always present when non-empty. They never collapse.
 - Room & board is per-day and never multiplied. Do not print an all-in figure. If someone later
   wants one, the assumed length of stay must be printed on the report in plain sight.
-- Any figure derived from the illustrative HMO fixture carries a visible marker. Real extracted
-  plans do not.
+- Any MBL taken from data/hmo_published_tiers.csv (mbl_source == "published_tier") carries a
+  visible marker reading as "published figures for this plan tier — check your own certificate".
+  Patient-stated figures do not.
 - Show the OLDEST as_of across the items in the report so staleness is visible — as_of varies per
   item, from 2021 to 2025 in facility_rates alone.
 - Every peso on the page must trace to a BudgetEstimate field. Write a test asserting this.
@@ -564,7 +589,8 @@ Extend eval/ (read run_eval.py and scoring.py first; match their structure). Lay
   Trajectory   — tool-sequence validity; ask_user fires when confidence is low
   End-to-end   — hallucinated-peso rate (every figure in prose present in the structured result)
   LLM-as-judge — honesty rubric: does it name what is missing? does it avoid "fully covered" on
-                 price_basis='component'? does it flag the illustrative HMO fixture?
+                 price_basis='component'? does it label published-tier MBLs as needing
+                 verification against the patient's own certificate?
 
 Three headline numbers for the deck: OCR F1, top-1 match accuracy, hallucinated-peso rate. Report
 each WITH INTERPRETATION, not just a value.
@@ -629,9 +655,11 @@ Two things to state explicitly rather than let a grader raise them:
 - Dr. Mundo estimates PRICES, not triage or diagnosis. The rubric lists "safety-critical workflows
   without a human in the loop" as a poor fit for agentic AI; say why this is not that.
 
-Honesty requirements: HMO extraction was validated largely on synthetic documents — disclose it.
-Report OCR metrics per source, never blended. Name the gaps: no appendectomy package, 19 procedures
-without RVS codes, no fecalysis.
+Honesty requirements: HMO MBL figures come from PUBLISHED INDIVIDUAL/FAMILY tiers, but most PH
+coverage is employer-provided and negotiated — so a corporate plan may match no public tier, and
+remaining balance is always patient-stated rather than verified. Disclose both. Report OCR metrics
+per source, never blended. Name the gaps: no appendectomy package, 19 procedures without RVS codes,
+no fecalysis.
 
 Demo: use laparoscopic cholecystectomy (full package plus case rate) or lipid profile (the
 panel-vs-components story). Do NOT use appendectomy — MMC publishes no operating-room package for
@@ -694,10 +722,10 @@ Disagreements are also the fastest way to find holes in the rules above.
 Redaction: in the RASTER, never via PDF annotations, which can be peeled off. No unredacted
 intermediate anywhere under the repo.
 
-Also collect HMO BENEFITS LETTERS (not membership cards — cards lack MBL and remaining balance).
-These are harder to obtain; expect most to be synthetic, and record the real/synthetic split
-because Phase 11 must disclose it.
+Request slips are the ONLY document type. Do NOT collect HMO cards, certificates or benefits
+letters — HMO intake went conversational on 2026-08-14 (plan §2.3) and no HMO document is used
+anywhere in this project.
 
 Report: counts per cell, the annotation rules as written, inter-annotator agreement, and the
-real/synthetic split for both slips and HMO letters.
+real/synthetic split.
 ```
