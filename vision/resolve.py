@@ -35,10 +35,18 @@ _ROOT = Path(__file__).resolve().parent.parent
 
 
 def _taxonomy_path() -> Path:
-    for parent in sorted(_ROOT.glob("labrequests-*/labrequests/taxonomy/taxonomy.yaml")):
-        return parent
+    """Find taxonomy.yaml under either dataset layout.
+
+    `labrequests/` is the committed location; `labrequests-<stamp>/labrequests/` is the
+    raw export. Preferring the committed one stops a stale export shadowing it.
+    """
+    candidates = [_ROOT / "labrequests" / "taxonomy" / "taxonomy.yaml"]
+    candidates += sorted(_ROOT.glob("labrequests-*/labrequests/taxonomy/taxonomy.yaml"))
+    for c in candidates:
+        if c.is_file():
+            return c
     raise FileNotFoundError(
-        "taxonomy.yaml not found. Expected labrequests-*/labrequests/taxonomy/taxonomy.yaml"
+        "taxonomy.yaml not found under labrequests/ or labrequests-<stamp>/labrequests/"
     )
 
 

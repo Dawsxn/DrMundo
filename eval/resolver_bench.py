@@ -21,9 +21,27 @@ _ROOT = Path(__file__).resolve().parent.parent
 
 
 def dataset_dir() -> Path:
-    for d in sorted(_ROOT.glob("labrequests-*/labrequests")):
+    for d in _candidate_dataset_dirs(_ROOT):
         return d
-    raise FileNotFoundError("labrequests dataset not found next to the repo root")
+    raise FileNotFoundError(
+        "labrequests dataset not found. Expected labrequests/ or "
+        "labrequests-<stamp>/labrequests/ beside the repo root."
+    )
+
+def _candidate_dataset_dirs(root: Path):
+    """Both layouts the dataset has appeared in.
+
+    `labrequests/` is where it was committed to main; the timestamped
+    `labrequests-<stamp>/labrequests/` is the raw export. Prefer the committed one so a
+    stale export cannot silently shadow it.
+    """
+    direct = root / "labrequests"
+    if (direct / "groundtruth").is_dir():
+        yield direct
+    for d in sorted(root.glob("labrequests-*/labrequests")):
+        if (d / "groundtruth").is_dir() or (d / "taxonomy").is_dir():
+            yield d
+
 
 
 def load_samples() -> list[dict]:
