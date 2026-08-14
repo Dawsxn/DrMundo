@@ -243,6 +243,10 @@ class DrMundoService:
                 senior_or_pwd=bool(memory.senior_or_pwd),
                 procedure_source=memory.procedure_source,
                 planned_procedure=memory.planned_procedure,
+                philhealth_active=memory.philhealth_active,
+                hmo_covers_outpatient=memory.hmo_covers_outpatient,
+                room_type=memory.room_type,
+                length_of_stay=memory.length_of_stay,
             )
             memory.remember_estimate(estimate)
 

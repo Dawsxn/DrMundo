@@ -83,6 +83,8 @@ def compute_budget(
     separate_lines: Iterable[SeparateLine] = (),
     procedure_source: ProcedureSource = "unknown",
     planned_procedure: Optional[str] = None,
+    philhealth_active: Optional[bool] = None,
+    hmo_covers_outpatient: Optional[bool] = None,
 ) -> BudgetEstimate:
     """Run the whole waterfall and return the structured estimate."""
     priced = list(priced)
@@ -121,10 +123,14 @@ def compute_budget(
     balance_low = ZERO
     balance_high = ZERO
 
+    # An inactive membership pays nothing. Told "no", we do not deduct a case rate the
+    # patient will not receive; told nothing, we behave as before rather than assume.
+    philhealth_applies = philhealth_active is not False
+
     for p in priced:
         item_low = p.price_low * multiplier
         item_high = p.price_high * multiplier
-        if _eligible_for_case_rate(p):
+        if philhealth_applies and _eligible_for_case_rate(p):
             covered_low = min(p.case_rate, item_low)
             covered_high = min(p.case_rate, item_high)
         else:
@@ -135,7 +141,13 @@ def compute_budget(
         balance_high += item_high - covered_high
 
     # -------------------------------------------------------------- W3  HMO
-    cap = _hmo_cap(hmo)
+    # Many plans cover outpatient laboratory work only with a referral or an approval
+    # letter. Told "no", the benefit does not apply to a bill that is nothing but labs;
+    # crediting it anyway would understate what the patient actually pays.
+    outpatient_only = all(p.item.kind in ("lab", "imaging", "diagnostic") for p in priced)
+    hmo_applies = not (hmo_covers_outpatient is False and outpatient_only and priced)
+
+    cap = _hmo_cap(hmo) if hmo_applies else None
     if cap is None:
         hmo_low = hmo_high = ZERO
     else:
@@ -167,7 +179,8 @@ def compute_budget(
         prepare_high=prepare_high,
         separate_lines=separate_lines,
         caveats=_build_caveats(priced, unpriced, needs_confirmation, cancelled,
-                               hmo, senior_or_pwd, procedure_source),
+                               hmo, senior_or_pwd, procedure_source,
+                               philhealth_active, hmo_covers_outpatient),
         hmo=hmo,
         senior_or_pwd=senior_or_pwd,
     )
@@ -181,6 +194,8 @@ def _build_caveats(
     hmo: Optional[HMOPlan],
     senior_or_pwd: bool,
     procedure_source: ProcedureSource = "unknown",
+    philhealth_active: Optional[bool] = None,
+    hmo_covers_outpatient: Optional[bool] = None,
 ) -> list[str]:
     """Everything the patient must be told for the number above to be honest.
 
@@ -256,6 +271,18 @@ def _build_caveats(
         out.append(
             "Includes the senior citizen / PWD reduction of 28.6% (VAT exemption plus 20%), "
             "applied to hospital charges before PhilHealth."
+        )
+
+    if philhealth_active is False:
+        out.append(
+            "You said your PhilHealth is not active, so no case rate is deducted. If you "
+            "settle your contributions before admission, this could drop considerably."
+        )
+
+    if hmo_covers_outpatient is False:
+        out.append(
+            "Your plan does not cover outpatient laboratory tests, so the HMO benefit is "
+            "not applied here."
         )
 
     if any(p.item.kind in {"lab", "imaging"} for p in priced):
