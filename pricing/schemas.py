@@ -51,9 +51,22 @@ class HMOPlan(BaseModel):
 
     provider: Optional[str] = None
     plan_name: Optional[str] = None
-    mbl_annual: Optional[Decimal] = Field(None, description="Annual maximum benefit limit.")
+    # Maxicare states its Maximum Benefit Limit PER ILLNESS PER YEAR, not as one annual
+    # pot. So a new condition gets the whole limit even if the member claimed for
+    # something unrelated last month, and the question that matters is whether they have
+    # already claimed FOR THIS CONDITION this year.
+    mbl_annual: Optional[Decimal] = Field(
+        None, description="Maximum benefit limit, per illness per year."
+    )
     remaining_balance: Optional[Decimal] = Field(
-        None, description="ALWAYS patient-stated; on no document."
+        None, description="What is left FOR THIS CONDITION. Always patient-stated."
+    )
+    preexisting: Optional[bool] = Field(
+        None,
+        description=(
+            "Condition predates the plan. Maxicare caps pre-existing conditions at a "
+            "lower amount during the first year of membership."
+        ),
     )
     coverage_pct: float = Field(1.0, ge=0.0, le=1.0)
     room_entitlement: Optional[str] = None
@@ -64,12 +77,12 @@ class HMOPlan(BaseModel):
 
     @property
     def limit_assumed_untouched(self) -> bool:
-        """True when we are capping at the ANNUAL limit with no balance stated.
+        """True when we cap at the published limit with nothing claimed stated.
 
-        That silently assumes the patient has claimed nothing all year, which for anyone
-        mid-year is optimistic in the direction that under-quotes them. The arithmetic
-        still uses it, because refusing to credit any HMO would be useless to the many
-        people who do not know their balance -- but it must be said out loud.
+        Because the limit is per illness rather than an annual pot, this is a far milder
+        assumption than it first looks: a new condition really does get the whole limit.
+        It is still an assumption when the patient has already claimed for THIS condition
+        this year, so it is said out loud rather than buried.
         """
         return self.remaining_balance is None and self.mbl_annual is not None
 
