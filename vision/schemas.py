@@ -26,8 +26,10 @@ from typing import Literal, Optional
 from pydantic import BaseModel, Field, field_validator
 
 # What kind of thing the slip is asking for. Drives routing: only `procedure` items can
-# ever attract a PhilHealth case rate (see pricing/waterfall.py rule W2).
-ItemKind = Literal["procedure", "imaging", "lab", "unknown"]
+# ever attract a PhilHealth case rate (see pricing/waterfall.py rule W2). The other three
+# behave identically for pricing and are distinguished to match MMC's own categories in
+# hospital_prices (Laboratory / Imaging / Diagnostic), so a report can say which it is.
+ItemKind = Literal["procedure", "imaging", "lab", "diagnostic", "unknown"]
 
 # Ordered vs crossed out. Defaults to ordered, so an extractor that knows nothing about
 # cancellation cannot silently mark real orders as cancelled -- the failure it CAN cause

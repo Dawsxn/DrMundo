@@ -50,6 +50,16 @@ built against a different contract than §0.1 assumed. Three rulings follow.
 | Cancelled rows | **Visible line, never billed** | A struck-through row means the doctor cancelled that test. 45 rows across 40 forms. Rendering it proves the agent read the strike-through, and lets a patient catch a mis-read — if extraction wrongly cancels a real order, they can see it and say so |
 | Planned procedure | **Tri-state, and "none" is a valid answer** | Take it from the slip when present; ask when unknown; and accept *"no operation planned"* as a terminal answer for routine or precautionary work-up. The agent must not keep asking a patient who is just getting bloodwork |
 
+**Latency budget: 20 seconds**, upload to rendered report, fixed 2026-08-15 **before** any
+measurement. Covers the whole chain (redact, read, resolve, price, render), though the reader
+dominates it. Chosen because the demo runs live in front of a class and dead air past ~20s loses an
+audience, and a patient in a hospital lobby has about the same tolerance. Loose enough that
+PaddleOCR and docTR should clear it on CPU while TrOCR probably will not, which makes it a real
+discriminator rather than a formality.
+
+**Measure on the container, not a dev laptop.** Any figure recorded on a developer machine is a
+floor; anything near the line locally counts as failing until the LXC says otherwise.
+
 **On the third:** the current dataset is entirely lab requests, so nothing names a procedure today.
 The pipeline still supports slip-named procedures, because test cases for that are expected later.
 Until then the PhilHealth leg fires from the conversation rather than the image, and the deck must
