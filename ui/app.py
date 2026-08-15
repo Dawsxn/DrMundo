@@ -5,11 +5,17 @@ the chat box; Dr. Mundo says what it read, then walks through the remaining ques
 using real controls rather than asking them to describe things in prose. The figure and
 the PDF arrive together at the end.
 
-Three things are deliberate:
+Four things are deliberate:
 
   Questions are answered by clicking, not typing. A patient offered the actual candidate
   tests picks the right one; the same patient asked to describe the difference in free
   text often cannot. Typing still works for anyone who prefers it.
+
+  The benefits document has its own panel, above the conversation, and the chat box takes
+  slips only. The two uploads look alike and are not: a slip is a turn, and it scrolls
+  away once answered, while a Summary of Benefits describes the patient, governs every
+  figure afterwards, and stays true when the slip is replaced. The panel is also the only
+  honest place to show whether we are working from real limits or a ceiling.
 
   No price appears mid-intake. A half-answered estimate is the one most likely to be
   wrong in the direction that costs the patient money.
@@ -75,6 +81,9 @@ hr{border-color:var(--line);}
 .dm-q{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:.85rem 1rem .5rem;margin:.35rem 0 .6rem;background:#fcfeff;}
 .dm-q .step{font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);}
 .dm-q .ask{font-weight:600;margin:.15rem 0 .1rem;}
+.dm-cov-label{font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);}
+.dm-cov-plan{font-weight:600;margin:.1rem 0 .1rem;}
+.dm-cov-note{color:var(--mute);font-size:.8rem;line-height:1.5;}
 </style>""",
         unsafe_allow_html=True,
     )
@@ -86,6 +95,7 @@ def _init_state() -> None:
     st.session_state.setdefault("messages", [])    # {role, text, meta, image, pdf}
     st.session_state.setdefault("question", None)  # the pending intake question
     st.session_state.setdefault("has_slip", False)
+    st.session_state.setdefault("coverage_file", None)
 
 
 def _new_chat() -> None:
@@ -98,6 +108,7 @@ def _new_chat() -> None:
     st.session_state.messages = []
     st.session_state.question = None
     st.session_state.has_slip = False
+    st.session_state.coverage_file = None
 
 
 # ----------------------------------------------------------------- rendering
@@ -365,31 +376,98 @@ def _handle_slip(file) -> None:
 def _handle_benefits(file) -> None:
     """A Summary of Benefits, Certificate of Coverage or benefit booklet.
 
-    Routed by file type rather than by asking. A PDF in this conversation is a benefits
-    document, because a doctor's request arrives as a photograph and nobody hands out a
-    PDF of one.
+    Uploaded from the coverage panel rather than the chat box, because it is not a turn in
+    a conversation. It describes the patient rather than this estimate, it applies to
+    every figure afterwards, and it stays true when the slip is replaced. Something with
+    that lifetime does not belong in a message that scrolls away.
     """
     payload = file.getvalue()
-    st.session_state.messages.append(
-        {"role": "user", "text": f"📄 {file.name}", "meta": None, "image": None,
-         "pdf": payload})
     with st.spinner("Reading your benefits document…"):
         data = _post("/ask-benefits",
                      files={"file": (file.name, payload, file.type or "application/pdf")},
                      data={"session_id": st.session_state.session_id})
     if data is None:
         return
+    st.session_state.coverage_file = file.name
     _absorb(data)
     st.rerun()
 
 
-def _handle_upload(file) -> None:
-    name = (getattr(file, "name", "") or "").lower()
-    kind = (getattr(file, "type", "") or "").lower()
-    if name.endswith(".pdf") or kind == "application/pdf":
-        _handle_benefits(file)
-    else:
-        _handle_slip(file)
+# ----------------------------------------------------------------- coverage panel
+def _coverage() -> dict:
+    """What the SESSION says our coverage is, not what the last reply happened to mention.
+
+    Read from the server every render. The plan may have arrived from a document, from
+    answering the HMO question, or ten turns ago, and only the session knows which.
+    """
+    try:
+        resp = requests.get(f"{API_URL}/coverage",
+                            params={"session_id": st.session_state.session_id}, timeout=10)
+        return resp.json() if resp.status_code == 200 else {}
+    except requests.RequestException:
+        return {}
+
+
+EMPTY_COVERAGE = ("Upload your Summary of Benefits or Certificate of Coverage and I will "
+                  "use your real limits instead of assuming them. Optional, and it stays "
+                  "for the whole conversation.")
+
+
+def coverage_summary(data: dict) -> dict:
+    """Turn a /coverage payload into the three strings the panel shows.
+
+    Pure, so what the patient reads about their own cover can be tested without a browser
+    and without a model call. Returns {"headline", "note", "upload_label"}; `headline` is
+    empty when we hold no plan.
+    """
+    plan = (data or {}).get("plan") or {}
+    if not plan:
+        return {"headline": "", "note": EMPTY_COVERAGE,
+                "upload_label": "Add your benefits document (PDF)"}
+
+    bits = [f"**{plan.get('plan_name') or plan.get('provider') or 'Your plan'}**"]
+    if plan.get("mbl_annual"):
+        bits.append(f"{_peso(plan['mbl_annual'])} per illness/year")
+    if plan.get("room_entitlement"):
+        bits.append(str(plan["room_entitlement"]))
+
+    note = []
+    if data.get("sublimit_count"):
+        n = data["sublimit_count"]
+        note.append(f"{n} per-procedure limit{'s' if n > 1 else ''}")
+    if plan.get("outpatient_diagnostics_limit"):
+        note.append(f"outpatient {_peso(plan['outpatient_diagnostics_limit'])}")
+    if plan.get("remaining_balance"):
+        note.append(f"{_peso(plan['remaining_balance'])} left")
+    # Whether we hold a schedule is the difference between an estimate and a ceiling, so
+    # it is stated here rather than buried in the report's caveats.
+    note.append("real limits in use" if data.get("has_schedule")
+                else "no per-procedure limits yet, so figures are a ceiling")
+
+    return {"headline": " &middot; ".join(bits), "note": " &middot; ".join(note),
+            "upload_label": "Replace benefits document"}
+
+
+def _render_coverage_panel() -> None:
+    """A persistent card above the conversation: what your plan pays, and how to say so."""
+    data = _coverage()
+    summary = coverage_summary(data)
+    has_plan = bool(summary["headline"])
+
+    with st.container(border=True):
+        st.markdown('<div class="dm-cov-label">Your coverage</div>'
+                    + (f'<div class="dm-cov-plan">{summary["headline"]}</div>'
+                       if has_plan else "")
+                    + f'<div class="dm-cov-note">{summary["note"]}</div>',
+                    unsafe_allow_html=True)
+
+        with st.expander(summary["upload_label"], expanded=not has_plan):
+            up = st.file_uploader("Benefits document", type=["pdf", "png", "jpg", "jpeg"],
+                                  key="coverage_upload", label_visibility="collapsed")
+            # Streamlit hands the same file back on every rerun, so without this it would
+            # be re-read, re-charged and re-announced on every button press.
+            if up is not None and up.name != st.session_state.get("coverage_file"):
+                _handle_benefits(up)
 
 
 def _handle_text(text: str) -> None:
@@ -422,6 +500,8 @@ if st.session_state.messages:
         _new_chat()
         st.rerun()
 
+    _render_coverage_panel()
+
     for i, msg in enumerate(st.session_state.messages):
         _render_message(msg, i)
 
@@ -434,16 +514,17 @@ else:
         "prepare, after PhilHealth and your HMO.</p></div>",
         unsafe_allow_html=True,
     )
+    _render_coverage_panel()
 
 placeholder = ("Answer above, or type it here…" if st.session_state.question
-               else "Drop your request slip, or your HMO benefits PDF…")
+               else "Ask about a price, or drop your request slip here…")
 submitted = st.chat_input(placeholder, accept_file=True,
-                          file_type=["png", "jpg", "jpeg", "webp", "pdf"])
+                          file_type=["png", "jpg", "jpeg", "webp"])
 
 if submitted is not None:
     files = getattr(submitted, "files", None) or []
     text = (getattr(submitted, "text", None) or "").strip()
     if files:
-        _handle_upload(files[0])
+        _handle_slip(files[0])
     elif text:
         _handle_text(text)
