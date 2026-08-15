@@ -47,6 +47,16 @@ class SessionMemory:
     # The question the patient is currently answering, so their reply can be
     # interpreted in context ('yes' means different things to different questions).
     last_asked: object = None
+    # Which item the pending sub-limit question is about. A cap is only meaningful
+    # attached to the procedure it was quoted for, and by the time the answer arrives the
+    # question is gone, so the subject has to be held here.
+    sublimit_subject: Optional[str] = None
+
+    def remember_question(self, question) -> None:
+        """Record what was just asked, and what it was asked about."""
+        self.last_asked = question.kind if question else None
+        if question is not None and question.subject:
+            self.sublimit_subject = question.subject
 
     def remember_estimate(self, estimate: BudgetEstimate) -> None:
         """Keep the latest estimate, and carry its context forward.
@@ -92,6 +102,7 @@ class SessionMemory:
         self.resolved_choices.clear()
         self.asked.clear()
         self.last_asked = None
+        self.sublimit_subject = None
 
     def add(self, role: str, content: str) -> None:
         if not content:

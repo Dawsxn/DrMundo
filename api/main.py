@@ -238,6 +238,9 @@ def ask(req: AskRequest) -> AskResponse:
 
 MAX_UPLOAD_BYTES = 12 * 1024 * 1024
 ALLOWED_UPLOAD_TYPES = {"image/png", "image/jpeg", "image/webp"}
+# A benefits booklet is usually a PDF, and often the born-digital one HR emailed out. The
+# reader prefers that to a photograph of it, so PDF is accepted here and not for slips.
+ALLOWED_BENEFITS_TYPES = ALLOWED_UPLOAD_TYPES | {"application/pdf"}
 
 
 @app.post("/ask-slip", response_model=AskResponse, tags=["cost"])
@@ -267,6 +270,45 @@ async def ask_slip(
         result = SERVICE.handle_slip(tmp.name, session_id=session_id)
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(status_code=500, detail=f"Extraction error: {exc}") from exc
+    finally:
+        try:
+            os.unlink(tmp.name)
+        except OSError:
+            pass
+
+    return _to_response(result, session_id)
+
+
+@app.post("/ask-benefits", response_model=AskResponse, tags=["cost"])
+async def ask_benefits(
+    file: UploadFile = File(..., description="Summary of Benefits, Certificate of "
+                                             "Coverage, or benefit booklet. PDF or image."),
+    session_id: str = Form("default"),
+) -> AskResponse:
+    """Read a benefits document and re-price with the member's real limits.
+
+    Optional and order-independent: it may arrive before the slip, after it, or halfway
+    through the questions. Same temp-file discipline as the slip -- a benefits booklet
+    carries the member's name, so it must never land in the working tree.
+    """
+    if file.content_type not in ALLOWED_BENEFITS_TYPES:
+        raise HTTPException(415, f"Unsupported type {file.content_type!r}. Send a PDF, "
+                                 f"PNG or JPEG.")
+
+    payload = await file.read()
+    if len(payload) > MAX_UPLOAD_BYTES:
+        raise HTTPException(413, "File too large. Please send something under 12MB.")
+    if not payload:
+        raise HTTPException(400, "Empty upload.")
+
+    tmp = tempfile.NamedTemporaryFile(
+        suffix=Path(file.filename or "benefits.pdf").suffix or ".pdf", delete=False)
+    try:
+        tmp.write(payload)
+        tmp.close()
+        result = SERVICE.handle_benefits(tmp.name, session_id=session_id)
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=f"Benefits read error: {exc}") from exc
     finally:
         try:
             os.unlink(tmp.name)

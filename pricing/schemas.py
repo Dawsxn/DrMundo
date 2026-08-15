@@ -42,11 +42,17 @@ def to_display_pesos(amount: Decimal) -> int:
 
 
 class HMOPlan(BaseModel):
-    """Assembled CONVERSATIONALLY (plan §2.3) -- never extracted from an image.
+    """What the patient's coverage actually pays. Assembled from three sources.
 
     `remaining_balance` is always patient-stated: it appears on no card, certificate or
     benefits letter, because it changes with every claim and lives in the member portal.
-    That single fact is why the document-upload design was dropped.
+    A CARD carries none of this, which is why card scanning was dropped.
+
+    The MBL is not the only ceiling, and treating it as one overstates coverage badly. A
+    real schedule of benefits stacks a per-procedure sub-limit UNDER the MBL, and on the
+    expensive procedures it is the sub-limit that binds: a plan with a P150,000 limit and
+    a P35,000 cholecystectomy cap pays P35,000, and the MBL never comes into it. Those
+    fields are all optional, so a plan we know only as "Gold" behaves exactly as before.
     """
 
     provider: Optional[str] = None
@@ -74,6 +80,61 @@ class HMOPlan(BaseModel):
     accredited_at_mmc: Optional[bool] = None
     mbl_source: Optional[Literal["published_tier", "patient_stated"]] = None
     exclusions: list[str] = Field(default_factory=list)
+
+    # ---- from a schedule of benefits, when we have one -----------------------------------
+    procedure_sublimits: dict[str, Decimal] = Field(
+        default_factory=dict,
+        description=(
+            "Per-procedure caps, keyed by RVS code or by the procedure name as the "
+            "schedule words it. Binds BEFORE the MBL."
+        ),
+    )
+    default_procedure_sublimit: Optional[Decimal] = Field(
+        None,
+        description=(
+            "The schedule's catch-all, usually worded 'all other non-conventional but "
+            "medically necessary procedures'. Applies only to procedures, never to labs."
+        ),
+    )
+    outpatient_diagnostics_limit: Optional[Decimal] = Field(
+        None, description="Ceiling on outpatient labs and imaging, drawn as its own pool."
+    )
+    preexisting_pct_of_mbl: Optional[Decimal] = Field(
+        None,
+        description=(
+            "Fraction of the MBL available for a pre-existing condition. Group contracts "
+            "scale this by headcount (100% at 100+ members, 10% at 26-49)."
+        ),
+    )
+    preexisting_cap: Optional[Decimal] = Field(
+        None,
+        description=(
+            "Absolute first-year ceiling for a pre-existing condition. Individual "
+            "certificates state a peso figure where group contracts state a percentage, "
+            "so both forms exist and the smaller one binds."
+        ),
+    )
+    professional_fees_within_mbl: Optional[bool] = Field(
+        None,
+        description=(
+            "True when the surgeon's fee is drawn from this same limit. We cannot size "
+            "that fee, so it becomes a stated reason the figure is an upper bound."
+        ),
+    )
+    schedule_source: Optional[Literal["uploaded_document", "patient_stated"]] = None
+
+    @property
+    def has_schedule(self) -> bool:
+        """True when we know something about the limits BELOW the MBL.
+
+        This is the difference between an estimate and an upper bound. Without it the
+        most we can honestly say is "your plan will pay no more than this".
+        """
+        return bool(
+            self.procedure_sublimits
+            or self.default_procedure_sublimit is not None
+            or self.outpatient_diagnostics_limit is not None
+        )
 
     @property
     def limit_assumed_untouched(self) -> bool:
@@ -169,6 +230,11 @@ class BudgetEstimate(BaseModel):
     caveats: list[str] = Field(default_factory=list)
     hmo: Optional[HMOPlan] = None
     senior_or_pwd: bool = False
+    # True when the HMO figure is the MOST the plan could pay rather than what it will.
+    # Set whenever we credited a benefit without a schedule of benefits behind it: real
+    # schedules cap individual procedures well below the MBL, so a figure derived from the
+    # MBL alone is a ceiling. The renderer must word it as one.
+    hmo_upper_bound: bool = False
 
     @model_validator(mode="after")
     def _every_item_lands_somewhere(self) -> "BudgetEstimate":

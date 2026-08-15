@@ -51,6 +51,26 @@ def _grounded_values(answer: Answer) -> set[int]:
             vals.add(int(m.group()))
 
     vals |= _budget_values(answer)
+    vals |= _plan_values(answer.hmo)
+    return vals
+
+
+def _plan_values(plan) -> set[int]:
+    """Limits read off the patient's own benefits document.
+
+    Grounded wherever the plan is known, including mid-intake when the budget is withheld
+    so that no price reaches the screen. Without this the guard treats "your limit is
+    P150,000" as an invention and rebuilds the reply into an empty report.
+    """
+    if plan is None:
+        return set()
+    vals: set[int] = set()
+    amounts = [plan.mbl_annual, plan.remaining_balance, plan.default_procedure_sublimit,
+               plan.outpatient_diagnostics_limit, plan.preexisting_cap]
+    amounts += list(plan.procedure_sublimits.values())
+    for a in amounts:
+        if a is not None:
+            vals.add(to_display_pesos(a))
     return vals
 
 
@@ -91,6 +111,12 @@ def _budget_values(answer: Answer) -> set[int]:
         add(s.price_low, s.price_high)
     if b.hmo is not None:
         add(b.hmo.mbl_annual, b.hmo.remaining_balance)
+        # Limits read off the patient's own benefits document are data, not prose. Telling
+        # them "your plan caps this at P35,000" is exactly the sort of figure this guard
+        # exists to protect, and leaving it ungrounded made the guard delete a true
+        # sentence and replace it with an empty render.
+        add(b.hmo.default_procedure_sublimit, b.hmo.outpatient_diagnostics_limit,
+            b.hmo.preexisting_cap, *b.hmo.procedure_sublimits.values())
 
     return vals
 

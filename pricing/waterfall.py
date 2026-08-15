@@ -28,6 +28,8 @@ full, NOT a credit that subsidises the patient's blood tests.
 from decimal import Decimal
 from typing import Iterable, Optional
 
+from pricing.textmatch import aligns as _aligns
+from pricing.textmatch import norm as _norm
 from pricing.schemas import (
     BudgetEstimate,
     HMOPlan,
@@ -116,11 +118,104 @@ def _hmo_cap(hmo: Optional[HMOPlan]) -> Optional[Decimal]:
 
     Remaining balance and annual MBL are both ceilings; the binding one is the smaller.
     Neither present -> no computable cap, so the HMO leg does not fire.
+
+    A pre-existing condition scales the MBL rather than the balance. Group contracts state
+    it as a percentage that falls with headcount -- 100% at a hundred members, 10% at
+    twenty-six -- so a small employer's plan can pay a tenth of its headline limit.
     """
     if hmo is None:
         return None
-    caps = [c for c in (hmo.remaining_balance, hmo.mbl_annual) if c is not None]
+    mbl = hmo.mbl_annual
+    if mbl is not None and hmo.preexisting and hmo.preexisting_pct_of_mbl is not None:
+        mbl = mbl * hmo.preexisting_pct_of_mbl
+    caps = [c for c in (hmo.remaining_balance, mbl) if c is not None]
+    if hmo.preexisting and hmo.preexisting_cap is not None:
+        caps.append(hmo.preexisting_cap)
     return min(caps) if caps else None
+
+
+def _is_outpatient_kind(p: PricedItem) -> bool:
+    """Labs, imaging and diagnostics: what a schedule caps as one outpatient pool."""
+    return p.item.kind in ("lab", "imaging", "diagnostic")
+
+
+def _sublimit_for(p: PricedItem, hmo: Optional[HMOPlan]) -> Optional[Decimal]:
+    """This item's own cap under the schedule of benefits, or None if it has none.
+
+    Three ways in, most specific first:
+
+      the RVS code, when the schedule was keyed by code. Unambiguous.
+      the procedure NAME, matched at a word boundary. A schedule says "Laparoscopic
+        cholecystectomy" where MMC says "LAPAROSCOPIC CHOLECYSTECTOMY PACKAGE", so the
+        keys never match exactly and raw substring matching is how "Crea" once matched
+        "pan-CREA-s" and priced a P740 blood test at P16,800.
+      the schedule's catch-all for procedures it did not name.
+
+    An unmatched key is IGNORED, never applied to the nearest-looking row. A cap attached
+    to the wrong item removes coverage the patient actually has.
+    """
+    if hmo is None or not hmo.has_schedule:
+        return None
+
+    for key, amount in hmo.procedure_sublimits.items():
+        if p.rvs_code and key.strip() == p.rvs_code:
+            return amount
+
+    for key, amount in hmo.procedure_sublimits.items():
+        norm = _norm(key)
+        if len(norm) >= 4 and (_aligns(norm, p.catalog_name)
+                               or _aligns(norm, p.item.normalized or p.item.raw_text)):
+            return amount
+
+    if _is_outpatient_kind(p):
+        return None                    # labs draw on the outpatient pool, not this one
+    return hmo.default_procedure_sublimit
+
+
+def _hmo_payable(
+    priced: list[PricedItem],
+    hmo: HMOPlan,
+    cap: Decimal,
+    multiplier: Decimal,
+    entitlement: dict,
+    end: str,
+) -> Decimal:
+    """What the HMO pays across the whole bill, at one end of the price range.
+
+    The order the ceilings apply in is the opposite of the intuition, and getting it
+    backwards is what overstated coverage tenfold:
+
+      PER ITEM   the procedure's own sub-limit binds first. It is unaffected by what the
+                 rest of the bill costs, so it has to be applied before anything is pooled.
+      PER POOL   outpatient labs and imaging share one ceiling of their own, separate from
+                 the procedures.
+      OVERALL    the MBL, or the balance left on it, binds last across everything.
+
+    Run in any other order, a P35,000 cholecystectomy cap on a P150,000 limit yields the
+    P150,000. The sub-limit is the number the patient will actually be paid.
+    """
+    pct = Decimal(str(hmo.coverage_pct))
+    total = ZERO
+    outpatient_used = ZERO
+    outpatient_cap = hmo.outpatient_diagnostics_limit
+
+    for p in priced:
+        price = p.price_low if end == "low" else p.price_high
+        # What the HMO sees is what PhilHealth left, per item, on the discounted price.
+        owed = price * multiplier - min(entitlement.get(id(p), ZERO), price * multiplier)
+        payable = owed * pct
+
+        sub = _sublimit_for(p, hmo)
+        if sub is not None:
+            payable = min(payable, sub)
+
+        if outpatient_cap is not None and _is_outpatient_kind(p):
+            payable = min(payable, max(ZERO, outpatient_cap - outpatient_used))
+            outpatient_used += payable
+
+        total += payable
+
+    return min(cap, total)
 
 
 def compute_budget(
@@ -203,20 +298,35 @@ def compute_budget(
     # Many plans cover outpatient laboratory work only with a referral or an approval
     # letter. Told "no", the benefit does not apply to a bill that is nothing but labs;
     # crediting it anyway would understate what the patient actually pays.
-    outpatient_only = all(p.item.kind in ("lab", "imaging", "diagnostic") for p in priced)
+    outpatient_only = all(_is_outpatient_kind(p) for p in priced)
     hmo_applies = not (hmo_covers_outpatient is False and outpatient_only and priced)
 
     cap = _hmo_cap(hmo) if hmo_applies else None
     if cap is None:
         hmo_low = hmo_high = ZERO
     else:
-        pct = Decimal(str(hmo.coverage_pct))
-        hmo_low = min(cap, balance_low * pct)
-        hmo_high = min(cap, balance_high * pct)
+        hmo_low = _hmo_payable(priced, hmo, cap, multiplier, entitlement, "low")
+        hmo_high = _hmo_payable(priced, hmo, cap, multiplier, entitlement, "high")
 
     # -------------------------------------------------------------- W4  prepare
     prepare_low = max(ZERO, balance_low - hmo_low)
     prepare_high = max(ZERO, balance_high - hmo_high)
+
+    # Two things make the HMO figure a CEILING rather than an expectation, and either one
+    # is enough. Without a schedule of benefits we do not know the per-procedure caps that
+    # sit under the MBL, and those are what actually bind. And where the surgeon's fee is
+    # drawn from the same limit, part of the pot is already spoken for by a fee we have no
+    # data to size. Saying "your HMO will pay X" in either case is a promise we cannot keep.
+    # The professional-fee reason only applies where there is a procedure to have fees
+    # for. A bill of nothing but blood tests has no surgeon, so raising it there would
+    # attach a warning to a figure it cannot affect.
+    has_procedure = any(p.item.kind == "procedure" for p in priced)
+    hmo_upper_bound = bool(
+        (hmo_low or hmo_high)
+        and hmo is not None
+        and (not hmo.has_schedule
+             or (hmo.professional_fees_within_mbl and has_procedure))
+    )
 
     return BudgetEstimate(
         priced=priced,
@@ -243,6 +353,7 @@ def compute_budget(
                 + list(extra_caveats),
         hmo=hmo,
         senior_or_pwd=senior_or_pwd,
+        hmo_upper_bound=hmo_upper_bound,
     )
 
 
@@ -355,6 +466,50 @@ def _build_caveats(
             "settle your contributions before admission, this could drop considerably."
         )
 
+    # The single most important caveat in this list. A plan's headline limit is not what it
+    # pays for any particular operation: real schedules cap the expensive ones well below
+    # it. Without the schedule we can only bound the figure from above, and a bound
+    # presented as an expectation is how someone arrives at the cashier short.
+    if hmo is not None and (hmo_low or hmo_high) and not hmo.has_schedule:
+        out.append(
+            "This is the MOST your HMO could pay, not what it will. Plans cap individual "
+            "procedures well below the overall limit, and yours are unknown. Send me your "
+            "benefit booklet or Summary of Benefits and I can use your real limits."
+        )
+
+    if (hmo is not None and hmo.professional_fees_within_mbl and (hmo_low or hmo_high)
+            and any(p.item.kind == "procedure" for p in priced)):
+        out.append(
+            "Your plan draws the surgeon's and anaesthesiologist's fees from this same "
+            "limit. Those fees are not in the total above and we cannot size them, so less "
+            "of your limit will be left for the hospital bill than shown."
+        )
+
+    capped = [(p.catalog_name, _sublimit_for(p, hmo)) for p in priced]
+    capped = [(n, s) for n, s in capped if s is not None]
+    if capped:
+        named = "; ".join(f"{n.title()} at ₱{s:,.0f}" for n, s in sorted(capped)[:4])
+        out.append(
+            f"Your plan caps these individually, and the cap applies before the overall "
+            f"limit: {named}. Anything above a cap is yours to settle."
+        )
+
+    if hmo is not None and hmo.outpatient_diagnostics_limit is not None and any(
+            _is_outpatient_kind(p) for p in priced):
+        out.append(
+            f"Outpatient laboratory and imaging draw on a separate ceiling of "
+            f"₱{hmo.outpatient_diagnostics_limit:,.0f} a year under your plan, not on the "
+            f"main limit. This assumes none of it has been used yet."
+        )
+
+    if (hmo is not None and hmo.preexisting and hmo.preexisting_pct_of_mbl is not None
+            and hmo.preexisting_pct_of_mbl < 1):
+        pct = hmo.preexisting_pct_of_mbl * 100
+        out.append(
+            f"Because this condition predates your plan, only {pct:,.0f}% of your limit is "
+            f"available for it. That reduction is already applied above."
+        )
+
     if hmo is not None and hmo.limit_assumed_untouched and (hmo_low or hmo_high):
         out.append(
             f"Your plan's limit is ₱{hmo.mbl_annual:,.0f} per illness per year, and this "
@@ -374,7 +529,10 @@ def _build_caveats(
             "Maxicare provider directory or with their hotline before you go."
         )
 
-    if hmo is not None and hmo.preexisting:
+    # Only when we could not put a number on it. Where the schedule gave us the percentage
+    # the reduction is already in the arithmetic, and saying it "may be too generous"
+    # afterwards would contradict a figure we just computed correctly.
+    if hmo is not None and hmo.preexisting and hmo.preexisting_pct_of_mbl is None:
         out.append(
             "You said this condition predates your plan. Pre-existing conditions are "
             "capped at a lower amount during the first year of membership, so the HMO "
