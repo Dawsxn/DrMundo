@@ -23,6 +23,15 @@ request forms: resolution from label to code is lossless, 91.3% of read labels r
 catalogue row, and the hallucinated-peso rate is zero across 40 generated reports. The reading
 stage is the weak link, and Section 6 reports exactly where it fails and why.
 
+A second document type was added late and changed the largest number in the system. Philippine
+HMO plans publish a headline benefit limit, but a real schedule of benefits caps individual
+procedures well below it, and on the expensive ones that smaller cap is the one that binds.
+Modelling the headline limit as the only ceiling credited a ₱150,000 plan with ₱107,685 towards
+a gallbladder operation its own schedule caps at ₱35,000. The system now reads the patient's
+own benefits document, applies the ceilings in the order they actually bind, and where no
+schedule is available says plainly that the figure is the most the plan could pay rather than
+what it will.
+
 ---
 
 ## 1. Business case
@@ -92,8 +101,14 @@ figures scraped from Makati Medical Center's own published list, every row carry
 catalogue item code so any number on screen can be checked by hand. The dataset grew from about
 134 priced rows to roughly 2,400.
 
-Two midterm constraints were reversed. HMO is now in scope, as a conversational input rather
-than a dataset. Outpatient items can now carry coverage arithmetic where a case rate applies.
+Two midterm constraints were reversed. HMO is now in scope, and outpatient items can carry
+coverage arithmetic where a case rate applies.
+
+HMO began as a conversational input: the patient names their plan and we look up what Maxicare
+publishes for that tier. That is still the fallback, and it is weaker than it looks, because a
+published tier gives two numbers where a real policy has forty. The system now also accepts the
+patient's own Summary of Benefits, Certificate of Coverage or benefit booklet as an upload, and
+reads the limits out of it. Section 4 covers what that changes in the arithmetic.
 
 The rule that governed the rebuild, and that still governs the code: if a number was never
 published, we say so. That is why appendectomy has no package price in this system, why 19
@@ -179,14 +194,25 @@ result we do not have.
 ### 4.1 The pipeline
 
 ```
- image ──► redact ──► read ──► resolve ──► triage ──► price ──► waterfall ──► report
-           raster     VLM      taxonomy    4 buckets   MMC       pure Python   HTML/text
+ slip ────► redact ──► read ──► resolve ──► triage ──► price ──► waterfall ──► report
+ image      raster     VLM      taxonomy    4 buckets   MMC        ▲            HTML/PDF
+                                                                   │                │
+ benefits ► text or vision ──► plan limits ────────────────────────┘                │
+ PDF                           sub-limits, MBL, pre-existing                        │
                                                                                     │
  text ───► input guard ──► ReAct loop ──► tools ──► output guard ────────────────────┘
 ```
 
-The text path is the midterm system and is unchanged. Everything new hangs off the image path,
-and the two converge at the output guardrail.
+The text path is the midterm system and is unchanged. The two document paths are separate and
+meet at different places: a slip decides what is being bought, and joins the pipeline at the
+front; a benefits document decides what the plan pays for it, and joins at the waterfall. All
+three converge at the output guardrail.
+
+The separation matters beyond the diagram. A slip is a turn in a conversation and stops being
+true when the next one arrives. A benefits document describes the patient, governs every figure
+afterwards, and survives a new slip. Early on both were uploaded into the chat box, and the
+result was that uploading a slip discarded the benefits document that had been read a minute
+earlier, then asked the patient which HMO plan they had.
 
 ### 4.2 The stages
 
@@ -215,10 +241,25 @@ instead of demanding a unique match: avoid ER pricing because a request slip is 
 emergency, respect specimen because a serum creatinine is not a urine creatinine, and prefer
 the least qualified name so an unqualified order does not silently buy a richer study.
 
+**Benefits reading** turns a schedule of benefits into a set of limits. It is a different
+problem from reading a slip and uses a different strategy. A slip asks which rows carry a mark,
+which is a perception question that no text extractor can answer. A booklet asks what the
+figures mean, and the text is usually machine readable; the difficulty is that "up to
+PhP15,000.00" appears eleven times on one page and each occurrence governs something else. So
+the reader tries text first and falls back to the vision model only when a document turns out
+to be a scan.
+
 **The waterfall** is pure Python with no model involvement. Gross, then the senior and PWD
 reduction, then PhilHealth, then HMO, then what to prepare. Every leg is a range rather than a
 scalar, because a deduction is the smaller of an entitlement and what is left to pay, and what
 is left differs between the ends of a price range.
+
+The HMO leg is the part that changed most. It applies three ceilings, and the order is the
+reverse of the intuitive one. The procedure's own sub-limit binds first, per item, because it
+does not depend on what the rest of the bill costs. Outpatient laboratory and imaging then draw
+against a separate pool of their own. The overall benefit limit binds last, across everything.
+Run in the intuitive order, a ₱35,000 cholecystectomy cap against a ₱150,000 limit yields
+₱150,000, which is four times what the plan will pay.
 
 ### 4.3 Grounding
 
@@ -272,6 +313,39 @@ intake form. The report appears immediately, labelled as being before any HMO, a
 question after that is an offer to improve a number they already have. Abandoning halfway still
 leaves them with something true.
 
+**An HMO figure without a schedule behind it is labelled a ceiling.** Where we know only the
+plan's headline limit, the most we can honestly say is that the plan will pay no more than a
+certain amount. The report says exactly that, and the coverage panel says it continuously. This
+was the cheapest correction we made and probably the most valuable, because it makes the figure
+honest for every patient who never uploads anything.
+
+**A field the document does not state stays empty.** The reader returns null rather than
+supplying what a plan of that tier usually carries. An invented outpatient ceiling is
+indistinguishable from a real one by the time it reaches a patient as a peso figure, and the
+patient has no way to audit it. One of the three test documents is a one page human resources
+advisory that states a plan, a limit and nothing else, and it exists specifically to catch a
+reader that fills in the rest.
+
+**An unmatched limit is discarded, not attached to the nearest row.** A schedule says
+"Laparoscopic cholecystectomy" where the hospital says "LAPAROSCOPIC CHOLECYSTECTOMY PACKAGE",
+so the two vocabularies never match exactly and something has to bridge them. The bridge
+requires a match at a word boundary, and where nothing matches, the cap is dropped. This rule is
+shared with the catalogue join, because the same carelessness there once matched the surface
+form "Crea" inside "panCREAs" and priced a ₱740 blood test as a ₱16,800 study.
+
+**Facts about the paperwork are cleared; facts about the person are kept.** A new slip means new
+tests, a new room and possibly a new operation. It does not mean a new HMO, a new age, or newly
+lapsed PhilHealth contributions. Getting this split wrong is what discarded an uploaded benefits
+document the moment the patient uploaded their slip. Whether a condition is pre-existing is
+cleared with the slip, because it belongs to the condition rather than to the person.
+
+**Where the professional fee comes out of the same limit, we say so and decline to size it.**
+Several schedules draw the surgeon's and anaesthesiologist's fees from the same benefit limit we
+are crediting against the hospital bill. Professional fees are out of scope and the hospital's
+published data covers clinic consultations rather than surgeons' fees by procedure, so we have
+no defensible figure. The report states that part of the limit is already spoken for rather than
+inventing an amount for it.
+
 ---
 
 ## 6. Experiments and evaluation
@@ -290,6 +364,9 @@ against the real model for the reading layer.
 | Hallucinated-peso rate | **0.0%** (0/40 reports) | No figure appeared that could not be traced to structure |
 | Reading F1, GPT-4.1 | **77.2%** (n=40) | Recall 67.2%, precision 90.8% |
 | Cancelled rows billed | 1 of 11 | The failure that costs money, and it is not yet zero |
+| Benefits fields read | **100%** (14/14) | Across three documents of different shapes |
+| Benefits sub-limits read | **100%** (20/20) | The figures that bind before the overall limit |
+| Benefits fields fabricated | **0** (of 3 unstated) | The score that matters more than the other two |
 | Latency | mean 3.6 s, max 7.2 s | Against a 20 s budget fixed in advance |
 
 ### 6.2 Reading degrades with media quality, as designed
@@ -345,6 +422,46 @@ Eight reports scored 100% on all five criteria. The sample is small and the judg
 family with the model being judged, which is a real limitation of this method and not one we
 can design away at this scale.
 
+### 6.6 The benefits reader, and the score we care about
+
+Real benefit booklets cannot go in a public repository. They are somebody's actual policy, they
+name a member, and the copies circulating on document sharing sites are re-uploads of employer
+contracts that were never meant to be public. We generated three synthetic ones instead, from a
+committed script so they can be rebuilt.
+
+What is real in them is sourced and what is invented is labelled. The plan names, benefit limits
+and room entitlements come from Maxicare's own published tiers. The shape of the documents, the
+section order, the recurring "subject to MBL" phrasing, the table of per-procedure caps, and
+pre-existing cover scaled by the number of enrolled members, was read off the Bureau of Customs'
+published HMO procurement contract. Government agencies have to publish a full schedule of
+benefits so bidders can price against it, which makes procurement documents the one reliable
+public source for this material. Every peso figure other than a benefit limit is invented, and
+every page of every specimen carries a banner and a watermark saying so.
+
+The three cover deliberately different shapes. A two page certificate of coverage is mostly
+prose with one table. A three page corporate summary states three sets of figures for three
+employee categories in a grid, and the reader is asked for one of them. A one page human
+resources advisory states four facts and omits everything else.
+
+| Document | Fields | Sub-limits | Fabricated | Mode | Time |
+|---|---:|---:|---:|---|---:|
+| Certificate of coverage, 2pp | 6/6 | 8/8 | 0 of 0 unstated | text | 6.2 s |
+| Corporate summary, 3pp | 6/6 | 12/12 | 0 of 0 unstated | text | 3.0 s |
+| Human resources advisory, 1pp | 2/2 | 0/0 | **0 of 3 unstated** | text | 1.1 s |
+
+The last cell is the one we would defend first. A reader scoring perfect recall while inventing
+one outpatient ceiling is worse than a reader scoring 80% and inventing nothing, because the
+invented figure looks exactly like a real one on the report. The benchmark therefore scores
+fabrication separately rather than folding it into an accuracy number, and the sparse document
+exists to give it something to count.
+
+Two things this evaluation does not establish. All three documents are synthetic, so none of
+these figures describe a photograph of a real booklet, and the corporate specimen was written by
+us from a real contract's structure rather than being a real contract. And the corporate
+document states a co-insurance of 20% on charges above ₱80,000 for one employee category, which
+the reader correctly declined to record, because our plan model holds a flat percentage and
+cannot express a threshold. Flattening it would have quietly cut coverage on small bills.
+
 ---
 
 ## 7. What we would tell the next team
@@ -367,31 +484,69 @@ same shape of bug appeared three times: an empty result, a partial price, and a 
 x-ray order all produced confident output that happened to be wrong, and none of them looked
 like errors.
 
+**The guardrail will bite the hand that feeds it.** When the system first read a benefits
+document and reported the limits it found, the output guardrail deleted the sentence and
+replaced it with an empty report. It was right to: those figures came from the patient's plan,
+and the grounded set only contained figures from the priced estimate. The fix was to ground the
+plan as well, and to carry it alongside the estimate rather than inside it, because the estimate
+is deliberately withheld while questions are still being asked. A guardrail strict enough to be
+worth having will occasionally block something true, and the fix is to widen what counts as
+grounded rather than to loosen the check.
+
+**Version control will corrupt your data if you let it.** The repository had line ending
+conversion switched on and nothing marking PDFs as binary. Committing was fine and cloning was
+not: the files opened on the machine that made them and failed on the machine that received
+them, which is the exact path this dataset takes to a teammate. Two documents were already
+damaged in the working tree before we noticed. Binary types are now declared, and the check is a
+fresh clone that opens every file rather than a green test run.
+
 **Limits we did not solve.** Every image in the evaluation set is synthetic, so none of these
 numbers describe a phone photograph of a real slip in bad light. Every form is a laboratory
 request, so no form names a procedure and the PhilHealth leg is never exercised from an image;
-it fires from the conversation instead. HMO figures come from Maxicare's published
-individual and family tiers, and most Philippine coverage is employer-negotiated and will match
-no public tier. Fax and third-generation photocopy recall sits near half.
+it fires from the conversation instead. Fax and third-generation photocopy recall sits near
+half.
+
+On the coverage side: accreditation could not be verified from any first-party source, since
+Maxicare publishes a live directory rather than a citable list, so the report states the
+assumption and tells the patient how to check it rather than asserting a status. A sub-limit
+attaches to a priced procedure, so an operation named only in conversation gets no cap, which is
+narrower than it appears. Threshold co-insurance is not representable. And the professional fee
+drawn from the same benefit limit is acknowledged but not sized.
 
 **What we would do next, in order.** Add a checkbox detector so the OCR family becomes a real
 comparison arm rather than a documented rejection. Collect a small set of real, redacted slips
-so there is a non-synthetic denominator. Push cancelled-row detection to zero, since that is the
-one failure that takes money out of somebody's pocket rather than merely omitting a line.
+so there is a non-synthetic denominator, and the same for benefits documents, which are harder
+to obtain because they identify a member. Push cancelled-row detection to zero, since that is
+the one failure that takes money out of somebody's pocket rather than merely omitting a line.
+Then represent threshold co-insurance and per-category limits properly, since a group contract
+is the common case in the Philippines and we currently read it by taking the lowest figures
+stated.
 
 ---
 
 ## 8. Deployment
 
 The application runs as two processes: a FastAPI service exposing `/ask`, `/ask-slip`,
-`/refine`, `/reset` and `/health`, and a Streamlit interface. Both are containerised, and the
-image needs no OCR weights because the reading stage is an API call. Per-request token usage,
-cost and latency are logged to MLflow, and the reading stage reports its own time separately so
-it can be compared against the latency budget rather than hidden inside a total.
+`/ask-benefits`, `/coverage`, `/choice`, `/refine`, `/reset` and `/health`, and a Streamlit
+interface. Both are containerised, and the image needs no OCR weights because the reading stage
+is an API call. Per-request token usage, cost and latency are logged to MLflow, and the reading
+stage reports its own time separately so it can be compared against the latency budget rather
+than hidden inside a total.
 
 Uploads are validated on type and size, written to a temporary file outside the repository, and
 deleted in a finally block. The temporary name is random by design, because a patient's own
-filename can carry their name.
+filename can carry their name. This matters more for a benefits booklet than for a slip, since a
+certificate of coverage names the member on its first page.
+
+The interface has one conversation and no sidebar, with a single exception: coverage lives in a
+persistent card above the conversation rather than in the message history. It holds the upload,
+shows the plan and its limits, and states continuously whether the figures are built on the
+patient's real limits or on a ceiling. It is backed by its own endpoint rather than by the last
+reply, because a plan may have arrived from a document, from answering a question, or ten turns
+earlier, and only the session knows which.
+
+Nothing is persisted to disk. Health questions, an extracted slip, a stated benefit balance and
+an uploaded booklet all live in memory for the session and are dropped with it.
 
 ---
 
@@ -403,6 +558,13 @@ grounding guardrail is measured at zero hallucinated figures across the reports 
 and the places where the data simply does not exist are reported as gaps rather than filled with
 plausible numbers.
 
-The reading stage is where it is weakest, and we have said where and by how much. A system that
-misses half the tests on a faxed form is not finished. But it is honest about being unfinished,
-which is the property we would most want to keep if we carried this further.
+The last change we made was also the most instructive. For most of this project the HMO leg was
+confidently wrong by a factor of four, and nothing in the test suite could have caught it,
+because the arithmetic was correct and the model of the world was not. What found it was reading
+a real published contract and noticing a section we had no field for. The corresponding fix that
+helps the most patients is not the document reader at all; it is the sentence that now appears
+when there is no document, admitting that the figure is a ceiling.
+
+The reading stage is where the system is weakest, and we have said where and by how much. A
+system that misses half the tests on a faxed form is not finished. But it is honest about being
+unfinished, which is the property we would most want to keep if we carried this further.
