@@ -17,6 +17,7 @@ from pydantic import BaseModel, Field
 
 from agent.schemas import Answer
 from agent.service import DrMundoService
+from pricing.schemas import HMOPlan
 from config import DB_PATH, EMBEDDINGS_PATH
 
 app = FastAPI(
@@ -316,6 +317,30 @@ async def ask_benefits(
             pass
 
     return _to_response(result, session_id)
+
+
+class CoverageOut(BaseModel):
+    """The coverage profile currently in play for a session.
+
+    Read by the UI's coverage panel, which is persistent and therefore cannot be built
+    from the last reply alone: the plan may have arrived from a document, from answering
+    the HMO question, or several turns ago. The session is the only thing that knows.
+    """
+
+    plan: Optional[HMOPlan] = None
+    has_schedule: bool = False
+    sublimit_count: int = 0
+
+
+@app.get("/coverage", response_model=CoverageOut, tags=["cost"])
+def coverage(session_id: str = "default") -> CoverageOut:
+    """What we currently know about this session's HMO cover. Never creates a session."""
+    memory = SERVICE._sessions.get(session_id)
+    plan = memory.hmo if memory else None
+    if plan is None:
+        return CoverageOut()
+    return CoverageOut(plan=plan, has_schedule=plan.has_schedule,
+                       sublimit_count=len(plan.procedure_sublimits))
 
 
 @app.post("/refine", response_model=AskResponse, tags=["cost"])
