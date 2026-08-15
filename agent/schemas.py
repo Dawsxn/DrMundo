@@ -11,7 +11,7 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 
-from pricing.schemas import BudgetEstimate
+from pricing.schemas import BudgetEstimate, HMOPlan
 
 
 # ------------------------------------------------------------------ tool arguments
@@ -77,6 +77,13 @@ class Answer(BaseModel):
     # Scope v2: the whole multi-item estimate. Every peso the report shows lives in here,
     # and guardrails/output_guard.py grounds the prose against it.
     budget: Optional[BudgetEstimate] = None
+
+    # The coverage profile, carried separately from the estimate because the two become
+    # known at different times. A patient can upload their benefits booklet mid-intake,
+    # when `budget` is deliberately withheld so no price appears, and we still have to be
+    # able to say "your limit is P150,000" -- which the grounding guard would otherwise
+    # delete as an unsourced number, replacing a true sentence with an empty report.
+    hmo: Optional[HMOPlan] = None
 
     disclaimer: str = (
         "Estimates only -- not medical or financial advice. Price ranges are indicative "

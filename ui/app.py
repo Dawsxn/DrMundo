@@ -226,13 +226,19 @@ _EXTRA_FIELDS = {
     "procedure": ("Which operation?", "e.g. gallbladder surgery", "text"),
     "hmo": ("How much of your benefit is left?", "e.g. 40000", "text"),
     "stay": ("Number of nights", "e.g. 3", "text"),
+    "sublimit": ("The limit for this procedure", "e.g. 35000", "text"),
+    "preexisting": ("First-year limit, if your certificate states one", "e.g. 20000",
+                    "text"),
 }
 
 # (kind, option) pairs where the option means nothing without the companion field.
 # "Yes, for an operation" with the box empty says a procedure exists but not which one,
 # and the whole point of the answer is which one -- it decides the case rate.
-_NEEDS_EXTRA = {("procedure", "Yes, for an operation"): "Type the operation first, "
-                                                        "then press this."}
+_NEEDS_EXTRA = {
+    ("procedure", "Yes, for an operation"): "Type the operation first, then press this.",
+    ("sublimit", "Yes, there is a limit"): "Type the limit first, then press this. "
+                                           "Without it I have to assume there is none.",
+}
 
 
 def _render_question(q: dict) -> None:
@@ -356,6 +362,36 @@ def _handle_slip(file) -> None:
     st.rerun()
 
 
+def _handle_benefits(file) -> None:
+    """A Summary of Benefits, Certificate of Coverage or benefit booklet.
+
+    Routed by file type rather than by asking. A PDF in this conversation is a benefits
+    document, because a doctor's request arrives as a photograph and nobody hands out a
+    PDF of one.
+    """
+    payload = file.getvalue()
+    st.session_state.messages.append(
+        {"role": "user", "text": f"📄 {file.name}", "meta": None, "image": None,
+         "pdf": payload})
+    with st.spinner("Reading your benefits document…"):
+        data = _post("/ask-benefits",
+                     files={"file": (file.name, payload, file.type or "application/pdf")},
+                     data={"session_id": st.session_state.session_id})
+    if data is None:
+        return
+    _absorb(data)
+    st.rerun()
+
+
+def _handle_upload(file) -> None:
+    name = (getattr(file, "name", "") or "").lower()
+    kind = (getattr(file, "type", "") or "").lower()
+    if name.endswith(".pdf") or kind == "application/pdf":
+        _handle_benefits(file)
+    else:
+        _handle_slip(file)
+
+
 def _handle_text(text: str) -> None:
     # With a slip in play, plain text is an answer to the pending question. Without one,
     # it is an ordinary cost question for the v1 path.
@@ -400,14 +436,14 @@ else:
     )
 
 placeholder = ("Answer above, or type it here…" if st.session_state.question
-               else "Ask about a price, or drop your request slip here…")
+               else "Drop your request slip, or your HMO benefits PDF…")
 submitted = st.chat_input(placeholder, accept_file=True,
-                          file_type=["png", "jpg", "jpeg", "webp"])
+                          file_type=["png", "jpg", "jpeg", "webp", "pdf"])
 
 if submitted is not None:
     files = getattr(submitted, "files", None) or []
     text = (getattr(submitted, "text", None) or "").strip()
     if files:
-        _handle_slip(files[0])
+        _handle_upload(files[0])
     elif text:
         _handle_text(text)

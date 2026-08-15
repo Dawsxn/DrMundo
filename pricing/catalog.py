@@ -23,6 +23,8 @@ from typing import Optional
 
 from db.connection import get_connection
 from pricing.schemas import PricedItem
+from pricing.textmatch import aligns as _aligns
+from pricing.textmatch import norm as _norm
 from vision.resolve import _index as _taxonomy_index
 from vision.schemas import ExtractedItem
 
@@ -68,10 +70,6 @@ KNOWN_UNPRICED: set[str] = {
     # the lateral view and understate the bill, so this is reported unpriced instead.
     "XR_CHEST_AP_L",
 }
-
-
-def _norm(s: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", (s or "").lower())
 
 
 @lru_cache(maxsize=1)
@@ -154,22 +152,6 @@ def find_price(code: str) -> Optional[dict]:
             if best is None or r < best[0]:
                 best = (r, row)
     return best[1] if best else None
-
-
-def _aligns(key: str, service: str) -> bool:
-    """Does `key` match `service` starting at a WORD boundary?
-
-    Raw substring matching on normalised text is how CREATININE, whose surface form is
-    "Crea", matched PANCREAS: "crea" sits inside "pan-crea-s". The shortest-name rule then
-    preferred the 8-character PANCREAS over CREATININE SERUM, and a P740 blood test was
-    priced as a P16,800 study. The taxonomy says `substring_matching: false` for exactly
-    this reason.
-
-    So the key must begin at a token boundary. Tokens are still joined afterwards, because
-    MMC punctuates inconsistently and "Chest PA/L" has to reach "CHEST PA & LATERAL".
-    """
-    tokens = re.findall(r"[a-z0-9]+", service.lower())
-    return any("".join(tokens[i:]).startswith(key) for i in range(len(tokens)))
 
 
 def _is_exact(code: Optional[str], row: dict) -> bool:
