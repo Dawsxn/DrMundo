@@ -140,7 +140,8 @@ def _applicable(memory) -> list:
         kinds.append(Q_PHILHEALTH)
     if memory.admitted:
         kinds += [Q_ROOM, Q_STAY]
-    if memory.hmo is not None and not memory.admitted and _is_outpatient_only(memory):
+    if (memory.hmo is not None and memory.hmo.outpatient_diagnostics_limit is None
+            and not memory.admitted and _is_outpatient_only(memory)):
         kinds.append(Q_HMO_OUTPATIENT)
     if memory.hmo is not None:
         kinds.append(Q_PREEXISTING)
@@ -149,14 +150,20 @@ def _applicable(memory) -> list:
     return kinds
 
 
-def _room_options() -> list[str]:
+def _room_options(entitled: Optional[str] = None) -> list[str]:
     """MMC's elective rooms, cheapest first, with the nightly rate in the label.
 
     A patient choosing between "SEMI PRIVATE" and "REGULAR SUITE" with no figures is
     choosing blind, and the gap is P19,100 a night.
+
+    Where the plan names an entitlement, that option says so. The room above it is not
+    forbidden -- people do take one -- but the difference comes out of their pocket every
+    night, and they should be able to see which line that is before they pick.
     """
     from db.queries import get_facility_rates
+    from pricing.textmatch import norm
 
+    target = norm(entitled or "")
     rows = get_facility_rates()["rates"]
     seen, options = set(), []
     for r in rows:
@@ -164,7 +171,10 @@ def _room_options() -> list[str]:
         if name in seen:
             continue
         seen.add(name)
-        options.append(f"{name} — ₱{r['rate_low']:,}/night")
+        label = f"{name} — ₱{r['rate_low']:,}/night"
+        if target and norm(name) == target:
+            label += " (your plan covers this)"
+        options.append(label)
     return options[:8]
 
 
@@ -260,7 +270,7 @@ def next_question(memory) -> Optional[Question]:
             Q_ROOM,
             "Which room will you take? This is billed per day and stays outside the "
             "total.",
-            options=_room_options(),
+            options=_room_options(memory.hmo.room_entitlement if memory.hmo else None),
             progress=_progress(memory, Q_ROOM),
         )
 
@@ -288,6 +298,10 @@ def next_question(memory) -> Optional[Question]:
     # a slip that is nothing but lab tests.
     if (Q_HMO_OUTPATIENT not in memory.asked and memory.hmo is not None
             and memory.hmo_covers_outpatient is None
+            # A stated outpatient ceiling IS the answer. Asking "does your plan cover
+            # outpatient labs?" of someone whose booklet we just read, and which says
+            # "up to PhP20,000 per year", is asking them to confirm what they sent us.
+            and memory.hmo.outpatient_diagnostics_limit is None
             and not memory.admitted and _is_outpatient_only(memory)):
         return Question(
             Q_HMO_OUTPATIENT,
@@ -301,12 +315,17 @@ def next_question(memory) -> Optional[Question]:
     # and PhilHealth does not care.
     if (Q_PREEXISTING not in memory.asked and memory.hmo is not None
             and memory.preexisting is None):
+        # Only the patient knows whether the condition predates the plan, so this is asked
+        # even with a booklet in hand. What the booklet DOES settle is the cap, so the
+        # figure is only asked for when the document did not state one.
+        knows_cap = (memory.hmo.preexisting_cap is not None
+                     or memory.hmo.preexisting_pct_of_mbl is not None)
         return Question(
             Q_PREEXISTING,
             "Is this for a condition you already had before your HMO started? Plans cap "
             "those at a lower amount in the first year.",
             options=["No", "Yes", "Not sure"],
-            field="number",
+            field=None if knows_cap else "number",
             progress=_progress(memory, Q_PREEXISTING),
         )
 
