@@ -19,6 +19,40 @@ from monitoring.mlflow_logger import log_service_result
 from monitoring.usage import UsageTotals, estimate_cost, track_usage
 
 
+def _describe_plan(result) -> str:
+    """Tell the patient what we actually read, in their terms.
+
+    Reading a document silently is worse than not reading it: the figures change and the
+    patient has no way to tell whether we understood their booklet or invented it. Listing
+    what was found is also how a misread gets caught, since they know their own plan.
+    """
+    plan = result.plan
+    bits = []
+    if plan.plan_name:
+        bits.append(f"**{plan.plan_name}**")
+    if plan.mbl_annual is not None:
+        bits.append(f"limit ₱{plan.mbl_annual:,.0f} per illness per year")
+    if plan.room_entitlement:
+        bits.append(f"{plan.room_entitlement.lower()} room")
+    head = "Read your benefits document: " + ", ".join(bits) + "." if bits else \
+        "Read your benefits document."
+
+    detail = []
+    if plan.procedure_sublimits:
+        n = len(plan.procedure_sublimits)
+        detail.append(f"{n} per-procedure limit{'s' if n > 1 else ''}")
+    if plan.outpatient_diagnostics_limit is not None:
+        detail.append(f"an outpatient ceiling of ₱{plan.outpatient_diagnostics_limit:,.0f}")
+    if plan.professional_fees_within_mbl:
+        detail.append("doctors' fees drawn from the same limit")
+    if detail:
+        head += " I also found " + ", ".join(detail) + "."
+    if not plan.has_schedule:
+        head += (" It does not list per-procedure limits, so I will still treat the HMO "
+                 "figure as a ceiling.")
+    return head
+
+
 @dataclass
 class ServiceResult:
     answer: Answer
@@ -105,7 +139,7 @@ class DrMundoService:
             from agent.format import format_intake_summary
             from agent.intake import next_question
             question = next_question(memory)
-            memory.last_asked = question.kind if question else None
+            memory.remember_question(question)
             answer = self._reply(estimate, "uploaded request slip", question,
                                  format_intake_summary(estimate))
             answer, report = check_output(answer)
@@ -122,6 +156,95 @@ class DrMundoService:
         if self.enable_mlflow:
             log_service_result("[slip upload]", result)
         return result
+
+    def handle_benefits(self, file_path, session_id: str = "default") -> ServiceResult:
+        """Read an uploaded benefits document and re-price with the member's real limits.
+
+        The second document type this accepts, and a different role from the first. A slip
+        says what is being bought; a Summary of Benefits says what the plan pays for it.
+        It is optional, it can arrive at any point in the conversation, and it applies to
+        every estimate afterwards rather than to one.
+
+        A document that arrives before any slip is still worth reading: the limits are
+        held and the next upload is priced with them already in place.
+        """
+        import time as _time
+        from pathlib import Path as _Path
+
+        from agent.intake import next_question
+        from pricing.estimate import estimate_from_slip
+        from vision.benefits import merge_into, read_benefits
+
+        start = _time.perf_counter()
+        memory = self._memory(session_id)
+
+        with track_usage() as usage:
+            result = read_benefits(_Path(file_path))
+            if not result.ok:
+                answer = Answer(
+                    status="no_data", path=None, query="uploaded benefits document",
+                    answer_text=(
+                        "I couldn't read that document. A clearer scan or the PDF itself "
+                        "usually works, or just tell me your plan and limit."
+                    ),
+                )
+                answer, report = check_output(answer)
+                return ServiceResult(
+                    answer=answer, category="cost", output_report=report,
+                    latency_ms=int((_time.perf_counter() - start) * 1000),
+                    prompt_version=self.prompt_name,
+                )
+
+            memory.hmo = merge_into(result.plan, memory.hmo)
+            memory.asked.add("hmo")          # the document answered it better than we could
+
+            if memory.slip is None:
+                # No path: there is nothing priced yet, so there is no grounded budget for
+                # the guard to check these figures against. They came off the patient's own
+                # document, and claiming a pricing path we have not walked would invite the
+                # guard to rebuild this sentence into an empty report.
+                answer = Answer(status="answered", path=None,
+                                query="uploaded benefits document", answer_text="")
+                answer.answer_text = (_describe_plan(result)
+                                      + "\n\nNow send me your doctor's request and I will "
+                                        "price it against these limits.")
+                answer, report = check_output(answer)
+                memory.add_assistant(answer.answer_text)
+                return ServiceResult(
+                    answer=answer, category="cost", output_report=report,
+                    latency_ms=int((_time.perf_counter() - start) * 1000),
+                    prompt_version=self.prompt_name, usage=usage,
+                )
+
+            estimate = estimate_from_slip(
+                memory.slip, hmo=memory.hmo,
+                senior_or_pwd=bool(memory.senior_or_pwd),
+                procedure_source=memory.procedure_source,
+                planned_procedure=memory.planned_procedure,
+                philhealth_active=memory.philhealth_active,
+                hmo_covers_outpatient=memory.hmo_covers_outpatient,
+                room_type=memory.room_type,
+                length_of_stay=memory.length_of_stay,
+            )
+            memory.remember_estimate(estimate)
+            question = next_question(memory)
+            memory.remember_question(question)
+            answer = self._reply(estimate, "uploaded benefits document", question,
+                                 _describe_plan(result), hmo=memory.hmo)
+            answer, report = check_output(answer)
+
+        memory.add_user("[uploaded a benefits document]")
+        memory.add_assistant(answer.answer_text)
+
+        result_out = ServiceResult(
+            answer=answer, category="cost", output_report=report,
+            latency_ms=int((_time.perf_counter() - start) * 1000),
+            prompt_version=self.prompt_name, usage=usage,
+        )
+        result_out.estimated_cost_usd = estimate_cost(usage)
+        if self.enable_mlflow:
+            log_service_result("[benefits upload]", result_out)
+        return result_out
 
     def refine(
         self,
@@ -251,7 +374,7 @@ class DrMundoService:
             memory.remember_estimate(estimate)
 
             question = None if slots.get("wants_report") else next_question(memory)
-            memory.last_asked = question.kind if question else None
+            memory.remember_question(question)
             # An incomplete answer re-asks rather than advancing, and says what is missing
             # instead of repeating the question verbatim as though nothing happened.
             note = slots.get("_incomplete") or "Got it."
@@ -282,7 +405,8 @@ class DrMundoService:
                       answer_text="", budget=estimate)
 
     @staticmethod
-    def _reply(estimate, query: str, question, acknowledgement: str) -> Answer:
+    def _reply(estimate, query: str, question, acknowledgement: str,
+               hmo=None) -> Answer:
         """A question while intake is open; the priced report once it closes.
 
         The estimate is deliberately withheld from the Answer while questions remain, so
@@ -294,7 +418,7 @@ class DrMundoService:
 
         if question is not None:
             answer = Answer(status="answered", path="budget_report", query=query,
-                            answer_text="", budget=None)
+                            answer_text="", budget=None, hmo=hmo)
             answer.answer_text = acknowledgement + "\n\n" + question.text
             return answer
 

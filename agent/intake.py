@@ -35,6 +35,7 @@ Q_STAY = "stay"
 Q_HMO = "hmo"
 Q_HMO_OUTPATIENT = "hmo_outpatient"
 Q_PREEXISTING = "preexisting"
+Q_SUBLIMIT = "sublimit"
 Q_SENIOR = "senior"
 
 _EXTRACT_SYSTEM = """You turn a patient's reply into structured fields for a medical cost \
@@ -82,12 +83,13 @@ class Question:
 
 # Every question the flow can ask, in order. Used for the progress counter.
 ALL_KINDS = (Q_DISAMBIGUATE, Q_ADMITTED, Q_PROCEDURE, Q_PHILHEALTH, Q_ROOM, Q_STAY,
-             Q_HMO, Q_HMO_OUTPATIENT, Q_PREEXISTING, Q_SENIOR)
+             Q_HMO, Q_HMO_OUTPATIENT, Q_PREEXISTING, Q_SUBLIMIT, Q_SENIOR)
 
 # Questions that only apply in some situations. Asking all nine every time would cost more
 # in abandonment than the extra precision is worth, so a plain lab slip still finishes in
 # four and only the complicated cases get the longer path.
-CONDITIONAL = (Q_ROOM, Q_STAY, Q_PHILHEALTH, Q_HMO_OUTPATIENT, Q_DISAMBIGUATE)
+CONDITIONAL = (Q_ROOM, Q_STAY, Q_PHILHEALTH, Q_HMO_OUTPATIENT, Q_SUBLIMIT,
+               Q_DISAMBIGUATE)
 
 # Published Maxicare tiers, offered as choices. "Other" exists because most Philippine
 # coverage is employer-negotiated and matches no public tier; we ask for the limit
@@ -142,6 +144,8 @@ def _applicable(memory) -> list:
         kinds.append(Q_HMO_OUTPATIENT)
     if memory.hmo is not None:
         kinds.append(Q_PREEXISTING)
+    if _capped_candidate(memory) is not None:
+        kinds.append(Q_SUBLIMIT)
     return kinds
 
 
@@ -170,6 +174,29 @@ def _is_outpatient_only(memory) -> bool:
     if est is None:
         return True
     return all(p.item.kind in ("lab", "imaging", "diagnostic") for p in est.priced)
+
+
+# Below this, a sub-limit is unlikely to bind and the question is not worth its cost. A
+# schedule's caps sit in the tens of thousands, so asking about a ₱630 blood count wastes
+# the patient's patience on an answer that cannot change the total.
+SUBLIMIT_WORTH_ASKING = Decimal("20000")
+
+
+def _capped_candidate(memory):
+    """The priced item most likely to carry a per-procedure cap, or None.
+
+    Real schedules cap the expensive procedures individually and leave everything else to
+    the overall limit, so we ask about the dearest procedure on the slip and nothing else.
+    One question, aimed at the only item where the answer moves the number.
+    """
+    est = memory.estimate
+    if est is None or memory.hmo is None:
+        return None
+    if memory.hmo.has_schedule:
+        return None                     # a parsed booklet already answered this
+    candidates = [p for p in est.priced
+                  if p.item.kind == "procedure" and p.price_high >= SUBLIMIT_WORTH_ASKING]
+    return max(candidates, key=lambda p: p.price_high, default=None)
 
 
 def _pending_item(memory):
@@ -279,8 +306,27 @@ def next_question(memory) -> Optional[Question]:
             "Is this for a condition you already had before your HMO started? Plans cap "
             "those at a lower amount in the first year.",
             options=["No", "Yes", "Not sure"],
+            field="number",
             progress=_progress(memory, Q_PREEXISTING),
         )
+
+    # The single most valuable question we can ask an HMO member, because a per-procedure
+    # cap binds before the overall limit and is usually a fraction of it. It is asked only
+    # where an answer could move the figure: a plan is known, a schedule is not, and there
+    # is a procedure dear enough to be capped.
+    if Q_SUBLIMIT not in memory.asked:
+        item = _capped_candidate(memory)
+        if item is not None:
+            return Question(
+                Q_SUBLIMIT,
+                f"Does your plan put a specific limit on {item.catalog_name.title()}? "
+                f"It is usually on your approval letter, and it is often much lower than "
+                f"your overall limit.",
+                options=["No specific limit", "Yes, there is a limit", "Not sure"],
+                field="number",
+                subject=item.catalog_name,
+                progress=_progress(memory, Q_SUBLIMIT),
+            )
 
     if Q_SENIOR not in memory.asked and memory.senior_or_pwd is None:
         return Question(
@@ -380,6 +426,24 @@ def slots_from_choice(kind: str, value, extra=None) -> dict:
         # marking it not would overstate it. Neither guess is ours to make.
         if value in ("Yes", "No"):
             slots["preexisting"] = (value == "Yes")
+        # Individual certificates state the first-year pre-existing ceiling as a peso
+        # figure where group contracts state a percentage. Given the figure we can compute
+        # instead of warn, so it is offered as an optional field on the same question.
+        if value == "Yes" and extra:
+            slots["preexisting_cap"] = extra
+
+    elif kind == Q_SUBLIMIT:
+        if value == "No specific limit":
+            # A stated absence is an answer. It does not give us a schedule, but it does
+            # mean the overall limit is the only ceiling for this procedure.
+            slots["no_sublimit"] = True
+        elif extra:
+            slots["sublimit_amount"] = extra
+        elif value == "Yes, there is a limit":
+            slots["_incomplete"] = (
+                "How much is the limit? Without the figure I have to assume your plan pays "
+                "up to your overall limit, which would overstate it."
+            )
 
     elif kind == Q_PROCEDURE:
         if value == "Just a check-up":
@@ -470,6 +534,21 @@ def apply_answer(memory, slots: dict, asked_kind: Optional[str]) -> dict:
         if memory.hmo is not None:
             memory.hmo.preexisting = slots["preexisting"]
         memory.asked.add(Q_PREEXISTING)
+
+    if slots.get("preexisting_cap") is not None and memory.hmo is not None:
+        memory.hmo.preexisting_cap = to_decimal(slots["preexisting_cap"])
+
+    # A per-procedure cap the patient read off their approval letter. Keyed by the item we
+    # asked about, so it attaches to that procedure and not to whatever else is on the
+    # slip. A stated ABSENCE is recorded too: it is the answer "the overall limit is the
+    # only ceiling", which is different from not having asked.
+    if memory.hmo is not None and (slots.get("sublimit_amount") or slots.get("no_sublimit")):
+        subject = getattr(memory, "sublimit_subject", None)
+        amount = to_decimal(slots.get("sublimit_amount"))
+        if amount is not None and subject:
+            memory.hmo.procedure_sublimits[subject] = amount
+            memory.hmo.schedule_source = memory.hmo.schedule_source or "patient_stated"
+        memory.asked.add(Q_SUBLIMIT)
 
     # Same asymmetry: a "no" is only trusted against the question that was asked, but a
     # volunteered "senior citizen po ako" is unambiguous and taken whenever it appears.
