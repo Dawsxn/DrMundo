@@ -50,6 +50,9 @@ def _describe_plan(result) -> str:
     if not plan.has_schedule:
         head += (" It does not list per-procedure limits, so I will still treat the HMO "
                  "figure as a ceiling.")
+    # Say it out loud. Silently skipping questions looks identical to a flow that forgot
+    # to ask them, and the patient has no way to tell which happened.
+    head += " I won't ask you about your plan again."
     return head
 
 

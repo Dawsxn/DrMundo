@@ -86,21 +86,35 @@ class SessionMemory:
         return self.estimate is not None
 
     def clear_estimate(self) -> None:
-        """Drop the slip and everything derived from it. A new upload starts clean."""
+        """Drop the slip and everything derived from it. WHO THE PATIENT IS survives.
+
+        The split is by what a new piece of paper can actually change. A new slip means a
+        new set of tests, a new room, a new operation. It does not mean a new HMO, a new
+        age, or newly lapsed PhilHealth contributions.
+
+        Clearing those was a real bug and an infuriating one: a patient who uploaded their
+        benefits booklet and then their request slip was asked "do you have a Maxicare
+        HMO?" seconds after sending the document that answered it, and the limits they had
+        just supplied were thrown away with the question.
+
+        `preexisting` is cleared even though it feels personal, because it is a property of
+        the CONDITION rather than the person, and the next slip may be for a different one.
+        """
+        from agent.intake import Q_HMO, Q_PHILHEALTH, Q_SENIOR
+
         self.slip = None
         self.estimate = None
-        self.hmo = None
-        self.senior_or_pwd = None
         self.procedure_source = "unknown"
         self.planned_procedure = None
         self.admitted = None
-        self.philhealth_active = None
         self.room_type = None
         self.length_of_stay = None
         self.hmo_covers_outpatient = None
         self.preexisting = None
         self.resolved_choices.clear()
-        self.asked.clear()
+        # Keep the record of what we have already put to them, or the questions come back
+        # even though the answers survived.
+        self.asked &= {Q_HMO, Q_PHILHEALTH, Q_SENIOR}
         self.last_asked = None
         self.sublimit_subject = None
 
@@ -122,5 +136,10 @@ class SessionMemory:
         return list(self.turns)
 
     def clear(self) -> None:
+        """A genuinely fresh start: a new person, not a new slip."""
         self.turns.clear()
         self.clear_estimate()
+        self.hmo = None
+        self.senior_or_pwd = None
+        self.philhealth_active = None
+        self.asked.clear()
